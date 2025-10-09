@@ -1,3 +1,5 @@
+#### NO ASSISTANTS, NO HARDCODED API
+
 #!/usr/bin/env python3
 """
 Generate synthetic command samples for a MITRE ATT&CK technique
@@ -92,7 +94,7 @@ def call_openrouter(prompt: str, api_key: str, model: str = "openai/gpt-4o") -> 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate synthetic command samples for a MITRE technique using generated input file."
+        description="Show the prompt that would be sent to the LLM."
     )
     parser.add_argument("input_file", help="Path to the TXXX_LLM_Input_Ready.txt file")
     parser.add_argument("--technique-description", default="", 
@@ -101,48 +103,41 @@ def main():
                        help="OpenRouter model to use (default: openai/gpt-4o)")
     args = parser.parse_args()
 
-    # Get API key from environment
-    try:
-        api_key = get_api_key()
-    except ValueError as e:
-        print(f"[!] Error: {e}")
-        return 1
-
     # Extract technique ID from filename
     technique_id = extract_technique_id(args.input_file)
     
     # Load targets and constraints
     targets, constraints = load_targets_and_constraints(args.input_file)
     
-    print(f"[*] Loaded {len(targets)} targets and {len(constraints)} constraints for {technique_id}")
-    print(f"[*] Using model: {args.model}")
+    print(f"[*] Extracted Technique ID: {technique_id}")
+    print(f"[*] Loaded {len(targets)} targets and {len(constraints)} constraints")
+    print(f"[*] Model: {args.model}")
+    print("\n" + "="*80)
+    print("SAMPLE PROMPT (for first target):")
+    print("="*80 + "\n")
     
+    # Get first target to show example prompt
+    target = targets[0]
+    platform = target["platform"]
+    privilege = target["privilege"]
+    shell = target["shell"]
+    tool = target["tool"]
+
+    obfuscation_level = "heavy" if tool.endswith("-obf") else "none"
+    base_tool = tool.replace("-obf", "")
+
+    # Build the technique description line
+    tech_desc_line = ""
+    if args.technique_description:
+        tech_desc_line = f' ("{args.technique_description}")'
+
     # Format constraints for prompt
     constraints_text = format_constraints(constraints)
-    
-    # Output directory
-    output_dir = f"data/samples/{technique_id}"
-    os.makedirs(output_dir, exist_ok=True)
 
-    # === GENERATION LOOP ===
-    for idx, target in enumerate(targets, 1):
-        platform = target["platform"]
-        privilege = target["privilege"]
-        shell = target["shell"]
-        tool = target["tool"]
-
-        obfuscation_level = "heavy" if tool.endswith("-obf") else "none"
-        base_tool = tool.replace("-obf", "")
-
-        # Build the technique description line
-        tech_desc_line = ""
-        if args.technique_description:
-            tech_desc_line = f' ("{args.technique_description}")'
-
-        prompt = f"""
+    prompt = f"""
 You are a cybersecurity expert tasked with generating synthetic but realistic malicious command-line examples.
 
-For MITRE ATT&CK technique {technique_id}{tech_desc_line}, generate 10 commands aligned strictly with this behavior.
+For MITRE ATT&CK technique {technique_id}{tech_desc_line}, generate 10 unique commands aligned strictly with this behavior.
 
 Context:
 - Platform: {platform}
@@ -166,67 +161,10 @@ Constraints:
 {constraints_text}
 """
 
-        # Prompt hash for traceability
-        prompt_hash = hashlib.sha256(prompt.encode()).hexdigest()[:8]
-
-        print(f"[*] [{idx}/{len(targets)}] Generating samples for {platform}/{privilege}/{shell}/{base_tool}...")
-
-        try:
-            response_text = call_openrouter(prompt, api_key, args.model)
-        except Exception as e:
-            print(f"[!] API call failed for {shell} + {base_tool}: {e}")
-            continue
-
-        # Strip markdown code blocks if present
-        response_text = response_text.strip()
-        if response_text.startswith("```json"):
-            response_text = response_text.removeprefix("```json").removesuffix("```").strip()
-        elif response_text.startswith("```"):
-            response_text = response_text.removeprefix("```").removesuffix("```").strip()
-
-        try:
-            entries = json.loads(response_text)
-        except json.JSONDecodeError:
-            print(f"[!] Could not decode response as JSON for {shell} + {base_tool}")
-            print("\n--- RAW RESPONSE ---\n")
-            print(response_text)
-            print("\n--- END RAW RESPONSE ---\n")
-            continue
-
-        timestamp = datetime.utcnow().isoformat() + "Z"
-        seen_hashes = set()
-
-        for entry in entries:
-            entry["technique_id"] = technique_id
-            entry["platform"] = platform
-            entry["shell"] = shell
-
-            raw = json.dumps(entry, sort_keys=True).encode()
-            content_hash = hashlib.sha1(raw).hexdigest()[:8]
-            if content_hash in seen_hashes:
-                continue
-            seen_hashes.add(content_hash)
-
-            entry_id = f"SYN-{shell.upper()}-{technique_id}-{prompt_hash}-{content_hash}"
-            entry["id"] = entry_id
-            entry["source_prompt_hash"] = prompt_hash
-            entry["timestamp_utc"] = timestamp
-            entry["validation"] = {
-                "syntax_ok": None,
-                "llm_judge": None,
-                "sandbox_trace_id": None,
-                "mitre_match_score": None
-            }
-
-            filepath = os.path.join(output_dir, f"{entry_id}.json")
-            with open(filepath, "w") as f:
-                json.dump(entry, f, indent=2)
-
-        print(f"[+] Generated {len(seen_hashes)} unique entries for {shell} + {base_tool}")
-
-    print(f"\n[✓] Completed generation for technique {technique_id}")
-    print(f"[✓] Total targets processed: {len(targets)}")
-    print(f"[✓] Output directory: {output_dir}")
+    print(prompt)
+    print("\n" + "="*80)
+    print(f"This prompt would be sent for target 1 of {len(targets)}")
+    print("="*80)
 
 if __name__ == "__main__":
     exit(main() or 0)
