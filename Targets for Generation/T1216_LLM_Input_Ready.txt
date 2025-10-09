@@ -10,6 +10,9 @@ targets = [
     { "platform": "Windows", "privilege": "admin", "shell": "Powershell", "tool": "rundll32" },
     { "platform": "Windows", "privilege": "user", "shell": "Powershell", "tool": "PubPrn.vbs" },
     { "platform": "Windows", "privilege": "admin", "shell": "Powershell", "tool": "PubPrn.vbs" },
+    { "platform": "Linux", "privilege": "root", "shell": "bash", "tool": "sh -c (shell wrappers)" },
+    { "platform": "Linux", "privilege": "user", "shell": "bash", "tool": "cron / at" },
+    { "platform": "Linux", "privilege": "root", "shell": "python", "tool": "systemd-run" },
 ]
 
 # Constraints
