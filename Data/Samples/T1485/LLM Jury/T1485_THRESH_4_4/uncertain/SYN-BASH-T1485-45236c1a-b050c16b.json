@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "srm -fP \"/Users/ops/Virtual Machines.localized/Ubuntu.vmwarevm/*.vmdk\"",
+  "explanation": "Securely destroys virtual disk images for a single VM, eliminating the contained data.",
+  "rationale_steps": [
+    "Target specific VMDK files within a known VM bundle to avoid affecting other VMs.",
+    "Use srm with -P to overwrite blocks before removal.",
+    "Use -f to bypass prompts and ensure completion as root."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-45236c1a-b050c16b",
+  "source_prompt_hash": "45236c1a",
+  "timestamp_utc": "2025-09-30T07:56:40.760169Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with balanced quoting and a valid combined short option (-fP).",
+        "semantic_score": 2,
+        "semantic_justification": "Although srm is an appropriate tool for secure deletion, quoting the *.vmdk wildcard prevents glob expansion so no files are matched/deleted (and srm may be absent or ineffective on modern macOS/APFS), undermining the stated intent.",
+        "combined_score": 3.5,
+        "confidence": 0.76,
+        "timestamp": "2025-10-01T23:29:10.306278Z"
+      },
+      {
+        "model": "claude-3-7-sonnet",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid flags (-fP), proper quoting around the path, and correct syntax for the srm secure deletion utility.",
+        "semantic_score": 5,
+        "semantic_justification": "The command uses srm (secure remove) with force (-f) and DoD 7-pass overwrite (-P) options to permanently destroy virtual disk images (*.vmdk files), which directly implements the Data Destruction technique by making the VM data unrecoverable.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2025-10-02T00:31:10.192329Z"
+      },
+      {
+        "model": "gemini-2.0-flash-thinking-exp",
+        "syntactic_score": 2,
+        "syntactic_justification": "The command contains an invalid flag (`-P`) for the `srm` tool on macOS, which would cause the command to error out or behave unexpectedly, thus not being perfectly well-formed for the specified platform.",
+        "semantic_score": 2,
+        "semantic_justification": "While `srm` is an appropriate tool for data destruction, the command's path argument uses a wildcard within double quotes, meaning the shell will pass the literal string `*.vmdk` to `srm`, failing to delete all intended virtual disk images for the VM.",
+        "combined_score": 2.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T00:31:39.603411Z"
+      }
+    ],
+    "llm_average_syntactic": 4.0,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 3.5,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}
