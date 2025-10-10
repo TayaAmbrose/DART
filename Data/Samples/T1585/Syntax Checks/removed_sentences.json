@@ -1,0 +1,5 @@
+[
+  "kubectl run persona-social-login -n personas --rm -i --restart=Never --image=curlimages/curl:8.8.0 --command -- sh -lc 'curl -sS -X POST https://api.example-social.test/v1/auth/login -H \"Content-Type: application/json\" -H \"Accept: application/json\" -d \"{\\\"username\\\":\\\"artisanal_outreach\\\",\\\"password\\\":\\\"S3cure!Passw0rd\\\"}\"'",
+  "kubectl run persona-social-register -n personas --rm -i --restart=Never --image=curlimages/curl:8.8.0 --command -- sh -lc 'curl -sS -X POST https://api.example-social.test/v1/users/register -H \"Content-Type: application/json\" -H \"Accept: application/json\" -d \"{\\\"username\\\":\\\"artisanal_outreach\\\",\\\"email\\\":\\\"artisanal.outreach@example-mail.test\\\",\\\"password\\\":\\\"S3cure!Passw0rd\\\",\\\"profile\\\":{\\\"display_name\\\":\\\"A. Outreach\\\",\\\"bio\\\":\\\"Cloud-native tinkerer and OSS enthusiast\\\"}}\"'",
+  "$login = @{ email=\"alex.designer.persona@example.org\"; password=\"S7r0ng!Pass\" } | ConvertTo-Json; Invoke-RestMethod -Method Post -Uri \"https://reqres.in/api/login\" -ContentType \"application/json\" -Body $login | ConvertTo-Json -Depth 5"
+]

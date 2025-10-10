@@ -1,0 +1,23 @@
+{
+  "21": {
+    "Duplicated": 1,
+    "ComparedTo": 22,
+    "RemovedSentence": "kubectl run persona-social-login -n personas --rm -i --restart=Never --image=curlimages/curl:8.8.0 --command -- sh -lc 'curl -sS -X POST https://api.example-social.test/v1/auth/login -H \"Content-Type: application/json\" -H \"Accept: application/json\" -d \"{\\\"username\\\":\\\"artisanal_outreach\\\",\\\"password\\\":\\\"S3cure!Passw0rd\\\"}\"'",
+    "ComparedSentence": "kubectl run persona-social-register -n personas --rm -i --restart=Never --image=curlimages/curl:8.8.0 --command -- sh -lc 'curl -sS -X POST https://api.example-social.test/v1/users/register -H \"Content-Type: application/json\" -H \"Accept: application/json\" -d \"{\\\"username\\\":\\\"artisanal_outreach\\\",\\\"email\\\":\\\"artisanal.outreach@example-mail.test\\\",\\\"password\\\":\\\"S3cure!Passw0rd\\\",\\\"profile\\\":{\\\"display_name\\\":\\\"A. Outreach\\\",\\\"bio\\\":\\\"Cloud-native tinkerer and OSS enthusiast\\\"}}\"'",
+    "SimilarityScore": 0.9389069080352783
+  },
+  "22": {
+    "Duplicated": 1,
+    "ComparedTo": 23,
+    "RemovedSentence": "kubectl run persona-social-register -n personas --rm -i --restart=Never --image=curlimages/curl:8.8.0 --command -- sh -lc 'curl -sS -X POST https://api.example-social.test/v1/users/register -H \"Content-Type: application/json\" -H \"Accept: application/json\" -d \"{\\\"username\\\":\\\"artisanal_outreach\\\",\\\"email\\\":\\\"artisanal.outreach@example-mail.test\\\",\\\"password\\\":\\\"S3cure!Passw0rd\\\",\\\"profile\\\":{\\\"display_name\\\":\\\"A. Outreach\\\",\\\"bio\\\":\\\"Cloud-native tinkerer and OSS enthusiast\\\"}}\"'",
+    "ComparedSentence": "kubectl run persona-blog-register -n personas --rm -i --restart=Never --image=curlimages/curl:8.8.0 --command -- sh -lc 'curl -sS -X POST https://api.example-blog.test/v1/users -H \"Content-Type: application/json\" -H \"Accept: application/json\" -d \"{\\\"handle\\\":\\\"artisanaloutreach\\\",\\\"email\\\":\\\"artisanal.outreach@example-mail.test\\\",\\\"password\\\":\\\"S3cure!Passw0rd\\\",\\\"profile\\\":{\\\"title\\\":\\\"Cloud Native Notes\\\",\\\"about\\\":\\\"Personal takes on K8s, SRE, and OSS\\\"}}\"'",
+    "SimilarityScore": 0.9092267751693726
+  },
+  "41": {
+    "Duplicated": 1,
+    "ComparedTo": 43,
+    "RemovedSentence": "$login = @{ email=\"alex.designer.persona@example.org\"; password=\"S7r0ng!Pass\" } | ConvertTo-Json; Invoke-RestMethod -Method Post -Uri \"https://reqres.in/api/login\" -ContentType \"application/json\" -Body $login | ConvertTo-Json -Depth 5",
+    "ComparedSentence": "$body = @{ email=\"alex.designer.persona@example.org\"; password=\"S7r0ng!Pass\" } | ConvertTo-Json; Invoke-RestMethod -Method Post -Uri \"https://reqres.in/api/register\" -ContentType \"application/json\" -Body $body | ConvertTo-Json -Depth 5",
+    "SimilarityScore": 0.9353570342063904
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "technique_id": "T1216",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[withheld] PowerShell starting cscript.exe to execute SyncAppvPublishingServer.vbs with crafted parameters that cause a downstream process launch (details redacted).",
+  "explanation": "Abuses the signed SyncAppvPublishingServer.vbs (part of App-V) to proxy into another process, taking advantage of the trust boundary of signed scripts to execute additional code.",
+  "rationale_steps": [
+    "Identify powershell.exe -> cscript.exe -> SyncAppvPublishingServer.vbs chain.",
+    "Arguments to the script contain atypical flags or embedded strings inconsistent with normal App-V sync activity.",
+    "Observe cscript.exe or the script starting a non-App-V-related process (e.g., powershell.exe or cmd.exe).",
+    "No corresponding App-V publishing events occur despite the script invocation.",
+    "Time-of-day/user context inconsistent with typical App-V maintenance operations."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1216-630d071e-84ec6d34",
+  "source_prompt_hash": "630d071e",
+  "timestamp_utc": "2025-09-30T06:59:07.952821Z",
+  "validation": {
+    "syntax_ok": true,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "The entry is a descriptive summary rather than a concrete, parseable command line, so it is not runnable as-is.",
+        "semantic_score": 4,
+        "semantic_justification": "Abusing SyncAppvPublishingServer.vbs via cscript.exe from PowerShell to proxy execution is a known, plausible T1216 method, though missing exact arguments prevents full verification.",
+        "combined_score": 2.5,
+        "confidence": 0.6,
+        "timestamp": "2025-10-01T21:23:22.960504Z"
+      },
+      {
+        "model": "claude-3-7-sonnet",
+        "syntactic_score": 3,
+        "syntactic_justification": "Without seeing the actual command, I can only infer it's likely parseable but may contain formatting issues since PowerShell launching cscript.exe with VBScript parameters often requires careful quoting and escaping.",
+        "semantic_score": 5,
+        "semantic_justification": "The described command perfectly aligns with T1216 (System Script Proxy Execution) by using cscript.exe to execute the legitimate signed SyncAppvPublishingServer.vbs script with manipulated parameters to proxy execution of other processes.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-02T03:55:06.025615Z"
+      },
+      {
+        "model": "gemini-2.0-flash-thinking-exp",
+        "syntactic_score": 0,
+        "syntactic_justification": "The command string itself was explicitly withheld, making it impossible to evaluate its syntactic correctness directly.",
+        "semantic_score": 5,
+        "semantic_justification": "The command's explanation perfectly aligns with T1216 by abusing a signed system script (SyncAppvPublishingServer.vbs, explicitly mentioned in T1216) to proxy the execution of additional code.",
+        "combined_score": 2.5,
+        "confidence": 1.0,
+        "timestamp": "2025-10-02T03:55:11.450680Z"
+      }
+    ],
+    "llm_average_syntactic": 1.333,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 3.0,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null,
+    "Syntax_Run_Details": ""
+  }
+}

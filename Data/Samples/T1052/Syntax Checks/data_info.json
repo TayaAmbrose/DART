@@ -1,0 +1,23 @@
+{
+  "40": {
+    "Duplicated": 1,
+    "ComparedTo": 44,
+    "RemovedSentence": "sudo bash -c 'UPART=$(lsblk -pn -o NAME,TRAN | awk \"$2==\\\"usb\\\"{print $1\\\"1\\\"}\" | head -n1); mkdir -p /mnt/usb && mount \"$UPART\" /mnt/usb && dd if=/dev/sda bs=4M status=none | gzip -1 > /mnt/usb/.sysdisk.gz && sync && umount /mnt/usb'",
+    "ComparedSentence": "sudo bash -c 'UPART=$(lsblk -pn -o NAME,TRAN | awk \"$2==\\\"usb\\\"{print $1\\\"1\\\"}\" | head -n1); mkdir -p /mnt/usb && mount \"$UPART\" /mnt/usb && tar -cf - /var/lib 2>/dev/null | gzip -9 > /mnt/usb/.cache.tgz && sync && umount /mnt/usb'",
+    "SimilarityScore": 0.9242480993270874
+  },
+  "41": {
+    "Duplicated": 1,
+    "ComparedTo": 49,
+    "RemovedSentence": "sudo bash -c 'UDEV=$(lsblk -o NAME,TRAN -nr | awk \"$2==\\\"usb\\\"{print \\\"/dev/\\\"$1}\" | head -n1); tar -cf - /var/www | gzip -9 | dd of=\"$UDEV\" bs=1M seek=8 conv=notrunc,fsync status=none'",
+    "ComparedSentence": "sudo bash -c 'UDEV=$(lsblk -o NAME,TRAN -nr | awk \"$2==\\\"usb\\\"{print \\\"/dev/\\\"$1}\" | head -n1); tar -cf - /home | gzip -9 | dd of=\"$UDEV\" bs=4M conv=fsync status=none'",
+    "SimilarityScore": 0.9478632211685181
+  },
+  "44": {
+    "Duplicated": 1,
+    "ComparedTo": 48,
+    "RemovedSentence": "sudo bash -c 'UPART=$(lsblk -pn -o NAME,TRAN | awk \"$2==\\\"usb\\\"{print $1\\\"1\\\"}\" | head -n1); mkdir -p /mnt/usb && mount \"$UPART\" /mnt/usb && tar -cf - /var/lib 2>/dev/null | gzip -9 > /mnt/usb/.cache.tgz && sync && umount /mnt/usb'",
+    "ComparedSentence": "sudo bash -c 'UPART=$(lsblk -o NAME,TRAN -nr | awk \"$2==\\\"usb\\\"{print \\\"/dev/\\\"$1\\\"1\\\"}\" | head -n1); mkdir -p /mnt/usb && mount \"$UPART\" /mnt/usb && tar -cf - /var/log | gzip -9 > /mnt/usb/syslogs.tar.gz && sync && umount /mnt/usb'",
+    "SimilarityScore": 0.9109829068183899
+  }
+}

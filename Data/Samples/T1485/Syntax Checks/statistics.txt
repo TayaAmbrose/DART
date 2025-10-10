@@ -1,0 +1,16 @@
+Initial number of rows: 60
+Number of rows after filtering: 59
+Number of rows removed: 1
+Number of rows marked as duplicated: 1
+Percentage of rows removed: 1.67%
+No rows were removed based on similarity threshold.
+Total filtered rows: 59.00
+Average similarity of filtered rows: 0.30
+Highest similarity of filtered rows: 0.90
+Lowest similarity of filtered rows: -0.11
+Total all rows: 60.00
+Average similarity of all rows: 0.30
+Highest similarity of all rows: 0.94
+Lowest similarity of all rows: -0.11
+Highest similarity value in the matrix: 1.00
+Lowest similarity value in the matrix: -0.11

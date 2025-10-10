@@ -1,0 +1,3 @@
+[
+  "docker run --rm -v /srv/app/uploads:/target:rw ubuntu bash -lc 'find /target -xdev -type f -print0 | xargs -0 -r shred -n 2 -z -u; sync'"
+]

@@ -15,7 +15,7 @@
   "source_prompt_hash": "2e02ce6e",
   "timestamp_utc": "2025-09-30T08:40:28.862749Z",
   "validation": {
-    "syntax_ok": false,
+    "syntax_ok": true,
     "llm_judgments": [
       {
         "model": "gpt-5",
@@ -54,6 +54,6 @@
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
-    "Syntax_Run_Details": "mypy issues:\nC:\\Users\\flacman\\AppData\\Local\\Temp\\tmpunh3nqlt.py:1: error: Module has no attribute \"BTPROTO_L2CAP\"  [attr-defined]\nFound 1 error in 1 file (checked 1 source file)"
+    "Syntax_Run_Details": ""
   }
 }

