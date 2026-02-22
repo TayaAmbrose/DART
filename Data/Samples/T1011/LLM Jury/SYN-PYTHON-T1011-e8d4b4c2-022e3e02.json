@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T01:27:45.764446Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax for imports, variable assignments, list comprehension, and socket operations.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1011 by exfiltrating data from a file over UDP to a remote server using a non-standard port (53530), chunking the data with UUID tags to ensure reassembly, which is a realistic implementation of exfiltration over an alternative network medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:27:52.983101Z"
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper string delimiters, valid socket API calls, and correct list comprehension syntax for chunked UDP transmission.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command correctly implements UDP-based data exfiltration with chunking and UUID tagging, it uses a standard IP network socket (AF_INET/SOCK_DGRAM) rather than a genuinely different network medium (cellular, Bluetooth, Wi-Fi interface), so it does not authentically demonstrate T1011's core concept of using an alternate network medium distinct from the C2 channel\u2014it is more accurately T1048 (Exfiltration Over Alternative Protocol) over UDP.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:10:12.141612Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command uses perfectly formed Python syntax, with balanced delimiters, valid function calls, and proper statement separators, making it well-formed and runnable.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements the described intent of chunking and exfiltrating data via UUID-tagged UDP datagrams to a non-standard port, effectively creating an alternate network channel for data egress consistent with the spirit of T1011.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T06:31:51.491539Z"
+        "syntactic_justification": "The command is a perfectly formed Python one-liner with balanced parentheses, brackets, and quotes, using valid library calls and syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively chunks file data into UDP packets with a unique identifier for reassembly, though its classification as T1011 is slightly weak as it relies on standard IP routing rather than explicitly forcing a separate hardware medium.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:10:15.933931Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 4.0,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

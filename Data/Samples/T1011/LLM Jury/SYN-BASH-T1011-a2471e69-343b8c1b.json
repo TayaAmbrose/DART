@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T01:20:03.662528Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for both tcpdump and netcat, correct command separators, and appropriate redirection syntax.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements exfiltration over an alternative network medium (6LoWPAN) using IPv6 UDP on a specific port, with tcpdump monitoring the traffic and netcat transferring data from a blob file, fully aligning with the T1011 technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:20:06.856397Z"
+        "syntactic_justification": "The command is well-formed with balanced quotes, valid flag combinations for both tcpdump and nc, proper use of nohup/backgrounding, and correct IPv6 link-local address syntax with interface scope identifiers.",
+        "semantic_score": 4,
+        "semantic_justification": "The command credibly demonstrates T1011 by using a 6LoWPAN interface (a low-power IoT wireless medium distinct from primary channels) to exfiltrate data via IPv6 UDP with nc, though the tcpdump component writes to /dev/null making it functionally a no-op that adds noise rather than serving a clear operational purpose, and privilege level 'None' is understated since raw packet capture and 6LoWPAN interface access typically require elevated privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:08:41.016045Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct redirection, and proper command separation.",
-        "semantic_score": 3,
-        "semantic_justification": "While the `nc` command effectively exfiltrates data via the specified medium aligning with T1011, the `tcpdump` component would almost certainly fail without root privileges, contradicting the 'Privilege: None' claim and preventing full achievement of the stated intent.",
-        "combined_score": 4.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T06:29:22.997124Z"
+        "syntactic_justification": "The command is a valid sequence of Bash operations, utilizing proper backgrounding, redirection, and standard flags for tcpdump and netcat.",
+        "semantic_score": 4,
+        "semantic_justification": "The command successfully utilizes a low-power wireless interface (6LoWPAN) for data exfiltration via netcat, though the included tcpdump command requires root privileges which contradicts the 'Privilege: None' label.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:08:44.144735Z"
       }
     ],
     "llm_average_syntactic": 5.0,

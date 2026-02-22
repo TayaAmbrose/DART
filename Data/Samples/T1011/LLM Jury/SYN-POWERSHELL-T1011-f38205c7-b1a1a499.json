@@ -27,29 +27,29 @@
         "timestamp": "2025-09-30T23:52:20.639695Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper variable assignment, balanced parentheses, correct method calls, and proper piping of objects through the PowerShell pipeline.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively implements T1011 by reading a file's bytes and encoding each byte into ICMP packet sizes sent over IPv6 (an alternative network medium), creating a covert exfiltration channel that bypasses standard network monitoring.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T23:52:25.333747Z"
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, parentheses, and braces, valid pipeline operators, and correct cmdlet syntax throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command plausibly encodes file bytes into ICMPv6 ping buffer sizes to exfiltrate data covertly, which aligns with T1011's concept of using an alternative network medium, though Test-Connection's -BufferSize parameter behavior with IPv6 link-local addresses and the receiving end's ability to decode the data introduces operational realism gaps.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2026-02-18T21:52:08.235194Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct variable assignment, method calls, pipelining, cmdlet usage, valid parameters, and balanced syntax elements.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly reads file bytes, encodes each byte into the ICMPv6 payload size using `Test-Connection -BufferSize`, and transmits it via ICMPv6, aligning perfectly with the claimed intent and T1011 despite the target being a link-local address which restricts the exfiltration to the local network segment.",
-        "combined_score": 5.0,
+        "syntactic_justification": "The command is perfectly well-formed for Windows PowerShell, featuring balanced braces, valid cmdlet parameters, correct static method calls, and proper use of the pipeline.",
+        "semantic_score": 4,
+        "semantic_justification": "While the command successfully encodes data into ICMPv6 packet sizes to bypass monitoring, doing so byte-by-byte is extremely inefficient and noisy, and the technique is more accurately described as T1048 (Exfiltration Over Alternative Protocol) rather than T1011 (Other Network Medium).",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-09-30T23:52:45.315767Z"
+        "timestamp": "2026-02-18T21:52:17.444363Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

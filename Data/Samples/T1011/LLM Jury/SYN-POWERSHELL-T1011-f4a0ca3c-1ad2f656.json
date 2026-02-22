@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T01:04:51.110839Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid PowerShell syntax for variable assignments, method calls, and piping.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, braces, and quotes, proper semicolon separators, valid .NET method calls, and correct pipeline usage throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1011 technique by establishing a Bluetooth PAN connection, configuring a static IP, encoding a video file as base64, and exfiltrating it in chunks over TCP to avoid detection on the primary network.",
+        "semantic_justification": "The command accurately implements T1011 by connecting via Bluetooth PAN using BluetoothCL.exe, assigning a static IP to the Bluetooth network adapter, then reading and base64-encoding a file before streaming it in 2048-byte chunks over TCP to a remote host on the alternate Bluetooth network medium, fully consistent with the technique description.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:04:55.720922Z"
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:05:11.581014Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, featuring balanced quotes, parentheses, braces, and proper use of PowerShell operators, command separators, and valid flag formats.",
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script using correct syntax for variable assignment, object instantiation, method calls, and looping structures.",
         "semantic_score": 4,
-        "semantic_justification": "The command semantically aligns with T1011 by orchestrating Bluetooth PAN connection, static IP configuration, and chunked base64 data exfiltration; however, the `netsh` command to set a static IP requires elevated privileges, contradicting the 'None' privilege claim.",
+        "semantic_justification": "The command accurately implements the technical flow for T1011; however, the 'netsh' command requires administrative privileges which contradicts the 'None' privilege metadata provided.",
         "combined_score": 4.5,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T06:23:16.252758Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:05:16.131062Z"
       }
     ],
     "llm_average_syntactic": 5.0,

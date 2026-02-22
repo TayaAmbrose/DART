@@ -28,29 +28,29 @@
         "timestamp": "2025-09-30T23:51:18.327446Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced quotes, parentheses, and proper syntax for socket operations in Python.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by exfiltrating data over IPv6 (an alternative network medium to standard IPv4) on a non-standard port (55999), reading from a hidden file in a shared location.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T23:51:21.230792Z"
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper string quoting, valid socket API calls, and correct IPv6 connect tuple syntax (4-tuple with flowinfo and scope_id).",
+        "semantic_score": 3,
+        "semantic_justification": "While the command correctly demonstrates TCP data exfiltration over IPv6 using Python sockets and reads a plausible hidden file, IPv6 usage alone does not constitute T1011 (Exfiltration Over Other Network Medium), which specifically requires a physically different network medium (e.g., Bluetooth, cellular, Wi-Fi vs. wired); IPv6 is simply a different protocol layer over the same network medium, making this a misattribution to T1011 rather than T1048 (Exfiltration Over Alternative Protocol).",
+        "combined_score": 4.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T21:52:04.355277Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with correct syntax, balanced quotes, and valid function calls, making it runnable as-is.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively exfiltrates data using IPv6 on a non-standard port, which, while using the same physical network interface as IPv4, can act as an 'alternative medium' for bypassing IPv4-centric monitoring, aligning with the intent of T1011 to evade detection.",
-        "combined_score": 4.5,
+        "syntactic_justification": "The Python command is perfectly formed with correct socket library usage, a valid IPv6 connection tuple, and properly balanced quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command successfully implements data exfiltration over IPv6 to bypass IPv4-centric monitoring, which fits the logic of using an alternative network medium as described.",
+        "combined_score": 5.0,
         "confidence": 1.0,
-        "timestamp": "2025-09-30T23:51:38.142640Z"
+        "timestamp": "2026-02-18T21:52:04.648282Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

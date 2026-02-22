@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T00:23:07.947457Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags, correct command separators, and appropriate use of command substitution.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command chaining via &&, valid scp flags, and a correctly structured command substitution using awk and cut to extract the wlan1 IP address.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1011 by first checking for the wlan1 interface and then using SCP to exfiltrate data over this secondary network medium with appropriate parameters including a non-standard port and explicit binding to the wlan1 interface.",
+        "semantic_justification": "The command accurately implements T1011 by first verifying wlan1 exists via iwconfig, then binding scp explicitly to the wlan1 interface IP using -o BindAddress to force exfiltration over the wireless medium rather than the primary network interface, transferring a realistic credential file (keys.db) to a remote host over a non-standard port (49288).",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T00:23:13.127111Z"
+        "timestamp": "2026-02-18T21:58:01.725286Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct command syntax, balanced quoting, valid flags, and proper command substitution for all components.",
+        "syntactic_justification": "The command is perfectly well-formed, using correct syntax for command substitution, pipes, SSH options, and redirection.",
         "semantic_score": 5,
-        "semantic_justification": "The command accurately executes the claimed intent by performing an SCP transfer over a non-standard port, explicitly binding the connection to the IP address of the `wlan1` interface, thereby using a specific wireless medium for exfiltration as described by T1011.",
+        "semantic_justification": "The command accurately implements T1011 by explicitly binding the exfiltration traffic to a specific wireless interface (wlan1) via the SSH BindAddress option.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:12:17.355306Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:58:03.527549Z"
       }
     ],
     "llm_average_syntactic": 5.0,

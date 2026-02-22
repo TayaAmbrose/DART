@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T00:08:37.417375Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, balanced quoting, valid flags for both tcpdump and netcat, and correct command separators.",
-        "semantic_score": 4,
-        "semantic_justification": "The command aligns well with T1011 by exfiltrating data over an InfiniBand network interface (ib0) which is a separate network medium, though the tcpdump portion is monitoring rather than exfiltrating and may be unnecessary for the technique.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T00:08:40.632779Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with valid use of nohup, background execution, redirection, and nc flags, though 'nc -s 10.0.0.10 10.0.0.20 56473' uses the -s flag (source address binding) which is valid in some nc implementations but not universally supported, making it slightly platform-dependent.",
+        "semantic_score": 3,
+        "semantic_justification": "While the use of InfiniBand IPoIB (ib0) as an alternative network medium aligns conceptually with T1011, the tcpdump writing to /dev/null serves no monitoring or exfiltration purpose (it silently discards captured packets), and the actual exfiltration via nc over ib0 is plausible but the tcpdump component is operationally meaningless, reducing overall semantic coherence.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:54:33.143832Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax for both nohup/tcpdump and nc, proper command separators, and valid flags.",
+        "syntactic_justification": "The command uses valid Bash syntax, including proper backgrounding with nohup/ampersand and correct tool flags for tcpdump and netcat.",
         "semantic_score": 4,
-        "semantic_justification": "The `nc` component perfectly aligns with T1011 by exfiltrating data over a distinct InfiniBand medium using an uncommon port, but the `tcpdump` component would likely fail due to insufficient privileges ('None'), thus not fully meeting the command's stated intent for self-observation.",
+        "semantic_justification": "The use of an InfiniBand interface for exfiltration perfectly matches T1011, though both tcpdump and nc -s typically require root privileges which contradicts the 'None' metadata.",
         "combined_score": 4.5,
         "confidence": 0.9,
-        "timestamp": "2025-10-01T00:09:07.020558Z"
+        "timestamp": "2026-02-18T21:54:36.653886Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

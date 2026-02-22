@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T01:30:00.485253Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators (&&), valid flags for iwconfig and rsync, and correct use of subshell execution for IP address extraction.",
+        "syntactic_justification": "The command is well-formed with balanced quotes and parentheses, proper use of &&, valid flag formats for iwconfig and rsync, and correct command substitution syntax for extracting the wlan2 IP address.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by first checking for the secondary network interface (wlan2), then using rsync over SSH bound specifically to that interface's IP address on a non-standard port (49222) to exfiltrate data to a remote server.",
+        "semantic_justification": "The command accurately implements T1011 by first verifying the wlan2 interface exists, then binding the SSH connection to the wlan2 IP address to force traffic over that separate Wi-Fi medium on a non-standard port (49222), and using rsync to exfiltrate a specific session file to a remote host, which is operationally plausible and fully aligned with the technique description.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T01:30:05.494220Z"
+        "timestamp": "2026-02-18T22:10:40.978578Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command separators, and proper command substitution.",
+        "syntactic_justification": "The command is perfectly well-formed, using valid shell expansion, pipe chaining, and correctly nested quotes for the SSH remote shell argument.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly executes exfiltration over a specified Wi-Fi interface by explicitly binding SSH to its IP address on a non-standard port, directly achieving T1011's objective of using an alternate network medium.",
+        "semantic_justification": "The command accurately implements T1011 by explicitly binding the exfiltration traffic to a specific wireless interface's IP address, ensuring data travels over a different medium than the default gateway.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:32:33.062320Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:10:44.527487Z"
       }
     ],
     "llm_average_syntactic": 5.0,

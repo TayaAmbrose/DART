@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T00:21:34.545745Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and brackets, proper semicolon separators, and valid Python syntax throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by exfiltrating data over IPv6 UDP (an alternate network medium) with a specific traffic class (0x2c) to a high port (49512), reading from a hidden file and sending it in chunks to avoid detection.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:21:37.482435Z"
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper semicolons, valid socket API calls, and correct IPv6 address tuple format (addr, port, flowinfo, scope_id).",
+        "semantic_score": 3,
+        "semantic_justification": "The command correctly reads a file and sends it via IPv6 UDP with a custom traffic class, which is operationally plausible for data exfiltration, but IPv6 over the same network interface does not constitute 'a different network medium' as T1011 requires (e.g., cellular, Bluetooth, or Wi-Fi when the primary channel is wired); it merely uses a different protocol layer on the same medium.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T21:57:44.074962Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with correct syntax, balanced delimiters, and valid function calls for socket operations and file handling.",
+        "syntactic_justification": "The Python command is perfectly formed, with balanced quotes, proper semicolon separators, and correct syntax for the socket and file operations.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the claimed intent, using IPv6 UDP to exfiltrate data in chunks, which is operationally plausible for the specified technique and environment.",
+        "semantic_justification": "The command accurately implements the described logic: it opens a file, initializes an IPv6 UDP socket with a specific traffic class, and transmits the data in chunks to a remote IPv6 address.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T00:21:48.034250Z"
+        "timestamp": "2026-02-18T21:57:51.392233Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

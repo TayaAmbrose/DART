@@ -27,29 +27,29 @@
         "timestamp": "2025-09-30T23:50:12.203416Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed Python code executed via the -c flag with properly balanced quotes, parentheses, and brackets, valid syntax for list comprehension, and proper string formatting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by using Scapy to exfiltrate data over Apple Wireless Direct Link (AWDL), an alternative wireless network medium separate from the primary network, with proper IPv6 addressing, chunking of the data file, and explicit interface specification.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T23:50:16.649380Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and parentheses, but the shell substitution `$(ipconfig getv6ifaddr awdl0)` embedded inside a Python `-c` string with mixed quoting creates a fragile construct that could break depending on the shell's handling of nested quotes and substitutions.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses scapy to craft IPv6/UDP packets over the AWDL interface (Apple Wireless Direct Link, an ad-hoc Wi-Fi medium), reads a file and chunks it for transmission, which aligns well with T1011 exfiltration over an alternate network medium; minor realism gaps include that AWDL link-local addressing and peer discovery are more complex in practice, and the destination address is hardcoded rather than dynamically discovered.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2026-02-18T21:51:45.412643Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 4,
-        "syntactic_justification": "The command is well-formed, with balanced quotes and parentheses, but includes an invalid `ipconfig` subcommand (`getv6ifaddr`) for macOS, which is a minor platform-specific syntactic error in the shell part.",
-        "semantic_score": 2,
-        "semantic_justification": "While conceptually aligned with T1011, the command is operationally infeasible due to the specified 'Privilege: None' (Scapy's `send()` requires root privileges on macOS) and the incorrect method for acquiring the AWDL IPv6 source address on the specified platform.",
-        "combined_score": 3.0,
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed Bash one-liner that correctly uses double quotes to allow shell expansion of the ipconfig command before passing the script to Python.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately targets the AWDL interface to exfiltrate data over a side-channel, though in practice Scapy requires root privileges to send raw packets on macOS.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-09-30T23:50:41.222917Z"
+        "timestamp": "2026-02-18T21:51:58.730311Z"
       }
     ],
     "llm_average_syntactic": 4.667,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.0,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

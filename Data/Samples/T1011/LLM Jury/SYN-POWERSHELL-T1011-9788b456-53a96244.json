@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T00:51:23.156195Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for the netsh advfirewall firewall add rule command, including correctly formatted parameters, balanced quotes, and valid flag formats.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by creating a firewall rule that enables exfiltration over an IPv6 network connection to a specific host and port, which could be used as an alternate network medium for data exfiltration.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:51:28.352368Z"
+        "syntactic_justification": "The netsh advfirewall command is perfectly well-formed with balanced quotes, valid flags (dir, action, enable, protocol, remoteport, remoteip, profile), and correct syntax for adding a firewall rule.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command correctly creates an outbound firewall rule allowing TCP egress to a specific IPv6 address and high port, it only removes a firewall barrier rather than performing actual exfiltration, and T1011 specifically involves exfiltration over alternate network mediums (cellular, Bluetooth, Wi-Fi) rather than standard IPv6 TCP connections which would more accurately map to T1048 (Exfiltration Over Alternative Protocol) or T1041; the IPv6 usage alone does not constitute an 'other network medium' as defined by T1011.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:03:00.589891Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced quotes, and valid flags for `netsh advfirewall`.",
-        "semantic_score": 2,
-        "semantic_justification": "The command correctly constructs a firewall rule, but it requires administrative privileges to execute, directly contradicting the stated 'Privilege: None' and making the claimed intent unachievable.",
-        "combined_score": 3.5,
+        "syntactic_justification": "The command follows the correct syntax for the netsh advfirewall utility with all necessary parameters and valid argument values.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively opens a firewall hole to facilitate exfiltration, though the provided metadata incorrectly claims no privileges are required when Administrator rights are necessary.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:18:52.872304Z"
+        "timestamp": "2026-02-18T22:03:03.659389Z"
       }
     ],
     "llm_average_syntactic": 5.0,

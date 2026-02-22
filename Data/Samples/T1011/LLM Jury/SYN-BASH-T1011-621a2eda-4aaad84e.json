@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T01:27:12.841874Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, balanced quoting, valid flags, and correct command separators.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command chaining via &&, valid process substitution with $(), correct awk and cut pipelines, and valid nc flags (-u for UDP, -w for timeout, -s for source address).",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by checking for a secondary WiFi interface (wlan1), determining its IP address, and using netcat to exfiltrate data over UDP to a specific destination on an uncommon port.",
+        "semantic_justification": "The command accurately implements T1011 by first verifying the secondary Wi-Fi interface (wlan1) exists via iwconfig, then extracting its IP address to use as the source for a UDP netcat transmission of a hidden binary file to an external host on an uncommon port, fully aligning with exfiltration over an alternate network medium.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:27:15.300145Z"
+        "confidence": 0.92,
+        "timestamp": "2026-02-18T22:10:02.980880Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, and correct command separators, ensuring it is parseable and executable.",
+        "syntactic_justification": "The command is perfectly formed with correct use of command substitution, piping, and standard flags for nc, awk, and cut.",
         "semantic_score": 5,
-        "semantic_justification": "The command effectively utilizes a secondary Wi-Fi interface (wlan1) for UDP exfiltration of a local file to an uncommon port, precisely matching the T1011 technique and its operational description under specified privileges.",
+        "semantic_justification": "The command accurately implements T1011 by identifying a specific wireless interface, extracting its IP to bind the source, and exfiltrating data via that secondary medium.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:31:26.345781Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:10:06.793137Z"
       }
     ],
     "llm_average_syntactic": 5.0,

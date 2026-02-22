@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T00:34:46.478919Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, backticks, parentheses, and braces, correct PowerShell syntax with proper variable declarations, and appropriate escape sequences for nested command execution.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper escaping of backtick-prefixed variables for WMIC/PowerShell nesting, balanced parentheses and braces, though the complex multi-level quoting and backtick escaping within the WMIC call create edge cases that could fail depending on shell interpretation.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by identifying a cellular network adapter, binding to its IP address, and exfiltrating a file over that medium to bypass monitoring on the primary network.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:34:50.839098Z"
+        "semantic_justification": "The command accurately implements T1011 by using WMIC to spawn a hidden PowerShell process that enumerates cellular network adapters via WMI, binds a TCP socket specifically to the cellular interface IP, reads a file from disk, and exfiltrates it over TCP to an external IP on a non-standard port, fully bypassing the primary corporate network path.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:00:04.152766Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct variable escaping using backticks for PowerShell within the WMIC string, balanced quotes/parentheses/braces, and valid PowerShell syntax.",
+        "syntactic_justification": "The command is well-formed with correctly escaped PowerShell variables (using backticks) for execution via WMIC and handles nested quotes and parentheses properly.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly implements the claimed exfiltration technique by correctly identifying, binding to, and utilizing a cellular network interface to transfer data via TCP, consistent with T1011.",
+        "semantic_justification": "The command accurately implements T1011 by identifying a cellular adapter, binding a TCP client specifically to that interface's IP to bypass the default gateway, and exfiltrating data.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:14:26.735918Z"
+        "timestamp": "2026-02-18T22:00:10.912974Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

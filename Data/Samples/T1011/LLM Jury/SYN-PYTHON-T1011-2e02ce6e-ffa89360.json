@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T00:13:43.143739Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax for importing modules, creating a socket, setting timeout, connecting, sending data, and closing the connection.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements T1011 by using AF_VSOCK (virtual socket) as an alternative network medium to the standard TCP/IP stack, successfully exfiltrating the /etc/hosts file to the host system via a channel that would bypass traditional network monitoring.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:13:51.586526Z"
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper semicolons as statement separators, and valid socket API calls.",
+        "semantic_score": 4,
+        "semantic_justification": "Using AF_VSOCK (VM sockets) to exfiltrate /etc/hosts to the hypervisor host (CID 2) is a legitimate alternative network medium outside the primary IP stack, aligning well with T1011, though vsock availability depends on kernel support and the hypervisor environment, and CID 2 is the conventional host CID making this operationally plausible.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T21:55:42.911936Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and valid Python syntax for socket operations.",
+        "syntactic_justification": "The Python command is well-formed with correctly balanced quotes, proper semicolon separators, and valid socket API calls.",
         "semantic_score": 5,
-        "semantic_justification": "The command correctly uses `AF_VSOCK` to send data over a virtual socket, which represents an 'other network medium' outside the primary IP stack, aligning perfectly with the intent of T1011 to exfiltrate data via an alternative communication channel, especially relevant in virtualized environments.",
+        "semantic_justification": "The command correctly utilizes the AF_VSOCK address family to communicate with the host (CID 2), effectively exfiltrating data through the hypervisor transport instead of the standard IP stack.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T00:14:00.645637Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:55:47.021768Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T00:43:25.259537Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags for both tar and netcat, and correct use of command substitution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements T1011 by compressing documents and exfiltrating them over a Bluetooth PAN network interface (alternative medium) using netcat bound to the Bluetooth interface's IP address.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:43:30.240855Z"
+        "syntactic_justification": "The command is well-formed with balanced quotes, parentheses, and braces, proper pipe operators, valid flags for tar (czf) and nc (-s), and a correctly structured command substitution using awk.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by extracting the Bluetooth PAN IP via networksetup, binding netcat to that interface with -s, and streaming a compressed archive to a remote host, though the -s flag behavior in netcat for source binding varies by implementation and the awk pattern '/IP address/' may not exactly match macOS networksetup output formatting.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:01:25.892736Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced quoting, valid flags for each utility, and proper use of command substitution and piping.",
+        "syntactic_justification": "The command uses valid bash syntax, correctly nested command substitution, and standard flags for tar, awk, and netcat.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the claimed intent and T1011 by accurately compressing data and attempting to exfiltrate it over the specified Bluetooth PAN interface via netcat, assuming the Bluetooth PAN is active and connected.",
+        "semantic_justification": "The command effectively forces exfiltration traffic through the Bluetooth PAN interface by binding the netcat source address to the interface's assigned IP, perfectly matching T1011.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:16:11.313362Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:01:27.507294Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

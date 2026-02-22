@@ -28,24 +28,24 @@
         "timestamp": "2025-09-30T23:48:28.711350Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax for importing modules, creating a socket, setting parameters, and sending data.",
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper string encoding, valid socket API calls, and correct command separators throughout.",
         "semantic_score": 4,
-        "semantic_justification": "The command correctly implements exfiltration over an alternative network medium (AF_VSOCK) as described in T1011, though it's limited to virtualization environments where VSOCK is available rather than truly separate physical mediums like cellular or Bluetooth.",
+        "semantic_justification": "The command correctly uses AF_VSOCK (a hypervisor/VM communication channel distinct from IP networking) to exfiltrate host and user identifiers to CID 4, which aligns well with T1011's concept of using an alternative network medium, though AF_VSOCK is a VM-to-hypervisor channel rather than a traditional alternative network medium like cellular or Bluetooth, making it a creative but slightly non-canonical implementation of the technique.",
         "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-09-30T23:48:31.818921Z"
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T21:51:30.768475Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid Python syntax for imports, socket operations, string manipulation, and includes balanced quotes and parentheses.",
+        "syntactic_justification": "The Python code is perfectly formed, uses correct socket constants for Linux, and maintains balanced quoting and parentheses.",
         "semantic_score": 5,
-        "semantic_justification": "The command correctly uses `AF_VSOCK` to establish communication on a non-traditional network medium, precisely aligning with T1011's intent to exfiltrate data via channels distinct from standard IP networks, in this case, between a VM and its host (CID 4).",
+        "semantic_justification": "The command correctly utilizes AF_VSOCK to communicate over the hypervisor's backplane, effectively bypassing standard IP-based network monitoring as described in MITRE ATT&CK T1011.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-09-30T23:48:40.443054Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:51:32.303000Z"
       }
     ],
     "llm_average_syntactic": 5.0,

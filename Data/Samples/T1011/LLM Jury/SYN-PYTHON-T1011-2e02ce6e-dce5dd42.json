@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T00:56:16.569621Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper quotes, valid socket operations, and correct exception handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1011 by using AF_VSOCK socket communication to exfiltrate data over a non-standard network medium (VMCI/virtio-vsock) that bypasses traditional network monitoring.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:56:20.890955Z"
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper semicolon separators, correct string quoting, and valid socket API calls.",
+        "semantic_score": 4,
+        "semantic_justification": "AF_VSOCK (virtio-vsock) does bypass the traditional IP network stack by using a guest-to-host communication channel, which aligns well with T1011's concept of exfiltrating over an alternative network medium, though vsock is more of a hypervisor communication channel than a distinct external network medium like cellular or Bluetooth, making it a reasonable but slightly imperfect fit for T1011.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:03:51.054137Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed, with balanced quotes and parentheses, valid Python syntax for socket operations, and correct command-line invocation.",
+        "syntactic_justification": "The command is a perfectly well-formed Python one-liner with correctly balanced parentheses, quotes, and valid socket API calls.",
         "semantic_score": 5,
-        "semantic_justification": "The command correctly utilizes `AF_VSOCK` to establish a connection to the hypervisor (CID 2) and exfiltrate data from `/etc/hostname`, perfectly aligning with T1011's 'Exfiltration Over Other Network Medium' by bypassing traditional IP networks.",
+        "semantic_justification": "The command accurately uses the AF_VSOCK address family to communicate with the host (CID 2), effectively bypassing the standard TCP/IP stack for exfiltration as described in T1011.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:20:45.292290Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:03:52.586691Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

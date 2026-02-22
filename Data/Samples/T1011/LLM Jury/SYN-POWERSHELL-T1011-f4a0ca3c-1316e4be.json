@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T00:24:21.418804Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid PowerShell syntax for variable assignment, pipeline operations, and method calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1011 technique by establishing a Bluetooth PAN connection to a specific device, configuring a dedicated IP subnet for that connection, collecting environment variables, encoding them as base64, and exfiltrating the data over UDP through the Bluetooth medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:25:04.062855Z"
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper semicolon separators, valid .NET method calls, correct string interpolation, and no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by connecting via Bluetooth PAN, assigning a static IP to the Bluetooth network adapter, encoding environment variables in base64, and exfiltrating via UDP over the Bluetooth subnet, though BluetoothCL.exe is a third-party tool that may not reliably establish a NAP connection this way, and the privilege claim of 'None' is unrealistic since configuring network interfaces and connecting Bluetooth devices typically requires elevated privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:58:08.255822Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with correct syntax for external commands, cmdlets, variable assignments, .NET object instantiation, and method calls.",
-        "semantic_score": 3,
-        "semantic_justification": "While the overall design aligns with the technique, the `netsh` command requires elevated privileges to configure network adapters, meaning the command will fail to 'ensure all traffic uses the alternate Bluetooth medium' as claimed under the specified 'Privilege: None' condition.",
-        "combined_score": 4.0,
+        "syntactic_justification": "The command utilizes correct PowerShell syntax, properly handles object properties, and correctly uses semicolons as statement separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic effectively implements exfiltration over Bluetooth (T1011), though the command incorrectly specifies \"None\" for privileges despite using netsh, which requires administrative rights.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:12:41.110829Z"
+        "timestamp": "2026-02-18T21:58:13.460784Z"
       }
     ],
     "llm_average_syntactic": 5.0,

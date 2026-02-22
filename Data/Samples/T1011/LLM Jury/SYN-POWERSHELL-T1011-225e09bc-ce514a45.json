@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T00:12:19.171861Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced parentheses, correct variable assignments, error handling with -ErrorAction, and proper command chaining using semicolons.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper semicolon separators, correct variable interpolation in the ArgumentList string, and valid cmdlet syntax throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by identifying a Wi-Fi Direct adapter, obtaining its IP address, and using iperf3 to exfiltrate data over this alternative network medium while hiding the process window.",
+        "semantic_justification": "The command correctly identifies the Wi-Fi Direct virtual adapter, extracts its IPv4 address, and binds iperf3 to that specific interface to exfiltrate data over a peer-to-peer Wi-Fi Direct link separate from the primary network, which is a precise and operationally plausible implementation of T1011.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:12:25.021846Z"
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T21:55:05.298194Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell cmdlet syntax, variable assignments, property access, and argument list formatting for Start-Process.",
+        "syntactic_justification": "The command uses proper PowerShell syntax, correct variable assignments, and well-formed cmdlet calls with balanced quoting.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by explicitly identifying the Wi-Fi Direct adapter, binding iperf3 to its IP address, and initiating traffic over this alternative network medium, which is operationally plausible for exfiltration simulation.",
+        "semantic_justification": "The command accurately identifies a specific network interface and forces a network tool to bind to that interface's IP, effectively routing traffic over an alternative medium as described in T1011.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T00:12:36.587290Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:55:08.952356Z"
       }
     ],
     "llm_average_syntactic": 5.0,

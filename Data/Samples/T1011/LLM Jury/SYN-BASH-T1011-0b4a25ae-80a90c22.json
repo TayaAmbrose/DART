@@ -28,29 +28,29 @@
         "timestamp": "2025-09-30T22:54:46.956489Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators (&&, |), valid flags for all tools used (airport, networksetup, tar, openssl, nc), and proper piping between commands.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1011 by disconnecting from the current Wi-Fi network, connecting to an alternate network (staging-149), compressing and base64-encoding configuration files, and exfiltrating them line-by-line over IPv6 to a specific receiver on that alternate network medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T22:54:51.280743Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper separators, and valid flag usage, though the `while read -r l` loop piped from `openssl base64 -A` output is slightly awkward since `-A` produces a single line, making the loop functionally iterate only once, but it is syntactically parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by disassociating from the current Wi-Fi network, joining a separate SSID, and exfiltrating base64-encoded tar data over IPv6 link-local to a high port via netcat, though the use of `openssl base64 -A` (no-wrap single line) combined with a line-by-line read loop undermines the stated goal of chunked transmission, slightly reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:50:25.454685Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid Bash syntax, balanced quoting, appropriate command separators, and generally correct flag formats for the specified tools on macOS.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command correctly uses `networksetup` to switch Wi-Fi networks and `nc` for exfiltration, the `airport -z` command does not perform its claimed function on modern macOS, and `openssl base64 -A` negates the 'line-by-line' transfer and 'reducing burst signatures' intent by outputting a single long string.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-09-30T22:55:19.098723Z"
+        "syntactic_justification": "The command is well-formed with correct use of pipes, logical operators, and macOS-specific utility paths.",
+        "semantic_score": 4,
+        "semantic_justification": "The command successfully switches network interfaces to exfiltrate data; however, using 'openssl base64 -A' outputs a single line, making the 'while read' loop redundant as it sends the entire payload in one iteration.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:50:29.910648Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

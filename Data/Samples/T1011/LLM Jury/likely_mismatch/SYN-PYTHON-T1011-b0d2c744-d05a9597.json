@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Python",
+  "command": "[withheld \u2014 non-actionable: would open an IPv6 TCP socket (AF_INET6) scoped to a link-local interface and transmit base64-encoded file data to a high, uncommon port]",
+  "explanation": "Conceptually demonstrates T1011 by using an alternate network medium (IPv6 link-local) instead of the likely primary IPv4/HTTPS channel to exfiltrate data in base64 form over TCP to a non-standard port.",
+  "rationale_steps": [
+    "Select IPv6 link-local as the medium distinct from primary IPv4",
+    "Base64-encode the target data to avoid binary anomalies",
+    "Open AF_INET6/SOCK_STREAM and connect using a scope ID for the specific interface",
+    "Send data to a high-numbered, uncommon TCP port",
+    "Close the socket"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1011-b0d2c744-d05a9597",
+  "source_prompt_hash": "b0d2c744",
+  "timestamp_utc": "2025-09-30T08:42:48.649618Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "No executable command is provided\u2014only a conceptual description\u2014so it is not parseable or runnable as-is.",
+        "semantic_score": 2,
+        "semantic_justification": "While using a Python IPv6 link-local TCP socket to send base64 data is operationally feasible, it does not constitute a different network medium per T1011 (e.g., cellular or Bluetooth) and would also require a scope ID on Windows.",
+        "combined_score": 1.5,
+        "confidence": 0.72,
+        "timestamp": "2025-10-01T00:20:42.420564Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is explicitly withheld and described only conceptually, so no actual syntax can be evaluated \u2014 it is a description of intent rather than a runnable command.",
+        "semantic_score": 3,
+        "semantic_justification": "The described concept (IPv6 link-local socket transmitting base64-encoded data to a non-standard port) is plausible as an alternate-medium exfiltration technique, but IPv6 link-local is a layer-3 protocol on the same physical interface rather than a truly different network medium (e.g., Bluetooth, cellular, Wi-Fi), making it only a partial match for T1011's core premise.",
+        "combined_score": 2.0,
+        "confidence": 0.6,
+        "timestamp": "2026-02-18T21:57:21.655941Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The described Python implementation correctly identifies the necessary components\u2014AF_INET6, scope IDs for link-local addresses, and base64 encoding\u2014which are syntactically valid in Python's socket library.",
+        "semantic_score": 4,
+        "semantic_justification": "The command is operationally sound for data exfiltration; however, IPv6 link-local is more accurately categorized as an alternate protocol (T1048) rather than an alternate physical medium (T1011).",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:57:39.875290Z"
+      }
+    ],
+    "llm_average_syntactic": 2.333,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 2.667,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

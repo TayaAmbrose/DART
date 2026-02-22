@@ -26,29 +26,29 @@
         "timestamp": "2025-09-30T23:39:43.387694Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper variable assignments, correct PowerShell syntax for conversion and file operations, and valid ncat parameters.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully aligns with T1011 by exfiltrating data over IPv6 with TLS encryption on a non-standard port (60443), effectively using an alternative network medium that would bypass monitoring focused on standard corporate IPv4/HTTP traffic.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T23:39:46.426360Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced brackets and valid semicolon separation, though piping a string directly to ncat.exe via the pipeline is unconventional and may not work as intended since ncat reads from stdin but PowerShell string piping behavior can vary.",
+        "semantic_score": 3,
+        "semantic_justification": "While the intent to exfiltrate Base64-encoded file data over an encrypted IPv6 connection using ncat aligns broadly with T1011, the technique specifically refers to using a *different network medium* (e.g., cellular, Bluetooth, Wi-Fi vs. wired), whereas this command simply uses IPv6 over what is likely the same physical network medium, making it a better fit for T1048 (Exfiltration Over Alternative Protocol) than T1011.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:49:44.905668Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell variable assignment, .NET method calls, and command piping are perfectly well-formed, and all `ncat.exe` arguments are valid.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely executes the described T1011 technique by Base64 encoding a file and exfiltrating it via `ncat` over an IPv6 TLS connection to a non-standard port, representing a distinct network medium.",
-        "combined_score": 5.0,
+        "syntactic_justification": "The PowerShell syntax and ncat flags are correctly formatted and use proper command separation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command successfully exfiltrates data via IPv6/TLS, though IPv6 is technically a different protocol layer rather than a strictly 'other network medium' like Bluetooth or Cellular as described in T1011.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-09-30T23:39:58.738032Z"
+        "timestamp": "2026-02-18T21:49:49.926834Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.0,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

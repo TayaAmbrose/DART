@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T01:16:46.766859Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper variable declarations, correct method calls, and appropriate pipeline operators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively implements exfiltration over an alternative network medium by encoding file data into ICMPv6 packet sizes and transmitting to IPv6 addresses, which aligns perfectly with T1011 technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:16:53.114707Z"
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper semicolons as separators, valid variable assignments, correct use of .NET static methods, and valid PowerShell cmdlet flags including -IPv6 and -BufferSize.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a covert channel by encoding nibbles of each byte as ICMPv6 ping buffer sizes to two distinct IPv6 endpoints, which is a plausible steganographic exfiltration technique; however, the -IPv6 flag for Test-Connection and the assumption that fd00::/8 unique-local addresses are reachable alternate-medium endpoints slightly reduces operational realism, and the technique description emphasizes alternate physical mediums (cellular/Wi-Fi/Bluetooth) rather than just IPv6 over the same network.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:07:58.882758Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed, using valid cmdlet syntax, variable assignments, loop structure, bitwise operators, and correct parameter usage for Test-Connection.",
-        "semantic_score": 5,
-        "semantic_justification": "The command accurately implements the claimed intent by reading a file, encoding each byte into nibbles via ICMPv6 payload sizes, and sending them to specified endpoints, which constitutes a plausible exfiltration mechanism compatible with the T1011 'alternate medium' context if the network routing is configured appropriately.",
-        "combined_score": 5.0,
+        "syntactic_justification": "The command is perfectly well-formed PowerShell, using correct variable assignments, .NET method calls for file reading, bitwise operators, and valid Test-Connection parameters.",
+        "semantic_score": 4,
+        "semantic_justification": "The command successfully implements a data exfiltration side-channel by encoding file nibbles into ICMPv6 packet sizes; however, this is technically more aligned with T1048 (Exfiltration Over Alternative Protocol) than T1011 (Other Network Medium) unless the IPv6 addresses are specifically routed over a secondary physical interface.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:28:14.850545Z"
+        "timestamp": "2026-02-18T22:08:03.569396Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

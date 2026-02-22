@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T00:31:40.156288Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flag formats, and correct Python syntax within the embedded script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by validating a secondary wireless interface (wlan2) and using it to exfiltrate data via UDP to a remote server over a network medium separate from the primary connection.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:31:44.423293Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and parentheses, valid use of &&, and proper Python one-liner structure, though the environment variable IF set outside the Python subprocess may not propagate correctly into os.environ within the python3 -c invocation without explicit export.",
+        "semantic_score": 4,
+        "semantic_justification": "The command credibly implements T1011 by binding a UDP socket to the wlan2 interface IP and sending a file over that distinct Wi-Fi medium, though the reliance on os.environ['IF'] inside Python (without export) and the lack of explicit interface binding at the socket level (relying solely on source IP) introduce minor realism gaps.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:59:39.887307Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flag formats, and no impossible constructs.",
-        "semantic_score": 5,
-        "semantic_justification": "The command flawlessly achieves its claimed intent by validating a Wi-Fi interface, binding a UDP sender to its specific IP, and exfiltrating data, directly aligning with T1011's 'Exfiltration Over Other Network Medium' using Wi-Fi.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T06:13:57.480494Z"
+        "syntactic_justification": "The command is perfectly well-formed with correct use of shell separators, Python syntax, and nested quoting.",
+        "semantic_score": 4,
+        "semantic_justification": "The command logic is highly effective for T1011 (forcing exfiltration over a specific Wi-Fi interface), but it will likely fail at runtime because the shell variable 'IF' is not exported to the Python environment.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:59:50.084884Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.0,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

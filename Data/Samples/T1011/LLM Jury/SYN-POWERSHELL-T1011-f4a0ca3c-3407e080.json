@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T00:44:49.920497Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid PowerShell syntax for variable assignments, method calls, and piping operations.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper semicolon separators, correct .NET object instantiation syntax, and valid piping constructs throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1011 technique by establishing a Bluetooth connection, configuring the network interface, reading a file, and exfiltrating it over the Bluetooth medium using TCP.",
+        "semantic_justification": "The command precisely implements T1011 by connecting to a Bluetooth NAP device via MAC address, dynamically identifying and configuring the Bluetooth PAN network interface with a static IP, reading a target file, base64-encoding it, and exfiltrating it over a TCP connection bound specifically to the Bluetooth interface IP \u2014 fully leveraging an alternate network medium for exfiltration.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:44:52.808861Z"
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:01:52.299348Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct Powershell syntax, balanced constructs, and valid command separators throughout.",
-        "semantic_score": 3,
-        "semantic_justification": "The command logically attempts to exfiltrate data via a configured Bluetooth network, aligning well with T1011; however, the 'netsh' command requires administrator privileges, contradicting the stated 'Privilege: None' and rendering it inoperable as described.",
-        "combined_score": 4.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T06:16:56.172131Z"
+        "syntactic_justification": "The command is perfectly formed PowerShell with correct use of semicolons, .NET classes, and variable interpolation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates exfiltration over Bluetooth as described, though the use of netsh to set a static IP address requires administrative privileges, which contradicts the 'None' privilege level provided in the metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:01:56.843333Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T01:13:38.094165Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for iwconfig and wget, correct command chaining with && operator, and proper use of command substitution.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command chaining via &&, valid command substitution using $(), correct flag formats for iwconfig and wget, and proper pipe/awk/cut usage.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by first checking if wlan1 exists, then using wget to exfiltrate data over the secondary wireless interface (wlan1) to an external server on an uncommon port, effectively implementing exfiltration over an alternative network medium.",
+        "semantic_justification": "The command correctly implements T1011 by first verifying wlan1 exists via iwconfig, then dynamically extracting the wlan1 IP address to bind wget's outbound connection, forcing the HTTP POST of a local file to an external server exclusively over the secondary Wi-Fi interface rather than the primary network medium.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T01:13:44.001705Z"
+        "timestamp": "2026-02-18T22:07:04.510688Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced syntax, valid flags for all tools, and correct command substitution.",
+        "syntactic_justification": "The command uses valid Linux utilities, correct subshell syntax, and properly formatted wget flags without any syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by explicitly binding the `wget` connection to the `wlan1` interface's IP address to exfiltrate data, directly aligning with the T1011 technique.",
+        "semantic_justification": "The command successfully achieves the technique by dynamically identifying the IP of a specific wireless interface and forcing data exfiltration through that interface via the wget --bind-address flag.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:26:42.824810Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:07:07.353827Z"
       }
     ],
     "llm_average_syntactic": 5.0,

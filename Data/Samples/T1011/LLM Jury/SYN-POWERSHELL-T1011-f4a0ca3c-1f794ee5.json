@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T01:40:13.339392Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid PowerShell syntax, and appropriate use of variables and pipeline operations.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper semicolon separators, valid .NET method calls, correct string interpolation, and no syntax errors throughout the pipeline.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1011 technique by establishing a Bluetooth PAN connection, configuring network settings, and exfiltrating base64-encoded file data over the Bluetooth medium using TCP.",
+        "semantic_justification": "The command precisely implements T1011 by connecting a Bluetooth PAN adapter, assigning a static IP, pinning a host route to force traffic over the Bluetooth interface, reading and base64-encoding a file, then exfiltrating it via a TCP socket explicitly bound to the Bluetooth interface address \u2014 fully consistent with exfiltration over an alternate network medium.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:40:16.170514Z"
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:12:11.668338Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for external commands, cmdlets, .NET calls, variable assignment, and statement separators.",
-        "semantic_score": 3,
-        "semantic_justification": "The command's operational feasibility is significantly hampered as `netsh interface ip set address` and `route add` require Administrator privileges, directly contradicting the stated 'Privilege: None' and preventing the critical network configuration steps from completing, thus failing to achieve the claimed intent fully, although the overall logic for T1011 is sound.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T06:34:53.735805Z"
+        "syntactic_justification": "The command uses valid PowerShell syntax, correctly handles object properties, and properly sequences operations with semicolons.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly implements exfiltration over Bluetooth PAN, though the command requires administrative privileges to modify networking settings which contradicts the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:12:16.616115Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T00:59:15.911669Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command substitution, valid curl flags, and correct use of awk for parsing the network interface information.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes and parentheses, valid curl flags (--interface, --header, --data-binary), proper command substitution using $(), and correct awk syntax.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by binding curl to the iPhone USB interface (cellular connection) to exfiltrate the macOS keychain database over a secondary network medium, bypassing potential monitoring on the primary network.",
+        "semantic_justification": "The command accurately implements T1011 by using networksetup to retrieve the iPhone USB tethering interface IP, binding curl to that cellular-backed interface via --interface to exfiltrate the macOS login keychain over HTTP to an external server, bypassing the primary monitored network medium.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:59:18.986665Z"
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T22:04:22.307027Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command substitution, and proper Bash syntax.",
+        "syntactic_justification": "The command uses well-formed bash syntax, correct subshell nesting, proper quoting, and valid curl flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by using `curl` to exfiltrate a sensitive keychain file, binding to the IP address of the iPhone USB interface (a non-primary network medium) as described by T1011.",
+        "semantic_justification": "The command accurately leverages macOS-specific tools to identify a secondary network interface and forces data exfiltration through it, perfectly matching T1011.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:21:31.799347Z"
+        "timestamp": "2026-02-18T22:04:25.288801Z"
       }
     ],
     "llm_average_syntactic": 5.0,

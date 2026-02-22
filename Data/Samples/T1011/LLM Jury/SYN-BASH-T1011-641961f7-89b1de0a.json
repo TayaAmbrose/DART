@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T00:38:12.001320Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators (pipes), valid flags for all tools used, and correct subcommand structure with the command substitution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1011 by gathering system information (sysctl -a), compressing it (gzip -c), and exfiltrating it over a Bluetooth PAN network interface (using networksetup to get the Bluetooth IP) to a remote server via netcat, which is a realistic implementation of exfiltration over an alternative network medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:38:16.031362Z"
+        "syntactic_justification": "The command is well-formed with balanced quotes and parentheses, valid pipe operators, proper command substitution using $(), and correct flag usage throughout all tools (sysctl -a, gzip -c, nc -s).",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly captures system info, compresses it, and uses nc's -s flag to bind to the Bluetooth PAN interface IP (extracted via networksetup and awk), which is a plausible macOS-specific method to exfiltrate over Bluetooth PAN matching T1011, though the -s flag binds the source address rather than strictly forcing routing over the Bluetooth interface, making it a minor realism gap if other routes exist.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:00:37.436122Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid pipes, correct command substitution, and proper use of flags for all utilities.",
+        "syntactic_justification": "The command uses valid Bash syntax, correctly nested command substitutions, and standard flags for the macOS versions of netcat and networksetup.",
         "semantic_score": 5,
-        "semantic_justification": "The command semantically achieves the claimed intent by gathering and compressing system information, then attempting to exfiltrate it via netcat explicitly bound to the dynamically retrieved IP address of the 'Bluetooth PAN' interface, which directly aligns with T1011 'Exfiltration Over Other Network Medium'.",
+        "semantic_justification": "The command effectively forces exfiltration over the Bluetooth PAN interface by binding netcat to its specific IP address, perfectly aligning with the T1011 technique.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T00:38:30.568084Z"
+        "timestamp": "2026-02-18T22:00:38.206299Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

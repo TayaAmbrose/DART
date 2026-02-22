@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T01:02:56.326362Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced parentheses, correct variable assignments, error handling with -ErrorAction, and proper command chaining using semicolons.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, proper semicolons as statement separators, correct cmdlet syntax, valid variable interpolation, and properly structured Start-Process arguments.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1011 by identifying the Bluetooth network adapter, obtaining its IP address, and using iperf3 to exfiltrate data over this alternate network medium on an uncommon UDP port (55222) in a hidden window.",
+        "semantic_justification": "The command accurately implements T1011 by enumerating the Bluetooth Network Connection adapter, extracting its IPv4 address, and binding iperf3 to that interface for UDP traffic over a non-standard port to an external host, precisely leveraging Bluetooth as an alternate exfiltration medium.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:03:00.849683Z"
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T22:04:59.168707Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed, uses correct cmdlet syntax, variable assignments, property access, and `Start-Process` with a properly formatted `ArgumentList` for the external executable.",
+        "syntactic_justification": "The command uses standard PowerShell syntax for variable assignment, cmdlet execution, and process starting with correct interpolation.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the claimed intent by identifying a Bluetooth network adapter, retrieving its IP, and then using `iperf3` to send UDP traffic bound specifically to that Bluetooth interface's IP, effectively leveraging Bluetooth as an alternate medium for simulated exfiltration as described in T1011.",
+        "semantic_justification": "The command accurately identifies the Bluetooth adapter, extracts its IP, and binds a network tool to that specific interface to transmit data over an alternative medium.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:22:48.593974Z"
+        "timestamp": "2026-02-18T22:05:01.717681Z"
       }
     ],
     "llm_average_syntactic": 5.0,
