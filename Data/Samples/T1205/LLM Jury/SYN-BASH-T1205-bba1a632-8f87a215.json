@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T18:40:30.212711Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced quotes, valid pipes, and appropriate flags for all commands.",
+        "syntactic_justification": "The command uses standard Linux utilities with correct flags, balanced quoting, and valid pipe sequences.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely executes the described intent of encoding a control string and sending it as a covert UDP signal, perfectly aligning with the T1205 Traffic Signaling technique and using appropriate tools and arguments.",
+        "semantic_justification": "The command effectively demonstrates traffic signaling by sending an encoded trigger string via a UDP packet to a specific port, matching the described intent and technique.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T18:40:39.022953Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:06:43.747339Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for all tools used (echo -n, base64 -w0, nc -u -w1), and correct command chaining via pipes.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by encoding a control message ('OPEN:8080') with base64 and transmitting it via UDP to port 40000, which could trigger a listening backdoor to open port 8080 as described.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:29:55.274043Z"
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid pipe chaining, and correct flags for echo (-n), base64 (-w0), and nc (-u -w1) with proper argument ordering.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a covert UDP signaling mechanism consistent with T1205 by encoding a control string in base64 and transmitting it to a specific host/port, though the effectiveness depends entirely on a pre-configured listener that interprets this magic string to open a port, which is plausible but the base64 encoding adds minimal obfuscation and the 'OPEN:8080' plaintext signal would be trivially readable after decoding.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T04:06:43.986980Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

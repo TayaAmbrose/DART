@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid flag formats, and appropriate error handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1568 Dynamic Resolution technique by generating date-seeded DGA domains, resolving them, establishing a port proxy to the resolved IP, configuring the firewall, and creating a C2 beacon - all operational steps are correctly implemented.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T05:03:50.386616Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct PowerShell syntax, balanced elements, and valid command usage for both PowerShell cmdlets and external `netsh` calls.",
-        "semantic_score": 3,
-        "semantic_justification": "The DGA domain generation and DNS resolution are semantically correct for T1568; however, the `netsh` commands for port proxy and firewall rule creation require Administrator privileges, which contradicts the stated 'Privilege: None', thus preventing the full claimed intent of setting up the proxy and beaconing via it from being achieved.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T05:04:13.347214Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell syntax is well-formed with balanced delimiters, valid cmdlets/arguments, and proper command separators and redirection.",
@@ -44,11 +24,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T05:04:36.861124Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced quotes, braces, and parentheses, proper use of semicolons as separators, valid cmdlet syntax for Resolve-DnsName, netsh, and Invoke-WebRequest, and correct pipeline and foreach constructs throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 by generating a date-seeded DGA domain list (svc1-20+date+.net), resolving each until an A record is found, dynamically updating a local portproxy to route traffic to the resolved C2 IP on port 443, adding a firewall rule to permit the proxy port, and beaconing with host identification headers \u2014 fully aligning with dynamic resolution, endpoint rotation, and C2 beaconing behaviors described in the technique.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:17:05.879168Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed, using correct syntax for loops, try-catch blocks, variable assignments, and cmdlets.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a DGA and C2 redirection logic, though the use of 'netsh' and firewall modifications requires administrative privileges, which contradicts the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:17:09.287421Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

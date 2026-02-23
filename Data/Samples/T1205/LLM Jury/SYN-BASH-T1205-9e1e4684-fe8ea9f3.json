@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T12:59:53.820303Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, balanced quotes, valid flags for nc and ssh, and correct command separators.",
+        "syntactic_justification": "The command is perfectly well-formed with a valid for loop, proper semicolons, correct nc flags (-u -z -w1), balanced quotes, and a valid && chained SSH command.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending a sequence of UDP port knocks to signal a remote system before attempting an SSH connection, exactly matching the T1205 technique description.",
+        "semantic_justification": "The command accurately implements UDP port knocking (a classic T1205 traffic signaling technique) by sending ordered UDP probes to three high ports with 1-second intervals, then immediately connecting via SSH on the expected unlocked port, which is operationally realistic and aligns precisely with how knock daemons work.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T12:59:56.340254Z"
+        "timestamp": "2026-02-19T03:42:38.118441Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct loop syntax, valid `netcat` and `ssh` flags, proper command separators, and balanced quoting.",
+        "syntactic_justification": "The command uses a perfectly formed Bash loop, valid netcat flags for UDP scanning, and correct logical operators to sequence the SSH connection.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of sending a timed sequence of UDP port knocks to signal a remote service, directly aligning with the Traffic Signaling (T1205) technique by using protocol fields and timing patterns to trigger an action.",
+        "semantic_justification": "The command accurately implements a classic port knocking sequence to signal a remote firewall to open a specific port, perfectly aligning with T1205.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T13:00:06.686227Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:42:38.524858Z"
       }
     ],
     "llm_average_syntactic": 5.0,

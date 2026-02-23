@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T09:07:10.136850Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper use of mkdir -p for directory creation, balanced quotes, correct path references, and proper command chaining with &&.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of && for chaining, valid flags (-p for mkdir, -Rp for cp), and correct variable expansion with $HOME.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 (Exfiltration Over Physical Medium) by copying Apple Mail data to a hidden directory on an external volume named 'PRIVATE', making it ready for physical exfiltration.",
+        "semantic_justification": "The command accurately implements T1052 by creating a hidden directory (dot-prefixed .mail) on a mounted USB volume (/Volumes/PRIVATE/) and recursively copying Apple Mail data from the correct macOS container path, fully aligning with physical medium exfiltration of email data.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T09:07:13.221838Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:38:15.145558Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for both `mkdir` and `cp`, and correct command separators.",
+        "syntactic_justification": "The command uses standard Bash syntax, correct flags for mkdir and cp, and properly handles paths with quotes and environment variables.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by correctly locating Apple Mail data and copying it recursively to a hidden directory on a simulated USB device, fully aligning with Exfiltration Over Physical Medium (T1052).",
+        "semantic_justification": "The command accurately targets a standard macOS mail storage path and utilizes a typical external volume mount point to perform exfiltration as described in T1052.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T09:07:20.950281Z"
+        "timestamp": "2026-02-18T22:38:17.798869Z"
       }
     ],
     "llm_average_syntactic": 5.0,

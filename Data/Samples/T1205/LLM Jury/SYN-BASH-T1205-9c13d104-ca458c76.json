@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T12:55:03.129637Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper variable usage, balanced quotes, valid flags for nc, and correct command separators.",
+        "syntactic_justification": "The command is perfectly well-formed with a valid bash for loop, proper variable quoting, correct nc flags (-z for zero-I/O scan mode, -w1 for timeout), valid semicolons as separators, and balanced structure throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command implements a port-knocking sequence using netcat to send TCP SYN packets to specific ports in sequence, which aligns perfectly with the Traffic Signaling technique for triggering remote actions based on network traffic patterns.",
+        "semantic_justification": "The command accurately implements a TCP port-knock sequence (a classic T1205 traffic signaling technique) by sending sequential SYN packets to ports 2222, 3333, 4444 with brief delays, which is precisely how port-knocking daemons (e.g., knockd) are triggered to dynamically alter firewall rules on the remote host.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T12:55:05.893659Z"
+        "timestamp": "2026-02-19T03:42:02.483124Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses correct Bash loop syntax, valid `nc` flags, and proper command separators.",
+        "syntactic_justification": "The command uses standard Bash loop syntax and valid Netcat flags that are well-formed and parseable.",
         "semantic_score": 5,
-        "semantic_justification": "The command accurately implements a TCP SYN-based port-knock sequence using `netcat`, which precisely aligns with the T1205 Traffic Signaling technique to trigger remote actions.",
+        "semantic_justification": "The command perfectly implements a sequential TCP port-knock pattern, which is a classic example of Traffic Signaling (T1205).",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T12:55:16.464708Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:42:02.516278Z"
       }
     ],
     "llm_average_syntactic": 5.0,

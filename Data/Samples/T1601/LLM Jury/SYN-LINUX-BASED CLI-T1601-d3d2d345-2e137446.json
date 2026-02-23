@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper echo statement syntax, semicolon separator, and valid ONIE command structure with the -y flag and a properly formatted file path.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) as it uses the legitimate ONIE tooling to install a malicious network operating system image, effectively replacing the system firmware with a compromised version.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T20:10:58.292533Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using standard Linux syntax for command separation, string quoting, and valid command-line arguments for both `echo` and `onie-nos-install`.",
-        "semantic_score": 5,
-        "semantic_justification": "The `onie-nos-install` command is precisely the tool used on ONIE-enabled network devices to replace the existing Network Operating System, directly fulfilling the T1601 technique of modifying a system image by replacing it with a malicious one.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T20:11:09.036951Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quotes and a proper command separator make it shell-parseable, with flags in valid format.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.6,
         "timestamp": "2025-10-02T20:11:57.315577Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid semicolon separator, and proper flag usage for the onie-nos-install tool.",
+        "semantic_score": 4,
+        "semantic_justification": "ONIE (Open Network Install Environment) is a legitimate bootloader/installer framework used on bare-metal switches for NOS installation, making this a realistic and operationally plausible method for T1601 firmware replacement, though in practice ONIE is typically invoked at boot time rather than from a running OS CLI, and the '-y' flag may not be a standard onie-nos-install option.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2026-02-19T01:27:11.691877Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard shell syntax with a valid command separator and properly quoted strings.",
+        "semantic_score": 5,
+        "semantic_justification": "The onie-nos-install command is the standard utility for installing or replacing a Network Operating System on ONIE-compliant hardware, directly achieving the technique's goal.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:27:12.203718Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

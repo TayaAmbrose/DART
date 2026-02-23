@@ -19,26 +19,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper flag formats, valid JSON structure in the data payload, and appropriate use of environment variables and output redirection.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying the non-public Crunchbase API with an authentication key to gather intelligence about organizations associated with a target domain, capturing exactly the technique described.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:01:37.286488Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid curl flags, and properly formatted JSON data and write-out strings.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of querying a 'closed-source' Crunchbase Pro API for organizational intelligence, directly aligning with MITRE ATT&CK T1597.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:01:45.772349Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command is well-formed with balanced quoting, valid curl flags, correctly quoted JSON payload and -w format string, and proper redirections.",
@@ -47,6 +27,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T12:02:15.999369Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes and braces, valid curl flags, proper JSON payload escaping, and correct output redirection syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying Crunchbase's paid/closed API (requiring an API key) to search for organizations associated with a target domain, logging results for reconnaissance purposes, which aligns precisely with querying non-public/paid databases for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:50:41.972345Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The curl command is perfectly formed with balanced quoting, valid API headers, a correctly structured JSON payload, and standard redirection/logging flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a search against the Crunchbase API, a representative closed-source paid database, which aligns perfectly with the T1597 technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:50:43.598420Z"
       }
     ],
     "llm_average_syntactic": 5.0,

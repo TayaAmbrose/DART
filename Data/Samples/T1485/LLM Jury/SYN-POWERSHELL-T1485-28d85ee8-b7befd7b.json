@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Azure PowerShell syntax, balanced quotes, valid parameters for Invoke-AzVMRunCommand, and correct PowerShell command structure within the ScriptString parameter.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully aligns with the T1485 Data Destruction technique by first recursively deleting a directory and then using cipher.exe /w to overwrite free space, effectively destroying data remnants on the target VM's D: drive.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T01:22:42.280811Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid PowerShell cmdlets and parameters, balanced quoting, and a correct command separator, making it parseable and executable.",
-        "semantic_score": 3,
-        "semantic_justification": "While the commands 'Remove-Item' and 'cipher.exe /w' are appropriate for data destruction, the stated 'Privilege: None' for the script's execution context within the VM makes the full achievement of the claimed intent (especially 'cipher.exe /w:D:' which requires administrator rights) operationally implausible.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T01:22:59.023021Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Azure PowerShell cmdlet with valid parameters and balanced quoting; the embedded script correctly chains Remove-Item and cipher.exe with proper flags.",
@@ -44,11 +24,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T01:23:19.307270Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid PowerShell cmdlet syntax for Invoke-AzVMRunCommand, proper semicolon separator between the two sub-commands, and correct flag usage throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1485 by first recursively deleting D:\\Exports to destroy data, then using cipher.exe /w:D: to overwrite free space and eliminate residual data remnants, which is a realistic and operationally sound two-stage destruction technique executed remotely via Azure VM Run Command.",
+        "combined_score": 5.0,
+        "confidence": null,
+        "timestamp": "2026-02-19T01:40:35.537421Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Azure PowerShell syntax with correctly balanced quotes and proper command separation within the script string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately leverages the Azure RunCommand feature to perform file deletion followed by a standard Windows utility for wiping free space, perfectly aligning with data destruction techniques.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:40:37.176228Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

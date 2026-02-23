@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper variable assignments, error handling with try/catch/finally blocks, and correct cmdlet syntax throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by securely retrieving a paid threat intelligence feed from Recorded Future using proper authentication, logging the activity, and implementing error handling for operational reliability.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:33:28.776229Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, exhibiting correct PowerShell syntax for variable assignment, external command execution, error handling, object creation, and file system operations, with balanced quotes and valid flags.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of T1597 by securely acquiring a paid closed-source intelligence feed using appropriate tools (pscp), key-based authentication, and host key pinning, demonstrating a highly plausible operational implementation for intelligence collection.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:33:42.633754Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The PowerShell command is well-formed with balanced braces/quotes, valid separators, and correct pscp flag syntax.",
@@ -46,11 +26,31 @@
         "combined_score": 4.0,
         "confidence": 0.7,
         "timestamp": "2025-10-02T11:34:28.508503Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is well-formed with balanced quotes, braces, and parentheses, proper try/catch/finally blocks, valid flag usage for pscp, and correct cmdlet syntax throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command plausibly demonstrates T1597 by retrieving a paid domain risk feed from Recorded Future's SFTP server using key-based authentication with host key pinning, logging results as JSON, though T1597 typically describes adversary reconnaissance against closed sources rather than legitimate threat-intel consumption, making the framing slightly misaligned with the attacker perspective the technique implies.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:48:36.288221Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is perfectly formed with correct variable assignments, balanced braces, proper use of the call operator for the external executable, and valid error handling logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately simulates the collection of intelligence from a paid closed source (Recorded Future) using industry-standard tools and realistic credential management via environment variables.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:48:36.474613Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper syntax, balanced quotes/braces, correct error handling, appropriate variable declarations, and proper API request formatting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by authenticating to RiskIQ PassiveTotal (a paid threat intelligence platform), querying for subdomain information about a target domain, and storing the results for later use in targeting.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:10:48.487222Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed, with balanced quotes, proper command separators, valid flag formats, and correct syntax for all operations.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by using authenticated access to RiskIQ PassiveTotal, a closed-source subscription intelligence platform, to gather subdomains, directly aligning with the 'Search Closed Sources' technique (T1597).",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:11:03.136628Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell one-liner is well-formed with balanced quotes/braces, valid separators, correct parameter usage, and parseable constructs.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T12:11:17.052439Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, parentheses, and braces, proper semicolons as separators, valid cmdlet syntax, and correct string interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by authenticating to RiskIQ PassiveTotal (a legitimate closed-source, subscription-based threat intelligence platform) via API credentials stored in environment variables, querying the subdomain lookup endpoint, and saving results to disk \u2014 fully consistent with adversarial use of paid intelligence feeds for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:51:16.758442Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is well-structured with balanced braces, proper variable assignments, and correct use of try-catch blocks and cmdlets.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements the technique by programmatically querying the RiskIQ (PassiveTotal) API, a closed intelligence source, to perform reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:51:20.503448Z"
       }
     ],
     "llm_average_syntactic": 5.0,

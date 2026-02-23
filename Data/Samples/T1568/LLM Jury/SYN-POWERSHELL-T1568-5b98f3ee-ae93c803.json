@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid flag formats, and appropriate error handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by using a time-based domain generation algorithm, resolving multiple A records, testing connectivity to find the optimal endpoint, and establishing command and control through the selected IP.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:56:04.770629Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced syntax, correct PowerShell cmdlet usage, proper variable assignments, and valid `netsh` command structure.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively demonstrates dynamic domain generation (DGA), DNS resolution, selection of an optimal endpoint from multiple IP addresses, and subsequent beaconing with a relevant Host header, aligning strongly with MITRE ATT&CK T1568; however, the `netsh advfirewall` command requires elevated privileges, which contradicts the stated 'Privilege: None' and impacts the operational plausibility of the entire sequence under those conditions.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T07:56:27.624353Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The PowerShell one-liner is well-formed with balanced delimiters, valid cmdlets/parameters, proper pipelines, and a correct hashtable literal.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T07:56:42.979188Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, parentheses, and quotes, proper semicolon separators, valid cmdlet syntax, and correct string formatting operators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by constructing a time-based domain name (mimicking a DGA with HHmm rotation), resolving multiple A records via an external DNS server, selecting the lowest-latency endpoint via TCP timing, opening a firewall rule for port 65200, and beaconing to the optimal IP with a spoofed Host header \u2014 all operationally coherent and realistic.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:31:30.286014Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced braces, parentheses, and valid PowerShell cmdlet parameters.",
+        "semantic_score": 4,
+        "semantic_justification": "The command perfectly implements a time-based DGA and endpoint selection, though the netsh firewall modification requires administrative privileges which contradicts the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:31:32.753281Z"
       }
     ],
     "llm_average_syntactic": 5.0,

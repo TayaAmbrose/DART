@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is well-formed with properly balanced parentheses, braces, and quotes, correct pipeline operators, valid method calls, and proper variable assignments throughout the entire script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with detecting T1568 (Dynamic Resolution) by identifying suspicious domains with long random-looking names, testing them for NXDOMAIN responses (characteristic of DGAs), and reporting potential DGA activity to a SIEM endpoint.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T08:00:30.199345Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced syntax, proper command separators, valid parameters, and correct PowerShell constructs throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the claimed defensive intent by identifying DGA-like domains from the DNS cache, repeatedly querying them via DoH for NXDOMAIN responses, and reporting high-churn failures to a SIEM, directly addressing T1568 detection.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T08:00:43.529740Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 4,
         "syntactic_justification": "Well-formed PowerShell with valid cmdlets/parameters and balanced quoting; the over-parenthesized if condition is slightly awkward but likely still parseable.",
@@ -46,11 +26,31 @@
         "combined_score": 4.0,
         "confidence": 0.7,
         "timestamp": "2025-10-02T08:02:09.389919Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces, proper pipeline usage, and valid cmdlet syntax, though the nested string interpolation in the Invoke-WebRequest URI (unquoted URL at the end) and complex quoting within the foreach loop could cause edge-case parsing issues in some environments.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a defensive T1568 detection workflow by extracting long-label domains from the DNS client cache (a valid DGA heuristic), querying Google's DoH API to score NXDOMAIN failures, and reporting suspects to a SIEM endpoint, which is operationally plausible and well-aligned with detecting DGA/dynamic resolution activity, though querying the local DNS cache rather than live traffic limits detection coverage.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:31:37.927886Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script with correct variable scoping, balanced delimiters, and valid use of cmdlets and pipelines.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively implements a defensive hunting logic for DGA activity by filtering the DNS cache for high-entropy strings, verifying their resolution status via an external API, and reporting suspected NXDOMAIN churn to a SIEM.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:31:44.549096Z"
       }
     ],
-    "llm_average_syntactic": 4.667,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.667,
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

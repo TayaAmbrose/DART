@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid shred syntax, using proper flags (-n 3 for 3 passes, -z for zeroing, -u for removal, -f for force) and a valid file path.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by securely overwriting a sensitive database file (payroll.sqlite3) multiple times before deletion, making recovery impossible.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T00:36:22.841454Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses standard flags and a valid file path, and contains no syntax errors or impossible constructs.",
-        "semantic_score": 5,
-        "semantic_justification": "The command utilizes 'shred', a tool explicitly mentioned in the T1485 description for secure deletion, with arguments that fully align with the intent of securely overwriting and deleting a file, making it a perfect example of data destruction.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T00:36:28.339700Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid shred invocation with correct flags (-n, -z, -u, -f) and a proper absolute path, no quoting or separators required.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T00:36:36.318537Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid shred flags (-n 3 for three overwrite passes, -z for final zeroing pass, -u to remove the file after shredding, -f to force permissions if needed) and a valid target file path.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 Data Destruction by using shred to securely overwrite a sensitive payroll SQLite database with multiple passes and a zeroing pass before deletion, making recovery extremely difficult and directly matching the technique's description of secure deletion tools.",
+        "combined_score": 5.0,
+        "confidence": 0.98,
+        "timestamp": "2026-02-19T01:38:53.346471Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Bash syntax and uses valid flags for the shred utility in a well-formed manner.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely executes the described intent of secure data destruction using the appropriate tool and flags for overwriting, zeroing, and removing the file.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:38:54.267550Z"
       }
     ],
     "llm_average_syntactic": 5.0,

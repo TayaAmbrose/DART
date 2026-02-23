@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper gcloud syntax, valid flags, balanced quotes, and correct formatting for the service account creation operation.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1585 technique by creating a service account with a human-like name that could be used for persistent access to Google Cloud resources, and includes the --format=json flag to obtain credentials in a programmatically usable format.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T09:40:55.690257Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax for gcloud, balanced quotes, and valid flags.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly creates a new Google Cloud service account, which perfectly aligns with the MITRE ATT&CK T1585 technique 'Establish Accounts' and the provided explanation.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T09:40:58.914762Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed gcloud command with valid flags and balanced quoting.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T09:41:06.723673Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid gcloud CLI flags (--display-name, --format), and correct subcommand structure for service account creation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command directly implements T1585 by creating a Google Cloud service account with a persona-driven display name, which is a realistic and operationally plausible method for establishing cloud accounts to support adversarial automation and persistence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:39:26.721824Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows the standard gcloud CLI syntax with valid subcommands, flags, and properly quoted arguments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements MITRE ATT&CK T1585 by creating a cloud service account with a deceptive display name to blend into the environment.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:39:28.200541Z"
       }
     ],
     "llm_average_syntactic": 5.0,

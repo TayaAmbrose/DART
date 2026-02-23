@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T18:09:52.939286Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid PowerShell syntax, operators, control flow, and external command execution with correct parameter formatting.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces, valid pipeline operators, and correct string escaping, though the leading '& ' before netsh is unnecessary and the escaped backslashes in the log path (\\s+, \\\\) mix regex and string contexts that could cause edge-case issues.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly implements a sequence-based port knock using Windows Firewall logging as a trigger, perfectly aligning with the T1205 Traffic Signaling technique to enable a remote management firewall rule.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T18:10:09.457072Z"
+        "semantic_justification": "The command accurately implements a port-knock sequence detector (T1205) by enabling firewall drop logging, tailing the log file, parsing DROP entries for a stateful three-port sequence (7001\u21927002\u21927003) per source IP, and triggering WinRM firewall rule enablement upon successful knock completion, which is a textbook traffic signaling trigger mechanism.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T04:04:50.554010Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolon separators, correct PowerShell syntax for variable assignments, array declarations, and pipeline operations.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by monitoring firewall logs for a specific sequence of dropped connection attempts (port knocking) and conditionally enabling Windows Remote Management when the correct sequence is detected.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:25:20.783827Z"
+        "syntactic_justification": "The command is a well-formed PowerShell script utilizing valid syntax for variable assignment, array and hash table manipulation, and pipeline processing with Get-Content and ForEach-Object.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively implements a port-knocking trigger by monitoring firewall logs for dropped packets, which is a classic implementation of Traffic Signaling (T1205). However, in the standard Windows Firewall log format, the destination port is at index 7, while the script attempts to read the port from index 8 (which is the packet size field).",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:05:11.239681Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

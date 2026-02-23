@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T07:31:21.988318Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper variable assignments, correct PowerShell cmdlet usage, and appropriate piping of output between commands.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper string concatenation, valid cmdlet usage, correct semicolon separators, and no syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by identifying a removable drive, compressing sensitive HR/Payroll data, encoding it to evade detection, and exfiltrating it to the physical medium with an innocuous filename.",
+        "semantic_justification": "The command fully implements T1052 by detecting a removable drive, compressing sensitive HR/Payroll data, base64-encoding the archive to obfuscate content, and writing it to the USB drive with a benign-looking filename ('drivers.dat') \u2014 all operationally plausible steps for physical medium exfiltration.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T07:31:24.853024Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:32:56.129006Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid PowerShell cmdlets, .NET methods, operators, and proper syntax for variable assignment, piping, and parameter passing.",
+        "syntactic_justification": "The command uses valid PowerShell syntax, correct piping, and properly structured .NET method calls for Base64 conversion.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the stated intent by compressing specified files, base64 encoding the archive, and writing the result to a detectable removable drive, fully aligning with the MITRE ATT&CK T1052 technique for exfiltration over a physical medium using staging, obfuscation, and benign file naming.",
+        "semantic_justification": "The command accurately implements the technique by identifying a removable drive, staging/compressing data, and obfuscating the output via Base64 encoding and a misleading filename.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T07:31:35.223338Z"
+        "timestamp": "2026-02-18T22:32:59.235600Z"
       }
     ],
     "llm_average_syntactic": 5.0,

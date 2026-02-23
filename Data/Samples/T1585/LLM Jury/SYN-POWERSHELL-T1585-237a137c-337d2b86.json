@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes/parentheses/braces, appropriate semicolons separating commands, and correct parameter usage for Azure PowerShell and REST API calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1585 technique by obtaining an access token, identifying a user account, modifying its alternate email addresses via Microsoft Graph API, and verifying the changes - all supporting the establishment of a cross-service presence as claimed.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T09:35:03.092638Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, correctly using PowerShell command separators and valid parameter formats.",
-        "semantic_score": 5,
-        "semantic_justification": "The command successfully modifies an existing user's 'otherMails' property in Azure AD via Microsoft Graph, aligning with the 'abuse accounts' aspect of T1585 to enable follow-on actions and blend into normal activity through changes to identity configurations.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T09:35:19.466273Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced quotes/parentheses, valid hashtables, and correctly structured Invoke-RestMethod calls including PATCH body and content type.",
@@ -45,6 +25,26 @@
         "combined_score": 4.0,
         "confidence": 0.6,
         "timestamp": "2025-10-02T09:35:44.733865Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper string quoting, correct semicolon separators, valid REST method parameters, and proper hashtable/JSON conversion syntax throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 persona establishment by retrieving an Azure AD access token, resolving a user's object ID, patching the user's otherMails attribute via Microsoft Graph API to add alternate email addresses (supporting cross-service identity presence), and then verifying the change \u2014 all operationally plausible and correctly aligned with the stated intent.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:39:14.025590Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed PowerShell sequence using valid Azure cmdlets and correctly formatted REST API calls with balanced syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively uses the Microsoft Graph API to modify account metadata, facilitating persona development and persistence as described in the technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:39:17.455527Z"
       }
     ],
     "llm_average_syntactic": 5.0,

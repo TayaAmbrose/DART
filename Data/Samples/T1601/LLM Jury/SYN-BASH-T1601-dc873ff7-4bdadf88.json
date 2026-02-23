@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper variable assignments, command separators (&&), balanced quotes, valid flags for losetup/mount/chmod, and follows a logical sequence with no syntax errors.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements the T1601 technique by mounting a firmware image, modifying it by injecting a persistence mechanism (rc.local startup script), unmounting cleanly, and calculating a new checksum to track the modified image.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T19:03:39.425966Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct variable assignments, command substitutions, logical operators, and valid flags for each utility.",
-        "semantic_score": 1,
-        "semantic_justification": "The command fundamentally fails to achieve its claimed intent of modifying a firmware image because the critical `losetup` and `mount` operations require root privileges, contradicting the stated 'Privilege: None'.",
-        "combined_score": 3.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T19:03:50.692444Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash using valid command substitution, chaining with &&, and appropriate flags with no quoting or balancing issues.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T19:04:06.639973Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with proper use of command substitution, variable assignment, logical AND operators, valid flags for losetup/mount/chmod, and balanced structure throughout the pipeline.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 firmware modification by loop-mounting a firmware image, injecting a persistence script into /etc/rc.local, cleanly unmounting, and recomputing the SHA256 hash to track the altered image \u2014 all operationally plausible steps for modifying a firmware image to add persistence.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:21:30.186780Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax, correctly chains operations with logical AND operators, and properly handles variable assignments and command substitutions.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by mounting a disk image via a loop device, injecting a persistence script into a common startup location, and then cleaning up and verifying the image hash.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:21:32.334899Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.167,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

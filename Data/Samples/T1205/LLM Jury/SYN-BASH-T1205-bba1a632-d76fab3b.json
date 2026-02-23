@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T14:07:14.634790Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid netcat flags, IP addresses, port numbers, and command separators, ensuring it will execute without error.",
+        "syntactic_justification": "The command is perfectly well-formed with three valid netcat invocations separated by semicolons, using correct flags (-z for zero-I/O scan mode, -w1 for timeout), valid IP address, and valid port numbers.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements a SYN knock sequence using netcat's zero-I/O mode to specific ports, which is a classic and operationally plausible method for Traffic Signaling (T1205) to trigger a hidden rule change without requiring elevated privileges.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T14:07:25.266661Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (semicolons), valid netcat flags (-z for zero-I/O mode, -w1 for timeout), and correct IP address and port number formats.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by performing a port-knocking sequence using netcat to send TCP SYN packets to specific ports in sequence, which could trigger a hidden rule change on a network device without requiring administrative privileges.",
+        "semantic_justification": "The command accurately implements a port-knocking sequence (a classic T1205 traffic signaling technique) by sending sequential TCP SYN packets to three distinct high-numbered ports on a target host using netcat's scan mode, which is operationally realistic for triggering hidden firewall rule changes without requiring elevated privileges.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:09:57.534679Z"
+        "timestamp": "2026-02-19T03:47:08.164652Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard netcat flags and semicolon separators correctly to execute a sequence of connection attempts.",
+        "semantic_score": 5,
+        "semantic_justification": "The sequence of netcat scans effectively implements a port-knocking trigger by sending TCP SYN packets to a specific series of ports as described.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:47:10.899703Z"
       }
     ],
     "llm_average_syntactic": 5.0,

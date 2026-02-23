@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper syntax, balanced quotes/braces, appropriate error handling, and valid parameter usage throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements T1597 (Search Closed Sources) by querying the paid Censys API service for domain intelligence, properly handling authentication, storing results securely, and logging errors appropriately.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:15:21.342061Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed, using correct syntax for variable assignment, control flow, cmdlet parameters, and JSON handling, with all quotes and parentheses balanced.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1597 technique by performing an authenticated query against the paid Censys API to gather intelligence on a target domain, which is a classic example of searching closed sources.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:15:31.782131Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell command is well-formed with balanced braces/quotes, valid cmdlets and parameters, proper error handling, and correct use of headers and JSON conversion.",
@@ -46,11 +26,31 @@
         "combined_score": 5.0,
         "confidence": 0.95,
         "timestamp": "2025-10-02T12:16:11.111258Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, parentheses, and quotes, proper semicolon separators, valid cmdlet usage, and correct hashtable/JSON conversion syntax throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1597 by querying the paid Censys API (a closed/subscription intelligence source) using an API token to enumerate hosts and TLS certificates for a target domain, with results saved for reconnaissance; the minor gap is that Censys is a legitimate threat-intel/security tool rather than a dark-market source, making it more aligned with the 'paid technical databases' sub-variant of T1597.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:51:42.721191Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed PowerShell script with balanced braces, quotes, and parentheses, utilizing correct cmdlets and variable assignments for a complex one-liner.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by performing an authenticated API request to a technical data source (Censys) to gather intelligence on a specific domain, complete with error handling and logging.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:51:46.476426Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid find parameters, proper use of -exec with shred, correct flag syntax, and proper command termination with '+'.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using shred to securely overwrite files (with -n 1 for one pass), zero-filling (-z), unlinking (-u), and forcing (-f) deletion of files in the specified directory, limiting scope with -maxdepth 1 and -xdev.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T00:41:01.816427Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid `find` and `shred` options, and correctly structured for `find -exec {} +`.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the stated intent by using `find` with `maxdepth 1` and `type f` to target only immediate files, and `shred` with appropriate flags (`-n 1 -z -u -f`) for secure data destruction, fully aligning with the T1485 technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T00:41:06.188581Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid find syntax with -exec ... +, correct placement of {} and well-formed shred flags, no quoting or parsing issues.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T00:41:24.693582Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed and parseable with valid flags for both find and shred, though using `+` as the terminator with `-exec shred` may cause issues since shred accepts multiple files but the behavior depends on the implementation; using `\\;` would be safer for per-file execution.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses shred with overwrite (-n 1), zero-out (-z), unlink (-u), and force (-f) flags to securely delete files in a specific temporary directory, with -xdev preventing filesystem crossing and -maxdepth 1 limiting scope to immediate files, perfectly aligning with T1485 secure deletion behavior.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:39:11.059813Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard GNU find syntax and valid shred flags in a well-formed bash structure.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely executes the described intent of secure data destruction on a specific directory using the appropriate tool for T1485.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:39:11.571540Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

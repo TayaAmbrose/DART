@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed PowerShell with balanced quotes, parentheses, and braces, proper command separators, valid parameter names, and correct string formatting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1568 Dynamic Resolution technique by using a pseudo-random domain generation algorithm (DGA), following CNAME records, using external DNS resolvers, implementing jitter with random sleep, and establishing command and control over HTTPS on a non-standard port.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T05:26:44.287572Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, braces, and correct PowerShell syntax for command separation and parameter usage.",
-        "semantic_score": 3,
-        "semantic_justification": "While the dynamic resolution logic (DGA generation, CNAME/A record resolution, external DNS) perfectly aligns with T1568, the `netsh advfirewall` command requires administrative privileges, directly contradicting the stated 'Privilege: None', thus making the subsequent HTTPS check-in unlikely to succeed and breaking the overall claimed intent.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T05:27:05.257715Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced braces/quotes, valid parameters, and correct use of Resolve-DnsName, indexing, and pipelines.",
@@ -46,11 +26,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T05:27:12.326695Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced braces, parentheses, and quotes, valid cmdlet usage, proper string formatting with -f operator, and correct semicolon separators throughout the script block.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by algorithmically generating a domain with a random numeric suffix (lightweight DGA), following a CNAME chain to an edge host, using an external DNS resolver (9.9.9.9), adding randomized jitter to evade beaconing detection, opening a firewall rule for the non-standard port 10443, and performing an HTTPS check-in with a spoofed Host header \u2014 all operationally coherent and realistic.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:18:59.729484Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed PowerShell with balanced braces, quotes, and valid cmdlet parameters.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly demonstrates dynamic resolution and jitter, though the netsh command requires administrative privileges which contradicts the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:19:01.327029Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

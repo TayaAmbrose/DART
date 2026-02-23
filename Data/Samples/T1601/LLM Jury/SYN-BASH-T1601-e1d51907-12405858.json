@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper use of dd parameters, pipe redirection, command substitution, and awk for processing the output.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively extracts and compares the GPT header against a baseline which aligns with detecting firmware/system image modifications, but it only checks one component of the system rather than the complete firmware image.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T17:19:32.751087Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "All commands, pipes, process substitutions, and arguments are correctly formed and balanced, resulting in a perfectly parseable Bash command.",
-        "semantic_score": 3,
-        "semantic_justification": "The command accurately targets GPT header integrity as a T1601 detection signal, but it requires root privileges to read `/dev/sda`, directly contradicting the stated 'Privilege: None' and making it operationally infeasible as described.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T17:19:52.270867Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash using valid dd options, process substitution, and command chaining with no quoting or flag issues.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T17:20:07.805104Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper process substitution syntax, valid dd flags, correct use of && and pipe operators, and no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly extracts LBA 1 (the primary GPT header) using dd with appropriate skip/count values and performs a hash comparison against a baseline, which is a valid integrity-checking approach aligned with T1601 detection; however, reading /dev/sda typically requires root privileges contrary to the 'None' privilege claim, and the diff approach on single-line sha256 output is functional but slightly awkward compared to direct sha256sum --check.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:13:12.183033Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, including correct piping, logical operators, and process substitution.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately extracts the GPT header from LBA 1 and compares hashes, but it incorrectly claims to require no privileges despite needing root access for /dev/sda.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:13:18.892437Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.167,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

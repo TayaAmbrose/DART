@@ -26,29 +26,29 @@
         "timestamp": "2025-10-01T17:31:11.692236Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid iptables flags and module options without any syntax errors or misconfigurations.",
+        "syntactic_justification": "The command uses valid iptables syntax and module flags with correct parameter ordering and balanced quotes.",
         "semantic_score": 5,
-        "semantic_justification": "The command accurately implements the second step of a timed port-knocking sequence using the `recent` module, checking for a previous signal within 15 seconds and marking the current signal, perfectly aligning with covert activation signaling under T1205.",
+        "semantic_justification": "The command accurately implements a multi-stage port-knocking logic using the iptables 'recent' module to track state between packets.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T17:31:23.507875Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:01:37.322263Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper iptables syntax, correctly using all flags, modules, and arguments with appropriate spacing and quoting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command implements the second step of a port-knocking sequence using the recent module to track connection attempts, perfectly aligning with the Traffic Signaling technique by requiring a specific sequence of connection attempts within a timed window to trigger an action.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:22:15.881894Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and valid iptables flags, though chaining two `-m recent` modules in a single iptables rule is syntactically unusual and may behave unexpectedly depending on kernel/iptables version, but it is parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly models the second step of a port-knocking sequence by checking for a prior signal (T1205_K1 within 15 seconds) and then recording the new knock (T1205_K2) with logging, which aligns well with T1205 covert activation signaling, though the LOG target only logs rather than granting access, making this a monitoring/detection model rather than a fully operational knock daemon.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T04:01:37.965245Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

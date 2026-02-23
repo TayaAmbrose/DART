@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid flag formats, appropriate command separators, and correct escape sequences throughout the complex bash script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1568 Dynamic Resolution technique by generating a random subdomain at runtime, implementing fallback resolution logic, and establishing communication that mimics legitimate telemetry traffic.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:47:15.476773Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct bash syntax, balanced quotes, proper command separators, and valid use of command substitutions and conditional logic.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1568 by algorithmically generating a random subdomain at runtime, dynamically resolving it with fallbacks, and then using the resolved endpoint for plausible C2 beaconing via HTTP.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T07:47:30.012591Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The command is well-formed with balanced quoting and valid Bash constructs, control flow, and flags.",
@@ -46,11 +26,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T07:48:51.732573Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper quoting and command chaining, though the variable expansion `${#body}` inside a `printf` format string and the nested quoting in the for loop may cause edge-case issues in some bash environments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 dynamic resolution behavior: it generates a random subdomain at runtime (DGA-like), uses a fallback chain of domains, resolves via `getent`, and exfiltrates data over HTTP using a browser-like User-Agent to a generic collection endpoint, closely matching the technique's beaconing and endpoint rotation characteristics.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:30:35.720484Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly structured with correct variable expansions, properly escaped nested quotes for the bash -c wrapper, and valid piping between utilities.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively demonstrates T1568 by algorithmically generating a subdomain at runtime, implementing a fallback resolution logic, and using low-level tools to establish a network connection.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:30:38.959141Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

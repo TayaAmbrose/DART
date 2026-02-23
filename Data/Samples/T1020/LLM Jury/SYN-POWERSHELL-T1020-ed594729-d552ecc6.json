@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T03:34:15.975087Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, cmdlet usage, parameter passing, balanced quotes/parentheses/braces, and appropriate semicolons separating commands.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper semicolon separators, valid cmdlet names and parameters, correct hashtable syntax for headers, and no syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1020 Automated Exfiltration technique by compressing the Windows Scheduled Tasks directory, exfiltrating it via HTTPS POST to a remote server with browser-like headers for evasion, and cleaning up the temporary file afterward.",
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration by compressing the Windows Scheduled Tasks directory into a timestamped zip, silently POSTing it over HTTPS to a remote endpoint with browser-mimicking headers, then cleaning up the artifact \u2014 fully matching the technique's batching, compression, and automated transfer behaviors.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T03:34:19.124052Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:23:18.939274Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid PowerShell cmdlets, proper syntax for variables, date formatting, path joining, and cmdlet parameters with balanced quotes and parentheses.",
-        "semantic_score": 3,
-        "semantic_justification": "The command correctly uses PowerShell cmdlets to package and exfiltrate data via HTTP POST, aligning with T1020, but the target path 'C:\\Windows\\System32\\Tasks' typically requires elevated privileges to read completely, making its full operational success unlikely under the stated 'Privilege: None' constraint.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T05:47:05.120512Z"
+        "syntactic_justification": "The PowerShell syntax is perfectly formed, with correct variable assignments, cmdlet usage, and command sequencing.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates the automated packaging and exfiltration of system data via HTTPS, aligning perfectly with T1020.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:23:22.521124Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

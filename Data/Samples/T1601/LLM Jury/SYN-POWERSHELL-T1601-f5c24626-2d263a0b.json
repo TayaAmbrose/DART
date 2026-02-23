@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for DISM commands, PowerShell cmdlets, proper semicolon separators, balanced parentheses, and correct parameter usage throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by mounting Windows image files, adding a startup script to the default user profile in the modified image, and comparing the differences between clean and modified images to confirm the modification.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T20:28:24.485842Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 3,
-        "syntactic_justification": "The command is parseable, but the `Get-ChildItem -Name \"path\"` construction is used to retrieve directory contents, which syntactically returns the directory object itself rather than its children, making the `Compare-Object` ineffective for its stated purpose.",
-        "semantic_score": 2,
-        "semantic_justification": "The command directly contradicts the claimed \"Privilege: None\" by using `dism /Mount-Image` which requires Administrator, and the `Compare-Object` step fails to confirm the file's presence due to the incorrect `Get-ChildItem` parameter usage for listing directory contents.",
-        "combined_score": 2.5,
-        "confidence": 1,
-        "timestamp": "2025-10-02T20:28:40.624180Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with proper semicolons, balanced quotes/parentheses, valid DISM and cmdlet parameters, and parseable Compare-Object expressions.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T20:29:31.535005Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper semicolon separators, valid DISM flags, correct PowerShell cmdlet syntax, and properly escaped paths throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements offline image modification by mounting both a clean and modified WIM image, injecting a startup script into the Default user profile's Startup folder within the modified image, and then using Compare-Object to verify the planted file exists only in the modified image \u2014 directly aligning with T1601's technique of modifying system images to introduce persistence.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:27:54.184970Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct PowerShell syntax, proper DISM flags, and balanced delimiters throughout the multi-command string.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic effectively demonstrates mounting and injecting a persistence script into an offline image, though DISM operations strictly require administrative privileges which contradicts the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:27:57.106986Z"
       }
     ],
-    "llm_average_syntactic": 4.333,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.0,
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

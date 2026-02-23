@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, function definition, balanced parentheses/quotes, and correct syntax for file operations and string manipulation.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the technique of detecting system image modifications by comparing the current kernel image (/boot/vmlinuz) against a known-good baseline using hexdump comparison, which would effectively identify tampering in the system image.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:52:28.622076Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with no syntax errors, correct function definitions, method calls, and proper use of libraries and language constructs.",
-        "semantic_score": 3,
-        "semantic_justification": "The command's logic perfectly aligns with detecting system image tampering (T1601) by hex-diffing kernel images against a baseline; however, the specified 'Privilege: None' contradicts the typical permissions required to read a baseline file located in '/root/baselines/', making it operationally implausible in a standard Linux environment.",
-        "combined_score": 4.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T18:52:55.045250Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid Python snippet with correct imports, balanced structures, and a proper call to difflib.unified_diff.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T18:53:06.952795Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically correct with balanced parentheses, proper imports, valid function definitions, and correct string formatting throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements a hex-diff comparison of the first 4 KiB of the current kernel image against a golden baseline, which is a realistic and operationally sound detection method for T1601 (Modify System Image) tampering.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:20:38.273927Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly well-formed with correct imports, valid function definitions, proper indentation, and balanced delimiters.",
+        "semantic_score": 4,
+        "semantic_justification": "The script correctly implements a hex-comparison for detection of T1601; however, accessing the baseline file in /root/ typically requires root privileges, contradicting the 'None' privilege requirement.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:20:44.308565Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

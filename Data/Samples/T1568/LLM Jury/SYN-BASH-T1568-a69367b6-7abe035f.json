@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper variable assignments, command substitutions, balanced quotes, valid flags for all tools used (iptables, curl, date, etc.), and correct command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by generating a deterministic but time-based domain using SHA1 hashing, using DoH to bypass standard DNS monitoring, selecting random ports and TLDs for evasion, and implementing proper firewall rules to force the covert channel.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:28:46.254213Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, valid flags for all utilities, and correct use of command substitution and piping.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1568 by algorithmically generating domains, utilizing DoH for dynamic resolution, randomizing C2 ports, and implementing beaconing with well-designed evasion tactics despite the `iptables` commands requiring elevated privileges to execute successfully.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:29:00.717415Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quoting and expansions with valid flags and separators across printf/sha1sum/cut, shuf, iptables, and curl, making the command parse cleanly.",
@@ -46,11 +26,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T07:29:18.736566Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolon separators, valid flag formats for iptables and curl, and correct variable expansion throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 by generating a time-seeded DGA domain (sha1sum-based with daily rotation), using DNS-over-HTTPS to bypass standard DNS monitoring, rotating TLDs and ports via shuf, blocking standard UDP/53 to prevent DNS visibility, and beaconing with host/timestamp telemetry over an irregular TLS port \u2014 all operationally coherent and realistic.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:28:34.503265Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using valid Bash syntax, correct command substitutions, balanced quotes, and appropriate flag usage for all tools involved.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a time-based DGA and DNS-over-HTTPS resolution, but it would require root privileges to execute the 'iptables' commands, which contradicts the 'Privilege: None' metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:28:39.958999Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

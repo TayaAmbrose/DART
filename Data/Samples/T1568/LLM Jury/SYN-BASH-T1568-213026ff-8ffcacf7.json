@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid flag formats, correct command separators, and appropriate escape sequences throughout the complex bash script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1568 Dynamic Resolution technique by using DNS resolution with shuffled IPs (fast-flux behavior), fallback hardcoded IPs, encrypted command payloads, and realistic C2 communication patterns with randomized sleep intervals.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T05:04:39.713981Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, proper command separators, valid flag formats, and no impossible constructs.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1568 by performing runtime resolution of multiple IP endpoints via dig, shuffling and iterating through them with fallback IPs, and attempting to establish C2 communication, thus demonstrating dynamic endpoint determination and rotation.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T05:04:51.312444Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quoting and substitutions, valid printf/loop constructs, and proper piping/redirection make it well-formed for bash with standard tools.",
@@ -46,11 +26,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T05:05:23.068783Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper quoting and command chaining, but the variable expansion of `$ips` in the for loop without quoting and the mixing of `printf` format strings with embedded variables creates edge cases where word splitting or empty results from `dig` could cause parsing issues.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 fast-flux behavior by shuffling DNS A records and appending hardcoded fallback IPs, uses AES-256-CBC encrypted payloads encoded in base64 as a Bearer token to blend with legitimate API traffic, and employs randomized sleep intervals and User-Agent spoofing consistent with stealthy C2 beaconing over dynamic endpoints.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:17:14.410713Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed with correct nested quote escaping, valid shell loops, proper piping, and standard flags for dig, openssl, and nc.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements dynamic endpoint resolution by shuffling DNS results (fast-flux imitation) and includes realistic C2 behaviors like encrypted headers and fallback IPs.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:17:16.594575Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

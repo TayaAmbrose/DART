@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T09:06:01.994787Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and appropriate error handling with redirection.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of bash -c with single-quoted heredoc, valid command separators (&&), correct subshell variable assignment, and all flags are syntactically valid.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by identifying a USB device, mounting it, compressing and encoding sensitive system configuration files (/etc), hiding them with a dot-prefixed filename, and properly unmounting the device.",
+        "semantic_justification": "The command precisely implements T1052 by auto-detecting a USB partition via /dev/disk/by-id, mounting it, compressing and base64-encoding /etc (a high-value configuration directory) into a hidden dotfile (.conf.img) to evade casual inspection, then safely syncing and unmounting \u2014 fully consistent with physical medium exfiltration with obfuscation.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:06:04.837671Z"
+        "timestamp": "2026-02-18T22:38:10.940975Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced quotes, valid command separators, and proper flag usage.",
+        "syntactic_justification": "The command uses correct bash syntax, proper nesting of quotes for the subshell, and valid piping and redirection logic.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly achieves its claimed intent by robustly identifying and mounting a USB, effectively staging, compressing, base64-encoding, and saving sensitive data to it, perfectly aligning with the T1052 technique for exfiltration over a physical medium.",
+        "semantic_justification": "The command accurately implements identifying a physical USB device, mounting it, and staging compressed/obfuscated data for exfiltration as described in MITRE ATT&CK T1052.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T09:06:17.648932Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:38:11.659222Z"
       }
     ],
     "llm_average_syntactic": 5.0,

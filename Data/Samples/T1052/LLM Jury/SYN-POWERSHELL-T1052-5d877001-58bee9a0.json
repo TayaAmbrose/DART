@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T09:36:02.351649Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced parentheses, correct variable assignment, proper piping, and valid parameter usage for both Get-Volume and Expand-Archive cmdlets.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper semicolon separator, correct PowerShell cmdlet syntax, valid parameter names, and properly quoted string interpolation.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 (Exfiltration Over Physical Medium) as it automatically identifies a removable drive and extracts sensitive HR data directly to it, enabling physical exfiltration exactly as described in the technique.",
+        "semantic_justification": "The command accurately implements T1052 by dynamically detecting a removable drive via Get-Volume, then extracting a pre-staged ZIP archive of sensitive HR data onto that removable medium, which is operationally realistic and directly aligned with physical medium exfiltration behavior.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:36:05.534758Z"
+        "timestamp": "2026-02-18T22:40:09.724708Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Powershell command is perfectly well-formed, with balanced parentheses, correct command separators, valid flag formats, and proper quoting.",
+        "syntactic_justification": "The command uses correct PowerShell syntax, properly handles variable assignment, pipeline filtering, and string interpolation for the destination path.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the claimed intent by identifying a removable drive and extracting a staged ZIP archive onto it, directly aligning with the 'Exfiltration Over Physical Medium' technique.",
+        "semantic_justification": "The command accurately identifies a removable drive and uses a native utility to move staged data to that physical medium, perfectly aligning with the T1052 technique.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T09:36:12.185023Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:40:12.489979Z"
       }
     ],
     "llm_average_syntactic": 5.0,

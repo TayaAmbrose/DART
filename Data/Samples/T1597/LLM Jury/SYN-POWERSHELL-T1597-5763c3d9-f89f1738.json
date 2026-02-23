@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with properly balanced braces, parentheses, quotes, correct error handling via try-catch, and valid parameter usage for Invoke-RestMethod.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying Farsight DNSDB, a commercial closed-source threat intelligence database, using proper API authentication and handling the response appropriately.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:10:46.553689Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed, using correct syntax for `try-catch` blocks, variable assignments, `if` statements, `Invoke-RestMethod` with headers, piping, and error logging.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly queries Farsight DNSDB, a commercial closed-source historical DNS database, for intelligence, which perfectly aligns with the T1597 technique of 'Search Closed Sources' for non-public information.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:10:51.236205Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell try/catch, variable assignment, hashtable headers, quoting, and separators are all valid and balanced with no syntax errors.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T13:11:13.008458Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, proper try/catch structure, correct hashtable syntax for headers, valid Invoke-RestMethod flags, and proper string interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying Farsight DNSDB (a real commercial closed-source passive DNS repository) using its actual v2 API endpoint with proper API key authentication via the X-API-Key header, retrieving historical DNS RRset data for a target domain, which is a textbook example of searching closed sources for intelligence gathering.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T00:56:14.481118Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly structured, using correct syntax for try/catch blocks, variable assignments, and cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately queries a known commercial closed-source technical database (Farsight DNSDB) using the correct API endpoint and header authentication for intelligence gathering.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:56:15.771370Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T15:03:01.965624Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using balanced quotes and braces, correct command separators, and valid flag formats for both PowerShell cmdlets and netsh utilities.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces and valid semicolons, but the leading `&` before `netsh` combined with the semicolon chaining and `Start-Job` on the same line creates a minor ambiguity in how the compound statement is parsed, though it would likely execute correctly in practice.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely implements a traffic signaling mechanism by initiating a network trace for specific UDP traffic (a 'knock'), and then programmatically opening a firewall port in response to file growth indicating activity, directly aligning with MITRE ATT&CK T1205.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T15:03:31.606917Z"
+        "semantic_justification": "The command accurately implements a port-knocking mechanism aligned with T1205: it uses netsh to capture UDP traffic on a designated knock port (49000), monitors the capture file for growth indicating an inbound knock signal, and then dynamically opens a firewall rule for TCP/8080, which is a realistic and operationally plausible traffic signaling trigger workflow.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:50:30.402183Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid flag formats for both netsh and PowerShell, and appropriate escape sequences.",
+        "syntactic_justification": "The command is well-formed, uses correct PowerShell syntax for background jobs and script blocks, and utilizes valid netsh trace and firewall parameters with properly balanced quotes and separators.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by setting up a packet capture for UDP port 49000, monitoring for specific traffic patterns, and then triggering a firewall rule change when the signal is detected, creating a port-knocking implementation.",
+        "semantic_justification": "The command perfectly implements a port-knocking (traffic signaling) mechanism by leveraging native Windows diagnostic tools to monitor specific network traffic and trigger a firewall state change, which aligns exactly with T1205.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:12:38.818148Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:50:39.399866Z"
       }
     ],
-    "llm_average_syntactic": 4.667,
+    "llm_average_syntactic": 4.333,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.667,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

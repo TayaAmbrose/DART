@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T10:33:00.057976Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid PowerShell syntax throughout, and appropriate variable usage.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced quotes, valid cmdlets, and proper separators, though the array slicing `$b[$i..($end-1)]` may have edge-case issues with large byte arrays in some PowerShell versions, and the string concatenation for `$usb` is slightly unconventional but parseable.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1052 by identifying a removable drive, compressing user data from Desktop and Documents, splitting it into chunks, hiding those chunks in a hidden directory on the USB drive, and cleaning up traces - all core behaviors of exfiltration over physical medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T10:33:03.269460Z"
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive, compressing targeted user data (Desktop and Documents), splitting the archive into 4MB chunks with innocuous-looking names (cache_NNN.bin), copying them to a hidden folder on the USB, and cleaning up staging artifacts \u2014 fully consistent with the described exfiltration-over-physical-medium technique including staging, chunking, obfuscation, and anti-detection measures.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T22:42:21.412693Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct PowerShell syntax, balanced elements, valid cmdlets, proper variable assignments, and appropriate use of .NET methods.",
+        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for variables, loops, .NET static methods, and path joining.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly executes the claimed intent of archiving data, splitting it into chunks, copying to a hidden folder on a removable drive, and cleaning up, directly aligning with all aspects of MITRE ATT&CK T1052 and its sub-behaviors.",
+        "semantic_justification": "The command accurately implements the T1052 technique by identifying a removable drive, archiving data, chunking the archive to evade file-size detections, and hiding the destination directory.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T10:33:16.308349Z"
+        "timestamp": "2026-02-18T22:42:24.943014Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

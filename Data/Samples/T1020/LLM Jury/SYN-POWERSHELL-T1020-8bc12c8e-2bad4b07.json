@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T04:49:53.809710Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid flag formats, and appropriate escape sequences.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, parentheses, and braces, valid PsExec flags, and correct PowerShell syntax including proper string concatenation, try/catch blocks, and pipeline chaining.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by using PsExec to launch a hidden PowerShell process that continuously scans for document files, exfiltrates them via HTTP PUT requests, tracks already-exfiltrated files using alternate data streams, and repeats the process every 15 minutes.",
+        "semantic_justification": "The command perfectly implements T1020 automated exfiltration: it uses PsExec to run a hidden, privileged PowerShell loop that recursively collects .docx/.xlsx files, exfiltrates them via HTTP PUT to an external server, marks each file with an NTFS alternate data stream to prevent re-exfiltration, and sleeps 900 seconds between iterations \u2014 fully consistent with batching, scheduling, and deduplication behaviors described in the technique.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T04:49:57.093186Z"
+        "timestamp": "2026-02-18T22:28:03.099221Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, valid parameters for all cmdlets, and proper command separation.",
+        "syntactic_justification": "The command is well-formed with correctly balanced quotes, proper PowerShell syntax, and valid PsExec flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command expertly implements T1020 Automated Exfiltration by using a scheduled loop to enumerate, filter (via ADS for re-sends), and exfiltrate specific document types via HTTP PUT, leveraging psexec for SYSTEM privileges and stealth.",
+        "semantic_justification": "The command perfectly aligns with T1020 by using a persistent loop, HTTP-based transfer, and NTFS Alternate Data Streams to track and automate exfiltration of specific file types.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T04:50:15.510624Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:28:07.293353Z"
       }
     ],
     "llm_average_syntactic": 5.0,

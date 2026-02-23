@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T17:05:49.115515Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct PowerShell syntax, balanced quotes, proper command chaining, and valid flag usage, including the necessary escaping for inner strings.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command perfectly implements the logic for TFTP traffic signaling (T1205) and the intended actions, its operational feasibility is severely hampered by the stated 'Privilege: None' as firewall rule modifications require Administrator privileges.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T17:06:26.961956Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper PowerShell constructs, balanced braces, and correct quoting using doubled single-quotes for inner strings within the outer single-quoted ArgumentList, though the nested quoting complexity creates edge cases that could cause parsing issues in some environments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a TFTP-based port-knocking mechanism (T1205) by listening on UDP/69, parsing TFTP RRQ opcodes (0x0001) and filename fields per RFC 1350, and using a specific filename 'knock.cfg' as the traffic signal to dynamically enable a WinRM HTTPS firewall rule scoped to the requesting IP, which is a highly realistic and operationally coherent implementation of traffic signaling for C2 access control.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:58:41.962303Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper PowerShell syntax, correct use of WMI methods, and properly escaped nested quotes within the ArgumentList parameter.",
+        "syntactic_justification": "The command is perfectly well-formed, using correctly doubled single-quotes to escape the inner script block within the WMI argument string, and properly handles PowerShell syntax for the UDP listener and firewall manipulation.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a UDP listener on port 69 (TFTP), parsing incoming TFTP read requests, and only enabling a WinRM firewall rule when a specific signal ('knock.cfg' filename) is detected from a remote host.",
+        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by monitoring a low-level protocol (TFTP) for a specific trigger (the filename 'knock.cfg') to dynamically modify firewall rules for command and control access (WinRM).",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:18:34.501854Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:58:46.211171Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

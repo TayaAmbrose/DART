@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T14:59:38.331340Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid command, IP address, port arguments, and a correctly formatted flag with its value, making it runnable without syntax errors.",
+        "syntactic_justification": "The command is perfectly well-formed with valid flags (-d for delay in milliseconds), correct argument ordering (host followed by ports), and no syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1205 Traffic Signaling, as port knocking uses a specific sequence and timing of network traffic to trigger an action (opening a hidden service), serving as a covert signal.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T14:59:48.496571Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax for the 'knock' utility, including proper spacing, valid IP address format, sequential port numbers, and a valid delay flag (-d) with numeric parameter.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending a specific sequence of TCP packets to predetermined ports (7000, 8000, 9000) with a 200ms delay between them, which serves as a covert signal to trigger the knockd service to open a hidden service.",
+        "semantic_justification": "The command accurately implements T1205 port-knocking traffic signaling: `knock` is the correct client tool for knockd, the three sequential ports (7000, 8000, 9000) form the knock sequence, and `-d 200` sets a 200ms inter-knock delay, which is operationally realistic for triggering a hidden service on a remote daemon.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:12:31.801874Z"
+        "timestamp": "2026-02-19T03:50:16.957367Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows the standard syntax for the knock utility, including the host, a series of ports, and the valid -d flag for delay.",
+        "semantic_score": 5,
+        "semantic_justification": "Port knocking is a primary example of Traffic Signaling (T1205), using a specific sequence of network packets to trigger an action on a remote host.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:50:25.371843Z"
       }
     ],
     "llm_average_syntactic": 5.0,

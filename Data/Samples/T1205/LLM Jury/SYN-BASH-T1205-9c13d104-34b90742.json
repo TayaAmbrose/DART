@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T19:06:54.643797Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper loop syntax, variable usage, command separators, and balanced quotes.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid Bash for-loop syntax, proper semicolons as separators, correct nc flags (-w1 for timeout, -u for UDP), and valid shell redirection from /dev/null.",
         "semantic_score": 5,
-        "semantic_justification": "The command implements a classic port-knocking sequence using netcat to send empty UDP packets to three sequential ports (7000, 8001, 9002) with timing delays, which aligns perfectly with the Traffic Signaling technique for covert communication.",
+        "semantic_justification": "The command accurately implements a UDP port-knock sequence by sending zero-byte datagrams to sequential ports (7000, 8001, 9002) with timed intervals, which is a realistic and operationally plausible implementation of T1205 traffic signaling to trigger a remote port-knocking daemon into modifying firewall state.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:34:48.335097Z"
+        "timestamp": "2026-02-19T04:08:41.572183Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Bash for loop, netcat command with its flags, input redirection, and command separators are all perfectly well-formed and syntactically correct.",
+        "syntactic_justification": "The command uses standard Bash loop syntax and valid netcat flags with proper redirection and sequencing.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely executes a UDP port-knock sequence using Netcat, which perfectly aligns with the T1205 Traffic Signaling technique as described, creating a covert signal to a remote system.",
+        "semantic_justification": "The command accurately implements a UDP port-knocking sequence, which is a classic example of traffic signaling to trigger a remote action.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T03:34:52.800140Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:08:43.310185Z"
       }
     ],
     "llm_average_syntactic": 5.0,

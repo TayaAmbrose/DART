@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, variable declarations, error handling, balanced quotes/parentheses/braces, and correct syntax throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying the private SecurityTrails API with proper authentication, error handling, and data processing to gather intelligence about a target domain.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:51:06.187417Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed, contains no syntax errors, and correctly uses all language constructs and function calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 as it queries a known commercial closed-source intelligence platform (SecurityTrails) for domain data using an API key, directly matching the technique's intent of acquiring non-public information for targeting.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:51:13.537706Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid Python with proper imports, balanced syntax, and correct use of semicolons and inline if/try blocks.",
@@ -45,11 +25,31 @@
         "combined_score": 5.0,
         "confidence": 0.96,
         "timestamp": "2025-10-02T13:51:33.060662Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed and parseable with correct imports, string formatting, and exception handling, though the unusual inline semicolon-separated style mixed with newlines and blank lines creates minor readability/formatting issues that could cause problems in some execution contexts.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the paid/closed-source SecurityTrails API using an API key for domain intelligence gathering, which directly matches the technique's description of querying paid technical databases to collect targeting intelligence.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:59:14.470484Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-formed, correctly uses semicolons for command separation, handles imports properly, and manages exception handling and environment variables without errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by querying a commercial/closed-source technical database (SecurityTrails) for domain intelligence using an API key.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:59:16.319791Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

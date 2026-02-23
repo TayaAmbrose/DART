@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T14:28:22.970632Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed for Bash on macOS, using valid commands, flags, arguments, and proper command separation.",
-        "semantic_score": 1,
-        "semantic_justification": "The command fails to achieve its claimed intent under the specified 'Privilege: None' as both 'ping -p' and 'networksetup -setdnsservers' require elevated (root) privileges on macOS.",
-        "combined_score": 3.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T14:28:53.181629Z"
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-c 1 -p for ping, proper networksetup syntax), correct use of && operator, and no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The ping -p flag correctly embeds a custom hex payload (DEADBEEFCAFEBABE) as a magic signal in ICMP packets aligning with T1205 traffic signaling, and networksetup -setdnsservers legitimately changes DNS on macOS to reroute resolution; however, the -p flag in macOS ping fills the packet with a repeating byte pattern rather than a literal hex string payload, which slightly reduces operational fidelity, and changing DNS servers typically requires admin privileges despite the 'None' privilege claim.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:48:27.406874Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid flags for both ping and networksetup commands, proper quoting, and correct command separator (&&).",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending an ICMP packet with a specific payload pattern (DEADBEEFCAFEBABE) that could serve as a covert signal, followed by changing DNS settings which could enable further command and control.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:11:01.068563Z"
+        "syntactic_justification": "The command uses standard Bash syntax, valid macOS ping flags, and correct networksetup utility arguments with proper quoting.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately demonstrates traffic signaling via the ICMP pad pattern, though the 'networksetup' portion requires administrative privileges which contradicts the 'None' privilege level stated.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:48:29.713564Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 4.0,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

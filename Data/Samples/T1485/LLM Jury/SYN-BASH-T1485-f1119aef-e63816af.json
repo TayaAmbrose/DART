@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper use of find with its arguments, piping to xargs with the null terminator option (-0), and correct syntax for the wipe command.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using the 'wipe' utility to securely overwrite rotated Nginx log files, making them unrecoverable while preserving active logs.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T01:48:50.968681Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct command syntax, valid flags, balanced quoting, and proper use of piping and argument passing.",
-        "semantic_score": 3,
-        "semantic_justification": "While the chosen tools (`find`, `xargs`, `wipe`) and their arguments are semantically appropriate for secure data destruction (T1485), the specified 'Privilege: None' for files typically located in `/var/log/nginx` makes the command operationally implausible to achieve its claimed intent of secure deletion in that location.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T01:49:02.416476Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The command is well-formed with valid find flags, properly quoted -name pattern, and a null-delimited pipeline to xargs invoking wipe with appropriate options.",
@@ -45,6 +25,26 @@
         "combined_score": 4.0,
         "confidence": 0.82,
         "timestamp": "2025-10-02T01:49:11.293295Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, correct use of -print0/xargs -0 pairing, valid find flags (-maxdepth, -type, -name), and proper pipe syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly targets rotated Nginx log files (*.log.*) using the `wipe` secure deletion tool with -f (force) flag to overwrite and delete them unrecoverably, aligning well with T1485 anti-forensic log destruction, though `wipe` is a less common utility that may not be installed by default and the 'None' privilege level is questionable since /var/log/nginx files are typically root-owned.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:41:57.256538Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard find and xargs syntax with null-terminated delimiters to safely handle filenames and valid flags for the wipe utility.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements secure data destruction of rotated logs, though it typically requires elevated privileges to modify files in /var/log and the 'wipe' utility is not always installed by default.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:41:59.507545Z"
       }
     ],
     "llm_average_syntactic": 5.0,

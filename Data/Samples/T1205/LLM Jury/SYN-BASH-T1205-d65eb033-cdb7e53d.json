@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T14:35:27.827601Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct Bash loop syntax, valid netcat flags, proper command separators, and correctly quoted arguments for networksetup.",
-        "semantic_score": 3,
-        "semantic_justification": "The initial UDP port-knocking sequence perfectly aligns with T1205 Traffic Signaling, but the subsequent networksetup commands to enable a web proxy require root privileges on macOS, making them semantically correct in intent but operationally implausible under the stated 'None' privilege level.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T14:36:13.705404Z"
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct use of for-loop syntax, proper command separators (&&, ;), valid flags for nc (-u, -w1), and correct networksetup argument structure.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 traffic signaling via a UDP port-knocking sequence (sending 'KO' payloads to sequential high ports with timing delays) to trigger a remote action, then configures a local HTTP proxy on macOS using the legitimate networksetup utility, which is operationally plausible as a post-knock C2 channel setup.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:48:50.549265Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for both nc and networksetup commands, correct command separators (;, &&), and no syntax errors.",
+        "syntactic_justification": "The command uses correct Bash loop syntax, proper piping, and valid macOS networksetup utility flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending a UDP port-knocking sequence with a payload ('KO') to three specific ports (45001-45003) as a signal, followed by configuring a local proxy that could be used for subsequent C2 communication.",
+        "semantic_justification": "The command accurately demonstrates a port-knocking sequence via UDP followed by a logic-linked proxy configuration, perfectly representing Traffic Signaling.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:11:23.629793Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:48:53.797354Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

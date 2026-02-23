@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T14:49:51.211789Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced quotes, valid flags, and proper command separators, including the use of redundant but not erroneous `-n` flags for `tcpdump`.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for tcpdump (-lnni, -A), proper pipe and && chaining, and correct networksetup subcommand syntax for macOS.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of listening for a DNS query signal to trigger network configuration changes for traffic steering, aligning directly with the T1205 Traffic Signaling technique and using appropriate macOS tools and privileges (via `sudo`) for operational plausibility.",
+        "semantic_justification": "The command accurately implements T1205 traffic signaling by passively monitoring DNS traffic for a magic domain token and, upon detection, reconfigures the system proxy to a local PAC file \u2014 a realistic covert trigger mechanism that aligns precisely with the technique's description of using protocol fields (DNS queries) as signals to coordinate subsequent actions.",
         "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T14:50:20.761747Z"
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:49:27.003039Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators (&&), valid flags for tcpdump and networksetup, and correct use of grep with pipe operators.",
+        "syntactic_justification": "The command uses valid shell syntax, balanced quoting, and correct flag usage for tcpdump, grep, and networksetup.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by monitoring DNS traffic for a specific domain trigger ('kn0ck.example.com') and then modifying proxy settings to redirect traffic through a local PAC file, which could contain malicious routing rules.",
+        "semantic_justification": "The command effectively implements traffic signaling by listening for a specific DNS string to trigger a configuration change that redirects network traffic via a PAC file.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:12:02.213711Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:49:29.665290Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid flag formats, and appropriate error handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1568 Dynamic Resolution technique by algorithmically generating domain names based on date patterns, resolving them through DNS, setting up port forwarding to the resolved IP, and implementing TTL-aware reconnection logic with error handling.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T05:22:59.181511Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct PowerShell syntax, balanced parentheses/braces, valid cmdlet usage, and proper command separators.",
-        "semantic_score": 4,
-        "semantic_justification": "The command perfectly implements DGA, dynamic resolution, fast-flux adaptation, and beaconing to maintain C2, but the `netsh interface portproxy` command typically requires Administrator privileges, contradicting the stated 'Privilege: None'.",
-        "combined_score": 4.5,
-        "confidence": 1,
-        "timestamp": "2025-10-02T05:23:11.377627Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid cmdlets/parameters, and proper separators that should parse in Windows PowerShell.",
@@ -44,6 +24,26 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T05:23:25.715029Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, braces, and quotes, valid cmdlet syntax, proper loop structure, try/catch blocks, and correct use of semicolons as statement separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 by constructing a date-seeded DGA domain name, resolving it via an external DNS server to get a fast-flux IP, dynamically updating a portproxy tunnel to the resolved endpoint, beaconing over that tunnel with TTL-jittered sleep intervals, and retrying on failure \u2014 fully matching dynamic resolution C2 behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:18:44.156019Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is perfectly formed with correct variable usage, cmdlet flags, and balanced delimiters.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic effectively simulates DGA and Fast-Flux behaviors, but the use of 'netsh interface portproxy' requires administrative privileges, which contradicts the 'None' privilege claim.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:18:48.979404Z"
       }
     ],
     "llm_average_syntactic": 5.0,

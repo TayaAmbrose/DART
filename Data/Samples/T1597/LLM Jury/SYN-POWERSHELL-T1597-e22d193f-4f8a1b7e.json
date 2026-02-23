@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper syntax, balanced quotes/braces, appropriate error handling, and valid parameter usage throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1597 technique by querying FullContact's paid API (a closed source) to gather corporate intelligence about a domain, storing the results for later use in targeting.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:48:54.521529Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for variable assignments, cmdlet calls, piping, conditional logic, try-catch blocks, and API interaction parameters without any discernible errors or formatting issues.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1597 technique, as it programmatically queries a known paid closed-source API (FullContact) to gather company enrichment data, directly matching the definition of acquiring non-public intelligence for targeting.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T11:49:10.490577Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell command is well-formed with balanced quotes/braces, valid cmdlets/parameters, correct hashtable and JSON handling, and proper try/catch usage.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T11:49:14.176877Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, parentheses, and quotes, proper semicolon separators, valid cmdlet usage, and correct string interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying FullContact's paid company enrichment API (a closed/commercial data source) using a bearer token API key, posting a domain for corporate intelligence gathering, and saving the enriched JSON output to a reconnaissance directory \u2014 fully consistent with adversarial use of closed-source intelligence feeds.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:49:21.989019Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell code is perfectly well-formed, using correct syntax for variable assignments, hashtables, try-catch blocks, and command pipelining.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements MITRE ATT&CK T1597 by querying a paid technical database (FullContact) for corporate enrichment data using a valid API pattern.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:49:27.279836Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax throughout the one-liner script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly addresses T1601 by implementing a detection mechanism that checks for unauthorized modifications to the GRUB bootloader configuration through hash comparison and diff generation, which would reveal tampering with the system boot process.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T19:22:38.536811Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed, with balanced quotes and parentheses, valid Python syntax for imports, assignments, file operations, hashing, and diffing, all contained within a single executable string for `python3 -c`.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves its claimed intent of comparing the current GRUB configuration against a baseline using hashes and diffs, directly aligning with detecting modifications to boot configuration, a core aspect of MITRE ATT&CK T1601 (Modify System Image) detection, and is operationally plausible for a detection mechanism.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T19:22:52.291770Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed python3 -c invocation with balanced quotes, valid Python syntax, and no shell parsing issues.",
@@ -45,6 +25,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T19:23:00.757340Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper semicolons as statement separators, valid imports, and correct string handling throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements GRUB configuration integrity checking by comparing SHA-256 hashes of the current grub.cfg against a stored baseline and generating a unified diff to detect unauthorized boot configuration modifications, which is a direct detection mechanism for T1601 (Modify System Image) targeting bootloader tampering.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:23:03.931177Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly formed, uses correct module imports, follows proper quoting conventions for a shell command, and contains no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a detection mechanism for T1601 by comparing the active bootloader configuration against a trusted baseline using cryptographic hashing and unified diffing.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:23:08.796401Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T19:33:00.434746Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for tcpdump and vtysh, correct command separators (&&), and proper nesting of commands within bash -c.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using tcpdump to listen for a specific TCP SYN packet to port 65001 as a trigger to automatically configure a BGP peering session, creating a covert communication channel through routing infrastructure.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:41:50.936043Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid separators, but the tcpdump filter string uses a quoted BPF expression passed to -l (which is the line-buffering flag, not a filter argument), meaning the BPF filter is not properly passed \u2014 it should be unquoted or passed without -l as the filter argument, making this a minor but meaningful syntactic issue.",
+        "semantic_score": 4,
+        "semantic_justification": "The overall concept is operationally plausible and well-aligned with T1205 \u2014 using a magic TCP SYN packet to a high port as a trigger to dynamically enable a BGP neighbor via vtysh is a realistic traffic-signaling-triggered covert routing channel \u2014 however, the tcpdump invocation misuses the -l flag (line buffering) where the BPF filter should be a positional argument, and the single-packet capture (-c 1) followed by immediate vtysh execution is a reasonable but simplified trigger mechanism that would work in practice with the flag corrected.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T04:11:14.047080Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid flags and arguments for both `tcpdump` and `vtysh`, and has correctly balanced quoting and command separators.",
+        "syntactic_justification": "The command is well-formed with correctly balanced single and double quotes, valid tcpdump BPF filter syntax, and proper command chaining using the && operator.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of using a TCP SYN packet as a signal to programmatically establish a covert BGP routing channel, directly aligning with the Traffic Signaling technique.",
+        "semantic_justification": "The command perfectly implements T1205 by using tcpdump as a listener for a specific 'signal' (a SYN packet to port 65001) to trigger a configuration change in a BGP routing daemon via vtysh, which is a highly plausible operational scenario for network device persistence or covert C2.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T03:41:59.167223Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:11:17.532061Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

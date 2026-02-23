@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T04:05:08.147275Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, variable assignment, command chaining, and correct WinSCP parameter syntax including nested quotes that are properly escaped.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command has mostly valid PowerShell and WinSCP syntax, but the inline variable expansion inside a WinSCP /command string using backtick-quoted `\"$r\"` is a mixed-quoting construct that may not resolve correctly in WinSCP's command interpreter, and the `2>$null` redirect after `Out-Null` is redundant but not fatal.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by using WinSCP to transfer log files over SFTP with bandwidth limiting (speed=512), resume capability, and authentication credentials while suppressing output, which aligns perfectly with the T1020 technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T05:56:22.451962Z"
+        "semantic_justification": "The command accurately implements T1020 automated exfiltration by using WinSCP to batch-transfer log files from ProgramData subdirectories to a remote SFTP server over a non-standard port (2222) with bandwidth throttling (-speed=512), resume support, and suppressed output to reduce detection, all consistent with the described technique.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:25:29.395327Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct Powershell syntax for variable assignment, external command execution, argument passing, and output redirection, including proper handling of quotes and variable expansion.",
+        "syntactic_justification": "The command uses valid PowerShell syntax, including the call operator, proper variable expansion with backticks, and correct WinSCP command-line arguments.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly achieves the claimed intent of automated log file exfiltration via SFTP, utilizing a non-standard port, bandwidth limiting, and resume support, perfectly aligning with T1020 Automated Exfiltration.",
+        "semantic_justification": "The command accurately leverages a common utility (WinSCP) to automate data transfer with realistic features like bandwidth limiting, session persistence, and host key verification, aligning perfectly with T1020.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T05:56:38.787270Z"
+        "timestamp": "2026-02-18T22:25:31.441598Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.333,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

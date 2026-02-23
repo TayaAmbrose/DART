@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T02:23:29.492210Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, balanced quoting, valid flags, appropriate command separators (&&), and correct redirection operators.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, proper use of command separators (&&), valid flag formats for find/tar/scp, correct variable expansion with ${ts}, and proper null-delimiter piping between find and tar.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by finding recent log files, packaging them with tar, transferring them via SCP over port 443 to blend with HTTPS traffic, and cleaning up afterward - all core elements of T1020.",
+        "semantic_justification": "The command fully realizes T1020 automated exfiltration: it timestamps and collects recently modified logs via find, compresses them with tar, exfiltrates over SCP on port 443 (blending with HTTPS traffic) to a remote attacker-controlled host using a pre-placed SSH key, suppresses all output, and removes the local artifact \u2014 all consistent with automated, stealthy data exfiltration.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T02:23:32.404793Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:19:54.513181Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax, correct command substitutions, and properly used flags and separators.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command's overall design aligns with automated exfiltration, the specified SSH key `/root/.ssh/id_rsa` would be inaccessible with 'Privilege: None,' causing the exfiltration step to fail and significantly reducing its operational plausibility under the stated conditions.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T02:23:52.295860Z"
+        "syntactic_justification": "The command uses proper bash variable substitution, pipe redirection, and standard flags for find, tar, and scp without any syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly demonstrates automated exfiltration by packaging data, using non-standard ports to bypass firewalls, and performing automated cleanup.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:19:58.440548Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

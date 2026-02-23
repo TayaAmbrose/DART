@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T18:37:25.439013Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes and braces, correctly escaped paths for the service binary, and PowerShell's implicit string concatenation handling the `''string''` literals without errors.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper PowerShell here-string syntax, balanced braces, and valid escaping, though the nested quoting with backtick-escaped quotes in BinaryPathName and double-single-quotes inside the here-string may cause edge-case parsing issues in some environments.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by creating a Windows service that listens for a specific UDP magic string, using it as a signal to enable and start the RemoteRegistry service, directly exemplifying the T1205 Traffic Signaling technique to activate functionality.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T18:37:48.412257Z"
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by creating a persistent UDP listener service that waits for a specific magic string ('START:RemoteRegistry') to trigger activation of the RemoteRegistry service, which is a textbook port-knocking/magic-packet signaling mechanism used to covertly enable functionality on demand.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T04:06:23.978524Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, braces, and parentheses, correct PowerShell syntax for creating objects, defining variables, and establishing a service.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a persistent service that listens for specific UDP packets containing a magic string that triggers the enabling of RemoteRegistry service, demonstrating covert signaling to activate functionality.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:29:27.941562Z"
+        "syntactic_justification": "The command is a well-formed PowerShell block with properly balanced braces, parentheses, and correctly escaped double quotes within the service binary path.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic for traffic signaling is clear, the use of doubled single quotes inside a literal here-string (@' ... '@) results in an invalid PowerShell script being written to disk; additionally, a script running a blocking UDP receive will cause a service start timeout in Windows.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:06:33.709753Z"
       }
     ],
-    "llm_average_syntactic": 4.667,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.5,
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.0,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

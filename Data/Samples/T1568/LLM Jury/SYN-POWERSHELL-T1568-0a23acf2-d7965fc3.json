@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid flag formats, and appropriate error handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1568 Dynamic Resolution technique by algorithmically generating domain names based on date, performing DNS resolution, using the results to establish communication channels via port proxy, and implementing jittered beaconing based on DNS TTL values.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:31:46.033106Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced syntax, valid cmdlets, proper variable assignments, and correct use of control flow structures.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command correctly implements dynamic domain generation, DNS resolution, and TTL-based beacon timing, the critical 'netsh interface portproxy' command requires administrative privileges and will fail under the specified 'None' privilege, preventing the beacon from reaching the intended C2.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T07:32:04.288930Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell command is well-formed with balanced delimiters, valid cmdlets/parameters, and correct separators.",
@@ -44,11 +24,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T07:32:31.801629Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, braces, and quotes, valid cmdlet usage, proper semicolon separators, and no syntax errors across all constructs including the for loop, try/catch, hashtable literal, and nested method calls.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution behaviors: it constructs a date-seeded domain name (lightweight DGA), flushes DNS cache to force fresh resolution each cycle, randomly selects from returned A records (fast-flux awareness), extracts TTL to jitter beacon intervals, updates a portproxy tunnel to the resolved IP, and beacons over that tunnel while passing TTL and domain metadata in headers \u2014 all operationally coherent and realistic.",
+        "combined_score": 5.0,
+        "confidence": 0.93,
+        "timestamp": "2026-02-19T00:28:45.113009Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced brackets, proper cmdlet usage, and correct variable interpolation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates dynamic resolution and jittered beaconing, though the use of 'netsh' requires administrative privileges, which conflicts with the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:28:49.345004Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

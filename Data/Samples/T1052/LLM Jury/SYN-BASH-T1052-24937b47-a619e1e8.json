@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T09:30:25.866179Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators (|, &&), valid flags for tar, dd, and diskutil, and correct syntax for redirecting stderr.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for tar/dd/diskutil, proper pipe and && separators, and correct shell syntax throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by compressing SSH credentials (valuable authentication material), writing them to a hidden-looking file on a USB drive, and then unmounting the drive for physical exfiltration.",
+        "semantic_justification": "The command accurately implements T1052 by streaming compressed SSH keys via tar into a disguised AppleDouble-style hidden file (._README) on a USB volume using dd, then unmounting the drive for physical removal \u2014 all tools and arguments are semantically correct and operationally plausible on macOS.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:30:29.144027Z"
+        "timestamp": "2026-02-18T22:39:41.972573Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid command separators, correct flag formats, and no impossible constructs.",
+        "syntactic_justification": "The command uses correct Bash syntax, valid tool flags for macOS, and properly handles pipes and logical operators.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves its claimed intent by compressing sensitive files, streaming them to a removable medium using an obfuscated filename, ensuring data integrity, and then unmounting the volume, directly aligning with the T1052 Exfiltration Over Physical Medium technique.",
+        "semantic_justification": "The command effectively packages sensitive data, disguises it as a system-like file on a removable volume, and prepares the hardware for physical removal as per T1052.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T09:30:41.022004Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:39:44.415465Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for docker exec (-u 0) and wipe (-f -r), and correct command structure for executing a command in a Docker container.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using the 'wipe' secure deletion tool to recursively (-r) and forcefully (-f) destroy log data in a container, running as root (-u 0) to ensure complete access to the target files.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T02:20:56.355281Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct syntax for `docker exec`, `bash -lc`, and the `wipe` utility, with balanced quoting and valid flags.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of secure, recursive log wiping as root inside a Docker container, directly aligning with T1485 Data Destruction using a dedicated wiping tool.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T02:21:00.607949Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed docker exec invocation with correct flags, balanced single quotes, and valid use of bash -lc.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T02:21:23.394846Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-f for force, -r for recursive), proper use of docker exec with -u 0 for root, and a correctly structured bash -lc invocation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1485 by using the `wipe` secure deletion tool recursively on archived log files inside a Docker container as root, which would irreversibly destroy forensic artifacts and operational data, fully consistent with the data destruction technique description.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:43:51.147296Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Docker and Bash syntax, including proper quoting, valid flags for the wipe utility, and correct container execution structure.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly achieves the intent of secure data destruction (T1485) by using the 'wipe' utility to recursively and forcefully overwrite log files within a containerized environment.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:43:53.220392Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T08:22:03.292082Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper use of mkdir -p for directory creation, balanced quotes, correct path references, and proper command chaining with &&.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-p for mkdir, -Rp for cp), proper && chaining, and correct use of $HOME and quoted paths.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 (Exfiltration Over Physical Medium) by copying SSH credentials to a hidden directory on a USB drive, which would allow an adversary to steal authentication material via physical media.",
+        "semantic_justification": "The command accurately implements T1052 by creating a hidden directory (.config) on a mounted USB volume and recursively copying SSH keys/configs there, preserving attributes with -p, which is operationally realistic for physical medium exfiltration on macOS.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T08:22:06.054453Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:35:50.551192Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command separators, and proper variable expansion for Bash.",
+        "syntactic_justification": "The command uses standard Bash syntax, valid flags for mkdir and cp, and correctly handles path quoting and variable expansion.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely targets SSH keys for exfiltration to a plausible hidden location on a USB drive, fully aligning with the T1052 technique and operational reality on macOS.",
+        "semantic_justification": "The command accurately implements the exfiltration of sensitive SSH data to a removable volume using a hidden directory to avoid casual observation.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T08:22:14.135715Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:35:51.448275Z"
       }
     ],
     "llm_average_syntactic": 5.0,

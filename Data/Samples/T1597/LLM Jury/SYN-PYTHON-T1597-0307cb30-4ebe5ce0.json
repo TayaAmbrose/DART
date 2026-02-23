@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced quotes, parentheses, and braces, proper error handling, and valid Python syntax throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by using the Censys API, a paid/closed intelligence source, to gather information about a target domain's certificates and DNS records for potential targeting.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:55:56.002980Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed, with correct syntax for imports, variable assignments, dictionary definitions, f-strings, API calls, and error handling within a single line.",
-        "semantic_score": 5,
-        "semantic_justification": "The command makes an authenticated request to the Censys API (a 'closed source' requiring an account and API keys) to gather intelligence on a target domain, directly aligning with the technique's description of acquiring non-public information for targeting.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T12:56:06.161268Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The Python one-liner is properly quoted and indented, with balanced delimiters and valid http.client usage for a POST request.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.84,
         "timestamp": "2025-10-02T12:56:48.364083Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python one-liner is largely well-formed with balanced parentheses and proper string handling, though the multi-line formatting within the -c argument (with bare newlines) may cause shell parsing issues depending on how it's executed.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying Censys (a paid/subscription-based closed intelligence source) using authenticated API credentials to enumerate hosts associated with a target domain via TLS certificates and DNS names, which is a realistic and operationally plausible reconnaissance technique against closed data sources.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:54:32.189488Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly formed, correctly handles environment variables, uses proper semicolons for one-liner separation, and correctly implements the HTTP request sequence.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a programmatic search against the Censys v2 API, which is a classic example of querying technical intelligence sources as described in T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:54:36.281787Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

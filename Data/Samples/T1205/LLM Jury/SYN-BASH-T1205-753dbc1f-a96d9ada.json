@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T17:57:34.592782Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct Bash loop syntax, valid `nc` flags, and proper command separators.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flag combinations (-z, -w1, -v, -w2), proper loop syntax, correct use of semicolons and variable expansion, and no syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements a TCP port-knocking sequence with specific timing to signal an access control change, aligning directly with the T1205 Traffic Signaling technique's description of 'sequence-based triggers' and 'timing patterns'.",
+        "semantic_justification": "The command accurately implements TCP port-knocking (a classic T1205 traffic signaling technique) by sending zero-data connection attempts to a sequence of ports (10443, 10554, 10665) with brief delays to trigger a firewall rule change, then verifies the result by probing SSH port 22, which is operationally realistic and precisely aligned with the technique description.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T17:57:47.226174Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T04:03:41.613595Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper loop syntax, variable usage, command separators, balanced quotes, and valid flags for the nc (netcat) utility.",
+        "syntactic_justification": "The command uses correct Bash loop syntax, proper command separators, and valid netcat flags for scanning.",
         "semantic_score": 5,
-        "semantic_justification": "The command correctly implements port-knocking by sending TCP connection attempts to specific ports in sequence (10443, 10554, 10665) followed by an SSH probe, which aligns perfectly with the Traffic Signaling technique where specific connection patterns trigger access control changes.",
+        "semantic_justification": "The command accurately implements a port-knocking sequence using standard network tools to signal a listener before attempting to verify an open SSH port.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:24:28.931551Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:03:42.543422Z"
       }
     ],
     "llm_average_syntactic": 5.0,

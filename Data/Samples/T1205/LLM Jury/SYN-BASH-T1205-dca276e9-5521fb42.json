@@ -26,29 +26,29 @@
         "timestamp": "2025-10-01T16:21:01.218184Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid iptables syntax, flags, modules, and arguments without any parsing errors or structural issues.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1205 technique by detecting the characteristic magic string of a Wake-on-LAN packet on UDP port 9, utilizing a seemingly legitimate but specialized traffic pattern for covert signaling and tracking the source via the recent module.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T16:21:14.362669Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with valid iptables flags and modules, though combining `-m recent --set` with `-j LOG` in a single rule is unusual (recent module typically precedes a separate action rule) and may not behave as expected on all iptables versions.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly targets UDP port 9 (WoL discard port) and matches the 6x 0xFF magic packet prefix using the string module with BM algorithm, logging matches as a detection/signaling trigger consistent with T1205 covert activation patterns, though a complete WoL magic packet detection would also check for the subsequent 16 repetitions of the target MAC address.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:55:38.342998Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for iptables, including correct flag formats, balanced quotes, and valid hex string representation.",
+        "syntactic_justification": "The command follows correct iptables syntax, uses valid modules (string, recent, LOG), and properly formats the hex-string and log-prefix.",
         "semantic_score": 5,
-        "semantic_justification": "The command correctly implements detection of Wake-on-LAN magic packets (6 bytes of 0xFF) on UDP port 9, which aligns perfectly with the T1205 Traffic Signaling technique as it monitors for specific bit patterns that could be used as covert activation signals.",
+        "semantic_justification": "The command effectively identifies the 'magic' header of a Wake-on-LAN packet and uses the 'recent' module to track the signaling event, perfectly mirroring T1205 behavior.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:16:19.136039Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:55:40.628040Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

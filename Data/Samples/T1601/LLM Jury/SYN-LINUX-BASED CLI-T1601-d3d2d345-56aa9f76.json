@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags, correct command separators (pipe and redirection), and appropriate use of the dd, sha256sum, and tee utilities.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements a method to detect firmware/system image modification by reading the root filesystem partition (/dev/mtdblock5) and generating a SHA256 hash that can be compared against a known good value to identify unauthorized changes.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T20:21:16.116379Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced quotes, valid flags, and proper command separators for a Linux-based CLI.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command uses appropriate tools and arguments to hash a partition, the stated 'Privilege: None' is semantically incorrect as reading raw '/dev/mtdblockX' partitions typically requires root, making it operationally implausible.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T20:21:33.281599Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed pipeline with balanced quotes, valid redirection, and correct use of dd, sha256sum, and tee separated by semicolons.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T20:21:45.007289Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid pipe operators, correct dd flags, and proper use of tee for output redirection.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses dd to read a raw MTD block device (common on embedded/network devices) and pipes it through sha256sum to generate a hash for integrity verification, which is directly relevant to T1601 detection/documentation workflows, though the specific device path /dev/mtdblock5 is assumed and may not correspond to the rootfs on all devices.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:27:41.394347Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Linux utilities with correct syntax, proper piping, and balanced quoting.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately reads an MTD partition to generate a checksum for image verification, though it realistically requires root privileges which contradicts the provided metadata.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:27:43.021961Z"
       }
     ],
     "llm_average_syntactic": 5.0,

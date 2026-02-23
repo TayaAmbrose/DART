@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T07:20:53.950458Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, cmdlet usage, parameter passing, pipeline operations, and error suppression.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper string concatenation, valid cmdlet usage, correct flag syntax, and appropriate semicolon separators throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by identifying a removable drive, creating a hidden system folder, compressing user documents, copying them to the physical medium, and removing local traces.",
+        "semantic_justification": "The command fully implements T1052 by detecting a removable drive, creating a hidden/system-attributed staging directory with a benign-looking name, compressing the user's Documents folder, copying the archive with a disguised extension (.dat) to the USB drive, and cleaning up local traces \u2014 all operationally plausible and consistent with physical medium exfiltration tradecraft.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T07:20:56.523569Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:32:43.467499Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced syntax, proper command separators, and valid flags, making it fully parseable and runnable without errors.",
+        "syntactic_justification": "The command uses valid PowerShell syntax, including proper variable assignment, cmdlet pipelines, semicolon separators, and correct string concatenation.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052, demonstrating data compression, staging, transfer to a physical medium, obfuscation (hidden/system directory, .dat extension), and local cleanup, all in an operationally plausible manner without requiring elevated privileges beyond basic user permissions.",
+        "semantic_justification": "The command perfectly demonstrates T1052 by identifying a removable drive, staging data via compression, obfuscating the destination directory/file, and cleaning up local traces.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T07:21:06.867728Z"
+        "timestamp": "2026-02-18T22:32:45.403139Z"
       }
     ],
     "llm_average_syntactic": 5.0,

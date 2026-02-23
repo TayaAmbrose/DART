@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T14:10:08.045403Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct Docker syntax, proper `sh -c` encapsulation, valid `apk` and `iptables` flags, balanced quotes, and logical command separators.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of && separators, valid iptables flags, and correct docker run syntax throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by using `iptables -m string` to detect an application-specific SSH banner signal on port 22, logging it, and then leveraging `iptables -m recent` to briefly open port 2222 specifically for the signaling source IP, directly implementing Traffic Signaling (T1205).",
+        "semantic_justification": "The command accurately implements T1205 port-knocking via SSH banner string matching: it uses iptables string matching to detect a custom SSH banner 'SSH-2.0-KNOCK' on port 22, records the source IP with the 'recent' module, and conditionally opens port 2222 for that IP within a 30-second window, which is a textbook traffic signaling/port-knocking implementation.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T14:10:25.921311Z"
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:47:22.074954Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Docker syntax, balanced quotes, valid iptables flags, and correct command chaining.",
+        "syntactic_justification": "The command is properly formatted with correct Docker flags, balanced quoting, and valid iptables module syntax.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using the SSH banner as a covert signal to trigger a hidden port opening, with proper logging and time-based access controls.",
+        "semantic_justification": "The logic correctly implements traffic signaling by using iptables to inspect packet payloads for a specific string and dynamically update firewall rules via the recent module.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:10:03.635335Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:47:26.140607Z"
       }
     ],
     "llm_average_syntactic": 5.0,

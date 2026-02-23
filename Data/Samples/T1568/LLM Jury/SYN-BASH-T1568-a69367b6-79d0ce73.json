@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper variable assignments, command separators, balanced quotes, valid flags for all tools used (iptables, curl, awk), and correct pipeline construction.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by using a deterministic algorithm to generate domain names based on date (DGA behavior), disrupting normal DNS resolution to force DoH usage, and establishing a command channel with system information over HTTPS to a time-rotated domain.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:08:34.931462Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command substitutions, and proper Bash syntax throughout.",
-        "semantic_score": 4,
-        "semantic_justification": "The command successfully implements time-rotated DGA, utilizes DoH for dynamic resolution, and performs plausible C2 beaconing, aligning strongly with T1568, but the iptables command to curtail traditional DNS will fail due to lack of privileges.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T07:08:55.455535Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash with balanced quoting, valid substitutions, and appropriate flags/pipelines.",
@@ -46,11 +26,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T07:09:00.396448Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and valid separators, though the nested command substitution in --user-agent and the awk uptime field reference ($10 for load average may be wrong depending on uptime format) introduce minor edge-case fragility.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by combining a time-seeded SHA1-based DGA to generate a rotating FQDN, suppressing traditional DNS via iptables to force DoH resolution through 1.1.1.1, adding jitter via random sleep, and beaconing over a non-standard port (2087) with a realistic user-agent, all of which are hallmark behaviors of dynamic resolution C2.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:26:44.925180Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with correct shell variable assignments, subshell executions, and valid flag usage for curl and iptables.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately demonstrates T1568 by algorithmically generating a domain based on time and a seed; however, the use of iptables requires root privileges which contradicts the 'Privilege: None' metadata.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:26:56.082041Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

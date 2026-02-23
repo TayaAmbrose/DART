@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T15:16:52.678505Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command separators, and no discernible syntax errors in the BPF filter or vtysh commands.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by using tcpdump to act as a listener for a specific L2 ARP signal and then dynamically adding a static route via vtysh, directly embodying the T1205 Traffic Signaling technique to enable a hidden path.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T15:17:07.831921Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and proper use of &&, but the tcpdump filter string uses a BPF expression with mixed quoting that may cause issues on some shells, and the -l flag is misused (it enables line buffering, not a filter \u2014 the filter should not be prefixed with -l).",
+        "semantic_score": 4,
+        "semantic_justification": "The overall concept is sound \u2014 using a specific ARP reply from a hardcoded MAC as a layer-2 trigger signal (T1205) to then inject a static route via vtysh is a realistic and creative traffic signaling implementation on network devices, though the tcpdump flag misuse (-l instead of just passing the filter as a positional argument) slightly reduces operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:51:45.266682Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for tcpdump and vtysh, correct command separators (&&), and appropriate use of sudo for elevated privileges.",
+        "syntactic_justification": "The command is perfectly formed with balanced nested quotes, correct boolean operators, and valid flags for both tcpdump and vtysh.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using tcpdump to monitor for a specific ARP packet with a distinctive MAC address as a trigger signal, which then executes vtysh to add a hidden network route, creating a covert communication channel.",
+        "semantic_justification": "The logic of using tcpdump with a capture count of 1 as a blocking trigger for subsequent command execution is a highly effective and plausible implementation of L2 traffic signaling.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:13:09.649204Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:51:47.872124Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

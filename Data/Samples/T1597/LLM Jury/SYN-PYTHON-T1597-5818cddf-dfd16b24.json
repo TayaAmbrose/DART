@@ -16,16 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is well-formed with proper imports, exception handling, balanced quotes/parentheses/braces, and correct string formatting for the inner Python script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries VirusTotal's private API using an API key to collect domain intelligence from a closed/paid source, which is exactly the technique described.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T14:04:00.768441Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The multi-line Python script is well-formed with balanced quotes (including the embedded -c code) and a valid Kubernetes stream exec invocation.",
@@ -36,19 +26,29 @@
         "timestamp": "2025-10-02T14:04:46.826400Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code, including the embedded inner script and Kubernetes API calls, is perfectly well-formed with correct syntax, balanced elements, and valid function calls.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with proper imports, exception handling, and Kubernetes API usage, though the embedded inner script string uses a mix of semicolons and newline escapes that could cause parsing issues in edge cases.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying the VirusTotal API using an API key, which constitutes accessing a 'closed source' for domain intelligence, fitting the description of acquiring non-public information for targeting.",
+        "semantic_justification": "The command accurately implements T1597 by querying the closed-source VirusTotal API (a paid/subscription threat intelligence feed) for domain intelligence using an API key, executed within a Kubernetes pod to collect targeting information about a domain.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:59:39.017011Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code and the nested sub-shell command are correctly structured, with proper handling of Kubernetes API objects, string escaping, and error handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively demonstrates T1597 by querying VirusTotal ( a standard closed-source technical intelligence provider) for domain metadata using an API key extracted from a target environment.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T20:47:34.175424Z"
+        "timestamp": "2026-02-19T00:59:43.564276Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

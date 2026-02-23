@@ -19,26 +19,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags for all utilities (dd, stat, rm), and correct variable usage.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Data Destruction technique by first overwriting a database backup with random data (making recovery extremely difficult) and then deleting the file, which aligns exactly with the described technique of rendering data unrecoverable.",
-        "combined_score": 5.0,
-        "confidence": 0.98,
-        "timestamp": "2025-10-02T02:14:23.528734Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct variable assignments, command substitutions, balanced quotes, valid `dd` flags, and proper command chaining using `&&`.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of overwriting a specific file with random data (`/dev/urandom`) to make recovery impractical, followed by its deletion (`rm -f`), which directly aligns with the T1485 Data Destruction technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T02:14:31.693880Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quoting and separators with valid bash, stat, and dd options and expansions make the command well-formed.",
@@ -47,6 +27,26 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T02:14:48.427421Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper variable assignment, valid dd flags (conv=notrunc,fdatasync, status=none), correct use of stat -c%s, and proper && chaining followed by rm -f.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 by first overwriting the target backup file in-place with cryptographically random data (using dd with /dev/urandom, matching the exact file size via stat, and forcing a sync with fdatasync), then deleting the file, making forensic recovery practically impossible and directly matching the described data destruction technique.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T01:43:19.770823Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper Bash syntax, including variable assignment, command substitution, and correctly formatted dd flags with balanced quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the data destruction technique by calculating the file size, overwriting the exact bytes with random data to prevent recovery, and then deleting the file.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:43:21.817916Z"
       }
     ],
     "llm_average_syntactic": 5.0,

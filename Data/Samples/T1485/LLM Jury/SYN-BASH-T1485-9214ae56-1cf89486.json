@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid command separators, correct flag formats, and appropriate escape sequences for nested bash commands.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by first overwriting a CSV file with random data (using dd with /dev/urandom) and then deleting it, making recovery impossible.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T01:23:28.633857Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct nesting of bash -c, proper escape sequences for inner quotes, and valid flags for all utilities.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves data destruction (T1485) by overwriting the target file with random data using dd based on its exact size, ensuring unrecoverability, and then deleting it.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T01:23:34.406610Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced single-quote escaping for nested bash -c, valid kubectl/jsonpath usage, and correct dd/stat options with proper separators.",
@@ -46,11 +26,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T01:24:31.915105Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper kubectl subcommands, variable substitution, and dd flags, but the nested quoting with escaped single quotes ('\\'' pattern) inside the outer bash -c string is complex and may fail in certain shell environments or when copy-pasted, though it is a recognized quoting technique.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 by locating a specific Kubernetes pod, using dd with /dev/urandom to overwrite the exact byte size of the target file (ensuring complete data destruction), using conv=fdatasync to force disk sync, and then removing the file, making recovery extremely difficult \u2014 fully aligned with secure-wipe data destruction technique.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T03:15:22.202480Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed but uses an unconventional triple-backslash escape for the nested single quotes ('\\\\'') which would likely fail in a standard shell compared to the standard '\\'' escape; however, the rest of the logic and flags are correct.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly demonstrates T1485 by using dd to overwrite a specific file with random data based on its actual size before deleting it, ensuring the data is unrecoverable.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:15:30.346973Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.333,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

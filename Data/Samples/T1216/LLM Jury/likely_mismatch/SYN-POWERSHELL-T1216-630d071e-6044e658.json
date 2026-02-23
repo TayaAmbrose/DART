@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T22:25:49.190786Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 3,
-        "syntactic_justification": "Without seeing the actual command, I can only infer it was parseable but likely had some formatting issues since the description mentions 'irregular parameters'.",
-        "semantic_score": 5,
-        "semantic_justification": "The described command perfectly aligns with T1216 (System Script Proxy Execution) by using PowerShell to launch wscript.exe to execute the trusted PubPrn.vbs script with irregular parameters to proxy execution of another process.",
-        "combined_score": 4.0,
-        "confidence": 0.7,
-        "timestamp": "2025-10-02T04:10:29.889152Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 2,
+        "syntactic_justification": "The command details are explicitly redacted and withheld, making it impossible to assess syntactic correctness beyond the described structural pattern.",
+        "semantic_score": 4,
+        "semantic_justification": "The described technique accurately reflects T1216 abuse \u2014 using PowerShell to invoke wscript.exe with the signed PubPrn.vbs to proxy execution of a secondary payload is a well-documented, operationally plausible implementation of System Script Proxy Execution.",
+        "combined_score": 3.0,
+        "confidence": 0.4,
+        "timestamp": "2026-02-19T00:07:59.907588Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 0,
-        "syntactic_justification": "The command string was explicitly withheld, making it impossible to evaluate any aspect of its syntactic correctness, formatting, or parsability.",
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command field contains a prose description with redacted details rather than an executable PowerShell command string.",
         "semantic_score": 5,
-        "semantic_justification": "The description perfectly matches T1216 by stating wscript.exe is used to proxy execution via PubPrn.vbs for an unexpected child process, directly aligning with abusing trusted scripts to bypass controls.",
-        "combined_score": 2.5,
+        "semantic_justification": "The described method of using wscript.exe and PubPrn.vbs to proxy execution is the definitive application of technique T1216.",
+        "combined_score": 3.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T04:10:32.719970Z"
+        "timestamp": "2026-02-19T00:08:27.227503Z"
       }
     ],
     "llm_average_syntactic": 1.333,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 3.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 2.833,
     "llm_verdict": "likely_mismatch",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -19,26 +19,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags, correct command separators, and appropriate use of variables and control structures.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Data Destruction technique by first overwriting all files in the finance reports directory with random data (making recovery difficult) and then deleting them completely.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T02:46:52.125053Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and robust null-terminated string processing in the loop.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the stated intent by first overwriting file contents with random data using `dd` and then securely deleting them using `find -delete`, directly aligning with the T1485 Data Destruction technique which explicitly mentions these methods.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T02:47:01.091574Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quoting and separators with valid GNU find/read/stat/dd options and correct NUL-delimited handling.",
@@ -47,6 +27,26 @@
         "combined_score": 4.5,
         "confidence": 1,
         "timestamp": "2025-10-02T02:47:28.928022Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of bash -c, correct find/while/read/dd pipeline syntax, valid flags (conv=notrunc, status=none, -print0, -d \"\"), and proper semicolons and command separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 by first overwriting each file's content with urandom data (using stat to match file size for complete overwrite), then syncing to disk, and finally deleting the files \u2014 a thorough two-phase secure destruction approach targeting a specific financial directory that aligns perfectly with the described technique.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T01:45:06.288913Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid bash syntax, correct variable expansion, and properly handles null-terminated strings for filename safety.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly achieves the goal of secure data destruction by calculating file sizes and overwriting them in-place using dd before final deletion.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:45:07.003551Z"
       }
     ],
     "llm_average_syntactic": 5.0,

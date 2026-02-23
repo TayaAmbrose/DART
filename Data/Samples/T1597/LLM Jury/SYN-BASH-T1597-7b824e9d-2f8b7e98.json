@@ -18,16 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, appropriate error handling with set -euo pipefail, and correct variable usage throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by securely retrieving non-public WHOIS data from a paid provider (DomainTools) using SFTP with proper authentication, verification, and logging mechanisms.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T14:27:34.561430Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The Bash one-liner has balanced quotes and parentheses, valid scp/ssh options, proper command chaining, and correctly escaped printf JSON strings.",
@@ -38,14 +28,24 @@
         "timestamp": "2025-10-02T14:28:15.654651Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, proper separators, and correct syntax for all included shell features and commands.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper escape sequences for embedded JSON, correct use of subshells, command separators (&&, ;), and valid scp/ssh option flags throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of collecting intelligence from a closed source via SFTP with verification and logging, aligning precisely with the T1597 technique and demonstrating high operational plausibility.",
+        "semantic_justification": "The command accurately implements T1597 by retrieving a paywalled WHOIS history XML feed from a closed-source provider (DomainTools) via authenticated SFTP with a dedicated key, performs SHA256 integrity verification, and logs structured JSON audit records \u2014 all operationally plausible and consistent with the technique's description of querying paid/private databases for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:27:16.513530Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct bash syntax for variable expansion, subshells, conditional logic, and complex printf formatting within a single-quoted string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates MITRE ATT&CK technique T1597 by retrieving a paid, non-public WHOIS history dataset from a known commercial provider (DomainTools) using operationally realistic parameters and logging practices.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T20:54:41.735960Z"
+        "timestamp": "2026-02-19T03:27:25.632349Z"
       }
     ],
     "llm_average_syntactic": 5.0,

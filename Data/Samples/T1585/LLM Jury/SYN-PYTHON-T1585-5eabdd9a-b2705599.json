@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and braces, proper imports, valid AWS boto3 API calls, and correct JSON output formatting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 (Establish Accounts) by creating a new WorkMail user with a realistic corporate email address that could be used for social engineering or persistence in AWS environments.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:05:01.309644Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with correct syntax, balanced quotes and parentheses, and valid Boto3 API calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of creating a WorkMail user and registering an email, directly aligning with the 'Establish Accounts' (T1585) technique by creating a new identity for adversarial use.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:05:11.029843Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The inline Python is well-formed with balanced quotes and parentheses, proper semicolon separators, and valid-looking boto3 WorkMail method usage.",
@@ -44,6 +24,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T11:05:27.610817Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced quotes, parentheses, and braces, proper semicolons as statement separators, and valid boto3 API call chaining.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 by using the AWS WorkMail boto3 client to create a user account and register a realistic corporate-style email persona, directly matching the technique's description of creating accounts to blend into normal activity.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:45:27.831614Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed Python one-liner with correctly balanced quotes, valid Boto3 method calls, and proper JSON handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately uses the AWS Boto3 SDK to create a WorkMail user and register their email, directly supporting the establishment of a persona for social engineering or persistence.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:45:32.133909Z"
       }
     ],
     "llm_average_syntactic": 5.0,

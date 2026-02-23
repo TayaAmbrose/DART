@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid PowerShell syntax throughout, and appropriate error handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1568 Dynamic Resolution technique by configuring DNS servers, using a DGA-like domain generation pattern with date-based components, resolving the domain, creating a firewall rule, and establishing communication on an uncommon port.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:27:18.644418Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced syntax, valid PowerShell cmdlets and `netsh` usage, correct argument passing, and proper use of semicolons for command separation.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command correctly implements dynamic domain generation and resolution characteristic of T1568, the critical steps to set DNS servers, clear the system DNS cache, and add a firewall rule will fail due to the specified 'Privilege: None,' making the overall operational flow largely implausible as described.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T07:27:34.997730Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell command is well-formed with balanced braces/quotes, valid cmdlets/parameters, and correct separators.",
@@ -46,11 +26,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T07:28:08.335128Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced braces, parentheses, and quotes, valid cmdlet syntax, proper string formatting operators, and correct pipeline usage throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution: it constructs a DGA-style domain using random numbers and date-based components ('edge{0}-{1}.updn.net'), resolves it via DNS, then beacons to the resolved IP on an uncommon port (2053) with Host-header routing to obscure the C2 domain, fully matching the technique's algorithmic endpoint determination and C2 check-in behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.93,
+        "timestamp": "2026-02-19T00:28:24.958139Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed PowerShell script block with balanced braces, valid string formatting via the -f operator, and correct cmdlet syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic accurately reflects T1568 via a date-based DGA and uncommon port usage, but the command would fail under the stated 'None' privilege level as DNS and firewall modifications require administrative rights.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:28:30.485189Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

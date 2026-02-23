@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, variable definitions, error handling, balanced parentheses/braces, and correct function calls to AWS services and the Recorded Future API.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries Recorded Future's commercial threat intelligence API (a closed source) to gather domain intelligence, stores the results securely, and implements proper error handling and logging.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:57:36.345968Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with correct syntax, balanced delimiters, and valid function calls, making it runnable as-is.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying a commercial threat intelligence API (Recorded Future) for non-public domain information and storing the results, which is operationally plausible for intelligence gathering.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T12:57:50.812201Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid Python with balanced quoting/brackets, proper try/except and headers, and acceptable statement separation; no syntax errors apparent.",
@@ -45,6 +25,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T12:58:09.514882Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is syntactically well-formed with balanced parentheses, proper string formatting, valid imports, correct exception handling, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by retrieving an API token from AWS Secrets Manager, querying Recorded Future's commercial closed-source threat intelligence API for domain risk profiles, and storing the structured results in S3, which is operationally realistic and directly aligned with querying paid/private intelligence databases for targeting reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:54:46.959696Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-formed, uses valid libraries, handles exceptions, and correctly uses semicolons and f-strings.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by programmatically querying Recorded Future (a closed-source intelligence provider) and storing the results in a cloud environment.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:54:50.976004Z"
       }
     ],
     "llm_average_syntactic": 5.0,

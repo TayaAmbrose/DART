@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T08:57:42.872188Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for both tar and dd commands, correct command separators (|, &&), and appropriate syntax for all components including the final diskutil unmount operation.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for tar/dd/diskutil, proper pipe and && separators, and no syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 (Exfiltration Over Physical Medium) by compressing user photos, writing them to a hidden-looking file on a USB drive with a deceptive filename (.photoindex.db), and properly unmounting the drive for safe physical removal.",
+        "semantic_justification": "The command accurately implements T1052 by compressing the Pictures folder via tar, writing it to a disguised database-looking file on a USB volume using dd with appropriate block size and error-handling flags, then syncing and unmounting the drive for quick physical removal \u2014 all operationally plausible on macOS.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T08:57:46.309258Z"
+        "timestamp": "2026-02-18T22:37:52.837329Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command separators, and no impossible constructs.",
+        "syntactic_justification": "The command uses valid POSIX and macOS-specific syntax with proper piping, logical operators, and balanced quoting.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by compressing data, writing it to a physical medium with an obfuscated filename, and preparing the medium for quick removal, directly aligning with MITRE ATT&CK T1052's description of staging, packaging, obfuscation, and physical exfiltration.",
+        "semantic_justification": "The command effectively demonstrates exfiltration by compressing data, masquerading the output file, and cleanly unmounting the physical medium for removal.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T08:57:55.154169Z"
+        "timestamp": "2026-02-18T22:37:55.164788Z"
       }
     ],
     "llm_average_syntactic": 5.0,

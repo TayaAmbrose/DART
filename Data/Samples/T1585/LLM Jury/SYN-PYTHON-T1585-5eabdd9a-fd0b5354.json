@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and braces, proper imports, valid AWS boto3 API calls, and correct JSON formatting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1585 technique by creating a new AWS IAM user with console access, setting initial credentials, attaching a policy for limited permissions, and documenting the action - all consistent with establishing accounts for persistent access.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T10:45:08.476928Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct Python syntax, balanced quotes, parentheses, and braces, making it entirely parseable and runnable.",
-        "semantic_score": 5,
-        "semantic_justification": "The command flawlessly achieves its claimed intent of establishing an AWS IAM user with console access, a temporary password, and limited billing read permissions, directly aligning with the T1585 'Establish Accounts' technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T10:45:15.058660Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The Python one-liner is well-formed with balanced quotes/brackets and valid boto3 calls separated by semicolons.",
@@ -44,6 +24,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T10:45:29.343120Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper semicolon separators, correct boto3 API call syntax, and valid JSON output construction.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1585 by programmatically creating a plausible helpdesk contractor persona in AWS IAM with console login profile, realistic tags for legitimacy, and attaching a limited billing read-only policy to blend into normal organizational activity.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:43:50.237961Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly formed with correct indentation (via semicolons), balanced quoting, and valid boto3 method calls.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the creation of an IAM user, login profile, and policy attachment, which directly aligns with the Establish Accounts technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:43:53.851373Z"
       }
     ],
     "llm_average_syntactic": 5.0,

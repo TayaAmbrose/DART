@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T03:35:24.946491Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper PowerShell syntax, valid PsExec parameters, and correct nesting of commands.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, braces, and parentheses; valid PsExec flags; and properly structured PowerShell including event registration, FileSystemWatcher setup, and Invoke-WebRequest call with no syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by using FileSystemWatcher to monitor for new Excel files and automatically exfiltrating them via HTTP POST to an external server, with proper error handling and tracking of sent files.",
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration by using a FileSystemWatcher to trigger on newly created .xlsx files in C:\\Finance, immediately POST-ing each file to an external HTTPS endpoint, then moving it to a tracking folder to prevent re-exfiltration, all running as SYSTEM in a hidden, detached process via PsExec for persistence.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T03:35:27.599479Z"
+        "timestamp": "2026-02-18T22:23:26.523458Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, proper command separators, valid flags for both psexec and PowerShell, and no discernible syntax errors.",
+        "syntactic_justification": "The command is perfectly well-formed, using correct PsExec flags and a properly quoted PowerShell command string with balanced braces, parentheses, and single quotes.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1020 Automated Exfiltration by using a FileSystemWatcher to automatically upload newly created .xlsx files via HTTP POST, running as SYSTEM for persistence and stealth, and moving exfiltrated files to a hidden directory.",
+        "semantic_justification": "The command effectively implements automated exfiltration (T1020) by using a FileSystemWatcher to monitor a sensitive directory and automatically POSTing new files to a remote server before moving them to a hidden local directory.",
         "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T05:47:23.163213Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:23:32.247651Z"
       }
     ],
     "llm_average_syntactic": 5.0,

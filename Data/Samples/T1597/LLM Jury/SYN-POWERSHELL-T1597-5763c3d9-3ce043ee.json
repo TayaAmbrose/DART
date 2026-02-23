@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, proper error handling in a try-catch block, appropriate variable assignments, correct method calls, and proper parameter usage.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries Recorded Future's paid threat intelligence API using an authentication token to gather risk information about an IP address, which is exactly the type of closed-source intelligence gathering described in the technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:56:50.257483Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, braces, correct variable assignments, cmdlet usage, and error handling structure.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by querying Recorded Future, a paid closed-source threat intelligence provider, which directly exemplifies MITRE ATT&CK T1597 (Search Closed Sources).",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T13:56:57.616538Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced quoting/braces, valid separators, and parseable parameters within a proper try/catch.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T13:57:27.491684Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, proper try/catch structure, correct hashtable syntax for headers, valid cmdlet usage, and proper string handling throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying Recorded Future's paid closed-source threat intelligence API using an authenticated token (RF_TOKEN) to retrieve risk intelligence on an IP address, which is a realistic and operationally plausible use of a commercial threat intelligence subscription.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:59:25.569943Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly formed with correct use of try/catch blocks, environment variables, hashtable headers, and cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command realistically demonstrates querying a paid threat intelligence API (Recorded Future) using appropriate headers and endpoints, which aligns perfectly with T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:59:29.465250Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T09:53:54.089135Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax for the dd utility, using proper parameters (if, of, bs, count) with appropriate values and paths.",
+        "syntactic_justification": "The command is perfectly well-formed with valid sudo invocation, correct dd syntax, properly specified if/of/bs/count flags, and no quoting or parsing issues.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by using dd to copy 2GB (512 blocks of 4MB) of raw disk data to a hidden file (.cache.db) on an external volume, enabling physical exfiltration of potentially sensitive information.",
+        "semantic_justification": "The command accurately implements T1052 by using dd to read raw disk data from an internal macOS partition (rdisk0s1) and writing it to a hidden dot-prefixed file on an external USB volume, directly matching the technique's description of staging and transferring data to a physical medium for offline removal.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:53:57.152066Z"
+        "timestamp": "2026-02-18T22:41:01.231487Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid commands, arguments, and paths, and no syntax errors.",
+        "syntactic_justification": "The command uses valid dd syntax, correct flag formatting, and standard macOS file paths.",
         "semantic_score": 5,
-        "semantic_justification": "The command effectively uses `dd` with `sudo` to copy a raw disk slice to a hidden file on a USB drive, directly fulfilling the technique's goal of exfiltration over a physical medium.",
+        "semantic_justification": "The command accurately performs raw disk reading via the character device and writes to an external mount point, perfectly aligning with the described exfiltration technique.",
         "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T09:54:05.398083Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:41:02.919193Z"
       }
     ],
     "llm_average_syntactic": 5.0,

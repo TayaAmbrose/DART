@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T01:57:25.932341Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, balanced quoting, valid flags, appropriate command separators (&&), and correct escape sequences.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, proper use of && chaining, valid flag formats for both tar and scp, and correct variable interpolation throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by collecting network configuration files, compressing them with a timestamp, securely transferring them via SCP to a remote server on port 443, and cleaning up traces afterward.",
+        "semantic_justification": "The command fully aligns with T1020 automated exfiltration: it timestamps and archives network configuration files, transfers them via scp over port 443 (to blend with HTTPS traffic) using a private key with host-key checking disabled for stealth, and cleans up the local artifact afterward \u2014 all operationally realistic and consistent with the described technique.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:57:28.686175Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:18:34.758425Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax for variable assignment, command chaining, flag usage, and output redirection.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command utilizes appropriate tools and a generally correct flow aligned with T1020 Automated Exfiltration, the specified SSH identity file (`/root/.ssh/id_rsa`) is inaccessible for a user with 'None' privileges, which critically reduces the operational plausibility of the exfiltration step.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T01:58:04.842467Z"
+        "syntactic_justification": "The command is a perfectly formed Bash one-liner using valid variable substitution, command chaining with logical operators, and correct flag usage for tar and scp.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements the collection, packaging, and exfiltration workflow of T1020, though it would fail under the stated 'Privilege: None' constraint due to accessing /root/.ssh/id_rsa.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:18:39.102459Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

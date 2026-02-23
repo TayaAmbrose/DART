@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with properly balanced quotes, braces, and parentheses, correct error handling syntax, appropriate variable declarations, and proper use of PowerShell cmdlets and methods.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1597 technique by querying the paid Have I Been Pwned API (a closed source), using proper authentication with an API key, and storing the breach data results in a structured format for intelligence gathering purposes.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:30:33.334407Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid PowerShell syntax for variable assignments, cmdlet calls, conditional logic, error handling, and API request headers.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by querying the paid Have I Been Pwned API, which is a closed-source intelligence feed, for breach exposure of a target account, directly aligning with MITRE ATT&CK T1597 for intelligence gathering.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:30:41.323838Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced braces/quotes, valid parameters, and proper separators throughout.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T11:31:12.280625Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper semicolons as separators, valid cmdlet syntax, and correct string interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the paid Have I Been Pwned API (a closed/subscription data source) using an API key from environment variables, targeting a specific corporate account, and storing structured breach intelligence results to disk for reconnaissance purposes.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T00:48:11.029497Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with correct variable assignments, balanced braces, proper header construction, and valid use of try-catch blocks.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately leverages the paid Have I Been Pwned API to perform reconnaissance on a target account, which perfectly exemplifies querying closed-source intelligence per T1597.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:48:13.374848Z"
       }
     ],
     "llm_average_syntactic": 5.0,

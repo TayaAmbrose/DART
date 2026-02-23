@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T02:57:11.225416Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper variable assignments, correct PowerShell syntax for command execution, appropriate error handling, and proper use of command separators.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper PowerShell string interpolation, correct use of semicolons as separators, valid escape sequences (backtick for inner quotes), and proper redirection syntax.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by compressing Sysmon logs with a timestamp, using WinSCP to transfer via SFTP with proper authentication and host verification, and includes cleanup of local evidence, aligning perfectly with T1020.",
+        "semantic_justification": "The command fully achieves automated exfiltration (T1020) by timestamping and compressing Sysmon logs via Compress-Archive, transferring the archive to an external SFTP server using WinSCP in non-interactive batch mode with host key pinning, and cleaning up the local artifact on success \u2014 all operationally realistic and consistent with the technique description.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T02:57:14.375675Z"
+        "timestamp": "2026-02-18T22:21:36.027512Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for variable assignment, cmdlet execution, string interpolation, and proper escaping for arguments passed to the external WinSCP executable.",
+        "syntactic_justification": "The command is well-formed, using correct PowerShell variable expansion, command separators, and proper quoting for the external WinSCP executable call.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly executes the claimed intent of archiving Sysmon logs, performing automated SFTP exfiltration via WinSCP with host key pinning and batch options, and cleaning up the local archive, perfectly aligning with MITRE ATT&CK T1020 Automated Exfiltration.",
+        "semantic_justification": "The command perfectly illustrates T1020 by automating the collection/compression of logs, using a scripted third-party transfer tool (WinSCP) with non-interactive flags, and performing post-exfiltration cleanup.",
         "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T05:36:15.244004Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:21:47.706568Z"
       }
     ],
     "llm_average_syntactic": 5.0,

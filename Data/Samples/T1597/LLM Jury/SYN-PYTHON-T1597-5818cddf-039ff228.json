@@ -16,16 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed Python code with proper imports, exception handling, balanced quotes/parentheses/braces, and correct string formatting for the inner Python script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries RiskIQ PassiveTotal, a paid/subscription-based threat intelligence service, to gather passive DNS data about a target domain using API credentials.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T14:29:23.271729Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Python with balanced quotes and valid Kubernetes exec/stream usage; the inline inner script is correctly quoted and parseable.",
@@ -36,19 +26,29 @@
         "timestamp": "2025-10-02T14:29:50.656682Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with correct imports, variable assignments, function calls, exception handling, and valid string literals for both the outer Kubernetes interaction and the inner RiskIQ API call.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is well-formed and parseable with proper imports, exception handling, and balanced constructs, though the embedded inner script uses escaped newlines and mixed quoting that could cause edge-case issues in some environments.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 as it queries RiskIQ PassiveTotal, a 'closed-source, subscription API,' to collect passive DNS intelligence, directly matching the 'querying paid technical databases' and 'collect intelligence for targeting' aspects of the technique.",
+        "semantic_justification": "The command accurately implements T1597 by querying RiskIQ PassiveTotal's closed-source, subscription-based passive DNS API for a target domain, executed via Kubernetes pod exec to leverage existing infrastructure, which is operationally plausible and well-aligned with the technique's description of querying paid/private intelligence databases.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:27:29.428841Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-formed, correctly uses the kubernetes-python client's stream function, and handles nested quoting and newline escaping within the 'inner' string properly for execution via python3 -c.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by querying the RiskIQ PassiveTotal API, a prominent closed-source intelligence provider, using valid API parameters and authentication methods to gather passive DNS data.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T20:55:13.884375Z"
+        "timestamp": "2026-02-19T03:27:37.901582Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

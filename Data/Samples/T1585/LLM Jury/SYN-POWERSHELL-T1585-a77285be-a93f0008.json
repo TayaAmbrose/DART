@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper variable assignments, balanced quotes/braces, correct PowerShell syntax for Invoke-RestMethod calls, proper URI encoding, and appropriate JSON formatting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 (Establish Accounts) by modifying an existing Azure AD user account with additional contact details that could be used for account persistence or recovery channels, using legitimate Microsoft Graph API endpoints with proper authentication.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T10:22:43.900770Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, correct command separators, valid flag formats, and proper PowerShell escape sequences for the URI.",
-        "semantic_score": 2,
-        "semantic_justification": "The command modifies an *existing* account's attributes, which semantically aligns more with 'Account Manipulation' (T1098) rather than the 'Establish Accounts' (T1585) technique primarily focused on account creation or initial establishment.",
-        "combined_score": 3.5,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T10:22:52.690600Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell commands are well-formed with balanced quotes, valid Azure CLI and Graph usage, proper header hashtables, and correct escaping for $select, making it parseable as written.",
@@ -45,11 +25,31 @@
         "combined_score": 3.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T10:23:12.037204Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with proper quoting, valid REST method calls, and correct header syntax, though the backtick escaping in the URI (`$select=) and variable assignment syntax ($uid=$(...)) may cause minor issues in some PowerShell environments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 persona reinforcement by retrieving a user's object ID, obtaining a Graph API token, patching alternate contact details (mobilePhone, otherMails) and preferredLanguage to strengthen an established account's identity, and verifying the changes \u2014 all operationally plausible steps for an adversary maintaining a cloud account persona.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:43:28.211382Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly uses PowerShell subexpression syntax for variable assignment, properly escapes special characters in the URI for Graph API queries, and uses valid Azure CLI and Invoke-RestMethod parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates how an adversary would programmatically update account metadata (recovery email and phone) via the Microsoft Graph API to solidify control over a persona or provide a back-channel for account recovery, aligning with the intent of T1585.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:43:34.490196Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 4.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T14:54:35.385614Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, parentheses, braces, and correct use of command separators and valid flags for all PowerShell cmdlets and WMI invocation.",
-        "semantic_score": 3,
-        "semantic_justification": "The command effectively implements traffic signaling using mDNS and the logic for firewall rule manipulation is correct; however, the stated 'Privilege: None' is insufficient for creating or modifying firewall rules, making the intended outcome of enabling WinRM inaccessible under the described conditions.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T14:55:03.863724Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with properly nested quotes (doubled single-quotes for PowerShell string escaping within the outer ArgumentList string), balanced braces and parentheses, and valid cmdlet syntax, though the deeply nested quoting layers and WMI ArgumentList string wrapping introduce edge-case parsing fragility.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by listening on mDNS (UDP/5353) for a specific application-layer signal ('_wpad._tcp.local' + 'open=1') to dynamically enable a pre-staged firewall rule allowing WinRM HTTPS (5986) only from the signaling host, which is a textbook port-knocking/traffic-signaling pattern using protocol mimicry (mDNS) to covertly trigger access.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:49:36.423691Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, parentheses, and braces, correct PowerShell syntax for WMI method invocation, and proper escape sequences for nested quotes.",
+        "syntactic_justification": "The command is perfectly formed with correct PowerShell syntax, appropriate nesting of script blocks, and properly escaped quotes for the WMI argument list.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a covert signaling mechanism that watches for specific mDNS traffic patterns and responds by enabling a firewall rule only when the correct signal is received.",
+        "semantic_justification": "The command perfectly implements the traffic signaling technique by monitoring mDNS traffic for a specific trigger to dynamically enable a WinRM firewall rule, which is a highly plausible operational use case for T1205.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:12:14.294388Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:49:48.817206Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

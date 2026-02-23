@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T08:54:00.792219Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, balanced quotes/parentheses/braces, appropriate command separators, valid cmdlet parameters, and correct pipeline usage.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced parentheses and valid cmdlet usage, though the -Include parameter with comma-separated values without quotes around each filename (e.g., `logins.json, key4.db` with spaces after commas) may cause issues in some PowerShell versions, and Copy-Item without a -Recurse flag when copying multiple files to a directory destination could behave unexpectedly.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by identifying a removable drive, creating a hidden directory, and exfiltrating sensitive Firefox credential files (logins.json, key4.db, places.sqlite) to that physical medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T08:54:03.934627Z"
+        "semantic_justification": "The command accurately implements T1052 by detecting a removable USB drive via WMI, creating a hidden staging directory on it, and copying Firefox credential files (logins.json, key4.db, places.sqlite) from the user profile \u2014 directly aligning with data staging and exfiltration over physical medium behavior.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T22:37:48.527546Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid PowerShell syntax for all cmdlets, and has balanced parentheses and proper command separators.",
+        "syntactic_justification": "The command uses proper PowerShell syntax, including correct cmdlets, variable assignments, piping, and conditional logic with balanced quoting and parentheses.",
         "semantic_score": 5,
-        "semantic_justification": "The command accurately identifies a removable drive, creates a hidden staging directory, and copies critical Firefox profile data, perfectly aligning with the T1052 technique for exfiltration over physical medium and the provided explanation.",
+        "semantic_justification": "The command accurately identifies removable drives, creates a hidden staging directory, and targets specific sensitive Firefox credential and history files, aligning perfectly with T1052.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T08:54:12.385404Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:37:49.469923Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

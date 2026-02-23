@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T13:50:47.645452Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and proper Python syntax within a Bash shell command using sudo.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements traffic signaling detection by monitoring for specific patterns (6 FF bytes) in UDP packets on port 9 (WoL), which aligns perfectly with the T1205 technique of identifying covert signaling in legitimate-looking network traffic.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T13:50:50.925630Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed with balanced parentheses and quotes, but the escaped backslashes in `b\"\\xff\"*6` within the single-quoted shell string may cause issues since `\\xff` inside single quotes won't be interpreted as a Python byte escape, potentially breaking the byte literal comparison.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses scapy to sniff UDP port 9 traffic and checks for WoL magic packet patterns (6 consecutive 0xFF bytes) to detect traffic signaling, which aligns well with T1205's concept of using protocol fields for covert signaling, though the escape sequence issue could reduce operational reliability.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:46:22.444512Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 2,
-        "syntactic_justification": "The command contains significant Scapy object access errors: `hasattr(p, \"load\")` will always be `False` for a Scapy Packet object `p`, and `p[0][1].src` is an incorrect way to access the source IP address, which would cause a runtime error if reached.",
-        "semantic_score": 2,
-        "semantic_justification": "While the conceptual intent to detect WoL magic packets (UDP/9, specific payload length, and FF prefix) is semantically correct for the T1205 technique, the execution is fundamentally broken by the syntactic errors, preventing the command from achieving its claimed detection purpose.",
-        "combined_score": 2.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T13:51:26.159591Z"
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with correctly nested quotes, balanced parentheses, and valid Scapy/Python syntax.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic for detecting Wake-on-LAN packets (102 bytes, 6x FF header) is conceptually correct for signaling, the Python implementation uses b'\\\\xff' which matches the literal characters '\\xff' instead of the byte 0xFF, causing the matching logic to fail on real network traffic.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:46:37.377450Z"
       }
     ],
-    "llm_average_syntactic": 4.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 3.667,
-    "llm_average_score": 3.833,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

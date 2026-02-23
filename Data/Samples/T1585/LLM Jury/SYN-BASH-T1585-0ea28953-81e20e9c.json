@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Azure CLI syntax, balanced quotes, valid flags, and correct parameter formatting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 (Establish Accounts) by creating a new Azure AD user with a persistent password (--force-change-password-next-sign-in false), natural-looking identity details, and using the appropriate Azure CLI tool for the task.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T08:43:30.587074Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, and correct Azure CLI syntax.",
-        "semantic_score": 3,
-        "semantic_justification": "The command correctly uses Azure CLI to establish an Azure AD user, aligning well with T1585 and setting a stable password, but the stated 'Privilege: None' makes its successful execution operationally implausible as user creation requires elevated Azure AD roles.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T08:43:56.041309Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Azure CLI command with balanced quotes and valid flags; safe Bash quoting and explicit JSON output.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.86,
         "timestamp": "2025-10-02T08:44:02.382682Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid Azure CLI flags, correct flag syntax for `az ad user create`, and proper output formatting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command directly implements T1585 by creating an Azure AD user account with a realistic display name, UPN, and a stable password (force-change disabled), which aligns precisely with establishing a persona account for persistent access or blending into normal activity.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:36:17.102778Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Azure CLI syntax, including valid flags and properly balanced quotes for strings containing spaces and special characters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly implements T1585 by programmatically creating a cloud account with a static password and a realistic persona to ensure persistent access.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:36:19.427267Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

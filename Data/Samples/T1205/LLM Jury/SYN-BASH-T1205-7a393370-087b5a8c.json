@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T18:47:05.394502Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, valid Python and shell syntax, and correct f-string interpolation for constructing the `os.system` command.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1205 by using a specific ICMP payload as a signal to trigger a highly sensitive, time-limited network configuration change, demonstrating operational plausibility for an adversary.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T18:47:24.556900Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced parentheses and proper escaping, though the nested quoting with escaped double-quotes inside the f-string shell call creates complex layering that could fail in some shell environments depending on how bash handles the mixed quote levels.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic signaling mechanism using scapy to sniff for a magic-string ICMP packet and then dynamically apply a temporary ACL via a network device configuration tool, which aligns well with T1205 (using ICMP payload as a covert trigger), though 'ciscoconf' is a non-standard/fictional tool and the ACL syntax mixes access-list and permit-tcp semantics in a way that may not reflect real Cisco IOS behavior.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2026-02-19T04:07:07.465960Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and proper command separators, using valid Python syntax within the -c argument and proper shell command chaining.",
+        "syntactic_justification": "The command is perfectly well-formed, using correct Scapy syntax for sniffing, valid Python f-strings, and properly escaped nested quotes and backgrounding for the shell execution.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using Scapy to sniff for ICMP packets containing a specific magic string ('OPENSSH') and then temporarily modifying network access controls based on this covert signal.",
+        "semantic_justification": "The command perfectly implements Traffic Signaling (T1205) by using an ICMP payload trigger ('OPENSSH') to dynamically and temporarily modify a network ACL, effectively behaving as a port-knocking mechanism.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:30:30.687856Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:07:16.414778Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T06:42:15.366554Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for both tar and dd commands, correct command separators (|, &&), and appropriate syntax for the diskutil unmount operation.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid pipe and && separators, correct flag formats for tar, dd, and diskutil, and proper variable expansion.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 (Exfiltration Over Physical Medium) by compressing user documents, writing them to a hidden-looking file on a removable drive, ensuring data is synced, and unmounting the drive for physical removal.",
+        "semantic_justification": "The command accurately implements T1052 by streaming a compressed archive of Documents to a hidden-looking file (.ds_store.tmp mimics macOS metadata) on a USB volume via dd, then syncing and unmounting the drive for physical removal \u2014 fully consistent with the technique's staging, obfuscation, and physical exfiltration behaviors.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T06:42:18.812955Z"
+        "timestamp": "2026-02-18T22:30:30.595894Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, valid flags for each utility, and correct use of pipe and logical AND operators.",
+        "syntactic_justification": "The command uses correct piping, valid flags for tar, dd, and diskutil, and properly quotes paths to handle potential spaces.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly executes the claimed intent of packaging, compressing, writing to an obfuscated file on a physical medium, and preparing for physical removal, directly aligning with the T1052 technique and operational feasibility.",
+        "semantic_justification": "The command effectively stages, compresses, and obfuscates data onto a removable medium and prepares it for physical removal, perfectly matching the T1052 technique.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:42:30.278743Z"
+        "timestamp": "2026-02-18T22:30:32.812117Z"
       }
     ],
     "llm_average_syntactic": 5.0,

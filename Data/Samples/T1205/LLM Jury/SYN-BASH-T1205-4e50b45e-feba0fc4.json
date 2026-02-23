@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T15:58:34.331537Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid flags, arguments, and standard shell syntax without any errors or ambiguities.",
+        "syntactic_justification": "The command is well-formed with valid flags: `-u` for UDP mode, three port numbers as positional arguments, and `-d 100` for delay, all consistent with the `knock` client tool's documented syntax.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely executes a port knock sequence using UDP, which is a textbook example of traffic signaling to trigger an action on a remote host, perfectly aligning with the T1205 technique's description of sequence-based triggers and protocol signaling.",
+        "semantic_justification": "The command accurately implements T1205 (Traffic Signaling) by using the `knock` utility to send a UDP-based port knock sequence to a target host, which can trigger a pre-configured `knockd` daemon to open firewall rules or execute payloads, directly matching the technique's covert signaling behavior.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T15:58:43.367453Z"
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:54:32.362957Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid flags (-u for UDP, -d for delay), proper IP address format, and correct parameter ordering for the knock utility.",
+        "syntactic_justification": "The command correctly uses the standard syntax for the knock client, including the UDP flag, target IP, port sequence, and delay parameter.",
         "semantic_score": 5,
-        "semantic_justification": "The command correctly implements port knocking (a traffic signaling technique) by sending UDP packets to specific ports in sequence (321, 654, 987) with a 100ms delay, which aligns perfectly with the T1205 technique of using network traffic patterns as signals.",
+        "semantic_justification": "Port knocking is a primary example of T1205 Traffic Signaling, and using UDP packets to a sequence of ports is a realistic implementation for triggering a server-side response.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:14:56.824483Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:54:33.591772Z"
       }
     ],
     "llm_average_syntactic": 4.667,

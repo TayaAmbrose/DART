@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T02:32:26.532104Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 1,
-        "syntactic_justification": "The command is a descriptive placeholder rather than an actual executable command, containing only a high-level description of functionality without proper syntax.",
+        "syntactic_justification": "The command is explicitly marked as a non-executable placeholder and contains no actual runnable code, only a natural-language description of intended behavior.",
         "semantic_score": 4,
-        "semantic_justification": "The described functionality aligns well with the T1020 Automated Exfiltration technique by establishing an automated file watcher that would silently exfiltrate new files over SMB, though without actual code it's impossible to verify complete implementation details.",
+        "semantic_justification": "The described approach accurately captures T1020 automated exfiltration semantics \u2014 using 'net use' to map an attacker-controlled SMB share, a FileSystemWatcher for event-driven triggering, auto-copy logic, and cleanup on exit \u2014 all of which are operationally plausible on Windows PowerShell, though the lack of actual code prevents full verification of implementation details.",
         "combined_score": 2.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T02:32:30.115771Z"
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:20:08.578301Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 1,
-        "syntactic_justification": "The provided text is a natural language description of actions and not an executable command string, making it unparseable and not runnable as-is.",
+        "syntactic_justification": "The provided input is a natural language description and a placeholder rather than executable PowerShell code.",
         "semantic_score": 5,
-        "semantic_justification": "The described actions perfectly align with T1020 Automated Exfiltration, utilizing appropriate Windows tools (`net use`, `FileSystemWatcher`) to establish an SMB exfiltration channel and automatically transfer data upon file changes.",
+        "semantic_justification": "The described logic of using a FileSystemWatcher to trigger automatic copies to a mapped SMB share is a highly effective and realistic implementation of automated exfiltration.",
         "combined_score": 3.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T02:32:44.090718Z"
+        "timestamp": "2026-02-18T22:20:13.800109Z"
       }
     ],
     "llm_average_syntactic": 1.0,

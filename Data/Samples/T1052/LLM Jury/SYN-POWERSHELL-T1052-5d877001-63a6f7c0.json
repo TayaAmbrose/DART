@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T09:52:08.663816Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, balanced parentheses, correct cmdlet usage, appropriate piping, and proper semicolon separators between commands.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper semicolon separators, valid cmdlet names, correct parameter syntax, and consistent variable references throughout the pipeline chain.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by identifying a USB device, creating a hidden VHDX container on it, copying project data into the container, and dismounting it - effectively exfiltrating data over physical media in a way that obscures the content.",
+        "semantic_justification": "The command precisely implements T1052 by detecting a USB drive, creating a hidden VHDX container file in a plausible system directory, mounting and formatting it, recursively copying project data into the container, then dismounting it \u2014 effectively concealing exfiltrated data within a single opaque container file on removable media, which is operationally realistic and technically accurate.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T09:52:11.830279Z"
+        "confidence": 0.92,
+        "timestamp": "2026-02-18T22:40:54.063318Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, correct separators, and valid PowerShell cmdlet syntax and parameters.",
-        "semantic_score": 1,
-        "semantic_justification": "The command's core operations like `Get-Disk`, `New-VHD`, `Mount-DiskImage`, `Format-Volume`, and `Dismount-DiskImage` explicitly require administrator privileges, rendering the command operationally impossible under the stated 'Privilege: None' constraint.",
-        "combined_score": 3.0,
+        "syntactic_justification": "The script is a well-formed PowerShell one-liner using standard cmdlet syntax, proper piping, and balanced punctuation.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly aligns with the exfiltration technique by hiding data in a container on a USB drive, but the commands New-VHD and Format-Volume require Administrative privileges, contradicting the 'None' privilege metadata.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T09:52:28.396984Z"
+        "timestamp": "2026-02-18T22:40:57.707263Z"
       }
     ],
     "llm_average_syntactic": 4.667,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 3.833,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

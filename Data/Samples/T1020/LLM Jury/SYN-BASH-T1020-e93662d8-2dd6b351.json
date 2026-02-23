@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T05:07:39.499438Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, balanced quoting, valid flags, appropriate command separators (&&), and correct redirection operators.",
+        "syntactic_justification": "The command is perfectly well-formed with correct variable expansion, balanced quoting, valid tar/scp flags, proper use of && chaining, and correct redirection syntax throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by collecting sensitive credential files (/etc/shadow, /etc/passwd, /etc/group), compressing them with a timestamp, transferring them via SCP over port 443 to an external server, and removing the local evidence afterward.",
+        "semantic_justification": "The command fully aligns with T1020 automated exfiltration: it timestamps and archives sensitive credential files (/etc/shadow, /etc/passwd, /etc/group), transfers them silently via SCP over port 443 using key-based authentication to an external host, suppresses all output, and removes local artifacts \u2014 demonstrating batching, compression, stealth, and automated transfer to an external location.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T05:07:42.572838Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:28:53.785845Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses correct bash syntax for variable assignment, command chaining with `&&`, file redirection, and valid flags for `tar`, `scp`, and `rm`.",
-        "semantic_score": 2,
-        "semantic_justification": "The command fails to achieve its primary intent of packaging sensitive files like /etc/shadow because it requires root privileges, which directly contradicts the stated 'Privilege: None' context, rendering the initial `tar` command inoperable.",
-        "combined_score": 3.5,
+        "syntactic_justification": "The command uses proper Bash syntax, including variable assignment, logical operators, and correctly formatted flags for tar and scp.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly demonstrates automated exfiltration by packaging sensitive files, using non-interactive authentication for transfer over a common evasion port, and cleaning up traces.",
+        "combined_score": 5.0,
         "confidence": 1.0,
-        "timestamp": "2025-10-01T05:08:05.720765Z"
+        "timestamp": "2026-02-18T22:28:56.241079Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.167,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

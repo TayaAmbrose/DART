@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with a valid command name (wipe), proper flag (-f), and a valid path with wildcard pattern (/var/crash/*.crash).",
-        "semantic_score": 5,
-        "semantic_justification": "The command aligns perfectly with the T1485 Data Destruction technique as it uses the 'wipe' utility to securely overwrite crash dump files before deletion, making them unrecoverable and potentially hiding evidence of system issues.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T01:43:57.049630Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with a valid utility, flag, and a shell-expandable path wildcard.",
-        "semantic_score": 3,
-        "semantic_justification": "While 'wipe' is the correct tool for data destruction and the target path is plausible, the stated 'Privilege: None' would prevent the command from typically accessing and destroying system-generated crash dump files in `/var/crash` on a standard Linux system, making its operational feasibility low for its claimed intent under the given conditions.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T01:44:04.708059Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash command with a valid flag and a globbing pattern; no quoting or parsing issues.",
@@ -45,6 +25,26 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T01:44:13.651173Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with a valid flag (-f for force), a recognized tool (wipe), and a properly specified glob path with no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The `wipe` tool on Linux does perform secure overwriting before deletion, and targeting `/var/crash/*.crash` files aligns with destroying forensic artifacts (crash dumps), though `wipe` is a less common utility and may not be installed by default, and the 'None' privilege level is questionable since crash dump files are typically root-owned.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:41:06.023591Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Bash syntax with a valid utility and flags.",
+        "semantic_score": 4,
+        "semantic_justification": "While the command effectively performs data destruction, accessing and wiping files in /var/crash typically requires root privileges, which contradicts the 'None' privilege level specified.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:41:06.376468Z"
       }
     ],
     "llm_average_syntactic": 5.0,

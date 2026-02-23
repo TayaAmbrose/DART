@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper syntax, balanced quotes/braces, correct error handling with try/catch, and appropriate variable declarations and method calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying Clearbit's paid API service to gather non-public company intelligence about a target domain using proper authentication and storing the results for later use.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:34:03.958028Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, proper command separators, and valid cmdlet usage.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by querying a known paid 'closed source' API (Clearbit) for company intelligence, directly aligning with T1597.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:34:13.185526Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced braces/quotes, valid try/catch, proper separators, correct headers/datatypes, and parseable cmdlet usage.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T13:34:26.952980Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, proper try/catch structure, correct string interpolation, valid cmdlet usage, and proper semicolon separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1597 by querying Clearbit's paid commercial company enrichment API (a closed/subscription data source) using a Bearer token API key, targeting a specific domain, and storing structured intelligence results to disk with logging \u2014 fully consistent with adversarial use of paid closed-source data for reconnaissance targeting.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:57:19.228315Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is perfectly formed with correct variable assignment, hash table syntax, error handling blocks, and proper cmdlet usage.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the T1597 technique by querying a known paid data enrichment service (Clearbit) using an API key to gather intelligence on a target domain.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:57:20.539116Z"
       }
     ],
     "llm_average_syntactic": 5.0,

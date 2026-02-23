@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, parentheses, and braces, correct variable assignments, proper PowerShell cmdlet usage, and appropriate pipeline operations.",
-        "semantic_score": 4,
-        "semantic_justification": "The command correctly implements a verification mechanism to detect firmware/system image tampering by comparing hashes from two different tools, but it's a detection mechanism rather than the actual modification technique described in T1601.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T18:46:29.050043Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced syntax, valid cmdlets, correct variable assignments, proper command separators, and a well-formed conditional statement.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves its claimed intent by cross-validating file hashes of a critical boot binary using two distinct methods, directly aligning with T1601's detection signals for image integrity failures.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T18:46:38.914698Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced quotes and parentheses, valid cmdlets/parameters, and proper statement separators.",
@@ -46,11 +26,31 @@
         "combined_score": 4.0,
         "confidence": 0.7,
         "timestamp": "2025-10-02T18:47:21.556062Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced quotes, parentheses, and valid semicolons, though the certutil regex pattern '^[0-9A-F]{64}$' may not reliably match certutil's lowercase hex output without case-insensitive handling, creating a potential edge-case failure.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements dual-tool hash cross-validation of a critical boot binary (winload.exe) in a mounted image path, which is a legitimate integrity verification approach aligned with T1601 detection; the minor gap is that certutil outputs lowercase hex while the regex expects uppercase, potentially causing false mismatches, and the path 'C:\\mount\\Windows\\System32\\' implies an offline mounted image context that is operationally plausible but not explicitly established.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:20:14.000993Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell syntax is perfectly valid, featuring correct variable assignments, command piping, regex usage within Select-String, and balanced conditional blocks.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic of cross-validating a file hash using two different utilities is a valid verification step for T1601, the command will fail in practice because certutil's output contains spaces between hex bytes and the regex provided expects a contiguous 64-character string, leading to a false 'mismatch' report.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:20:20.666162Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.0,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

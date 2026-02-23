@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper redirection of errors, correct piping to crontab, and valid syntax for both the crontab manipulation and the AWS CLI command.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 (Establish Accounts) by creating a persistent mechanism to automatically generate new AWS access keys monthly for a specific user, enabling long-term access to AWS resources.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T08:40:22.051006Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced parentheses, correctly quoted strings for the cron entry, valid command separators, and proper redirection syntax.",
-        "semantic_score": 5,
-        "semantic_justification": "The command accurately implements the stated intent of scheduling a monthly task to mint new AWS access keys for a specified user, directly aligning with the T1585 technique for establishing persistent account access through credential generation.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T08:40:27.726324Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced parentheses and quotes with valid separators/redirects, and the cron line is correctly echoed and piped to crontab -.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T08:41:05.566494Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper quoting, valid crontab syntax (25 3 1 * *), correct AWS CLI flags, and proper pipe/redirect operators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses `aws iam create-access-key` to periodically mint new AWS access keys for a persona user and logs them, which aligns well with T1585 account establishment and persistence; however, repeatedly creating keys monthly without deleting old ones will eventually hit AWS's two-key-per-user limit, reducing long-term operational plausibility.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:35:56.542521Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly uses a subshell to append a valid cron string to the existing crontab using standard Linux redirection and piping.",
+        "semantic_score": 4,
+        "semantic_justification": "The command successfully automates the creation of AWS access keys as described, though writing to /var/log typically requires root privileges (contradicting the 'None' privilege level) and AWS IAM users are limited to two active access keys, which may cause the command to fail after two months without a deletion step.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:36:03.085229Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T02:46:19.265306Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid Docker and bash syntax, and correct use of variables and redirection.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid flags, but the here-string (<<<) inside a bash -lc single-quoted string passed to docker run may have quoting/escaping issues in practice, particularly with variable expansion inside the heredoc and the outer single-quote context.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by creating a Docker container that periodically (every 30 minutes) archives web content, transfers it via SFTP to an external server, and removes local evidence, aligning exactly with the T1020 technique description.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T02:46:22.772269Z"
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration: it uses a Docker container with a loop, timestamps archives of /var/www via tar, transfers them via SFTP to an external attacker-controlled host using a mounted SSH key, suppresses host key checking for stealth, and repeats every 30 minutes \u2014 fully matching batching, scheduling, compression, and automated transfer behaviors described in the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:20:35.868726Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command substitutions, and proper use of here-strings.",
+        "syntactic_justification": "The command is perfectly well-formed, using valid Docker flags, balanced quoting, and correct Bash loop syntax with proper variable expansion within the container shell.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of automated, scheduled SFTP exfiltration of web content, aligning precisely with T1020's description of packaging, transfer, and scheduling.",
+        "semantic_justification": "The command perfectly implements T1020 by automating the compression and SFTP transfer of sensitive directory content on a recurring 30-minute schedule using a containerized toolset.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T05:32:56.606758Z"
+        "timestamp": "2026-02-18T22:20:38.476873Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T15:38:54.605276Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "All commands are perfectly well-formed with valid flags, proper command separators, and correct quoting, making them entirely parseable.",
-        "semantic_score": 2,
-        "semantic_justification": "The command fundamentally relies on `iptables`, which requires root privileges, rendering it operationally infeasible and unable to achieve its claimed intent under the stated 'Privilege: None' context.",
-        "combined_score": 3.5,
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, valid iptables flags and modules, correct use of semicolons as separators, and a valid backgrounded nc listener.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 DNS-layer traffic signaling by using iptables string matching to detect a magic token in UDP/53 traffic, setting a recent-match entry to temporarily gate TCP/9091 access for the signaling host, and establishing a persistent listener \u2014 fully consistent with the technique's port-knocking/signal-triggered activation pattern.",
+        "combined_score": 5.0,
         "confidence": 0.9,
-        "timestamp": "2025-10-01T15:39:28.493955Z"
+        "timestamp": "2026-02-19T03:53:00.820892Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for iptables rules, string matching, command chaining with semicolons, and background process execution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by setting up a covert DNS-based signaling mechanism that triggers access to a hidden service (port 9091) only when a specific pattern ('MAGICDNS') is detected in DNS traffic.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:14:09.076414Z"
+        "syntactic_justification": "The command uses valid iptables syntax for the recent and string match modules, correctly chains commands with semicolons, and utilizes proper shell redirection and backgrounding.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly implements the traffic signaling technique by using a specific DNS payload to trigger a firewall exception, though it realistically requires root privileges despite the metadata stating 'None'.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:53:06.036094Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

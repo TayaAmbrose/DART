@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T03:39:13.600121Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, cmdlet usage, parameter passing, balanced quotes/parentheses/braces, and appropriate semicolons separating each command.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper semicolon separators, valid cmdlet syntax, correct hashtable construction for headers, and all flags used appropriately.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by compressing Windows event logs into a temporary zip file, exfiltrating them via HTTPS POST with disguised headers, and cleaning up the evidence afterward.",
+        "semantic_justification": "The command fully implements T1020 automated exfiltration by compressing Windows event logs into a timestamped ZIP archive, POSTing it via HTTPS to an external domain with camouflaged headers (legitimate-looking User-Agent and domain), and cleaning up the artifact \u2014 covering collection, packaging, transfer, and anti-forensic cleanup in a single automated pipeline.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T03:39:16.278534Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:23:36.553121Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses correct PowerShell cmdlet syntax, valid parameters, balanced delimiters, and proper command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves automated exfiltration by compressing specific event logs and transmitting them via HTTPS POST with appropriate headers and cleanup, fully aligning with the T1020 technique description and operational plausibility under the stated 'None' privilege.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T05:48:43.352202Z"
+        "syntactic_justification": "The PowerShell syntax is perfectly formed, with correct use of cmdlets, variables, hash tables, and command separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively automates the staging, compression, and exfiltration of data, although accessing the specified log files typically requires administrative privileges.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:23:38.073635Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

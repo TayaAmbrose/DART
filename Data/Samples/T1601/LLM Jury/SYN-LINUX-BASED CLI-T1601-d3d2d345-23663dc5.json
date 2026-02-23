@@ -17,16 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper echo statement, command separator (&&), valid flashcp syntax with the -v flag, and sync command to ensure writes are committed to storage.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by using flashcp to directly write a malicious kernel image to the MTD flash device partition, which is exactly how firmware modification would be performed on many network devices.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T19:15:08.949132Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quotes with proper command separators and valid flags/operators make the command well-formed and parseable.",
@@ -37,19 +27,29 @@
         "timestamp": "2025-10-02T19:15:19.707207Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid `echo`, `flashcp`, and `sync` commands with correct arguments and proper command separators.",
-        "semantic_score": 4,
-        "semantic_justification": "The command correctly uses `flashcp` to attempt to overwrite an MTD partition, directly aligning with T1601's intent to modify a system image; however, the stated 'Privilege: None' makes its successful execution operationally implausible, as `flashcp` requires root privileges.",
-        "combined_score": 4.5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid command separators (;, &&), correct flag usage (-v for verbose in flashcp), and proper argument ordering.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by using flashcp (the standard Linux MTD flash copy utility) to overwrite a kernel partition (/dev/mtd2) with a malicious binary, followed by sync to ensure write completion, which is a realistic and operationally plausible method for modifying a system image on embedded/network devices with NOR/NAND flash storage.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:22:28.453413Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using standard shell operators and valid utility flags in a logical sequence.",
+        "semantic_score": 5,
+        "semantic_justification": "The use of flashcp to overwrite an MTD partition is a textbook method for modifying system images on embedded Linux-based network devices.",
+        "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T19:15:22.966336Z"
+        "timestamp": "2026-02-19T01:22:29.678929Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T08:28:56.886628Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper pipe syntax, valid tar flags, correct base64 redirection, and a properly specified output path.",
+        "syntactic_justification": "The command is perfectly well-formed with valid tar flags (-czf -), proper pipe to base64, and correct output redirection to the target path.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by compressing the macOS keychain data (which contains passwords and credentials), encoding it to avoid detection, and exfiltrating it to a USB drive with a filename disguised as an image in a camera directory.",
+        "semantic_justification": "The command accurately implements T1052 by archiving and compressing macOS Keychain data, encoding it with base64 to obfuscate binary content, and writing it to a USB volume under a disguised image filename (DCIM/.IMG0012.JPG), which is operationally plausible and realistic.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T08:28:59.712389Z"
+        "timestamp": "2026-02-18T22:36:23.729572Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid commands, flags, proper piping, and redirection without any syntax errors.",
+        "syntactic_justification": "The command uses standard Bash syntax, valid BSD tar flags for macOS, and correct pipe and redirection operators.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by packaging sensitive keychain data, encoding it with base64, and writing it to a mounted USB drive with a hidden, image-disguised filename, directly aligning with T1052.",
+        "semantic_justification": "The command accurately implements data staging, compression, encoding, and obfuscation for exfiltration to a physical medium as described in the technique.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T08:29:08.242045Z"
+        "timestamp": "2026-02-18T22:36:26.490924Z"
       }
     ],
     "llm_average_syntactic": 5.0,

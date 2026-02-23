@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T12:45:29.199980Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, proper Python syntax within the -c argument, and correct use of the sudo prefix for elevated privileges.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper quoting, valid Python inline syntax, and correct scapy API usage including chained packet layers and send() parameters.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using Scapy to craft custom TCP SYN packets with a specific magic string payload ('MAGICOPEN') that could serve as a covert activation signal to a listening system.",
+        "semantic_justification": "The command precisely implements T1205 Traffic Signaling by crafting TCP SYN packets with an embedded magic string payload ('MAGICOPEN') sent repeatedly to a specific host/port, which a covert listener could use as an activation trigger, fully consistent with the technique's description of using protocol fields and packet content to signal commands.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T12:45:32.525680Z"
+        "timestamp": "2026-02-19T03:40:56.087643Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct Python syntax, Scapy function calls, balanced quotes, and valid arguments.",
+        "syntactic_justification": "The command follows correct bash and python syntax, with properly nested quotes, balanced parentheses, and valid Scapy function calls.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the claimed intent of using Scapy to send repeated TCP SYN packets with a custom payload for signaling, directly aligning with T1205 Traffic Signaling via embedded commands in network traffic.",
+        "semantic_justification": "The command accurately implements traffic signaling by using a raw packet crafting tool to embed a specific string within a TCP SYN packet, which is a classic method for triggering covert listeners.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T12:45:40.016539Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:40:57.356300Z"
       }
     ],
     "llm_average_syntactic": 5.0,

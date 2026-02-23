@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper syntax, balanced quotes, correct exception handling, and appropriate use of libraries and functions.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements T1597 (Search Closed Sources) by querying the commercial BuiltWith API with proper authentication to gather intelligence about technologies used by a target domain, which is precisely the technique described.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:44:39.527464Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with correct syntax, balanced delimiters, proper function calls, and error handling, making it runnable as a single-line script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying a commercial, closed-source technical intelligence API (BuiltWith) to gather reconnaissance, which is operationally plausible for adversarial targeting.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:44:46.999895Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Python with balanced structures and a valid try/except block that will parse and run as a script.",
@@ -45,11 +25,31 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T11:44:58.862893Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with proper string handling, exception handling, and URL construction, though the multi-line format with inline if-statement after semicolons may cause issues when run as a single command-line string rather than a script file.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the commercial BuiltWith API (a paid closed-source intelligence feed) with an API key to enumerate technologies used by a target domain, which is a realistic and operationally plausible reconnaissance technique aligned with searching closed sources for targeting intelligence.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:49:05.025259Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly well-formed, using valid imports, correct environment variable retrieval, proper exception handling, and correctly formatted API requests with appropriate URL encoding.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the T1597 technique by programmatically querying a commercial, paid-tier technical intelligence database (BuiltWith) to gather information about a target's technology stack.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:49:09.075960Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

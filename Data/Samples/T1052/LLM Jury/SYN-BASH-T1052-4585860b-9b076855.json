@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T08:40:30.165589Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid dd parameters (if, of, bs, oflag, status), and correct path references.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by directly writing a pre-staged image to a physical USB device using dd with appropriate block size and flags for efficient transfer, bypassing file system detection.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T08:40:33.005731Z"
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid dd flags (if, of, bs, oflag, status), and correct use of the $HOME variable expansion.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses dd to write a pre-staged image directly to a raw USB device path, which aligns well with T1052 physical medium exfiltration, though writing a disk image rather than individual files is a less common but valid exfiltration approach; the 'None' privilege claim is slightly unrealistic since raw disk writes to /dev/disk/by-id/ typically require root or membership in the disk group on Linux.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T22:36:56.701568Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid `dd` options, correct quoting for paths, and proper flag syntax.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command uses the correct tool and arguments for writing to a raw USB disk as intended for exfiltration, the claim of \"Privilege: None\" is unrealistic as this operation almost always requires root privileges on Linux, preventing the command from achieving its stated intent.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T08:40:55.301836Z"
+        "syntactic_justification": "The command uses standard GNU dd syntax with correctly quoted paths and valid flags for block size and output synchronization.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements the technique, but writing directly to a block device in /dev/ typically requires root privileges, which contradicts the 'None' privilege level provided.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:36:57.892760Z"
       }
     ],
     "llm_average_syntactic": 5.0,

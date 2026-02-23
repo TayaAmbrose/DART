@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T12:58:02.459865Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), valid flags for hping3 and networksetup, and no syntax errors.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for hping3 and networksetup, proper use of && chaining, and correct argument syntax throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using a specific sequence of TCP SYN packets to predetermined ports as a covert signal, followed by enabling a proxy that could be used for subsequent C2 communications.",
+        "semantic_justification": "The command accurately implements T1205 port-knocking traffic signaling by sending sequential single TCP SYN packets to ports 22221, 22222, 22223 with timing delays to trigger a hidden service, then configures a local HTTP proxy to route traffic through the newly activated service \u2014 a realistic and operationally coherent implementation of the technique on macOS.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T12:58:05.429112Z"
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:42:16.819283Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax for all commands, flags, arguments, and proper use of command separators and quoting.",
+        "syntactic_justification": "The command uses correct Bash syntax, including proper command chaining with &&, valid hping3 flags, and correct networksetup parameters for macOS.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements a port knocking sequence as a timing/sequence-based trigger (Traffic Signaling) to activate a service, followed by a plausible post-trigger action of enabling a local proxy, fully aligning with T1205.",
+        "semantic_justification": "The command perfectly demonstrates traffic signaling (T1205) via a port-knocking sequence using hping3, followed by a logical post-activation step of configuring the system proxy to utilize the signaled service.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T12:58:23.454220Z"
+        "timestamp": "2026-02-19T03:42:23.575878Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -18,16 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, proper error handling in a try-catch block, appropriate variable assignments, correct method calls, and proper parameter usage.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying WhoisXML API, a commercial closed-source intelligence service, using proper authentication, error handling, and output formatting to gather domain intelligence.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:31:59.905135Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced braces/quotes, proper try/catch, valid parameters for Invoke-RestMethod, and correct hashtable and string usage.",
@@ -38,14 +28,24 @@
         "timestamp": "2025-10-02T13:32:08.017641Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced syntax, proper command separators, and valid parameter usage throughout.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, proper try/catch structure, correct string interpolation, valid Invoke-RestMethod flags, and proper semicolon separators throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying a commercial, closed-source WhoisXML API for intelligence, using a realistic method for API key management and error handling.",
+        "semantic_justification": "The command accurately implements T1597 by querying WhoisXML API, a commercial closed-source paid intelligence service, using an API key to retrieve WHOIS data for a target domain, which directly aligns with adversaries querying paid technical databases for targeting intelligence.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:32:08.607965Z"
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:57:11.725308Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed PowerShell script using correct syntax for try-catch blocks, variable assignments, .NET method calls, and cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying a commercial, paid WHOIS data provider using a legitimate API interaction pattern commonly used by adversaries for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:57:15.198466Z"
       }
     ],
     "llm_average_syntactic": 5.0,

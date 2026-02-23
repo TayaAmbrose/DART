@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags for all tools used, and correct variable references.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by generating a domain algorithmically based on date and hostname, making HTTP requests with browser-like properties to evade detection, and retrieving base64-encoded C2 instructions.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T05:16:22.235303Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid syntax for variable assignments, command substitutions, pipes, redirections, and standard macOS utility flags.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely executes the described intent, algorithmically generating a DGA-based domain at runtime and performing a stealthy C2 data retrieval consistent with T1568.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T05:16:32.255317Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quoting, valid separators, and appropriate flags for md5, wget, and base64 on macOS make the command well-formed and parseable.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T05:16:52.072819Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper variable assignments, valid flag usage for both wget and base64, and correct command chaining via semicolons and pipes.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 DGA behavior by generating a time- and hostname-seeded MD5-based domain at runtime, then fetching base64-encoded C2 instructions over HTTP with realistic browser-mimicking headers (User-Agent, Referer, Accept-Language) and rate-limiting to evade detection, decoding output to a hidden temp file.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:18:11.392149Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid bash syntax, balanced quotes, and correct flags for macOS-specific utilities like md5 -q and base64 -D.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly demonstrates dynamic resolution (DGA) by generating a time-and-host-based domain and fetching a payload with realistic browser emulation flags.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:18:15.471687Z"
       }
     ],
     "llm_average_syntactic": 5.0,

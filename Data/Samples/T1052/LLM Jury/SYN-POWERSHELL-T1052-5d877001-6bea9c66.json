@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T10:19:18.381959Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper syntax, balanced quotes and parentheses, appropriate semicolons as command separators, and valid cmdlet parameters.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by mounting an ISO image, identifying a removable drive, copying data to it (exfiltration over physical medium), and cleaning up by dismounting the image.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T10:19:21.242427Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and parentheses, valid PowerShell cmdlets chained with semicolons, though the Copy-Item path construction using string interpolation with drive letters (e.g., \"$iso:\\\" ) may have minor edge-case issues with path formatting.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1052 by mounting an ISO containing staged exfiltration content, identifying a removable USB drive dynamically, copying the contents recursively, and dismounting \u2014 closely matching the technique's staging-and-transfer pattern, with only a minor realism gap in that Copy-Item's source path \"$iso:\\\" may need adjustment to \"${iso}:\\\" for reliable variable expansion.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:41:54.378479Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid PowerShell cmdlets and syntax, balanced parentheses and quotes, and correct command separators.",
+        "syntactic_justification": "The command uses proper PowerShell syntax, correct cmdlet names, valid piping, and correctly balanced quotes and variables.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by mounting a staged ISO (implying prepared data) and copying its contents directly to a removable USB drive, simulating exfiltration over a physical medium.",
+        "semantic_justification": "The logic correctly identifies the drive letters for both the mounted ISO and the removable media to perform the file transfer as described.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T10:19:29.853301Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:41:56.730000Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

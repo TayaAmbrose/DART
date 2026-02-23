@@ -26,29 +26,29 @@
         "timestamp": "2025-10-01T13:24:38.972752Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper iptables syntax, valid flags, balanced quotes, and correct parameter usage.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements the first step of a port-knocking sequence using the iptables recent module to track connection attempts on UDP port 11111, which aligns perfectly with the Traffic Signaling technique by establishing a covert signaling mechanism.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T13:24:41.564557Z"
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid iptables flags, correct module syntax for `-m recent`, and proper log-prefix quoting.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements the first step of a port-knock sequence using iptables with the `recent` module to track source IPs that send UDP to port 11111, which is a realistic and operationally plausible implementation of traffic signaling (T1205), though it only logs rather than also setting the recent entry for use in subsequent knock rules, slightly reducing full operational completeness.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:45:11.593264Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid flags, arguments, and module usage for `iptables`.",
+        "syntactic_justification": "The command uses valid iptables syntax, including the proper flags for the recent module and the LOG target.",
         "semantic_score": 5,
-        "semantic_justification": "The command effectively establishes the first step of a port-knock sequence using `iptables`' `recent` module to track a covert signal (UDP/11111), perfectly aligning with the concept of traffic signaling for T1205.",
+        "semantic_justification": "The command correctly uses the iptables recent module to track source IPs hitting a specific port, which is a standard method for implementing the first stage of a port-knocking sequence.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T13:24:56.714869Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:45:13.532803Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

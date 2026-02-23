@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed Python code with proper imports, exception handling, balanced quotes/parentheses/braces, and correct string formatting for the embedded Python code to be executed in the Kubernetes pod.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries the non-public Have I Been Pwned API using an API key to collect breach intelligence about a specific email account, which is exactly the type of closed-source intelligence gathering described in the technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:56:51.944677Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The provided Python script is perfectly well-formed, with correct syntax, balanced delimiters, valid function calls, and proper string literal formatting for the embedded script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by programmatically querying the 'Have I Been Pwned' (HIBP) API using an API key, which constitutes accessing a closed source of non-public breach data to collect intelligence for targeting.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:56:56.452425Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Python code with balanced quoting and a correctly constructed inner exec string and Kubernetes stream call.",
@@ -44,11 +24,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T12:57:33.030423Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with proper imports, exception handling, and string construction, though the embedded inner script uses mixed newline escaping (\\n within a string) that could cause minor parsing issues in edge cases.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1597 by querying the paid HIBP API (a closed/subscription data source) via an API key to check breach exposure of a specific account, executed through a Kubernetes pod exec stream, which is operationally plausible and aligns with querying paid threat-intelligence databases for targeting intelligence.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:54:40.676656Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-structured, uses the Kubernetes client correctly, and the inner shell command is properly escaped and formatted for execution.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately targets a closed source (HIBP API) using required credentials to gather intelligence on account exposure, perfectly aligning with T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:54:43.373293Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

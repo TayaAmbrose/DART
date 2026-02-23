@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T03:56:04.879658Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, balanced parentheses, valid PowerShell syntax for variable assignment, proper command invocation, and correct parameter passing to WinSCP.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command is mostly well-formed PowerShell invoking WinSCP.com with proper quoting and variable interpolation, but the `synchronize` command is wrapped in parentheses and passed as a single string argument in a way that may cause parsing issues with WinSCP's command interpreter, and the `2>$null` redirect after `Out-Null` is redundant but not fatal.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by using WinSCP to synchronize local Windows temp files to a remote SFTP server with credentials, hostkey verification, and synchronization options that match files based on time criteria.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T03:56:08.150047Z"
+        "semantic_justification": "The command accurately implements T1020 automated exfiltration by using WinSCP to mirror C:\\Windows\\Temp to a remote SFTP server with time-based criteria and deletion of remote files, fully consistent with automated, scheduled, or scripted data transfer to an external location.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:24:52.224561Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 2,
-        "syntactic_justification": "The WinSCP `/command` switch expects a single string argument containing the script, but the command provides multiple independent strings, which will cause WinSCP.com to fail parsing after the first argument.",
-        "semantic_score": 2,
-        "semantic_justification": "The explanation claims the command 'mirrors the local Temp directory to a remote' (exfiltration), but the `synchronize remote` command in WinSCP actually synchronizes the remote directory to the local directory, which is the opposite of exfiltration.",
-        "combined_score": 2.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T05:54:23.078168Z"
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed PowerShell, correctly using the call operator, escaping internal quotes for the WinSCP command arguments, and properly silencing output via redirection.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly implements automated exfiltration (T1020) by using WinSCP's 'synchronize' feature to mirror a local directory to a remote SFTP server without user intervention.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:24:55.495565Z"
       }
     ],
-    "llm_average_syntactic": 4.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.0,
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

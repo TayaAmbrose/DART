@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct flag usage, and proper escaping for the nested JSON within the shell command.",
-        "semantic_score": 5,
-        "semantic_justification": "The command operationally aligns with the 'blend into normal activity' aspect of T1585, making an established account appear legitimate by performing typical social interactions.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T08:20:31.553181Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid kubectl syntax, correct flag formats, and properly escaped JSON payload.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 (Establish Accounts) by using an existing account to follow other accounts to blend in with normal activity patterns, making the persona appear legitimate and organically active.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T08:20:34.159181Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Proper kubectl run invocation with balanced quoting and a well-formed curl POST including correctly quoted headers and escaped JSON payload.",
@@ -44,11 +24,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T08:21:20.196212Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper escape sequences for the JSON body, valid kubectl and curl flags, and correct shell invocation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses a ephemeral Kubernetes pod to make an authenticated API call that follows social accounts on behalf of a persona, directly supporting T1585's account-blending behavior, though the use of a hardcoded test token and test domain slightly reduces operational realism.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:35:01.608464Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The kubectl run command is perfectly formed with valid flags, and the nested curl command correctly handles JSON escaping within the shell string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately simulates an adversary using an established cloud/container environment to perform account-warming activities on a social media profile to blend into normal activity, matching T1585.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:35:04.269959Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

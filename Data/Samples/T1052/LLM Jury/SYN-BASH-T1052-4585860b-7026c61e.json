@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T07:16:51.532789Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags, correct arithmetic expansion, and appropriate command piping.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, valid arithmetic expansion, proper pipe chaining, and correct flag syntax for both gzip and dd.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by compressing Chrome browser history and writing it to a physical USB device (/dev/sdb) in a covert manner by placing it in an unused area near the end of the device.",
+        "semantic_justification": "The command accurately implements T1052 by compressing Chrome browser history (staging sensitive data), then writing it directly to a raw USB block device at a calculated offset near the end of the disk (avoiding partition metadata), which is a realistic and operationally plausible physical medium exfiltration technique.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T07:16:54.149245Z"
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T22:32:27.111832Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct pipe usage, and proper arithmetic and command substitutions.",
-        "semantic_score": 3,
-        "semantic_justification": "The command's actions perfectly align with Exfiltration Over Physical Medium (T1052) by compressing and writing data to a raw disk offset, but it is not operationally plausible under the stated 'Privilege: None' as writing to /dev/sdb typically requires root access.",
-        "combined_score": 4.0,
+        "syntactic_justification": "The command uses valid Bash syntax, including proper arithmetic expansion, command substitution, piping, and correct flags for gzip and dd.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements exfiltration to a physical medium by writing compressed data to a calculated offset on a raw device, though it realistically requires root privileges to access /dev/sdb.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T07:17:12.150317Z"
+        "timestamp": "2026-02-18T22:32:31.995753Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

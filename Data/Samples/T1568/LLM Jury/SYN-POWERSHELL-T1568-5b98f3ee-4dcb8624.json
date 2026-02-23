@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid flag formats, and appropriate error handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by using a DGA-like domain pattern with random numbers and date components, retrieving C2 parameters from DNS TXT records, and establishing a connection to the dynamically resolved endpoint.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T04:52:46.094461Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, and all cmdlets and parameters are used correctly.",
-        "semantic_score": 3,
-        "semantic_justification": "The command strongly aligns with T1568 by using a DGA, dynamically resolving C2 parameters via DNS, and attempting to beacon, but the 'netsh advfirewall' command requires administrator privileges, contradicting the stated 'Privilege: None' and making the 'opens the advertised port' claim operationally implausible.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T04:53:05.978148Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell command is well-formed with balanced braces/quotes, valid parameters, and proper separators, so it should parse and run as written.",
@@ -46,11 +26,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T04:53:25.593172Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script block is fully well-formed with balanced braces, parentheses, and quotes, valid cmdlet syntax, proper use of semicolons as statement separators, and no detectable parsing errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by algorithmically generating a date-seeded DGA domain, querying TXT records via an external DNS resolver to retrieve C2 parameters (port and path), resolving the A record to confirm reachability, dynamically opening a firewall rule for the retrieved port, and then beaconing over HTTPS to the constructed endpoint \u2014 fully matching the described technique and explanation.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:15:44.763969Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script block is well-formed with correct variable interpolation, proper use of cmdlets, and balanced delimiters.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a DGA-based resolution and C2 parameter retrieval, though the 'netsh' command requires administrative privileges which contradicts the 'None' privilege metadata provided.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:15:47.852888Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

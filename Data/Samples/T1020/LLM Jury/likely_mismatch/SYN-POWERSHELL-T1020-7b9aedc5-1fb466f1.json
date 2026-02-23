@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T02:13:12.269285Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 1,
-        "syntactic_justification": "The command is a placeholder description rather than an actual executable command, containing only a high-level description of the intended operation without proper syntax.",
-        "semantic_score": 4,
-        "semantic_justification": "The described technique accurately represents automated exfiltration using SMB drive mapping for data transfer, though it lacks specific implementation details like file filtering criteria and automation mechanisms.",
-        "combined_score": 2.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T02:13:15.214598Z"
+        "syntactic_justification": "The command is a non-executable natural language placeholder/description rather than actual runnable code, containing no real syntax, just a prose description of what commands would be used.",
+        "semantic_score": 3,
+        "semantic_justification": "The described approach (net use to map a remote SMB share, recursive copy of filtered file types, then disconnect) is operationally plausible and aligns with T1020 automated exfiltration concepts, but the absence of actual executable commands, specific file type filters, copy mechanisms, or silent flags makes it only a partial conceptual match.",
+        "combined_score": 2.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:19:22.778430Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 1,
-        "syntactic_justification": "The provided 'command' is explicitly a 'non-executable placeholder' and a natural language description of actions, not a syntactically runnable command string.",
+        "syntactic_justification": "The provided text is a natural language description and a placeholder rather than a functional, executable PowerShell command.",
         "semantic_score": 5,
-        "semantic_justification": "The described sequence of actions\u2014mapping a network share and recursively copying filtered files\u2014is a highly plausible and effective method for automated exfiltration over SMB, perfectly aligning with T1020.",
+        "semantic_justification": "The described procedure\u2014mounting a remote drive via SMB, recursively copying targeted data, and unmounting to clear traces\u2014is a standard and effective method for automated exfiltration.",
         "combined_score": 3.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T02:13:25.030870Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:19:28.817401Z"
       }
     ],
     "llm_average_syntactic": 1.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 2.5,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 2.333,
     "llm_verdict": "likely_mismatch",
     "sandbox_trace_id": null,
     "mitre_match_score": null

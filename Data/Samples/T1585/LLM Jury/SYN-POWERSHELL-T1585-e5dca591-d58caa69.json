@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper AWS CLI syntax, correctly formatted parameters, balanced quotes, and valid flags.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 (Establish Accounts) by creating a login profile for an existing IAM user with an initial password and forced reset requirement, which is a realistic implementation of account establishment in AWS.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T08:50:40.335931Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct AWS CLI syntax, valid flags, and proper quoting for arguments.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly achieves the claimed intent of enabling AWS Console login for an existing user, which perfectly aligns with the T1585 'Establish Accounts' technique by creating persistent access and blending into normal activity.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T08:50:50.898933Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed AWS CLI command with valid flags and balanced quoting suitable for PowerShell.",
@@ -45,6 +25,26 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T08:50:58.244173Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid AWS CLI syntax, properly balanced single quotes around the password, correct flag names (--user-name, --password, --password-reset-required, --output), and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely achieves the stated intent by enabling AWS Console login for an IAM user with an initial temporary password and forced reset, which directly maps to T1585 account establishment behavior by creating usable credentials for a persona account while mimicking legitimate onboarding workflows.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:36:50.027281Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows the standard AWS CLI syntax with correctly formatted flags, balanced quotes, and valid argument structures for PowerShell.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses the AWS IAM API to enable console access for an identity, directly aligning with the Establish Accounts technique by creating a persistent access mechanism.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:36:51.713082Z"
       }
     ],
     "llm_average_syntactic": 5.0,

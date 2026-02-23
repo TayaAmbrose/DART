@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Python",
+  "command": "[withheld due to safety: would sniff UDP packets to a high-numbered port containing a specific cleartext passphrase and, on match, enable NAT or port-forwarding via iptables]",
+  "explanation": "High-level concept: a UDP magic packet with a cleartext passphrase signals the host to enable routing or NAT, effectively changing device functionality. Detection: monitor for UDP packets to odd ports with suspicious static payloads, alert on writes to net.ipv4.ip_forward and iptables NAT table modifications by root.",
+  "rationale_steps": [
+    "Use scapy to sniff for UDP packets to a chosen port and check Raw payload for a passphrase.",
+    "On match, the logic would set /proc/sys/net/ipv4/ip_forward and add iptables NAT rules (requires root).",
+    "Detection: sysctl/audit logs for ip_forward changes; iptables-save diffs; IDS payload matching on that UDP port."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1205-449d88c9-ac07c47e",
+  "source_prompt_hash": "449d88c9",
+  "timestamp_utc": "2025-09-30T06:12:17.631164Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "Only a high-level description is provided with no actual Python or shell syntax, so it is not runnable or parseable as-is.",
+        "semantic_score": 2,
+        "semantic_justification": "The concept aligns with T1205 traffic signaling, but it is not operationally feasible under 'Privilege: None' because sniffing and modifying iptables/sysctl require root.",
+        "combined_score": 1.5,
+        "confidence": 0.4,
+        "timestamp": "2025-10-01T15:27:17.311253Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command was withheld and replaced with a high-level description, so no actual syntax can be evaluated; only a conceptual summary is present.",
+        "semantic_score": 5,
+        "semantic_justification": "The described concept is a textbook T1205 traffic signaling / port-knocking variant: a UDP magic packet carrying a cleartext passphrase triggers iptables NAT/forwarding changes, which is operationally plausible, privilege-appropriate (root for iptables), and aligns precisely with the technique's covert signaling and payload-triggering behaviors.",
+        "combined_score": 3.0,
+        "confidence": 0.6,
+        "timestamp": "2026-02-19T03:52:20.266681Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The implementation of a UDP packet listener that executes a system command upon matching a string is syntactically straightforward in Python and involves no complex or impossible constructs.",
+        "semantic_score": 4,
+        "semantic_justification": "The use of a magic UDP packet to trigger firewall/NAT changes is a clear example of T1205, but the operation requires root privileges, contradicting the provided 'None' metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:52:42.896915Z"
+      }
+    ],
+    "llm_average_syntactic": 2.333,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 3.0,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

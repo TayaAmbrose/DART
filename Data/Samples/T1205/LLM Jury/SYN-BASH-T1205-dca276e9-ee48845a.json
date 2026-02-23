@@ -26,24 +26,24 @@
         "timestamp": "2025-10-01T16:55:48.630447Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid iptables options, module flags, and correct hex string syntax.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely detects the claimed T1205 technique by inspecting ICMP echo-request payloads for a specific magic hex token, which directly aligns with covert traffic signaling via custom encodings.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T16:55:59.506035Z"
+        "syntactic_justification": "The command is well-formed with balanced quotes, valid iptables flags, correct module syntax for -m string and -m recent, and a properly formatted hex-string argument.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses iptables with the string-matching module to detect ICMP echo-requests containing a magic byte sequence (0xDEADBEEF) and logs them, which is a plausible detection mechanism for T1205 ICMP-based covert signaling, though the -m recent --set is more suited for rate-limiting than pure detection and the LOG target only logs without blocking or alerting, making it a partial but operationally reasonable implementation.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:57:55.069827Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper iptables syntax, correctly using the string match module with hex-string option, proper quoting, and valid flags throughout.",
-        "semantic_score": 4,
-        "semantic_justification": "The command correctly implements detection of ICMP-based traffic signaling by monitoring for a specific hex pattern (DEADBEEF) in ICMP echo requests, but it only logs the traffic rather than blocking it, which is appropriate for detection but not prevention.",
-        "combined_score": 4.5,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:18:01.791647Z"
+        "syntactic_justification": "The command uses valid iptables syntax, correctly employs the string and recent modules, and features properly escaped hex-string notation and balanced quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a detection mechanism for ICMP-based traffic signaling by identifying a specific hex pattern in the payload and logging the event, aligning perfectly with T1205.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:57:57.055296Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T15:15:22.379955Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct flag usage, balanced quoting, and valid command chaining, adhering to standard bash and utility syntax.",
-        "semantic_score": 2,
-        "semantic_justification": "The command fails to achieve its claimed intent because the two `iptables` rules are inserted at the same position, leading to an incorrect order where the SSH check will occur before the HTTP knock sets the recent entry, and the 'Privilege: None' claim is incorrect as `ufw` and `iptables` require root.",
-        "combined_score": 3.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T15:15:52.630892Z"
+        "syntactic_justification": "The command is well-formed with balanced quoting, proper use of && separators, valid iptables flags including -m string, -m recent modules, and all arguments are syntactically correct.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements HTTP header-based port knocking (T1205) by using iptables string matching on the 'Host: knock.hidden' header to tag the source IP with the 'recent' module, then allowing SSH access for 15 seconds to IPs that sent the trigger \u2014 a textbook application-layer traffic signaling technique.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:51:36.380459Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for both ufw and iptables, correct command separators, and follows the expected syntax for both utilities.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, correct bash flag usage, and valid syntax for both ufw and iptables components.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using HTTP Host header inspection as a covert trigger to temporarily allow SSH access, creating a port knocking-like mechanism that aligns with T1205.",
+        "semantic_justification": "The command correctly uses the iptables 'string' and 'recent' modules to implement application-layer traffic signaling, allowing SSH access only after a specific HTTP trigger is observed.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:13:06.433431Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:51:39.815007Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

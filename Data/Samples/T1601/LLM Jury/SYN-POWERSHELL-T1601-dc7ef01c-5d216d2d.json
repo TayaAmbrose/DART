@@ -16,16 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for both DISM and certutil commands, correct piping to Out-Null, and appropriate parameter formatting.",
-        "semantic_score": 4,
-        "semantic_justification": "The command correctly mounts a Windows image in read-write mode and calculates a hash of the SOFTWARE registry hive which aligns with detecting T1601 modifications, but requires administrative privileges despite claiming 'None' in the privilege field.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T19:25:35.203867Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell pipeline and statement separator using valid DISM and certutil flags with correctly formatted paths and no quoting issues.",
@@ -36,19 +26,29 @@
         "timestamp": "2025-10-02T19:25:59.690628Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command uses well-formed DISM and CertUtil syntax, valid flags, correct command separators, and Powershell piping, making it perfectly parseable.",
-        "semantic_score": 1,
-        "semantic_justification": "The command does not perform the 'modify system image' action central to T1601; instead, it mounts the image read-write (a preparatory step) and then hashes a file for baselining/detection, and critically, the `dism /Mount-Image` operation requires Administrator privileges, contradicting the stated 'Privilege: None'.",
-        "combined_score": 3.0,
+        "syntactic_justification": "The command uses correct DISM and certutil syntax with proper PowerShell piping and command separation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively achieves the goal of mounting an image and hashing a sensitive file, but it incorrectly identifies the required privilege level as 'None' when DISM operations require administrative rights.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-02T19:26:08.340502Z"
+        "timestamp": "2026-02-19T01:23:47.093372Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed with valid flags and proper PowerShell piping, but piping `dism` output to `Out-Null` while using a semicolon to chain `certutil` is syntactically valid though the pipe from dism (a non-PowerShell native command) to Out-Null works in PowerShell but may produce minor behavioral quirks.",
+        "semantic_score": 3,
+        "semantic_justification": "While mounting a WIM image read-write and hashing the SOFTWARE hive is a plausible baseline/detection workflow, the claimed intent of 'enabling detection of later tampering (T1601)' is only partially aligned \u2014 T1601 involves modifying firmware/OS images, and mounting with /ReadWrite actually introduces risk of tampering rather than purely baselining, and the privilege level of 'None' is incorrect since DISM image mounting requires administrator privileges.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:23:47.487159Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 4.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

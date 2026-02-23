@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper variable usage, correct command separators, valid flags for curl, and proper loop construction.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by using a deterministic algorithm with seed+date to generate domain names across multiple TLDs, using DNS-over-HTTPS to resolve them, and establishing C2 communication when a valid endpoint is found.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T06:57:05.078324Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct Bash syntax for variables, arrays, loops, command substitutions, arithmetic expansions, and `curl` arguments with proper quoting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the claimed intent and the T1568 technique, realistically demonstrating DGA domain generation, DoH-based probing for a C2 endpoint, and subsequent beaconing with system information.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T06:57:18.468086Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash with balanced quoting/parentheses, valid array indexing and arithmetic expansions, and correct curl flags and separators.",
@@ -46,11 +26,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T06:57:41.867787Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid constructs, but the array indexing `${TLDs[$RANDOM%${#TLDs[@]}]}` may behave inconsistently across bash versions due to arithmetic in array subscripts without explicit `$(())`, though it typically works in bash.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 DGA behavior: it seeds domain generation with a daily date + index + SHA256 truncation, rotates across multiple TLDs, uses DNS-over-HTTPS (DoH) to evade DNS monitoring, probes a non-standard port (4433) for C2 liveness, and sends a beacon with host identity and timestamp upon successful connection.",
+        "combined_score": 4.5,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:26:07.068983Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Bash syntax for variable assignments, array indexing, command substitution, and loop structures.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a time-seeded DGA using DoH for resolution and a standard beaconing pattern, aligning perfectly with T1568.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:26:09.005604Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

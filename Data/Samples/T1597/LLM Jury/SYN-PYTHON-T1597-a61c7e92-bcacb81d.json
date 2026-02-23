@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper syntax, balanced quotes/parentheses/braces, correct exception handling, and appropriate function calls to the boto3 and requests libraries.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries RiskIQ PassiveTotal (a paid threat intelligence service) for DNS information about a domain, retrieves credentials from AWS Secrets Manager, and stores the results in S3.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:48:29.917856Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed, with correct imports, variable assignments, function calls, control flow, and no syntax errors.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly queries a recognized paid closed-source intelligence platform (RiskIQ PassiveTotal) for reconnaissance data and stores it, directly aligning with T1597's description of acquiring non-public information.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:48:35.672302Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid Python script with balanced syntax, proper imports, and runnable structure.",
@@ -45,6 +25,26 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T12:48:37.133360Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically well-formed with balanced parentheses, proper imports, correct string formatting, valid exception handling, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by authenticating to RiskIQ PassiveTotal (a legitimate paid closed-source threat intelligence platform) using credentials retrieved from AWS Secrets Manager, querying passive DNS records for a target domain, and storing results in S3, which is operationally realistic and directly aligned with querying paid/private databases for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:54:02.111828Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly well-formed with correct imports, variable assignments, exception handling, and valid library calls.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements T1597 by programmatically querying a known paid intelligence provider (RiskIQ) using valid API patterns and storing the results in a cloud environment.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:54:04.719774Z"
       }
     ],
     "llm_average_syntactic": 5.0,

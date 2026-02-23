@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, error handling with try/catch/finally blocks, balanced quotes/braces, and correct command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by retrieving credential exposure data from SpyCloud (a closed-source threat intelligence provider) using proper authentication, logging the activity, and storing the data for analysis.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:45:01.506758Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for variable assignment, control flow (try-catch-finally), external command execution, and cmdlet usage.",
-        "semantic_score": 4,
-        "semantic_justification": "The command strongly aligns with T1597 by using pscp to retrieve credential exposure data from a closed source (SpyCloud), but the destination path 'C:\\Intel' is unlikely writable by a user with 'None' privilege, creating a minor operational realism gap.",
-        "combined_score": 4.5,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T13:45:22.796792Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced try/catch/finally, correct quoting, valid PSCP flags, and proper hashtable and pipeline usage.",
@@ -46,11 +26,31 @@
         "combined_score": 4.5,
         "confidence": 0.86,
         "timestamp": "2025-10-02T13:45:36.240754Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, braces, and parentheses, proper semicolon separators, valid try/catch/finally blocks, and correct cmdlet syntax throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by using pscp.exe to retrieve a credential exposure export from SpyCloud (a legitimate closed-source threat intelligence vendor) over SCP with key-based authentication, storing credentials in environment variables, computing a SHA256 hash for integrity verification, and logging structured JSON output \u2014 all operationally plausible for querying a paid closed-source intelligence feed.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:58:50.585724Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed PowerShell script using correct syntax for variables, try-catch-finally blocks, external process execution, and object manipulation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by automating the retrieval of a non-public data export from a known closed-source intelligence provider (SpyCloud) using industry-standard tools and authentication.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:58:53.071586Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

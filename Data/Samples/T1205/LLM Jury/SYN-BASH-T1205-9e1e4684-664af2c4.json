@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T16:01:11.645289Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct command syntax, proper piping and conditional execution, balanced quotes, and valid flags for all tools used.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper command chaining via &&, valid flags for both nc (-u -w1) and ssh (-o ConnectTimeout=5 -p 5522), and correct use of command substitution with $().",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly demonstrates T1205 by sending a specific UDP signal to a gateway to trigger an access control change, enabling a subsequent SSH connection, which is a textbook example of traffic signaling to coordinate actions and trigger payloads.",
+        "semantic_justification": "The command accurately implements a port-knocking/traffic signaling variant by sending a magic-string UDP packet to a gateway service to trigger firewall rule changes, then immediately attempting SSH \u2014 directly aligning with T1205's use of protocol signals to trigger access or coordinate actions.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T16:01:23.857550Z"
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:54:37.481964Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators (&&), valid flags for both netcat (-u, -w1) and ssh (-o, -p), and correct use of command substitution.",
+        "syntactic_justification": "The command uses valid bash syntax, correct piping, properly nested subshells, and standard flags for nc and ssh.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending a UDP 'magic packet' containing the host's IP to a knock service (port 7000) that temporarily opens access to an SSH service on a non-standard port (5522), demonstrating a legitimate implementation of port knocking for covert access.",
+        "semantic_justification": "The command accurately implements a traffic signaling (port knocking) trigger followed by a conditional service connection, perfectly matching the T1205 technique.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:15:08.717902Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:54:40.496965Z"
       }
     ],
     "llm_average_syntactic": 5.0,

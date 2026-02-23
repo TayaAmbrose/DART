@@ -19,26 +19,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct syntax for all the bash operations including variable assignments, conditionals, and command substitutions.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the dynamic resolution technique (T1568) by generating a domain algorithmically (using date+hash), resolving through CNAME indirection, dynamically selecting ports, configuring firewall rules, and establishing command and control through HTTP.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T05:07:10.533919Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid command substitutions, proper separators, and correct flag usage for all included utilities.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command effectively implements dynamic resolution via DGA-like generation, CNAME indirection, and random port selection, the `iptables` commands require root privileges, contradicting the stated 'Privilege: None' and making the full operational flow implausible.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T05:07:30.965177Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quotes and command separators with valid flags and substitutions make it well-formed and parseable by bash.",
@@ -47,11 +27,31 @@
         "combined_score": 4.5,
         "confidence": 0.82,
         "timestamp": "2025-10-02T05:07:53.597921Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper semicolons as separators, valid flag usage for dig/curl/iptables/awk, and correct bash variable expansion throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by generating a time-seeded domain, using CNAME indirection for endpoint rotation, randomly selecting an IP from DNS results, dynamically choosing a high port via awk/srand, modifying iptables to permit the connection, and fetching tasks \u2014 all hallmarks of dynamic C2 resolution with fast-flux/CNAME pivoting.",
+        "combined_score": 5.0,
+        "confidence": 0.93,
+        "timestamp": "2026-02-19T00:17:20.867879Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed, uses correct bash parameter expansion, valid tool flags, and properly nested command substitutions.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively emulates DGA and dynamic resolution behaviors, although the use of 'iptables' contradicts the 'Privilege: None' metadata as it requires root access.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:17:23.674175Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T04:06:07.308857Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct Docker syntax including volume mounts, networking configuration, and a properly structured bash script with error handling.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolons and command separators, valid Docker flags, correct volume mount syntax, and a properly quoted bash heredoc-style inline script.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by creating a Docker container that runs continuously, periodically (every 6 hours) compressing MySQL database files and exfiltrating them via SCP to a remote server with proper authentication and cleanup.",
+        "semantic_justification": "The command fully implements T1020 automated exfiltration by using a Docker container with a persistent loop to periodically compress MySQL database files via tar, then quietly transfer them via SCP to an external attacker-controlled host every 6 hours, with cleanup and timestamped filenames \u2014 matching all hallmarks of automated exfiltration including batching, compression, scheduling, and use of an alternative protocol (SSH/SCP).",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T05:56:41.962025Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:25:36.460257Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command substitutions, and proper command separation within the bash script.",
+        "syntactic_justification": "The command uses correct Docker and Bash syntax with properly balanced quotes, valid flags, and logical flow.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1020 Automated Exfiltration by using a containerized, scheduled process to archive and compress database files, then exfiltrate them via SCP to an external attacker-controlled IP.",
+        "semantic_justification": "The command effectively automates data collection, compression, and exfiltration via a persistent containerized process, perfectly aligning with T1020.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T05:56:56.201463Z"
+        "timestamp": "2026-02-18T22:25:38.917497Z"
       }
     ],
     "llm_average_syntactic": 5.0,

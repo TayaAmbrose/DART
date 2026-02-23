@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct syntax for all operations including variable assignments, command substitutions, and piping.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1568 Dynamic Resolution technique by algorithmically generating a domain name based on hostname and day-of-year, then fetching and executing content from that dynamically determined endpoint.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T06:07:28.492991Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct bash syntax for variable assignments, command substitutions, arithmetic expansion, piping, and output redirection, with all flags and arguments valid.",
-        "semantic_score": 5,
-        "semantic_justification": "The command flawlessly implements T1568 by algorithmically determining a subdomain at runtime (DGA-like hostname hash XOR day-of-year), then fetches and decodes instructions disguised as a JavaScript library from this dynamic endpoint, aligning perfectly with the technique's description and operational plausibility.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T06:07:42.209817Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The command uses balanced quoting, valid bash constructs and flags for macOS utilities, proper separators, a well-formed arithmetic expansion, and a valid pipeline with redirection.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.83,
         "timestamp": "2025-10-02T06:08:31.821333Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper semicolons as separators, valid arithmetic expansion, correct flag usage for date/md5/cut/printf/wget/base64, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 by algorithmically deriving a subdomain at runtime using a day-of-year XOR with a host-derived hash (DGA behavior), fetching base64-encoded payload disguised as a JS vendor file via a legitimate-looking CDN domain with a browser User-Agent for evasion, and decoding it to a hidden temp file \u2014 fully consistent with dynamic resolution C2 tradecraft on macOS.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:21:32.891910Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid bash syntax, correct macOS-specific flags for md5 and base64, and properly handles shell arithmetic and variable expansion.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a Domain Generation Algorithm (DGA) by calculating a time-and-host-dependent subdomain at runtime, which perfectly aligns with the T1568 technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:21:33.927758Z"
       }
     ],
     "llm_average_syntactic": 5.0,

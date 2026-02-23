@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, featuring a valid command, standard flags, and a correctly quoted path for the macOS platform.",
-        "semantic_score": 5,
-        "semantic_justification": "The command uses 'srm', a tool specifically designed for secure deletion with overwriting, directly achieving the recursive and unrecoverable data destruction described in T1485 for the specified backup directory.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T02:58:03.379661Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, valid flags (-rfP), and correctly quoted path.",
-        "semantic_score": 5,
-        "semantic_justification": "The command uses 'srm' (secure remove) with recursive (-r), force (-f), and DoD-compliant overwrite (-P) flags to permanently destroy data in the specified backup directory, directly aligning with the T1485 Data Destruction technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T02:58:03.683021Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 4,
         "syntactic_justification": "The command is well-formed with balanced quotes and valid option clustering, though -P may not be a supported srm flag on modern macOS versions.",
@@ -45,6 +25,26 @@
         "combined_score": 4.0,
         "confidence": 0.5,
         "timestamp": "2025-10-02T02:58:39.356029Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-r for recursive, -f for force, -P for overwrite passes), and a properly quoted path argument.",
+        "semantic_score": 5,
+        "semantic_justification": "srm (secure remove) is a macOS/Unix tool specifically designed for secure deletion, and using -rfP to recursively and forcefully wipe a backup directory with multiple overwrite passes directly aligns with T1485 data destruction targeting backup systems.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:45:09.996662Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Bash syntax with valid flags for the srm utility and properly quoted paths.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately utilizes a known secure-deletion tool (srm) with recursive and multi-pass overwrite flags to achieve data destruction on a plausible macOS mount point.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:45:12.431944Z"
       }
     ],
     "llm_average_syntactic": 4.667,

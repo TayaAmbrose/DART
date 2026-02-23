@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper syntax, balanced quotes/parentheses, correct exception handling, and appropriate variable declarations and function calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries WhoisXML API, a paid closed-source intelligence service, using an API key to gather domain information that could be used for reconnaissance.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:15:02.182759Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with balanced syntax, valid constructs, and is runnable as a single line despite using semicolons to chain statements.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying a paid, closed-source API (WhoisXML) using an API key to collect intelligence (WHOIS data) for potential targeting, directly matching the technique's description.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:15:08.752397Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid Python with balanced delimiters, proper try/except blocks, and correct use of urllib, SSL context, and JSON handling.",
@@ -45,11 +25,31 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T12:15:18.387291Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with balanced parentheses and proper syntax, but the multi-line format with inline if-statement and mixed indentation may cause issues when executed as a single command string in a shell context.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the paid WhoisXML API (a closed/commercial data source) using an API key to retrieve WHOIS intelligence on a target domain, with proper error handling, secure HTTPS context, and environment-variable-based credential management.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:51:33.626638Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-formed, using valid semicolon-separated statements, proper library imports, and correct exception handling syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly demonstrates T1597 by querying a real-world paid technical database (WhoisXML API) to gather intelligence, utilizing environment variables for credentials which is operationally realistic.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:51:37.691494Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

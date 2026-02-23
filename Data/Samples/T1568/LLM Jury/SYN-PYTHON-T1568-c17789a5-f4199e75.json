@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is well-formed with properly balanced quotes, parentheses, and braces, correct imports, valid function definitions, and proper control flow structures.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by using a time-based DGA algorithm to generate domains, querying them with DNS, establishing C2 communication when a valid domain resolves, and even includes realistic operational details like firewall rule insertion and HTTP connection.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:20:11.413717Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed, uses correct syntax for imports, function definitions, string formatting, Scapy calls, and subprocess execution, making it fully parseable and runnable via `python3 -c`.",
-        "semantic_score": 4,
-        "semantic_justification": "The command excellently implements dynamic resolution using a DGA, cache-bypassing random subdomains, and Scapy for direct DNS queries to determine a C2 endpoint, then attempts to establish C2 via `curl`, though the `iptables` rule modification typically requires elevated privileges, contradicting the stated 'Privilege: None'.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T07:20:30.884197Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Properly quoted python3 -c with balanced quotes/newlines and valid Python statements; no obvious syntax or flag errors.",
@@ -46,11 +26,31 @@
         "combined_score": 4.0,
         "confidence": 0.78,
         "timestamp": "2025-10-02T07:21:29.147251Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command is largely well-formed Python embedded in a shell one-liner, but the multiline structure with newlines inside the -c string is problematic for direct shell execution without proper escaping or quoting, and the scapy import on the same line as the -c string opening quote creates a parsing ambiguity that would likely fail in practice.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 DGA behavior by generating time-seeded SHA256-based domain names, reading system resolvers from /etc/resolv.conf to bypass caches, iterating through generated domains with randomized subdomain prefixes, dynamically selecting a C2 port, adding an iptables rule to permit outbound traffic, and beaconing to the resolved endpoint \u2014 all hallmarks of dynamic C2 resolution.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:27:45.928480Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-formed, correctly uses list comprehensions for parsing /etc/resolv.conf, and maintains proper quoting and structure for execution via the -c flag.",
+        "semantic_score": 4,
+        "semantic_justification": "The command perfectly implements a time-based DGA and dynamic resolution via raw DNS queries, though it operationally requires root privileges for scapy and iptables which contradicts the 'None' privilege label.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:27:50.221031Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.333,
     "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

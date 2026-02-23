@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T06:51:33.941680Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), balanced quotes, valid flags for the cp command (-Rp), and correct path references.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid use of && separators, correct flag usage for diskutil, mkdir -p, and cp -Rp, and proper variable expansion with $HOME.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 (Exfiltration Over Physical Medium) by mounting an external disk, creating a hidden directory (.dl), and copying user data to the removable storage in a concealed location.",
+        "semantic_justification": "The command accurately implements T1052 by mounting an external USB partition (disk2s1), creating a hidden directory (prefixed with '.') on the mounted volume to conceal the exfiltrated data, and recursively copying the Downloads folder there \u2014 fully consistent with staging and transferring data to a physical medium on macOS.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T06:51:36.632266Z"
+        "timestamp": "2026-02-18T22:30:54.111343Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid macOS commands, flags, path structures, balanced quotes, and proper logical separators.",
+        "syntactic_justification": "The command uses standard Bash syntax with valid logical operators, correctly quoted variables, and proper flag usage for all three utilities.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of mounting an external partition and copying the Downloads folder to a concealed location on it, directly aligning with T1052 for exfiltration over a physical medium.",
+        "semantic_justification": "The sequence correctly leverages native macOS tools to mount external media, create a hidden staging directory, and recursively copy sensitive user data, perfectly aligning with T1052.",
         "combined_score": 5.0,
         "confidence": 1.0,
-        "timestamp": "2025-10-01T06:51:46.176143Z"
+        "timestamp": "2026-02-18T22:30:56.252921Z"
       }
     ],
     "llm_average_syntactic": 5.0,

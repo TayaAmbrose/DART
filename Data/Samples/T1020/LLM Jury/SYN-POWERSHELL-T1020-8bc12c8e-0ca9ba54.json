@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T04:10:42.109377Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper escape sequences, valid flags for psexec and PowerShell, and correct PowerShell syntax throughout the script.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced braces and quotes, but the backtick escaping inside the double-quoted PowerShell -Command string passed through psexec/cmd.exe may cause parsing issues since backticks have special meaning in PowerShell but the outer shell layer could interfere with quoting.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by using psexec to launch a hidden PowerShell process that continuously monitors a directory for database backups, exfiltrates them via SFTP, tracks successful transfers, and runs on a scheduled interval.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T05:57:54.395958Z"
+        "semantic_justification": "The command accurately implements T1020 automated exfiltration by using psexec for privileged silent execution, a polling loop with sleep intervals to continuously transfer .bak database backup files via curl over SFTP to an external server, and tracking sent files by moving them to a separate directory \u2014 all hallmarks of automated, scheduled exfiltration behavior.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:25:51.108477Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, valid flags for psexec and powershell, and correct escaping for the curl argument within the nested command execution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of automated exfiltration, utilizing a loop, specific file targeting, SFTP transfer via curl, and tracking of sent items, aligning completely with the T1020 technique.",
-        "combined_score": 5.0,
+        "syntactic_justification": "The command is well-formed with correctly balanced parentheses, braces, and quotes, and utilizes appropriate PowerShell syntax for looping and file manipulation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command perfectly implements automated exfiltration as described; however, on most modern Windows systems, 'curl' is a PowerShell alias for 'Invoke-WebRequest', which does not support the -T (upload) flag, likely requiring 'curl.exe' to function as intended.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T05:58:19.549936Z"
+        "timestamp": "2026-02-18T22:26:05.542298Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

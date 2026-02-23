@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, variable assignments, command substitutions, arithmetic operations, and valid curl flags.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by generating a time-based DGA subdomain with hostname entropy, calculating a rotating port number, and establishing a beacon connection that would evade static blocking.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T06:32:28.174655Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command separators, and no discernible syntax errors for a Bash environment.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1568 by generating highly dynamic domain and port endpoints at runtime for beaconing, utilizing a DGA subdomain, a legitimate dynamic DNS service, and time-based port calculation.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T06:32:38.929257Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quoting and command substitutions with proper separators and flags; arithmetic and variable expansions are well-formed.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T06:33:06.764648Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolons as separators, valid arithmetic expansion, correct flag usage for both sha256sum and curl, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command authentically implements T1568 dynamic resolution by generating a time-and-host-seeded DGA subdomain via SHA256 hashing, computing a time-rotating port, and beaconing via curl with a host-identifying header to the dynamically resolved endpoint on DuckDNS, which is operationally plausible and fully aligned with the technique.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:23:21.046048Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid POSIX/Bash syntax, including correct variable expansion, subshells, piping, and arithmetic evaluation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively implements a time-based DGA for both domain and port resolution, matching the T1568 technique description.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:23:28.764358Z"
       }
     ],
     "llm_average_syntactic": 5.0,

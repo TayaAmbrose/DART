@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T14:05:24.815319Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced syntax, valid cmdlets, parameters, and .NET calls, ensuring it is parseable and runnable.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced braces, parentheses, and quotes, valid PowerShell cmdlet usage, proper string concatenation, and correct Base64 decoding pipeline.",
         "semantic_score": 5,
-        "semantic_justification": "The command effectively creates a covert DNS TXT signaling channel by querying a specific, action-oriented subdomain ('open-3389.example.com'), perfectly aligning with the T1205 technique of conveying commands via DNS traffic.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T14:05:36.971961Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper PowerShell syntax for variable assignment, method calls, and piping.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1205 Traffic Signaling by using a DNS TXT query with an encoded domain name as a covert signaling channel to trigger a remote action (opening RDP port 3389).",
+        "semantic_justification": "The command accurately implements T1205 by constructing a directive-encoded DNS TXT query ('open-3389.example.com') sent to an external resolver, functioning as a covert signaling channel to a controller without requiring elevated privileges.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:09:50.737717Z"
+        "timestamp": "2026-02-19T03:46:56.227571Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script block using valid cmdlets, proper string concatenation, and balanced delimiters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command successfully implements traffic signaling by dynamically constructing a domain and performing a DNS TXT lookup to act as a covert trigger, aligning perfectly with T1205.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:46:59.134751Z"
       }
     ],
     "llm_average_syntactic": 5.0,

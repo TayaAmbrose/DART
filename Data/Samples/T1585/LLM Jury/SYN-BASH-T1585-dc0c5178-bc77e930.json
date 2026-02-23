@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid kubectl syntax, correct flag formats, and properly escaped JSON payload.",
-        "semantic_score": 4,
-        "semantic_justification": "The command aligns with T1585 (Establish Accounts) by completing email verification for a social media persona account, though it's a simulation in a test environment rather than a real attack.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T09:49:52.391438Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The kubectl command, including all flags and the nested curl command with JSON payload escaping, is perfectly well-formed and syntactically correct.",
-        "semantic_score": 5,
-        "semantic_justification": "The command simulates email verification for an account, a critical step that directly contributes to establishing, activating, or gaining full access to an account, aligning perfectly with T1585's focus on adversaries creating or abusing accounts to enable follow-on actions or blend in.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T09:50:00.378432Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command is well-formed with valid kubectl flags, balanced quoting, and correctly escaped JSON in the curl payload.",
@@ -44,6 +24,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T09:50:32.827291Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper kubectl flags (--rm, -i, --restart=Never), valid JSON escaping in the curl data payload, and correct shell invocation via sh -lc.",
+        "semantic_score": 4,
+        "semantic_justification": "The command plausibly simulates email verification for a persona account (T1585 - Establish Accounts) by completing a verification step that would unlock full account functionality, using appropriate tools (curl) and a realistic API endpoint pattern, though the placeholder token reduces operational realism.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:39:51.354540Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The kubectl run command is perfectly formed with valid flags, proper shell escaping for the nested JSON payload, and balanced quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately simulates a step in account establishment by programmatically completing an email verification workflow via a web API, using a containerized tool common in Kubernetes environments.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:39:53.024560Z"
       }
     ],
     "llm_average_syntactic": 5.0,

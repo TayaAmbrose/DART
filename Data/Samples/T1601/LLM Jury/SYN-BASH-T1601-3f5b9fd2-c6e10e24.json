@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), valid flags (-sf), and correct syntax for all operations including symbolic linking, synchronizing the filesystem, and generating an MD5 checksum.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by replacing a legitimate boot image with a malicious one via symlink redirection, forcing synchronization to persist changes, and updating the checksum file to evade integrity checks.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T17:08:12.084114Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid commands, flags, paths, redirection, and logical command separators.",
-        "semantic_score": 3,
-        "semantic_justification": "The command uses appropriate tools and methods to achieve the claimed intent of redirecting a boot image symlink and updating its checksum for T1601; however, the specified 'Privilege: None' would prevent successful execution in a realistic network device environment.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T17:08:27.744577Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash with valid ln -sf usage, correct && chaining, and proper output redirection; no quoting or flag issues.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T17:08:38.313707Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid use of `ln -sf`, `&&` chaining, `sync`, `md5sum`, and output redirection, with no syntax errors or unbalanced constructs.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1601 by atomically replacing the active boot image symlink with a trojan image, flushing to disk with `sync`, and then overwriting the checksum file to mask the tampering \u2014 a realistic and operationally coherent firmware substitution attack on network devices.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:12:01.240136Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax, including valid command chaining with logical AND operators and correct flag usage for ln and md5sum.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by swapping the active boot image via a symlink and attempting to bypass basic integrity checks by updating the associated MD5 hash file.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:12:04.835495Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

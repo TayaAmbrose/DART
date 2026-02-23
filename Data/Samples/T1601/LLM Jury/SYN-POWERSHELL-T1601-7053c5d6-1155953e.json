@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for DISM operations, correct command separators, valid flags, and proper PowerShell cmdlet usage.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements the T1601 technique by mounting a Windows image file, modifying it by enabling a feature, committing changes, and then verifying the modified image against a clean baseline - all consistent with system image modification for potential backdoor insertion.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:22:35.585915Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct DISM syntax, valid Powershell cmdlets, proper flag formats, and appropriate command separators.",
-        "semantic_score": 3,
-        "semantic_justification": "The command sequence correctly uses DISM to modify an offline WIM image, aligning with T1601's goal, but the stated 'Privilege: None' is incorrect as DISM operations require Administrator privileges, making the command operationally infeasible under the given context.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T18:23:02.636403Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Commands are well-formed PowerShell statements with valid DISM and Get-FileHash syntax, proper separators, and no quoting issues for the given paths.",
@@ -46,11 +26,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T18:23:19.170644Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The commands are well-formed with valid DISM flags and PowerShell cmdlets, though mixing cmd-style `fc` with PowerShell in a single session may cause minor compatibility issues depending on execution context.",
+        "semantic_score": 4,
+        "semantic_justification": "The sequence accurately demonstrates T1601 offline image modification (mounting a WIM, enabling a feature, committing changes) and includes integrity verification steps, though enabling TelnetClient is a relatively benign example and the privilege level of 'None' is incorrect since DISM image mounting and modification requires administrator privileges.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:18:15.324190Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command string is correctly structured for PowerShell using semicolons as separators and valid flag formats for both DISM and Get-FileHash.",
+        "semantic_score": 4,
+        "semantic_justification": "The DISM commands accurately reflect the technique, but the 'fc' utility is a default alias for 'Format-Custom' in Windows PowerShell, which would cause the final verification step to fail.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:18:26.807459Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

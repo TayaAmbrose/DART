@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T18:21:35.081914Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command uses correct syntax for variable assignment, array definition, foreach loops, cmdlet calls with appropriate arguments, piping, and command separation.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper array syntax, valid foreach loop, correct cmdlet usage, and proper semicolon separators throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly demonstrates TCP port knocking using `Test-NetConnection` to sequence connections to specific ports, which is a classic implementation of the Traffic Signaling (T1205) technique as described in the explanation.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T18:21:45.307840Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, balanced parentheses/braces, correct cmdlet usage, appropriate piping, and valid parameter flags.",
-        "semantic_score": 5,
-        "semantic_justification": "The command implements a textbook port knocking sequence over IPv6 using sequential connection attempts to predefined ports (15001-15003) before checking the target port 60000, perfectly aligning with the Traffic Signaling technique (T1205).",
+        "semantic_justification": "The command accurately implements IPv6-based TCP port knocking (T1205) by sequentially connecting to ports 15001, 15002, 15003 with timing delays to signal a listener, then connecting to the trigger port 60000, which is operationally consistent with port-knocking daemons that open a service after detecting a specific knock sequence.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:27:32.777843Z"
+        "timestamp": "2026-02-19T04:05:44.758939Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, including proper variable assignment, array notation, a foreach loop, and correct cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a port knocking sequence by iterating through a set of ports with specific timing before attempting to access the target service, perfectly aligning with T1205.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:05:46.767997Z"
       }
     ],
     "llm_average_syntactic": 5.0,

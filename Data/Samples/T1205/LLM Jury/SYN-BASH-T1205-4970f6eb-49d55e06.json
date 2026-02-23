@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T13:09:06.388250Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid Docker and iptables flags, correct command separators, and appropriate escape sequences.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a covert signaling mechanism where an HTTP header triggers temporary SSH access, aligning with T1205's description of using protocol fields to coordinate actions.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T13:09:09.320994Z"
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of && separators, valid iptables flags, and correct Docker run syntax throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling mechanism where an HTTP header triggers SSH access for the source IP using iptables string matching and the 'recent' module, accurately reflecting T1205 behavior, though the implementation has a gap: the `--rcheck` rule on port 22 checks if the source IP sent the HTTP signal but the iptables rules process packets at the network layer before HTTP headers are parsed, meaning the string match on 'X-Open-SSH: 1' would need to match raw TCP payload data which is plausible but depends on packet fragmentation and TCP stream reassembly not being an issue.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:43:34.963602Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct command separators, and valid flags for all utilities (docker, apk, iptables).",
-        "semantic_score": 4,
-        "semantic_justification": "The command accurately implements the described traffic signaling technique using iptables, but the stated 'Privilege: None' is incorrect as running this docker command with `--net=host` and `CAP_NET_ADMIN`, and modifying host iptables, requires root-equivalent privileges.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T13:09:40.364102Z"
+        "syntactic_justification": "The command uses correct Docker flags and standard iptables syntax with well-nested quoting and logical operators.",
+        "semantic_score": 5,
+        "semantic_justification": "It accurately implements a 'port knocking' style traffic signal by using iptables string matching and the 'recent' module to dynamically open a port based on an HTTP-like signal.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:43:36.589426Z"
       }
     ],
     "llm_average_syntactic": 5.0,

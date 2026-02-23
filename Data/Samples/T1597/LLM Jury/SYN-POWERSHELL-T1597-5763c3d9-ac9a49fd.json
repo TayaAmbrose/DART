@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with properly balanced quotes, braces, and parentheses, correct error handling in a try-catch block, and valid parameter usage for the Invoke-RestMethod cmdlet.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying the Censys API, a paid closed-source intelligence service, using proper authentication, formatting the query to search for specific hosts, and handling the response appropriately.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:11:20.290298Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct PowerShell syntax for variable assignment, conditional logic, API calls, JSON conversion, and error handling, including proper quoting and balanced structures.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by querying a closed-source intelligence platform (Censys API) with plausible parameters to gather targeting intelligence, directly aligning with MITRE ATT&CK T1597.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:11:33.227283Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell script is well-formed with balanced quotes/braces, valid try/catch, correct header/hashtable syntax, and proper use of Invoke-RestMethod and JSON conversion.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T12:11:59.250539Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, proper try/catch structure, correct string interpolation, valid method calls, and proper semicolon separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the Censys paid/closed-source API using Basic Auth credentials from environment variables, searching for hosts with TLS certificates matching a target domain, which directly represents querying a paid internet-scanning database for reconnaissance intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:51:24.186054Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed, using correct syntax for environment variables, string interpolation with backtick escaping, hash table to JSON conversion, and Invoke-RestMethod parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a programmatic search of the Censys API (a paid/closed-source technical database) to gather intelligence on a target domain, which perfectly aligns with the MITRE ATT&CK T1597 technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:51:29.654561Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes/parentheses/braces, appropriate variable assignments, pipeline operations, and error redirection.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by automatically detecting a removable drive, creating a hidden directory, exporting registry data to it, and logging the operation - all core components of exfiltration over physical medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T09:29:47.508744Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct PowerShell syntax, balanced elements, valid flags, and proper command separators, despite a minor stylistic choice with the backtick.",
-        "semantic_score": 5,
-        "semantic_justification": "The command flawlessly executes the claimed intent of exporting user registry data to a removable drive for exfiltration, directly aligning with the T1052 technique by identifying a physical medium, staging data, and attempting to hide it without requiring elevated privileges.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T09:30:03.681955Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell command is well-formed with balanced quoting, valid separators, correct parameter usage (including acceptable -Expand abbreviation), and proper redirection.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T03:06:34.617969Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced quotes, proper semicolons as statement separators, valid backtick escaping in the path string, and correct use of pipeline operators and cmdlet flags throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive, creating a hidden user-named directory on it, exporting the HKCU registry hive via reg.exe, and logging the operation \u2014 all consistent with staging and exfiltrating sensitive data to physical media.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:39:33.946826Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct PowerShell syntax, properly handles variable interpolation, and employs valid command separators and cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately identifies a removable drive, creates a hidden staging directory, and exports user data to it, perfectly aligning with the Exfiltration Over Physical Medium technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:39:38.283284Z"
       }
     ],
     "llm_average_syntactic": 5.0,

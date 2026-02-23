@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T15:40:51.109882Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, braces, and uses valid PowerShell cmdlets, arguments, and command separators, making it parseable and runnable without syntax errors.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command's design perfectly aligns with the T1205 technique by using network traffic as a signal to trigger a covert channel, it requires Administrator privileges for core operations (e.g., Set-NetFirewallProfile, netsh, New-NetFirewallRule) despite the explanation claiming 'Privilege: None', rendering it operationally unfeasible as described.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T15:41:23.466540Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced braces, valid PowerShell constructs, and proper escaping, though the regex pattern uses `\\b` which in a PowerShell `-match` string context requires careful escaping and the double-backslash escaping within the here-string may cause minor parsing edge cases.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1205 (Traffic Signaling / port knock variant) by monitoring Windows Firewall DROP logs for TCP connections to port 443, interpreting them as a trigger signal, then dynamically creating a port proxy from 4443 to local WinRM (5986) with a scoped firewall rule for the signaling source IP and a self-cleaning job after 15 minutes \u2014 fully aligned with the described covert C2 channel technique.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:53:11.731120Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper PowerShell syntax throughout, and correct use of piping, error handling, and parameter passing.",
+        "syntactic_justification": "The command is a well-formed PowerShell script block using correct syntax for variables, loops, regex matching, and nested commands like Start-Job and netsh.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by monitoring firewall logs for specific dropped TCP connections to port 443, interpreting them as signals to dynamically create a covert channel (port proxy to WinRM) with temporary firewall rules that self-destruct after 15 minutes.",
+        "semantic_justification": "The command perfectly implements the Traffic Signaling technique (T1205) by monitoring firewall logs for a specific 'knock' (dropped TCP 443 packets) to trigger the dynamic opening of a port proxy for C2/access, including a persistent cleanup mechanism.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:14:12.418018Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:53:17.853323Z"
       }
     ],
-    "llm_average_syntactic": 4.667,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.333,
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

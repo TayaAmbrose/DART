@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid function definition, and correct pipeline operations.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements a DGA detection mechanism by retrieving DNS cache entries, calculating Shannon entropy to identify algorithmically generated domains, storing results in JSON format, and alerting a SOC webhook, which aligns perfectly with detecting the T1568 technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T05:20:29.906653Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed, with balanced syntax for functions, variables, pipelines, and command parameters.",
-        "semantic_score": 5,
-        "semantic_justification": "The command accurately implements a common defensive heuristic for T1568 by calculating Shannon entropy of DNS cache entries and sending a plausible alert to a SOC webhook, aligning perfectly with the claimed intent and operational feasibility.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T05:20:39.217074Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The PowerShell is well-formed with balanced delimiters, valid pipelines, and a properly defined function and comparisons.",
@@ -46,11 +26,31 @@
         "combined_score": 4.5,
         "confidence": 0.68,
         "timestamp": "2025-10-02T05:21:18.258456Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces, valid pipeline usage, and correct cmdlet syntax, though the `Get-Entropy` function call inside `Where-Object` lacks a pipe or proper invocation pattern (missing `-gt` comparison on the function call result may cause issues depending on PowerShell version, and the URL argument to `Invoke-WebRequest` is positionally placed after `-Body` without `-Uri`).",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a defensive T1568 detection heuristic by extracting DNS cache entries, computing Shannon entropy on first-level domain labels to flag algorithmically generated names (DGA detection), serializing suspects to JSON, and forwarding alerts to a SOC webhook \u2014 all operationally plausible and well-aligned with the technique's detection signals.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:18:41.234713Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script with correct syntax, balanced brackets, valid variable assignments, and proper use of pipeline and .NET method calls.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements a defensive Shannon entropy heuristic to identify potentially randomized DGA domains within the local DNS cache and provides a realistic workflow for alerting a SOC via a JSON webhook.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:18:54.832274Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

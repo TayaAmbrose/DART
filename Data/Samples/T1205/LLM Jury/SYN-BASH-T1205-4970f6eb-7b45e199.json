@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T13:55:47.268247Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, featuring balanced quotes, valid `docker` and `iptables` flags, correct command separators (`&&`), and proper string handling within the `sh -c` execution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the claimed intent by using `iptables -m string` to identify a covert SNI signal on TCP/443, logging the event, and then leveraging the `recent` module to temporarily open TCP/8443 for the signaling source, a highly plausible implementation of T1205 Traffic Signaling.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T13:56:07.133347Z"
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of && separators, valid iptables flags, and correct Docker run syntax throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling mechanism using iptables string matching on TCP/443 to detect a covert SNI token and temporarily open TCP/8443, aligning well with T1205, though the iptables string module matching on TLS ClientHello content is unreliable in practice since TLS SNI may not be accessible as plaintext in all kernel/iptables configurations, and the --recent module's per-source-IP tracking does provide the intended trigger-based access control.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:46:42.854534Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Docker syntax, balanced quotes, valid iptables flags, and correct command chaining.",
+        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, correct use of shell operators, and valid flag usage for both Docker and iptables.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using string matching in iptables to detect a specific TLS SNI pattern and temporarily opening a secondary port only to hosts that sent the covert signal.",
+        "semantic_justification": "The command accurately implements Traffic Signaling (T1205) by using the iptables string match module to detect a specific SNI-like token in TCP/443 traffic and the 'recent' module to dynamically open a secondary port (8443) for the signaling source.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:09:24.449135Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:46:46.335366Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

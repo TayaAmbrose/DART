@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax, proper quoting, and correct flag format for the srm utility.",
-        "semantic_score": 5,
-        "semantic_justification": "The command uses srm (secure remove) with flags -f (force) and -P (overwrite with patterns) to permanently destroy the Messages chat database, directly implementing the Data Destruction technique by making the communication records unrecoverable.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T02:25:54.469664Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with a valid command name, standard flags, and a correctly quoted file path.",
-        "semantic_score": 5,
-        "semantic_justification": "The `srm` command with `-fP` flags is specifically designed for secure multi-pass data destruction, making it an ideal and operationally plausible tool to permanently wipe the specified Messages database file, directly aligning with the T1485 technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T02:25:58.100872Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed command with valid combined flags and balanced quoting around the file path.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.7,
         "timestamp": "2025-10-02T02:26:12.083687Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-f for force, -P for overwrite passes), and a properly specified file path.",
+        "semantic_score": 5,
+        "semantic_justification": "srm (secure remove) is a macOS secure deletion tool, the -f and -P flags force deletion with multiple overwrite passes, and targeting chat.db (the SQLite database storing iMessage/SMS records) is a precise and operationally realistic method to destroy communication records for a specific user.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:44:09.553441Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Bash syntax with valid flag formatting and properly quoted absolute file paths.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses a secure removal utility to target the specific iMessage database path on macOS, directly achieving the goal of destroying communication records in line with MITRE ATT&CK T1485.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:44:18.050980Z"
       }
     ],
     "llm_average_syntactic": 5.0,

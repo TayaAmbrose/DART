@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T16:44:55.330777Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed, using valid cmdlets, operators, variable assignments, and object instantiations without any syntax errors or imbalances.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly constructs and sends a standard Wake-on-LAN (WOL) 'magic packet' to a directed broadcast address via UDP, aligning perfectly with the T1205 technique of using legitimate network traffic (WOL) as a signal for adversarial purposes.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T16:45:17.011357Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, method calls, balanced quotes, parentheses, and braces, and uses valid PowerShell syntax throughout.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, proper semicolons as separators, valid array construction, correct .NET socket API usage, and no syntax errors.",
         "semantic_score": 4,
-        "semantic_justification": "The command implements a form of traffic signaling by sending a specially crafted Wake-on-LAN packet to a broadcast address which could be used as a trigger mechanism, though it's using a standard protocol rather than a fully covert channel.",
+        "semantic_justification": "The command correctly constructs a Wake-on-LAN magic packet (6x 0xFF followed by 16 repetitions of the target MAC) and sends it via UDP broadcast, which aligns with T1205 traffic signaling by embedding a trigger signal in legitimate-looking network traffic; the minor gap is that WoL typically uses port 9 rather than port 7, and the preliminary Test-NetConnection check on port 7 is slightly unusual but not operationally implausible.",
         "combined_score": 4.5,
         "confidence": 0.9,
-        "timestamp": "2025-10-02T03:17:24.104633Z"
+        "timestamp": "2026-02-19T03:57:07.298639Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell syntax is perfectly formed, uses correct object methods, and handles byte array construction correctly.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately constructs a standard Wake-on-LAN magic packet and sends it to a broadcast address, aligning perfectly with the intent of signaling a host.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:57:09.751294Z"
       }
     ],
     "llm_average_syntactic": 5.0,

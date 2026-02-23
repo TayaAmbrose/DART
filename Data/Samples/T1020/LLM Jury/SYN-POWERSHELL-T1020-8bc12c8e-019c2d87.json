@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T04:18:40.783986Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid flag formats, and appropriate escape sequences.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, braces, and parentheses; valid PsExec flags; and properly structured PowerShell with correct semicolons, cmdlet syntax, and escape sequences throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by using PsExec to launch a hidden PowerShell process that continuously monitors the printer spool directory, uploads files to an external server, and tracks sent files to avoid duplication.",
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration by using PsExec to run a hidden, privileged PowerShell loop that continuously monitors the print spool directory, uploads files via HTTPS WebClient with a spoofed User-Agent, and tracks sent files by moving them to a staging folder to prevent duplicate transfers.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T04:18:52.601250Z"
+        "timestamp": "2026-02-18T22:26:52.953692Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags for both psexec and PowerShell, and no impossible constructs.",
+        "syntactic_justification": "The command is well-constructed with proper PowerShell quoting, balanced braces, and valid PsExec flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1020 Automated Exfiltration, establishing a hidden, persistent, and automated process to collect print spool files and exfiltrate them via HTTPS while managing processed files.",
+        "semantic_justification": "The command effectively automates the exfiltration of sensitive print spooler data using a persistent loop and standard web protocols.",
         "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T06:00:58.891882Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:26:57.048387Z"
       }
     ],
     "llm_average_syntactic": 5.0,

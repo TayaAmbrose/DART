@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T14:12:32.254528Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses balanced quotes, proper command separators, and valid iptables flags and module options.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolons as separators, valid iptables flags, and correct bash -c quoting throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly implements the described port-knocking sequence as a timing- and sequence-based trigger for access, directly aligning with the Traffic Signaling technique (T1205) by using covert network signals to coordinate actions.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T14:12:46.280993Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper bash syntax, balanced quotes, valid iptables flags, and correct command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command implements a port-knocking mechanism that perfectly aligns with the Traffic Signaling technique by creating a covert sequence of UDP packets that must be received in order to temporarily open SSH access.",
+        "semantic_justification": "The command accurately implements a UDP port-knocking sequence (11111\u219222222\u219233333) using iptables recent module to covertly signal and temporarily open TCP/22, which is a textbook Traffic Signaling (T1205) implementation where a specific packet sequence acts as a hidden trigger to unlock access.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:10:10.948612Z"
+        "timestamp": "2026-02-19T03:47:29.669328Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid bash syntax, correctly nested quotes, and properly formatted iptables flags for the recent module.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements a stateful port-knocking sequence using the iptables recent module, which perfectly aligns with the Traffic Signaling technique (T1205).",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:47:35.467605Z"
       }
     ],
     "llm_average_syntactic": 5.0,

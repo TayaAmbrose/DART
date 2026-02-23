@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax for imports, variable assignments, conditionals, file operations, and string comparisons.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively implements bootloader integrity verification by hashing and comparing the first 1MB of disk data against a baseline, though it requires root privileges (not 'None' as claimed) to read raw disk devices and assumes the baseline file exists.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T18:27:30.753012Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed, uses correct syntax for all operations, and has balanced quotes, parentheses, and semicolons, making it runnable as-is.",
-        "semantic_score": 3,
-        "semantic_justification": "The command's logic perfectly aligns with detecting T1601 by hashing boot sectors, but it claims 'Privilege: None' which is inaccurate as reading raw disk devices like '/dev/sda' typically requires root, making it operationally unfeasible as stated.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T18:27:46.429805Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The python3 -c string is well-formed with balanced quotes and valid Python statements separated by semicolons.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T18:27:57.700081Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper string quoting, valid semicolons as statement separators, and correct Python syntax throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements bootloader integrity verification by hashing the first 1 MiB of the boot disk and comparing against a stored baseline checksum, which is a valid detection method for T1601 firmware/bootloader tampering, though reading raw block devices typically requires root privileges (contradicting the 'None' privilege claim) and the baseline file path is somewhat arbitrary.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:18:41.945165Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-formed, uses correct syntax for imports, generator expressions, and file operations, and has properly balanced quotes.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a detection mechanism for T1601 by hashing the first 1MiB of a disk device, though it requires root privileges which contradicts the 'None' privilege level provided.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:18:45.116384Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.167,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

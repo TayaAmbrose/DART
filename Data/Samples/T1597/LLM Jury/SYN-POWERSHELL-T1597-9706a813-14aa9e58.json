@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, balanced quotes/braces, correct error handling with try/catch/finally blocks, and appropriate command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by retrieving a subscription-only intelligence feed from Flashpoint using secure SCP with proper authentication, while implementing comprehensive logging and error handling.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:01:55.826014Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for variables, cmdlets, external command execution with `pscp`, robust error handling, and object manipulation.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by using `pscp` to securely acquire a daily closed-web intelligence feed from Flashpoint, a known closed-source intelligence vendor, including host key pinning for security and comprehensive audit logging.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:02:12.431292Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell is well-formed with balanced braces/quotes, valid parameter usage, proper try/catch/finally structure, and correct invocation of pscp.exe.",
@@ -46,11 +26,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T13:02:47.023933Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, braces, and parentheses, proper semicolon separators, valid try/catch/finally blocks, and correct flag syntax for pscp.exe.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately models T1597 by downloading a subscription-only closed-web intelligence feed from Flashpoint via SCP with credential and host-key pinning, logging a structured audit entry, though using pscp.exe (PuTTY SCP) rather than native PowerShell SFTP is a minor realism gap, and the technique typically describes adversaries querying/purchasing data rather than scripted automated retrieval from a legitimate subscription service.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:55:25.395914Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script uses correct syntax, proper variable interpolation, valid try-catch-finally blocks, and appropriate command separators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately emulates the acquisition of closed-source intelligence (T1597) by downloading a non-public feed from a known threat-intelligence provider (Flashpoint) using standard protocols and logging the outcome.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:55:26.802635Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

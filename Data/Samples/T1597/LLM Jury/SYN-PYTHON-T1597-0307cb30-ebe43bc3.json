@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and braces, proper error handling, and valid Python syntax throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements T1597 (Search Closed Sources) by querying Farsight DNSDB, a paid/private intelligence source, using an API key to gather historical DNS data about a target domain for reconnaissance purposes.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:34:29.898391Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script passed to `python3 -c` is perfectly well-formed with correct syntax, balanced quotes, valid function calls, and proper error handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely queries Farsight DNSDB, a paid closed source for historical DNS data, directly aligning with the technique's goal of acquiring non-public intelligence for targeting.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:34:36.962726Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The single-quoted Python one-liner has balanced quotes/braces, valid separators, and acceptable newlines/indentation, making it parseable by python3 -c.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.78,
         "timestamp": "2025-10-02T13:35:00.251861Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python one-liner is mostly well-formed with balanced quotes and parentheses, but the embedded newlines and try/except block within a shell -c string introduce formatting fragility that could cause parsing issues depending on the shell environment.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying Farsight DNSDB, a well-known paid/closed-source passive DNS database, using an API key for authenticated access to retrieve historical DNS RRsets for a target domain, which is a realistic and operationally plausible reconnaissance technique against closed sources.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:57:25.782992Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly formed, using proper semicolons for one-line execution, correct module imports, and balanced delimiters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a query to the Farsight DNSDB API, a classic example of a paid/closed data source used for reconnaissance, with correct handling of NDJSON responses.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:57:26.410299Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

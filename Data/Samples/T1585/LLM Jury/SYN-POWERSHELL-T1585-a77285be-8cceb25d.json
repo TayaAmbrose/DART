@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes/braces, correct variable assignments, proper API endpoint construction, and appropriate parameter passing to the Invoke-RestMethod cmdlets.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1585 technique by modifying an existing user account with detailed profile attributes via Microsoft Graph API to make it blend into the organization, which is a key aspect of establishing accounts for persistence and blending into normal activity.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T08:49:18.336255Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses balanced quotes and parentheses, valid flag formats for `az` and `Invoke-RestMethod`, and correctly escapes `$select` in the URL.",
-        "semantic_score": 2,
-        "semantic_justification": "The command modifies an *existing* user's profile attributes, which does not align with the core T1585 'Establish Accounts' technique focused on *creating* or *gaining access to new* accounts; furthermore, the 'Privilege: None' claim is incorrect as Graph API permissions are required for this action.",
-        "combined_score": 3.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T08:49:29.407030Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell is well-formed with balanced quotes/hashtables, proper separators, valid az flags, and correct escaping of $select in the URL.",
@@ -45,11 +25,31 @@
         "combined_score": 3.5,
         "confidence": 0.68,
         "timestamp": "2025-10-02T08:50:35.134354Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The PowerShell command is largely well-formed with proper variable assignment, hashtable construction, and REST method calls, though the backtick escaping in the URI (`$select=) and the use of `$uid=` with `$` prefix (valid in PowerShell) are correct, but the semicolon-separated pipeline mixing az CLI and PowerShell cmdlets is syntactically valid in PowerShell even if slightly unconventional.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses Microsoft Graph API via PATCH to enrich an existing Azure AD user account with realistic profile attributes (department, jobTitle, city, etc.) to make it blend into the organization, which aligns well with T1585's account establishment and persona blending behaviors, though this is more account manipulation/enrichment than initial account creation.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:36:42.502835Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, including proper subexpressions, hash table to JSON conversion, and correct escaping for the Graph API query parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively uses the Azure CLI and Microsoft Graph API to populate a user's profile with plausible organizational details, directly supporting the goal of blending into an environment.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:36:46.767480Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 4.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

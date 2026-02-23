@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, balanced quotes/parentheses/braces, correct method calls, and appropriate conditional logic structure.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively implements a file integrity check to detect unauthorized system image modifications by comparing hashes against a baseline, but it's unusual to run PowerShell directly on network devices rather than using device-specific verification mechanisms.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T17:23:01.610033Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses standard PowerShell syntax, balanced elements, and valid cmdlets and operators.",
-        "semantic_score": 3,
-        "semantic_justification": "While the core logic of comparing a file hash against a baseline is sound for detecting T1601 modifications, the specified 'Privilege: None' is a significant realism gap for verifying a 'system image' on a 'Network Device', as such checks typically require elevated access to ensure the integrity of the image and the checking process itself.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T17:23:22.756056Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell command is well-formed with correct quoting, semicolons, balanced parentheses/braces, valid cmdlets and property access.",
@@ -46,11 +26,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T17:23:54.355813Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is perfectly well-formed with balanced quotes, parentheses, and braces, valid cmdlet usage, proper string methods, and correct conditional syntax throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a defensive integrity check aligned with T1601 detection mitigations by comparing a local system image hash against a centrally managed baseline, though running PowerShell on network devices is atypical (most embedded/network OS devices don't expose a Windows PowerShell environment), slightly reducing operational plausibility.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:13:37.279911Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell code is perfectly formed with correct variable assignments, cmdlet usage, property access, and conditional logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements an integrity check by comparing a local file's hash against a trusted remote baseline to detect modifications consistent with T1601.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:13:40.080362Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

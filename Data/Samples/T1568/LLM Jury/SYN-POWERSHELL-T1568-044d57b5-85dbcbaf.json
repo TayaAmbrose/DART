@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, method calls, balanced quotes/parentheses/braces, appropriate semicolons as command separators, and valid parameter flags throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with defensive monitoring for T1568 (Dynamic Resolution) by retrieving a threat feed of newly registered domains, comparing it against the local DNS cache, and reporting matches to a SIEM endpoint - a realistic approach to detecting potential DGA activity.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:39:51.944201Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, exhibiting balanced quotes/parentheses, correct PowerShell command separators, and valid flag formats for all cmdlets used.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by collecting local DNS cache, correlating it with a feed of newly registered domains (a key indicator for T1568), and reporting hits, making it an operationally plausible and effective defensive measure.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T07:39:57.460756Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The PowerShell one-liner is well-formed with balanced quotes/parentheses, valid cmdlets and flags, proper separators, and correct parameter usage.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T07:40:30.238712Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced quotes, braces, and parentheses, proper semicolon separators, valid cmdlet names and parameters, and correct JSON conversion pipeline.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements a defensive T1568 detection workflow by fetching a newly-registered-domains threat feed, cross-referencing it against the local DNS client cache (a realistic artifact of dynamic resolution activity), and POSTing any matches to a SIEM ingestion endpoint with a UTC timestamp.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:29:46.615666Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed PowerShell script using correct cmdlet syntax, variable scoping, and proper object property access.",
+        "semantic_score": 5,
+        "semantic_justification": "The command logically implements a defensive check by cross-referencing local DNS artifacts with a threat intelligence feed, accurately reflecting a detection strategy for T1568.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:29:48.758847Z"
       }
     ],
     "llm_average_syntactic": 5.0,

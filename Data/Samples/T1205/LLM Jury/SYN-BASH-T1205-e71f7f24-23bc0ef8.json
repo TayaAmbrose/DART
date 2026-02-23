@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T13:33:12.324123Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid Python syntax within the quoted code block, and correct use of the bash -c and vtysh -c constructs.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and parentheses, though the nested escaping of double quotes within the bash -c / python3 -c construct is complex and could fail in some shell environments depending on exact quoting interpretation.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending UDP packets with specific TTL values as a covert signaling mechanism and then configuring a route that would utilize the path opened by this knock sequence.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T13:33:15.811257Z"
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by using Scapy to send TTL-encoded UDP port-knocking packets as a covert trigger signal, then leverages vtysh to install a routing entry that exploits the signaled path, which is operationally coherent and realistic for network device compromise scenarios.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T04:23:00.955684Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct nesting of commands, balanced quotes, and proper escaping for the Python string within the `bash -c` context.",
+        "syntactic_justification": "The command correctly uses nested quoting for bash and python strings, properly separates commands with a semicolon, and follows valid Scapy and vtysh syntax.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly achieves the claimed intent by using Scapy for TTL-encoded UDP signaling and `vtysh` to establish a new route on a network device, directly aligning with Traffic Signaling (T1205) and its stated operational sequence.",
+        "semantic_justification": "The command accurately implements a traffic signaling mechanism by manipulating packet-level fields (TTL and Port) via Scapy and follows up with a logical administrative action on a network device.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T13:33:37.087270Z"
+        "timestamp": "2026-02-19T04:23:05.434773Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

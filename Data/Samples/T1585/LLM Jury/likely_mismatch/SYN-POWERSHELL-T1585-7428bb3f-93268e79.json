@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignment, piping, method calls, parameter flags, and balanced quotes/braces.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command correctly creates and posts data to an external API which aligns with establishing accounts/personas, using a public test API (jsonplaceholder) rather than an actual account creation endpoint reduces its effectiveness as a realistic implementation of T1585.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T09:35:48.093946Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with correct syntax, balanced elements, and valid parameter usage for all cmdlets.",
-        "semantic_score": 1,
-        "semantic_justification": "The command interacts with `jsonplaceholder.typicode.com`, a mock API, and does not create or abuse any real-world account type relevant to T1585, making it fundamentally misaligned with the technique.",
-        "combined_score": 3.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T09:35:52.968651Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid PowerShell assignment and pipelines with balanced quotes and correct parameters for Invoke-RestMethod and ConvertTo-Json.",
@@ -44,6 +24,26 @@
         "combined_score": 3.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T09:36:05.897342Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, proper piping, valid cmdlet names, and correct parameter syntax throughout.",
+        "semantic_score": 2,
+        "semantic_justification": "While the command does POST data to a REST API (jsonplaceholder.typicode.com, a public test/mock API), it creates a portfolio album entry rather than establishing an actual account or identity, making it only tangentially related to T1585 account establishment; the test API has no real-world persistence or identity implications.",
+        "combined_score": 3.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:39:21.189845Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, correctly handles hash tables, JSON conversion, and the Invoke-RestMethod cmdlet.",
+        "semantic_score": 2,
+        "semantic_justification": "While the command simulates an activity for persona building, it uses a mock API (jsonplaceholder) that doesn't persist data or create actual accounts, thus failing to achieve the technical intent of T1585.",
+        "combined_score": 3.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:39:23.918940Z"
       }
     ],
     "llm_average_syntactic": 5.0,

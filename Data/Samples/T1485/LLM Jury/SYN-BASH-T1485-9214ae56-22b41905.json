@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for dd, correct use of variables, proper command chaining with || and ;, and balanced syntax throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the Data Destruction technique by using dd to overwrite free space with zeros (making previously deleted data unrecoverable) and then removing the wipe file, effectively implementing secure deletion on the finance mount point.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T00:38:27.031976Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, proper command separators, valid flags for all utilities, and correct variable expansion.",
-        "semantic_score": 5,
-        "semantic_justification": "The command accurately implements the claimed intent of filling free space with zeros using 'dd if=/dev/zero' and then removing the filler file, directly aligning with the 'overwriting files or entire devices' aspect of T1485 Data Destruction.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T00:38:33.472696Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed bash command with balanced quoting, valid dd options, proper separators, and correct variable expansion.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T00:38:50.315380Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper variable usage, valid dd flags (bs=8M, oflag=direct, status=progress), correct use of || true to suppress errors, and proper semicolon separators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements free-space wiping on a targeted mount point by filling available space with zeros using dd with direct I/O, then syncing and removing the filler file, which is a classic anti-forensic technique to prevent recovery of previously deleted file remnants, fully consistent with T1485 data destruction goals.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:38:57.849271Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly structured with correct bash variable assignment, command chaining, and valid dd flags including error handling for the expected disk-full condition.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively performs a free-space wipe by filling the disk until it errors out, syncing the buffers, and removing the temporary file, which is a standard anti-forensic data destruction technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:39:00.099339Z"
       }
     ],
     "llm_average_syntactic": 5.0,

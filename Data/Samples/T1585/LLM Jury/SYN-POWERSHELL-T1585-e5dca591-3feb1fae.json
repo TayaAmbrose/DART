@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid AWS CLI syntax, correct flags, and proper argument formatting.",
-        "semantic_score": 5,
-        "semantic_justification": "Creating an AWS access key directly aligns with the T1585 technique, which explicitly lists 'creating service/API keys' as a typical behavior for establishing persistent account access.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T09:04:34.731637Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The AWS CLI command is perfectly well-formed with valid syntax, proper parameter formatting, and correct output specification.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1585 technique by creating AWS access keys for an existing user account, enabling programmatic access that could be used for persistence or follow-on actions.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T09:04:44.764519Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The AWS CLI command is well-formed with valid flags and no quoting or parsing issues for PowerShell.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T09:05:02.460218Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid AWS CLI syntax, correct flag usage (--user-name, --output), and no quoting or structural issues.",
+        "semantic_score": 5,
+        "semantic_justification": "The command directly aligns with T1585 by generating programmatic API credentials (access key/secret key pair) for an established persona account, enabling persistent API-based access consistent with the technique's goal of creating or abusing accounts for follow-on actions.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:37:32.032415Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard AWS CLI syntax for IAM operations with valid flags and arguments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly utilizes the AWS IAM service to generate programmatic access keys, which directly facilitates establishing or maintaining persistent cloud access.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:37:33.833214Z"
       }
     ],
     "llm_average_syntactic": 5.0,

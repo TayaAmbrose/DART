@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with properly balanced braces, quotes, and parentheses, correct error handling with try/catch, and valid parameter usage for Invoke-RestMethod.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying Shodan's paid API service for intelligence on a specific IP address using proper authentication and error handling, which is a realistic implementation of the technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:39:37.207681Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, parentheses, and braces, proper command separators, and valid parameter formats for all cmdlets used.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the claimed intent by querying the Shodan API, a well-known closed-source dataset, for host intelligence, directly aligning with MITRE ATT&CK T1597 and demonstrating operationally plausible reconnaissance.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:39:37.332166Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced braces, valid try/catch, correct parameter and hashtable syntax, and runnable command separators.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T13:39:42.934344Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, proper try/catch structure, correct string interpolation, valid Invoke-RestMethod flags, and proper semicolon separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the paid Shodan API (a closed-source intelligence database) using an API key for authenticated access, retrieving host intelligence on a specific IP, and outputting structured JSON results, which is operationally realistic for closed-source reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:58:06.237055Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is well-structured with proper error handling, balanced braces, correct variable interpolation, and valid cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a query to a paid technical intelligence source (Shodan) using an API key, perfectly aligning with the Search Closed Sources technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:58:08.256476Z"
       }
     ],
     "llm_average_syntactic": 5.0,

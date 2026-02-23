@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T18:39:49.485620Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid PowerShell syntax for variable assignments, array definitions, a for loop, cmdlet calls, parameters, and flow control.",
+        "syntactic_justification": "The PowerShell script is perfectly well-formed with balanced quotes, proper array syntax, valid for-loop construction, correct cmdlet usage, and proper semicolon separators throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely implements an inter-packet timing signature using `Test-NetConnection` and `Start-Sleep`, which perfectly aligns with T1205's description of 'timing patterns' and 'timing- or sequence-based triggers' for traffic signaling (e.g., port knocking).",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T18:40:02.305085Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, array initialization, loop structure, command execution, and balanced parentheses/braces.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a port knocking sequence with specific timing delays between connection attempts that serve as a covert signal to potentially open port 6001.",
+        "semantic_justification": "The command accurately implements a port-knocking sequence with inter-packet timing signatures (100ms, 300ms, 500ms delays between knocks on ports 3211, 4322, 5433) followed by a connection attempt to the trigger port 6001, which is a textbook implementation of T1205 Traffic Signaling using timing-based covert channels to unlock a backdoor port.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:29:51.589718Z"
+        "timestamp": "2026-02-19T04:06:37.784617Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses perfectly formed PowerShell syntax, including correct variable assignments, array definitions, loop structures, and cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a port-knocking sequence with specific timing intervals to signal a listener, which aligns perfectly with the Traffic Signaling technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:06:39.406069Z"
       }
     ],
     "llm_average_syntactic": 5.0,

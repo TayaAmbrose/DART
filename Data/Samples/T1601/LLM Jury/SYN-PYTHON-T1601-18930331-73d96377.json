@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax for imports, variable assignments, and function calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly addresses the technique by comparing the EFI bootloader file against a baseline using both binary comparison and hash verification, which is an appropriate detection method for firmware/bootloader tampering.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:14:41.675536Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes and parentheses, correct Python syntax, and valid function calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves its claimed intent of detecting tampering of a critical EFI bootloader by comparing it to a baseline using both byte-by-byte comparison and cryptographic hashing, directly aligning with T1601 detection methods like image integrity failures.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T18:14:50.586196Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed python3 one-liner with balanced quotes and valid statements; no syntax errors.",
@@ -45,11 +25,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T18:15:01.355929Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper semicolons as statement separators, valid imports, and correct string quoting throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements EFI bootloader integrity verification by comparing the live bootloader binary against a stored baseline using both byte-level file comparison (filecmp) and SHA-256 hashing (hashlib), which is a textbook detection method for T1601 firmware/bootloader tampering.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:17:25.843807Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly structured for a one-liner, with correct imports, variable assignments, and semicolon usage.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements an integrity check for bootloader tampering as described in T1601 detection, though reading from /boot/efi typically requires root privileges.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:17:30.215615Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

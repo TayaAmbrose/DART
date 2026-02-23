@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax, using the md5sum utility with the -c flag to check against a manifest file with a proper path specification.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly addresses the technique by validating firmware image integrity through checksum verification, which is a primary mitigation against T1601 (Modify System Image) attacks.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:14:02.412312Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, utilizing a standard utility with a valid flag and a properly structured file path.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively uses `md5sum -c` to perform checksum validation against a manifest, directly aligning with the detection of integrity issues that would arise from a T1601 (Modify System Image) activity.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T18:14:06.244926Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command uses valid md5sum -c syntax with a proper file path and no quoting or flag issues.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T18:14:11.651435Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid syntax: `md5sum -c` is a standard flag for checksum verification, and the path `/etc/firmware/manifest.md5` is a properly formatted file path with no quoting or parsing issues.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses `md5sum -c` to validate firmware image integrity against a manifest file, which is a legitimate detection/mitigation action aligned with T1601 (detecting unauthorized firmware modifications), though the path `/etc/firmware/manifest.md5` is somewhat idealized and may not exist on all network devices, and MD5 is a weak hash algorithm for security-critical integrity checks.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:17:20.695380Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a standard, well-formed use of the md5sum utility with the correct flag for checking a manifest file.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements an integrity check which is the primary method for detecting the unauthorized firmware modifications described in T1601.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:17:22.183868Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

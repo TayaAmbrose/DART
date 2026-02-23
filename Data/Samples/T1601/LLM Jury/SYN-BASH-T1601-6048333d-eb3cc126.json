@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper process substitution, balanced parentheses, valid flags for diff and tar commands, and correct piping to sort with appropriate environment variable setting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the technique of detecting system image modifications by comparing file listings between an original and potentially modified system image, which would reveal additions, removals, or changes that could indicate firmware tampering.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T17:08:41.400118Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses standard Bash features like process substitution, and employs valid flags and balanced parentheses.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves its claimed intent by using `tar -tf` to list archive contents, `sort` for consistent comparison, and `diff -u` to highlight file-level differences between two system images, directly aligning with detection aspects of T1601.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T17:08:49.480912Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash using valid diff options, process substitution, and correct tar and sort usage with no quoting or balancing issues.",
@@ -44,11 +24,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T17:09:06.056357Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses for process substitution, valid flags for both diff (-u) and tar (-tf), proper pipe to sort with LC_ALL=C, and correct bash process substitution syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses diff with process substitution to compare sorted file listings from two tar archives to detect additions or removals in a potentially tampered system image, which is a valid forensic/detection approach for T1601; minor realism gap is that /bootflash/ is a Cisco IOS path but bash process substitution may not be available on all network device shells, and comparing only file lists misses content-level tampering.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:12:10.294135Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, including process substitution, pipes, and standard flags for diff and tar.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately compares the file inventories of two system image archives to identify additions or removals, which is a standard procedure for analyzing modified firmware images.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:12:12.020838Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

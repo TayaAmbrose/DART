@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (;, &&), valid flags for ubiattach/ubidetach, correct redirection (>/dev/null), and balanced quoting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by using UBI tools to attach a UBI device, replace the root filesystem with a malicious image, detach the device, and sync changes - a realistic method to modify firmware on network devices.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T17:37:45.136534Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced quotes, valid flags, and proper use of command separators (`;` and `&&`).",
-        "semantic_score": 3,
-        "semantic_justification": "While the command correctly employs appropriate UBI tools (`ubiattach`, `ubiupdatevol`, `ubidetach`) and a logical sequence to update a rootfs volume, aligning well with the T1601 technique, the specified 'Privilege: None' makes the core UBI operations functionally impossible, preventing the achievement of the claimed intent in practice.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T17:38:14.194835Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Shell syntax is well-formed with balanced quotes, proper separators, and valid-looking flags and redirection.",
@@ -45,10 +25,30 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T17:38:16.450893Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command chain is well-formed with proper use of semicolons and && operators, balanced quotes, and valid flag formats, though `ubiattach -m 5 >/dev/null` suppresses output that might be needed for error checking and the lack of a `-d` flag for ubiattach to specify device number could cause issues in some implementations.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses UBI subsystem tools (ubiattach, ubiupdatevol, ubidetach) to replace a rootfs volume with a malicious squashfs image, which is a realistic method for persistent firmware modification on embedded/network devices using NAND flash with UBI, though `ubiattach` typically requires specifying a UBI device number with `-d` and may need root privileges not acknowledged in the metadata.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:14:22.675160Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Linux shell syntax with correct use of separators, redirection, and valid flags for the UBI utility suite.",
+        "semantic_score": 5,
+        "semantic_justification": "The sequence of attaching an MTD device, overwriting a UBI volume with a provided image file, and detaching is a standard and effective method for modifying system images on embedded Linux platforms.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:14:24.133389Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
     "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,

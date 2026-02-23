@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, and uses valid Python syntax within the `-c` argument for script execution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the claimed intent and T1585 by using the appropriate AWS SDK call to generate programmatic access keys for an IAM user, which directly enables API interactions.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T08:51:04.933162Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed Python code executed via the command line with properly balanced quotes, parentheses, and braces, correct JSON handling, and appropriate use of the boto3 library.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 (Establish Accounts) as it creates AWS programmatic access credentials (access key and secret) for an established IAM user, enabling persistent access to AWS services.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T08:51:09.966163Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The bash one-liner and embedded Python are well-formed with balanced quotes/braces and valid boto3 calls.",
@@ -45,6 +25,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T08:51:33.510090Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, parentheses, and braces, proper semicolons as separators, and valid Python syntax within the -c argument.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses boto3's IAM client to create programmatic access keys for a named persona user, directly aligning with T1585's account establishment behavior of creating API/service credentials for a pre-existing persona account.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:36:54.791568Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed Python one-liner with correct imports, balanced quotes, and valid Boto3 method calls.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses the AWS SDK to generate API credentials for a specific IAM user, which directly implements the account establishment and credential creation aspects of T1585.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:36:58.080118Z"
       }
     ],
     "llm_average_syntactic": 5.0,

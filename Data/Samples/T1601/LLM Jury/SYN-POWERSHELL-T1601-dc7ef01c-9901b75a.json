@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes, valid command separator (semicolon), and correct parameter usage for both Copy-Item and certutil.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by copying a malicious driver into an offline Windows system image and using certutil to generate a hash, demonstrating both the image modification and integrity tracking aspects.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:20:08.328526Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid PowerShell and Windows utilities with correct syntax, balanced quoting, and proper command separators.",
-        "semantic_score": 3,
-        "semantic_justification": "The command uses appropriate tools and paths to modify an offline system image by injecting a driver, directly aligning with T1601, but the specified 'Privilege: None' means it would realistically fail to write to the protected system directory, significantly reducing its operational plausibility.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T18:20:25.106361Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell command is well-formed with balanced quotes, correct use of Copy-Item and -Force, a valid semicolon separator, and proper certutil -hashfile syntax.",
@@ -44,6 +24,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T18:20:50.648709Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid PowerShell Copy-Item syntax with -Force flag, proper semicolon separator, and valid certutil -hashfile invocation with correct SHA256 argument.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly demonstrates offline image patching by copying a malicious driver into a mounted Windows image's drivers directory (consistent with T1601 in-storage modification) and verifying the hash, though the 'None' privilege level is unrealistic since mounting and writing to system image paths typically requires administrator privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:34:04.361446Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, including the semicolon separator, correct cmdlet usage, and valid certutil flags.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately simulates injecting a file into a mounted offline system image, though it lacks the registry modifications necessary to ensure the driver is actually loaded by the OS.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:34:09.375877Z"
       }
     ],
     "llm_average_syntactic": 5.0,

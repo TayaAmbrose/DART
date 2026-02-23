@@ -28,28 +28,28 @@
         "timestamp": "2025-10-01T16:24:32.055337Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes/parentheses/braces, correct cmdlet usage, valid parameters, and a syntactically correct regex pattern.",
-        "semantic_score": 2,
-        "semantic_justification": "The command's logic perfectly aligns with the T1205 technique and its explanation; however, the explicit 'Privilege: None' renders it semantically incorrect as `Set-NetFirewallProfile` and `New-NetFirewallRule` require administrative privileges to function, making the claimed intent unachievable.",
-        "combined_score": 3.5,
-        "confidence": 1,
-        "timestamp": "2025-10-01T16:24:55.012502Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced braces, quotes, and valid PowerShell constructs, though the escaped backslashes in the regex pattern (\\s+, \\b, \\d) and path separators may behave differently depending on how the outer quoting interacts with the ScriptBlock string interpolation, creating minor edge-case parsing concerns.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a traffic signaling technique by monitoring Windows Firewall logs for ICMP type 13 (Timestamp Request) packets and dynamically creating a temporary WinRM firewall rule for the source IP, which aligns well with T1205; however, the 'Privilege: None' claim is inaccurate since Set-NetFirewallProfile and New-NetFirewallRule require administrative privileges, and relying on the Windows Firewall log to detect ICMP type 13 is plausible but depends on the log format actually capturing icmp-type fields in a parseable way.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2026-02-19T03:56:21.231431Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper PowerShell syntax throughout, and correct use of cmdlets and parameters.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by monitoring firewall logs for specific ICMP type 13 packets and using them as a covert signal to temporarily open WinRM access from the sender's IP address.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:16:28.368550Z"
+        "syntactic_justification": "The command is a well-formed PowerShell script with balanced braces, proper cmdlet usage, correctly escaped regex, and valid pipeline structures.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively implements traffic signaling by monitoring firewall logs for a specific ICMP type to trigger a rule change, though it requires Administrative privileges which are not noted in the description.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:56:25.106036Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.333,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
     "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,

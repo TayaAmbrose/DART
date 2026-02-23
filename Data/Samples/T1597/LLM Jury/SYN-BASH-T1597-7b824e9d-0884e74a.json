@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, appropriate error handling with set -euo pipefail, and correct variable usage throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully aligns with T1597 (Search Closed Sources) by securely retrieving non-public certificate data from a paid/private source (cert-insight) via SFTP with proper authentication, verification, and structured logging of the intelligence gathering activity.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:08:21.589588Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid bash syntax for variable assignments, conditional logic, command chaining, quoting, brace expansion, and redirection.",
-        "semantic_score": 4,
-        "semantic_justification": "The command perfectly embodies the T1597 technique by fetching a specific, authenticated, 'closed-source' data feed with validation and structured logging; however, writing to `/opt/ti` and `/var/log` as 'Privilege: None' is generally not operationally plausible without explicit system-level permission configuration.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T13:08:43.678272Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command is well-formed with balanced quotes, valid scp/ssh options, proper command separators, and correct use of brace expansion and subshells.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.86,
         "timestamp": "2025-10-02T13:09:34.995854Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper use of &&, semicolons, command substitution, and valid flag formats throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command credibly implements T1597 by retrieving a closed-source certificate intelligence feed via authenticated SFTP with checksum validation and structured JSON logging, though the scenario blurs the line between legitimate threat-intel subscription use and adversarial closed-source reconnaissance, and the labeled technique attribution in the log output is an unusual operational detail.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:55:48.352415Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, correctly handles shell options, employs proper brace expansion for scp, and maintains balanced quoting throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command realistically simulates an automated collection of non-public technical data (certificate inventory) from a private source using secure transfer and verification methods.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:55:52.392632Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T09:46:37.296965Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, pipeline operations, balanced parentheses/braces, and correct cmdlet syntax throughout.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper string formatting using -f operator, valid cmdlet flags, and correct pipeline chaining throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by automatically identifying a connected USB drive, creating a backup folder, and selectively copying recent Office documents and PDFs to that physical medium for potential exfiltration.",
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable USB drive (DriveType=2), creating a benign-named backup directory, and selectively copying recently modified Office documents (docx, xlsx, pptx, pdf) from the user profile within the last 3 days, fully aligning with the technique's data staging and physical medium exfiltration behaviors.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T09:46:40.145048Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:40:46.995612Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid PowerShell syntax, balanced operators, and appropriate cmdlet parameters throughout.",
+        "syntactic_justification": "The command uses valid PowerShell syntax, correctly handles variables, utilizes standard cmdlets, and maintains proper pipeline flow.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the stated intent of selectively copying recent office documents to a benign-looking backup folder on a USB drive, perfectly aligning with the T1052 exfiltration technique.",
+        "semantic_justification": "The command accurately implements Exfiltration Over Physical Medium by identifying a removable drive and selectively copying specific documents based on file type and recent modification time.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T09:46:50.766133Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:40:50.170243Z"
       }
     ],
     "llm_average_syntactic": 5.0,

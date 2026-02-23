@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, error handling with try/catch/finally blocks, balanced quotes/braces, and correct command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by retrieving a commercial passive DNS dataset from DomainTools using secure SCP with proper authentication, error handling, and logging mechanisms.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:09:35.631880Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper command execution, correct cmdlet usage, and a well-structured try/catch/finally block.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by using `pscp` to acquire a commercial passive DNS export from a known intelligence provider (DomainTools), demonstrating a realistic acquisition from a closed source with appropriate authentication and logging.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:09:47.092271Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The PowerShell one-liner is well-formed with balanced quoting, valid PuTTY pscp flags, and correct separators.",
@@ -46,6 +26,26 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T12:10:45.437083Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, braces, and parentheses, proper semicolon separators, valid try/catch/finally blocks, and correct flag syntax for pscp.exe.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by downloading a commercial passive DNS bulk export from DomainTools (a real paid threat-intelligence provider) via SCP with host key pinning, credential retrieval from environment variables, SHA256 integrity verification, and structured JSON logging \u2014 all operationally plausible and consistent with querying closed/paid data sources for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:51:10.532354Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is well-structured, uses correct syntax for error handling, variable assignment, and calling external executables.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately simulates the acquisition of non-public intelligence from a commercial provider (DomainTools) using operationally realistic tools and parameters.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:51:13.231653Z"
       }
     ],
     "llm_average_syntactic": 5.0,

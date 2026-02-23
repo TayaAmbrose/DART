@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T09:31:21.051202Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, balanced parentheses/braces, correct pipeline operations, appropriate error handling with ErrorAction parameters, and proper string concatenation using backticks.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper semicolons as statement separators, correct backtick escaping for variable interpolation in strings, and valid cmdlet syntax throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by identifying a removable drive, mounting a VHD image found on it, copying user documents to the mounted image, logging the operation, and then dismounting the image - effectively hiding exfiltrated data inside an existing container on physical media.",
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive, mounting a VHD/VHDX disk image found on it (a sophisticated obfuscation technique to hide exfiltrated data within an existing container), copying the user's Documents into the mounted volume under a user-named subdirectory, logging the operation, and cleanly dismounting the image \u2014 all operationally plausible and realistic for insider-threat exfiltration scenarios.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:31:24.749338Z"
+        "timestamp": "2026-02-18T22:39:48.642918Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced syntax and valid PowerShell cmdlets, parameters, and dynamic path construction, making it parseable and runnable.",
-        "semantic_score": 2,
-        "semantic_justification": "The command fundamentally fails to achieve its claimed intent of mounting a disk image and copying data, as `Mount-DiskImage` and `Dismount-DiskImage` require elevated privileges, contrary to the stated 'Privilege: None'.",
-        "combined_score": 3.5,
+        "syntactic_justification": "The command is well-formed PowerShell with proper variable expansion, escaping of colons, balanced braces, and valid cmdlet chains.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements the technique by staging data inside a VHD container on removable media; however, Mount-DiskImage typically requires administrative privileges, which conflicts with the 'Privilege: None' metadata.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T09:31:50.723276Z"
+        "timestamp": "2026-02-18T22:39:55.471119Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

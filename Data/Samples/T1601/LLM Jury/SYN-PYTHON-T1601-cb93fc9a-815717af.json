@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, variable declarations, file operations, error handling, and string formatting.",
-        "semantic_score": 4,
-        "semantic_justification": "The script correctly implements a bootloader/MBR integrity check to detect firmware tampering (T1601), but requires root privileges to read from /dev/sda which contradicts the 'Privilege: None' claim.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T19:13:16.732407Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed, runnable, and contains no syntax errors.",
-        "semantic_score": 4,
-        "semantic_justification": "The command's logic perfectly aligns with detecting T1601 by comparing boot sector hashes, but the stated 'Privilege: None' is incorrect as reading '/dev/sda' requires root access, which is a minor realism gap.",
-        "combined_score": 4.5,
-        "confidence": 1,
-        "timestamp": "2025-10-02T19:13:24.998052Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid Python script with correct imports, balanced constructs, and runnable syntax.",
@@ -45,6 +25,26 @@
         "combined_score": 4.0,
         "confidence": 0.82,
         "timestamp": "2025-10-02T19:13:48.487621Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically correct with balanced parentheses, proper string formatting, valid module usage, and no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The script correctly implements boot sector integrity checking by hashing the first 1 MiB of the disk and comparing against a stored SHA-256 baseline, which is a valid detection mechanism for T1601 (Modify System Image), though it requires root privileges to read /dev/sda despite the metadata claiming 'None', and it is a defensive/detection tool rather than an offensive technique implementation.",
+        "combined_score": 4.5,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:22:20.947012Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is syntactically valid, with proper module imports, file handling, and logic for computing and comparing hashes.",
+        "semantic_score": 4,
+        "semantic_justification": "The script effectively implements an integrity check for the boot sector to detect T1601 activity, but it requires root privileges to access /dev/sda and /root, which contradicts the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:22:24.456912Z"
       }
     ],
     "llm_average_syntactic": 5.0,

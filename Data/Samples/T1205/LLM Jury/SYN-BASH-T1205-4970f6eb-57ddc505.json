@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T19:21:16.050788Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Docker syntax, balanced quotes, valid iptables flags, and correct command chaining.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements the Traffic Signaling technique by using DNS packets with a specific string pattern as a signal to temporarily open MySQL port access, aligning perfectly with T1205's description of embedding signals in legitimate-looking network traffic.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:39:18.685269Z"
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of && separators, valid iptables flags, and correct Docker run syntax throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic signaling mechanism using iptables string matching on DNS UDP/53 traffic to trigger temporary MySQL port access, accurately reflecting T1205 covert signaling; however, the `--recent` module without a source IP match (`--rcheck` checks the sender but the `--set` rule doesn't restrict to the same source), and the absence of a DROP default rule for port 3306 reduces operational realism slightly.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T04:10:39.715198Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command separators, and proper Docker and iptables syntax.",
+        "syntactic_justification": "The command uses perfectly balanced quoting, correct shell separators, and valid syntax for Docker, apk, and iptables flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the described traffic signaling technique, using specific DNS UDP/53 traffic to trigger a temporary firewall rule change for TCP/3306, aligning well with T1205 and the stated intent.",
+        "semantic_justification": "The command accurately implements Traffic Signaling (T1205) by using iptables' string and recent modules to dynamically open a port based on a specific payload in UDP/53 traffic.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T03:39:26.090239Z"
+        "timestamp": "2026-02-19T04:10:42.198178Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

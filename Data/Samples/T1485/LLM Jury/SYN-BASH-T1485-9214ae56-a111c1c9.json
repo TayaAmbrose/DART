@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct use of subshells, variable assignments, and conditional logic.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by identifying a specific partition labeled 'SECURE_ARCHIVE', unmounting it if mounted, and then deliberately overwriting its critical metadata with random data using dd, which would render the data unrecoverable.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T01:45:48.126774Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, correct command separators (;, &&, ||), valid flags for all utilities (blkid, umount, dd), and proper command substitution.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command's design and use of tools (blkid, umount, dd /dev/urandom) are perfectly aligned with the T1485 data destruction technique by targeting critical partition metadata, it cannot achieve its claimed intent of corrupting a partition under the specified 'Privilege: None' as `umount` and `dd` to a raw device typically require root privileges.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T01:45:59.710931Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed bash with balanced quotes and braces, proper test and grouping, and valid dd options.",
@@ -46,11 +26,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T01:46:06.544077Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper use of command separators (&&, ;, ||), valid flags for blkid, umount, and dd, and correct bash -c quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1485 by locating a partition by label (blkid -L), unmounting it, then overwriting the first 16 MiB with urandom using dd with direct I/O, which destroys filesystem metadata (superblock, partition table headers) and renders the archive unrecoverable, fully consistent with the claimed intent.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:41:16.969534Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper bash syntax, including conditional execution, subshells, and correctly formatted dd and blkid flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly identifies a target by label, attempts to unmount it to avoid write locks, and uses dd to overwrite the beginning of the device, effectively destroying metadata and headers.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:41:27.254373Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

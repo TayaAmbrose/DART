@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 4,
-        "syntactic_justification": "The command is mostly well-formed but has a minor issue with nested quotes where double quotes inside awk are escaped with curly braces instead of proper escaping.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the technique of detecting system image modification by comparing the MD5 hash of the active boot image against a known good reference value stored in a protected location.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T19:39:59.631067Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct command substitution, piping, quoting, and conditional execution within the bash -c environment.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the stated intent of detecting system image modification by comparing current and golden MD5 hashes, directly aligning with T1601 detection signals and operational best practices for integrity checks.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T19:40:18.071058Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Properly quoted bash -c string with balanced quotes, valid pipelines, variable assignments, and a correct test expression.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 1,
         "timestamp": "2025-10-02T19:40:31.663023Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command is mostly well-formed, but the awk field separator quoting inside the outer single-quoted bash -c string uses double quotes which is fine, however the awk print $1 references may not work correctly as written because $1 inside double-quoted awk strings within a bash -c single-quoted context could be interpreted inconsistently depending on shell escaping; the logic structure and brackets are otherwise balanced.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements a defensive integrity check aligned with T1601 detection by computing the MD5 of the active firmware image and comparing it against a stored golden reference value, alerting on any mismatch that would indicate unauthorized system image modification.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:25:23.453444Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with correctly balanced single and double quotes, proper command substitution syntax, and valid shell logical operators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively achieves the intent of detecting system image modification by comparing checksums, though it contains a minor shell-scripting flaw where '$1' inside double quotes within a bash -c string will be expanded by the shell rather than awk (resulting in the full md5sum output being compared rather than just the hash).",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:25:46.696189Z"
       }
     ],
-    "llm_average_syntactic": 4.667,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.667,
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

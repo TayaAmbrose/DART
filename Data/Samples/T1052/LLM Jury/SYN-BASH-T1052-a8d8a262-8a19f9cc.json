@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T08:23:07.604404Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and appropriate variable usage throughout the bash script.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of bash -c with single-quoted heredoc, correct awk quoting with escaped double quotes, valid command separators (&&), and proper subshell variable assignment.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by identifying a USB device, mounting it, exfiltrating backup files with compression, hiding the data with a dot-prefixed filename, manipulating timestamps to evade detection, and properly unmounting the device.",
+        "semantic_justification": "The command precisely implements T1052 by auto-detecting a USB device via lsblk transport type, mounting it, compressing and staging backup files to a hidden dotfile on the physical medium, then using touch -r to timestamp-blend the file with a system binary to evade detection, followed by sync and unmount \u2014 fully consistent with physical medium exfiltration tradecraft.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T08:23:10.467698Z"
+        "timestamp": "2026-02-18T22:35:55.978204Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, featuring balanced quoting, proper command separators, and valid flag formats throughout its execution string, correctly handling inner escaped quotes for `awk`.",
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 3,
+        "syntactic_justification": "The use of double quotes for the awk script inside the bash -c single-quoted string causes the shell to attempt to expand $1 and $2 as shell variables, which results in an awk syntax error during execution.",
         "semantic_score": 4,
-        "semantic_justification": "The command largely achieves its claimed intent of exfiltrating compressed files to a USB with timestamp obfuscation, but its USB partition identification logic is a common heuristic and not entirely robust for all scenarios.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T08:23:30.526965Z"
+        "semantic_justification": "The command perfectly captures the lifecycle of T1052 (discovery, mounting, staging/compression, and timestomping), though the specific awk-based device discovery logic is prone to failure.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:36:06.802737Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.333,
     "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

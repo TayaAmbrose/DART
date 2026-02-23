@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T10:38:09.889885Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for both tar and dd commands, and correct piping syntax.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for tar (C, c, z, f), dd (of, bs, oflag, iflag, status), proper pipe usage, and correct variable expansion with double quotes around $HOME.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by efficiently archiving user pictures and writing them directly to a physical USB device identified by UUID, bypassing filesystem monitoring and ensuring reliable exfiltration.",
+        "semantic_justification": "The command accurately implements T1052 by archiving the Pictures directory via tar to stdout and piping it directly to a raw USB device identified by UUID using dd with direct I/O flags, bypassing filesystem-level writes to evade detection \u2014 fully consistent with physical medium exfiltration staging and transfer behavior.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T10:38:12.744552Z"
+        "timestamp": "2026-02-18T22:42:35.645240Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, featuring balanced quotes, valid flags, correct command separators, and no impossible constructs.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command correctly employs `tar` and `dd` to package and attempt raw exfiltration to a physical medium, the specified 'Privilege: None' makes the `dd` component operationally unfeasible, as writing directly to a raw block device typically requires elevated privileges.",
-        "combined_score": 4.0,
+        "syntactic_justification": "The command uses valid tar and dd flags, correctly handles pipes, and uses proper shell variable referencing.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively stages and writes data to a physical medium, though writing directly to a block device via /dev/ typically requires root privileges, contradicting the 'None' privilege level provided.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T10:38:36.977547Z"
+        "timestamp": "2026-02-18T22:42:38.184256Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

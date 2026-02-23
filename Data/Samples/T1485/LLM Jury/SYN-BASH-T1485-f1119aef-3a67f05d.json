@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with a valid command name 'wipe', proper flag '-f', and a valid file path '/root/keys/old-luks.key'.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly uses the 'wipe' utility which is designed for secure file deletion, aligning perfectly with the T1485 Data Destruction technique by securely overwriting a sensitive encryption key file to prevent recovery.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T01:02:08.806661Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command uses a valid utility (`wipe`), a common flag (`-f`), and a well-formed file path, with no syntax errors or formatting issues.",
-        "semantic_score": 3,
-        "semantic_justification": "While the `wipe` utility is perfectly aligned with the Data Destruction technique, the stated 'Privilege: None' would prevent a non-root user from accessing and deleting a file in the `/root` directory, making the claimed intent unachievable under the given conditions.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T01:02:27.567057Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed command with a plausible flag and a valid absolute path; no quoting or parsing issues.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.7,
         "timestamp": "2025-10-02T01:02:28.821199Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with a valid flag (-f for force) and a properly specified file path, no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The `wipe` utility is a legitimate secure deletion tool on Linux that overwrites file contents before removal, making it appropriate for securely destroying a LUKS key file; however, `wipe` is not universally installed by default and the privilege level of 'None' is questionable since /root/keys/ requires root access, slightly reducing plausibility.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:39:57.138365Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows the correct syntax for the wipe utility, using a valid flag and a properly formatted file path.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately uses a secure deletion tool to render a sensitive key file unrecoverable, directly fulfilling the Data Destruction technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:39:59.515288Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

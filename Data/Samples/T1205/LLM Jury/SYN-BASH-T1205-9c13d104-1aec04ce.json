@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T12:58:53.869917Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for both nc and iptables, correct command separators (|, &&), and follows proper bash syntax.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by listening for a specific magic string on UDP port 40009 and only opening TCP port 8080 when the precise trigger 'MAGIC:OPEN:8080' is received, creating a covert port-knocking mechanism.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T12:58:57.018596Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and valid pipe/logical-AND separators, though the `grep -m1` piped from `nc -u -l` may have buffering issues in practice that could prevent reliable matching, but syntactically it is parseable and valid.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling pattern (T1205) by listening on UDP/40009 for a precise magic string trigger and conditionally opening a firewall rule for TCP/8080, which is operationally plausible for a knock-to-open backdoor, though the use of `grep` on raw UDP netcat output may be unreliable without proper line buffering, slightly reducing realism.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:42:29.108028Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, correct command separators, and valid flags for all utilities used.",
+        "syntactic_justification": "The command is well-formed with proper use of bash flags, piping, string quoting, and logical operators.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the claimed intent, using appropriate tools to listen for a magic string on UDP and then dynamically modify the firewall to open a TCP port, which directly aligns with the T1205 Traffic Signaling technique as a trigger mechanism.",
+        "semantic_justification": "The command perfectly implements basic traffic signaling by listening for a specific UDP payload to trigger a firewall modification, which is a classic example of T1205.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T12:59:21.722533Z"
+        "timestamp": "2026-02-19T03:42:33.946121Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

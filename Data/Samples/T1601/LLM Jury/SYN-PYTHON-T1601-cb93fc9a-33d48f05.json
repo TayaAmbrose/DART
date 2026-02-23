@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, variable declarations, file handling with context managers, function calls, and control flow.",
-        "semantic_score": 5,
-        "semantic_justification": "The script directly addresses the technique by implementing a defensive measure that validates system image integrity through SHA-256 hash comparison against a known baseline, which is a recommended mitigation for T1601.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:12:30.923835Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with no syntax errors, balanced constructs, and valid module imports and method calls.",
-        "semantic_score": 4,
-        "semantic_justification": "The command perfectly achieves its claimed intent of validating system image integrity, which directly aligns with detecting T1601 via checksum validation; however, the stated 'Privilege: None' contradicts the use of '/root' paths, introducing a minor realism gap in operational feasibility under the specified context.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T18:12:49.602863Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid Python code with correct imports, balanced constructs, and proper use of iter-sentinel I/O; parseable as-is.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T18:12:56.651503Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically well-formed with balanced parentheses, proper string literals, correct use of hashlib and difflib APIs, and valid file I/O constructs.",
+        "semantic_score": 4,
+        "semantic_justification": "The script correctly implements SHA-256 integrity validation of a system ISO against a stored baseline checksum, which is a legitimate detection/mitigation measure for T1601 (Modify System Image), though it validates a pre-deployment ISO rather than an in-device firmware image, making it slightly peripheral to the core technique of in-storage/in-memory firmware tampering on embedded/network devices.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:16:59.201284Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly formed, uses standard libraries correctly, and implements a robust chunked reading pattern for large files.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements integrity validation for a system image, which is the primary detection/mitigation method for T1601.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:17:01.677871Z"
       }
     ],
     "llm_average_syntactic": 5.0,

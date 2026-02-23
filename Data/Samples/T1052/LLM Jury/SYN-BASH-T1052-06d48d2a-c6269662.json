@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T09:14:11.989642Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper use of mkdir -p for directory creation, balanced quotes, correct path references, and proper command chaining with &&.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-p for mkdir, -Rp for cp), proper use of && operator, and correct variable expansion with $HOME.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by creating a hidden directory (.k) on an external volume (EXFIL) and copying the user's Keychain data (which contains passwords and credentials) to that location for physical exfiltration.",
+        "semantic_justification": "The command accurately implements T1052 by creating a hidden directory (.k) on an external volume (/Volumes/EXFIL, a macOS mount point for removable media) and recursively copying macOS Keychain data there, which is a realistic and operationally plausible method for exfiltrating credentials via physical medium.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:14:15.179166Z"
+        "timestamp": "2026-02-18T22:38:29.679679Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-p, -R), and proper command separation (&&).",
+        "syntactic_justification": "The command uses standard Bash syntax, correctly balances quotes, uses valid flags for mkdir and cp, and employs a logical operator correctly.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of copying macOS Keychain data to an external drive and operationally aligns with T1052 by staging sensitive data for physical exfiltration.",
+        "semantic_justification": "The command accurately targets the macOS Keychain path and uses a mounted external volume path consistent with the technique's description of exfiltration via physical media.",
         "combined_score": 5.0,
         "confidence": 1.0,
-        "timestamp": "2025-10-01T09:14:21.224793Z"
+        "timestamp": "2026-02-18T22:38:31.214193Z"
       }
     ],
     "llm_average_syntactic": 5.0,

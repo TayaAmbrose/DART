@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct variable usage throughout the pipeline.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by generating a domain algorithmically using date and seed values, resolving it through an external DNS server, establishing firewall rules, and connecting to the dynamically resolved endpoint.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T04:59:24.993616Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced quotes, valid flags, and proper command separators.",
-        "semantic_score": 4,
-        "semantic_justification": "The command accurately models DGA domain generation, fast-flux resolution, and `curl`'s SNI preservation, but the `iptables` command requires root privileges, rendering the full command sequence operationally infeasible under the stated 'Privilege: None', thus preventing the final connection.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T04:59:42.620007Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The one-liner is well-formed with balanced quotes, proper separators, and valid flags for host, iptables, and curl.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.86,
         "timestamp": "2025-10-02T05:00:02.633979Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolons and && separators, valid flag usage for md5sum, host, awk, shuf, iptables, and curl, and correct variable expansions throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by generating a daily DGA domain via seeded MD5 hashing, resolving it through an external DNS resolver (1.1.1.1) to obtain a fast-flux IP, using curl's --connect-to to direct traffic to the resolved IP while preserving the SNI/Host header, tunneling over port 2053 to evade filtering, and beaconing with user identity \u2014 all operationally coherent and realistic.",
+        "combined_score": 5.0,
+        "confidence": 0.93,
+        "timestamp": "2026-02-19T00:16:48.532684Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid bash syntax, balanced quotes, proper command substitution, and correct piping throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately simulates a DGA-based callback, though the inclusion of 'iptables' requires root privileges which contradicts the 'None' privilege metadata provided.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:16:51.889145Z"
       }
     ],
     "llm_average_syntactic": 5.0,

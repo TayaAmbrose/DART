@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T17:27:28.254229Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is a perfectly well-formed PowerShell script block, exhibiting correct syntax for cmdlets, variables, regex, and control flow without any apparent errors.",
-        "semantic_score": 2,
-        "semantic_justification": "While the command's logic for port knocking and traffic signaling is semantically sound for the technique, it will fundamentally fail to achieve its claimed intent of configuring firewall logging and opening RDP, as these actions explicitly require administrator privileges which are stated as 'None' in the evaluation context.",
-        "combined_score": 3.5,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T17:27:53.438594Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces, proper regex escaping, and valid cmdlet usage, though the double-backslash in the log path and some regex escape sequences may behave unexpectedly depending on how the string is interpreted at runtime.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements UDP port knocking via Windows Firewall log monitoring, correctly sequencing three specific destination ports (11111\u219222222\u219233333) from the same source IP within a timeout window, then dynamically creating a temporary inbound firewall rule to allow RDP (TCP 3389) for 10 minutes \u2014 fully consistent with T1205 Traffic Signaling used to trigger access.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T04:00:59.844671Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid parameter names, and correct escape sequences throughout the complex script block.",
+        "syntactic_justification": "The command is a well-formed PowerShell script block using valid cmdlets, balanced delimiters, and correct regex syntax.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by monitoring firewall logs for a specific sequence of UDP packets (port knocking) and temporarily allowing RDP access only when the correct sequence is detected, which aligns with the technique's description of embedding signals within network traffic to trigger actions.",
+        "semantic_justification": "The command perfectly implements port knocking (T1205) by monitoring firewall logs for a specific UDP packet sequence and dynamically updating firewall rules to grant access.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:21:35.902337Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:01:07.737220Z"
       }
     ],
-    "llm_average_syntactic": 4.667,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.0,
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

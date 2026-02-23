@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T02:48:53.337669Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags, correct command separators (&&), and appropriate redirection of output.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, proper use of command separators (&&), valid flags for find/tar/scp, correct variable expansion, and proper null-delimiter piping between find and tar.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by finding recent files, compressing them with tar, transferring them via SCP to an external server, and cleaning up traces - all core elements of T1020.",
+        "semantic_justification": "The command fully implements T1020 automated exfiltration: it timestamps the archive for uniqueness, uses find to collect recently modified user files with size filtering, compresses them with tar, silently exfiltrates via scp with non-interactive key-based auth to an attacker-controlled host in a hidden directory, and cleans up the local artifact \u2014 all consistent with realistic adversarial automation.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T02:48:56.153738Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:20:42.984783Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax, balanced operators, and correctly used flags for all constituent commands.",
-        "semantic_score": 3,
-        "semantic_justification": "The command correctly identifies, compresses, and attempts to exfiltrate data via SCP, aligning with T1020, but the specified SSH key path `/root/.ssh/id_rsa` is inaccessible under the stated 'Privilege: None', rendering the critical exfiltration step inoperable.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T05:33:23.299517Z"
+        "syntactic_justification": "The command is perfectly formed using standard Bash syntax, correct tool flags, and proper use of logical operators and variable expansion.",
+        "semantic_score": 5,
+        "semantic_justification": "The command successfully implements a data exfiltration workflow by identifying target files, archiving them with compression, and transferring them via SCP using non-interactive authentication flags.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:20:48.307476Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

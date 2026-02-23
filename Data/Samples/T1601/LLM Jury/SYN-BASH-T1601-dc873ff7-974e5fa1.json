@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper use of command separators (&&, ||), valid flags for the install and diff commands, and correct redirection operators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by replacing a rescue image with a modified version, calculating its checksum, comparing it with a backup checksum, and suppressing errors with '|| true' to hide the modification.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T20:10:06.931549Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid commands, flags, paths, and operators without any syntax errors or imbalances.",
-        "semantic_score": 1,
-        "semantic_justification": "The command attempts to modify and write to system-critical paths (`/mnt/flash/`), which would invariably require elevated privileges (root), directly contradicting the stated 'Privilege: None' and making the core intent unachievable.",
-        "combined_score": 3.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T20:10:23.035941Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash command list with valid options, separators, and redirection, and intended &&/|| precedence.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T20:10:55.368067Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid use of &&, ||, proper flag syntax for install and sha256sum, and balanced quoting throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command credibly replaces a rescue image with a malicious variant and records its checksum (aligning with T1601 firmware tampering), though the diff against the backup checksum would reveal the mismatch rather than conceal it, slightly undermining the operational stealth intent described.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:27:00.405399Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax, valid utility flags, and correct logical operators (&&, ||) with no formatting errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command logically fulfills the technique by overwriting a boot image and updating checksums, though it realistically requires root privileges despite the metadata's 'None' claim.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:27:06.513111Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.167,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

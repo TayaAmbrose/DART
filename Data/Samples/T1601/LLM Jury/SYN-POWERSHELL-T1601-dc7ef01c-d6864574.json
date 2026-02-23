@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax including balanced parentheses, semicolons for command separation, correct variable assignment, and proper method calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements T1601 by replacing a system binary (notepad.exe) in an offline mounted Windows image, verifying the modification through hash comparison, and aligns perfectly with the technique of modifying system images.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T19:33:03.960653Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid PowerShell cmdlets, proper command separators, correct parameter syntax, and balanced parentheses and quotes throughout.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command's logical flow and choice of tools are appropriate for modifying an offline system image and verifying changes (aligning with T1601), the specified 'Privilege: None' makes the core 'Copy-Item' operation to 'C:\\mount\\Windows\\System32' operationally implausible and likely to fail due to insufficient permissions.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T19:33:16.791239Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid PowerShell with balanced quotes and parentheses, proper semicolon separators, and correct cmdlet/parameter usage.",
@@ -46,11 +26,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T19:33:36.865966Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper semicolon separators, valid Get-FileHash and Copy-Item syntax, correct -Algorithm flags, and a valid certutil invocation appended at the end.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by replacing a system binary (notepad.exe) within a mounted offline Windows image at C:\\mount, performing pre/post SHA256 hash comparisons to verify the trojanization succeeded, and using certutil for independent hash verification \u2014 all operationally plausible steps for modifying a system image.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:24:41.796753Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, correctly balanced parentheses and quotes, and proper semicolon-delimited execution flow.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by replacing a file within a mounted image path and verifying the modification via cryptographic hashing.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:24:45.667656Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

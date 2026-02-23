@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T02:06:32.139196Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper quoting, parameter names, method calls, and object construction syntax.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, properly constructed hashtable for headers, valid GUID generation via [guid]::NewGuid().ToString(), correct Invoke-WebRequest parameter usage, and proper semicolon separators.",
         "semantic_score": 5,
-        "semantic_justification": "The command directly implements automated exfiltration by uploading the Windows Security event log file via HTTPS with custom headers to blend in with normal traffic, matching the T1020 technique perfectly.",
+        "semantic_justification": "The command directly implements T1020 automated exfiltration by uploading the Windows Security event log (a high-value sensitive artifact) via HTTPS PUT to an external collector endpoint, with realistic blending techniques including a common User-Agent string, a randomized session token to avoid pattern detection, suppressed progress output, and silent error handling consistent with operational stealth.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T02:06:34.890001Z"
+        "timestamp": "2026-02-18T22:19:12.054230Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with correct cmdlet usage, parameter syntax, string literals, hash table construction, and expression evaluation.",
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell one-liner with correct cmdlet usage, parameter flags, hash table syntax for headers, and variable expansion.",
         "semantic_score": 4,
-        "semantic_justification": "The command semantically aligns with T1020 Automated Exfiltration by using Invoke-WebRequest to upload a log file, but the specified 'Privilege: None' would prevent reading the Security.evtx file due to access restrictions and file locking, creating an operational realism gap.",
+        "semantic_justification": "The command effectively demonstrates data exfiltration via HTTPS PUT; however, it targets the Security event log which is typically locked by the system and requires administrative privileges, contradicting the 'Privilege: None' metadata.",
         "combined_score": 4.5,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T02:06:47.960043Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:19:18.504397Z"
       }
     ],
     "llm_average_syntactic": 5.0,

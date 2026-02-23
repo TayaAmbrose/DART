@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The AWS CLI command is perfectly well-formed with proper command structure, valid flags, balanced quotes, and correct SSH key format.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1585 technique by adding an SSH public key to an existing IAM user account, which enables persistent access to AWS CodeCommit services and aligns with the adversary behavior of establishing or modifying accounts for persistent access.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T09:41:09.686783Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed for PowerShell, with valid AWS CLI syntax, correct flag usage, and proper quoting for the SSH public key body.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely aligns with T1585 as it abuses an existing account's identity to establish a new persistent access mechanism (SSH key), fitting 'gain persistent access' and 'changes to identity/privilege configurations' aspects of the technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T09:41:25.722097Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Properly formed AWS CLI command with valid flags and balanced quoting for PowerShell.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.84,
         "timestamp": "2025-10-02T09:41:52.544834Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with valid AWS CLI flags and structure, though the SSH public key body contains a placeholder 'EXAMPLE' string that would make it an invalid RSA key in practice, and single-quote handling in PowerShell can be problematic.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses `aws iam upload-ssh-public-key` to associate an SSH public key with an IAM user for CodeCommit access, which directly aligns with T1585 by establishing persistent access credentials under a normalized developer persona.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:39:31.928577Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a correctly formatted AWS CLI call with valid parameters and appropriate quoting for PowerShell.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses the AWS IAM service to associate an SSH key with a user, facilitating persistent access to CodeCommit as described.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:39:38.824741Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

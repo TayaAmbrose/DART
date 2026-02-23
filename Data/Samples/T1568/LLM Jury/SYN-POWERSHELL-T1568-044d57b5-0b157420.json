@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid PowerShell syntax throughout, and appropriate pipeline operations.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively implements a defensive detection for T1568 by retrieving DNS client logs, comparing against a baseline of common domains, identifying rarely seen domains that could indicate DGA activity, and sending the results to a SIEM for analysis.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T06:49:14.200067Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, and uses valid cmdlets, parameters, and operators throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements a defensible rarity analysis by extracting domain names from DNS client logs, filtering against a baseline, identifying those seen infrequently, and sending them to a SIEM, directly addressing detection of T1568 behaviors.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T06:49:34.241911Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quoting and parentheses with valid PowerShell operators and parameters; mixed named/positional arguments for Invoke-WebRequest are acceptable.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T06:49:48.499131Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced parentheses, proper semicolons as statement separators, valid backtick escaping for the newline split, correct hashtable and ConvertTo-Json usage, and properly quoted strings throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a defensive T1568 detection workflow: it fetches a known-good domain baseline, extracts queried domains from the DNS Client operational event log, identifies rare/low-frequency domains not in the baseline (a strong DGA/dynamic resolution signal), and ships the findings as structured JSON to a SIEM endpoint \u2014 all operationally plausible and well-aligned with the described rarity-analysis intent.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:25:36.328696Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed, using correct syntax for variable assignment, piping, property access, and web requests.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a rarity analysis workflow by baselining common domains, extracting recent DNS queries from event logs, and identifying outliers to detect potential DGA activity.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:25:37.801911Z"
       }
     ],
     "llm_average_syntactic": 5.0,

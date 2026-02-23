@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T17:12:02.180583Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed, using correct syntax for variable assignment, object creation, loops, method calls, and command separation with balanced delimiters.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, proper array syntax, valid .NET object instantiation, correct method calls, and appropriate semicolon separators throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely executes a UDP port-knocking sequence with specific timing and a sequence of ports, which directly aligns with the 'timing- or sequence-based triggers' aspect of T1205 Traffic Signaling to trigger a remote action.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T17:12:14.439835Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed PowerShell with balanced braces, parentheses, proper variable declarations, method calls, and command structure.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending UDP packets to specific ports in sequence, which aligns with port-knocking for covert signaling to potentially trigger actions on a remote system.",
+        "semantic_justification": "The command accurately implements UDP port-knocking (T1205) by sequentially sending minimal datagrams to a predefined set of high ports with timed intervals, which is a realistic and operationally plausible method to trigger a knock daemon into opening a hidden service.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:19:03.414653Z"
+        "timestamp": "2026-02-19T03:59:17.241578Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell code is perfectly well-formed, using correct .NET object instantiation, method overloads, and control flow structures.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a UDP port-knocking sequence by sending specific datagrams to a series of ports with defined delays, aligning perfectly with T1205.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:59:20.005892Z"
       }
     ],
     "llm_average_syntactic": 5.0,

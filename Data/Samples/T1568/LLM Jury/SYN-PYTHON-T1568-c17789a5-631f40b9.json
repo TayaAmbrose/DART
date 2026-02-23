@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is well-formed with properly balanced quotes, parentheses, and braces, correct imports, valid function definitions, and proper control flow structures.",
-        "semantic_score": 5,
-        "semantic_justification": "The code perfectly implements a DGA (Domain Generation Algorithm) that creates time-based domains, queries for NS records, pivots through authoritative nameservers, and establishes command and control through discovered endpoints - directly aligning with T1568 Dynamic Resolution technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:33:09.638992Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is impeccably structured with balanced delimiters, valid module imports, proper function definitions, and correct use of Scapy and subprocess commands, making it perfectly well-formed.",
-        "semantic_score": 4,
-        "semantic_justification": "The command excellently implements DGA and an advanced authoritative NS pivot for dynamic resolution (T1568), aligning strongly with the claimed intent, though the final `iptables` command will fail due to requiring root privileges not available under the stated 'Privilege: None'.",
-        "combined_score": 4.5,
-        "confidence": 1,
-        "timestamp": "2025-10-02T07:33:31.921705Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Multi-line Python in a single quoted -c string is well-formed with balanced quotes/parentheses and valid Scapy/subprocess invocations.",
@@ -46,11 +26,31 @@
         "combined_score": 4.0,
         "confidence": 0.7,
         "timestamp": "2025-10-02T07:34:07.583858Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command is largely well-formed Python embedded in a shell one-liner, but the multiline structure with unescaped newlines inside the -c string would cause parsing issues in most shells without proper quoting or line continuation handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 by using a time-seeded SHA256 DGA to generate 25 candidate domains, querying for NS records to pivot to the authoritative nameserver (bypassing recursive resolver controls), resolving the final A record directly from that NS, selecting a random non-standard port, adding an iptables rule to permit egress, and beaconing to the resolved endpoint \u2014 fully matching the described NS-pivot DGA C2 technique.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:28:54.408535Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-formed, uses correct indentation for nested blocks within the multiline string, and follows valid syntax for all imported libraries.",
+        "semantic_score": 4,
+        "semantic_justification": "The command perfectly implements a DGA and complex DNS resolution logic aligned with T1568; however, it requires root privileges to use Scapy raw sockets (sr1) and modify iptables, which contradicts the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:28:58.179144Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.333,
     "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

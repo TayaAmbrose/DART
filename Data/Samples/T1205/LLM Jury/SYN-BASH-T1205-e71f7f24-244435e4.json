@@ -27,28 +27,28 @@
         "timestamp": "2025-10-01T17:01:32.373199Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, and valid flags for all utilities used.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command correctly implements traffic signaling using appropriate tools, the `awk` pattern does not specifically detect a WoL \"magic packet pattern\" as claimed, instead triggering on any broadcast UDP packet on ports 7 or 9.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid piping, but the awk pattern matching on hex dump output from tcpdump -XX may not reliably match 'ff ff ff ff ff ff' as a literal string due to formatting variations, making it functionally fragile though syntactically parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a traffic signaling trigger by monitoring for WoL-style broadcast packets on UDP echo/discard ports and using that signal to activate a covert route insertion via vtysh, which aligns well with T1205's concept of using network signals to trigger actions, though the awk-based detection of the magic packet pattern from tcpdump hex output is an imprecise method that reduces operational reliability.",
         "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T17:02:02.941304Z"
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:58:34.790230Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators (&&), valid flags for tcpdump and awk, and correct piping between commands.",
+        "syntactic_justification": "The command is well-structured with properly nested quotes, correct command piping, and valid flags for tcpdump, awk, and vtysh.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by listening for specific UDP broadcast packets (magic packets) as a covert signal that triggers the installation of a network route, creating a hidden command and control mechanism on network devices.",
+        "semantic_justification": "The command effectively implements traffic signaling by using tcpdump to monitor for a specific WoL-style packet and triggering a legitimate routing change once the signal is detected.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:18:27.514680Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:58:36.793995Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
     "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,

@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1216",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "WITHHELD_FOR_SAFETY - mshta variant: execution from Alternate Data Stream (ADS) launched by PowerShell",
+  "explanation": "Describes launching mshta from PowerShell to execute HTA content stored in an alternate data stream, relying on the signed host to proxy execution.",
+  "rationale_steps": [
+    "Place HTA-like content in an ADS to obscure the payload on disk",
+    "PowerShell then starts mshta targeting the ADS path",
+    "Execution runs under mshta, potentially bypassing allowlists and simple AV scans",
+    "Detect via Sysmon file stream creation (EID 15) and mshta command lines referencing colon-delimited ADS paths",
+    "Constrain ADS execution and disable or restrict mshta where operationally feasible"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1216-b60f034d-6aa35339",
+  "source_prompt_hash": "b60f034d",
+  "timestamp_utc": "2025-09-30T07:02:44.293218Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "No executable command is provided; it's a descriptive placeholder and not runnable as-is.",
+        "semantic_score": 3,
+        "semantic_justification": "The described approach (mshta from PowerShell executing HTA in an ADS) aligns with T1216 proxy execution, but without a concrete command its feasibility and correctness cannot be verified.",
+        "combined_score": 2.0,
+        "confidence": 0.2,
+        "timestamp": "2025-10-02T04:31:10.820633Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is explicitly withheld and replaced with a descriptive placeholder, so no actual syntax can be evaluated.",
+        "semantic_score": 3,
+        "semantic_justification": "The described technique (PowerShell launching mshta to execute HTA content from an Alternate Data Stream) is a plausible proxy-execution method, but mshta is more closely associated with T1218.005 than T1216, and the description lacks specifics needed to confirm full alignment with the signed-script-proxy technique.",
+        "combined_score": 2.0,
+        "confidence": 0.4,
+        "timestamp": "2026-02-19T00:11:00.562193Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 0,
+        "syntactic_justification": "The provided input is a natural language description and a safety placeholder rather than an executable or parseable PowerShell command.",
+        "semantic_score": 0,
+        "semantic_justification": "Because the command field contains a placeholder and description instead of actual code, it does not perform the claimed action or implement the T1216 technique.",
+        "combined_score": 0.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:11:12.897708Z"
+      }
+    ],
+    "llm_average_syntactic": 0.667,
+    "llm_average_semantic": 2.0,
+    "llm_average_score": 1.333,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

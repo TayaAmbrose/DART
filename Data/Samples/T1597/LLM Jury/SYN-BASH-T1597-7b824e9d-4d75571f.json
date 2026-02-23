@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, appropriate error handling with set -euo pipefail, and clean variable usage throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully aligns with T1597 (Search Closed Sources) by securely retrieving and verifying a non-public intelligence feed from a closed source using proper authentication, integrity verification, and logging mechanisms.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:40:38.105251Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command separators, and proper use of bash features like brace expansion and command substitution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by downloading specific 'products.json' data from a dedicated 'cpe-enrichment' SFTP service using SSH, a highly plausible method for acquiring intelligence from a closed, paid, or private source.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:40:56.298613Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The Bash one-liner uses valid set/if syntax, balanced quoting and grouping, correct scp options and brace expansion, and properly chains checksum verification and logging.",
@@ -46,11 +26,31 @@
         "combined_score": 5.0,
         "confidence": 0.95,
         "timestamp": "2025-10-02T13:41:12.110926Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, braces, and parentheses, proper use of &&, semicolons, and command grouping, valid scp flags, and correct brace expansion syntax for downloading two files simultaneously.",
+        "semantic_score": 4,
+        "semantic_justification": "The command plausibly implements T1597 by fetching a closed-source CPE enrichment dataset via authenticated SCP with integrity verification and structured JSON logging, though CPE enrichment feeds are typically public/semi-public rather than truly closed sources, slightly reducing alignment with the technique's emphasis on dark-market or strictly non-public data.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:58:13.055989Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-structured Bash script with correct quoting, valid tool flags, and proper use of logic and subshells.",
+        "semantic_score": 5,
+        "semantic_justification": "The command realistically simulates the ingestion of a private threat intelligence feed, which aligns precisely with the data acquisition phase of T1597.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:58:15.903870Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T21:33:02.603821Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, valid flags (//nologo), correct path structure, and appropriate use of parameters for PubPrn.vbs.",
+        "syntactic_justification": "The command is perfectly well-formed with valid cscript flags (//nologo), a correct absolute path to PubPrn.vbs, and properly structured arguments including the script: moniker URI.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly demonstrates T1216 by using cscript.exe to execute the legitimate signed PubPrn.vbs script as a proxy to load and execute potentially malicious remote code from an external server via the script: moniker.",
+        "semantic_justification": "This is a textbook T1216 abuse case \u2014 PubPrn.vbs is a Microsoft-signed VBScript that accepts a 'script:' moniker as its second argument, causing cscript.exe to fetch and execute a remote .sct scriptlet, which is a well-documented AppLocker bypass technique requiring no elevated privileges.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T03:57:33.798790Z"
+        "confidence": 0.98,
+        "timestamp": "2026-02-19T00:05:27.330068Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid executable, flags, paths, and a correctly structured 'script:' moniker with a valid URL.",
+        "syntactic_justification": "The command follows the correct syntax for cscript.exe, including valid flags and pathing to the PubPrn.vbs script.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by abusing PubPrn.vbs via cscript to load a remote scriptlet using the documented 'script:' moniker, directly aligning with MITRE ATT&CK T1216 for system script proxy execution.",
+        "semantic_justification": "The command accurately leverages the PubPrn.vbs script to execute a remote scriptlet via the script moniker, perfectly demonstrating technique T1216.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T03:57:35.688158Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:05:28.643478Z"
       }
     ],
     "llm_average_syntactic": 5.0,

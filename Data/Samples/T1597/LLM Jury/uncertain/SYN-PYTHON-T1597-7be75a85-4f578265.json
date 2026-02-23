@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1597",
+  "platform": "Linux",
+  "shell": "Python",
+  "command": "import os,sys,json,ssl,urllib.request,urllib.parse,base64; d=os.getenv('TARGET_DOMAIN','example.com'); aid=os.getenv('CENSYS_API_ID'); sec=os.getenv('CENSYS_API_SECRET'); \nif not (aid and sec): print(json.dumps({'source':'censys','query':d,'error':'missing CENSYS_API_ID or CENSYS_API_SECRET'}), file=sys.stderr); sys.exit(1); \nurl='https://search.censys.io/api/v2/hosts/search'; q={'q':'services.tls.certificates.leaf_data.names: '+d,'per_page':10}; data=json.dumps(q).encode('utf-8'); auth='Basic '+base64.b64encode((aid+':'+sec).encode()).decode(); hdr={'Authorization':auth,'Content-Type':'application/json','Accept':'application/json','User-Agent':'t1597-demo/1.0'}; ctx=ssl.create_default_context(); \ntry:\n    r=urllib.request.urlopen(urllib.request.Request(url,data=data,headers=hdr,method='POST'),timeout=25,context=ctx); print(json.dumps({'source':'censys','query':d,'data':json.loads(r.read().decode('utf-8'))}, ensure_ascii=False));\nexcept Exception as e:\n    print(json.dumps({'source':'censys','query':d,'error':str(e)}), file=sys.stderr); sys.exit(2)",
+  "explanation": "Performs a targeted Censys v2 hosts search (closed-source) using Basic Auth, limiting results and posting a JSON query for TLS names matching the domain.",
+  "rationale_steps": [
+    "Authenticate to a commercial research database (Censys) using API ID/secret.",
+    "Submit a structured query for hosts with certificates referencing the domain.",
+    "Limit per_page and use timeouts to minimize operational footprint."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1597-7be75a85-4f578265",
+  "source_prompt_hash": "7be75a85",
+  "timestamp_utc": "2025-09-30T06:36:34.534600Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid Python script with balanced delimiters, proper indentation for try/except, and correct use of semicolons and request parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "Authenticates to and queries the Censys v2 closed-source API via POST to search TLS certificate names for a target domain, directly aligning with T1597 closed-source acquisition.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T13:37:16.918857Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with proper imports, exception handling, and JSON operations, but the multi-line format with inline `if` statements and mixed indentation may cause issues when executed as a single shell command string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying Censys (a paid/closed-source intelligence platform) via authenticated API calls using Basic Auth with API credentials, targeting TLS certificate data for a specific domain to gather reconnaissance intelligence.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:57:29.934594Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 2,
+        "syntactic_justification": "Python does not allow 'try/except' blocks to be written on a single line using semicolons, and the semicolons following the 'if' statement keep the entire subsequent script inside the conditional block.",
+        "semantic_score": 1,
+        "semantic_justification": "The command logic is inverted: the reconnaissance code is syntactically placed within the 'if not (aid and sec)' block, meaning it would only attempt to run if credentials were missing, and even then, it is preceded by sys.exit(1).",
+        "combined_score": 1.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:57:41.525144Z"
+      }
+    ],
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 3.667,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

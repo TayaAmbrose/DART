@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid kubectl syntax, correct JSON escaping in the curl payload, and appropriate use of flags and parameters.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1585 technique by creating a social media account with a crafted persona, complete with username, email, password and profile details that could be used for follow-on social engineering or persistence.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T10:03:48.296478Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, and correct escape sequences for the nested JSON payload within the curl command.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly registers a user account via an API call, perfectly aligning with the T1585 'Establish Accounts' technique description of creating accounts to blend into normal activity or enable follow-on actions.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T10:03:53.797102Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command structure, quoting, escaping, and kubectl/curl flags are well-formed and balanced, making it parseable as written.",
@@ -44,6 +24,26 @@
         "combined_score": 4.5,
         "confidence": 0.79,
         "timestamp": "2025-10-02T10:05:16.031144Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes and braces, proper kubectl flags (--rm, -i, --restart=Never), valid curl options, and correctly escaped JSON payload within the shell -c string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 (Establish Accounts) by using a ephemeral Kubernetes pod to programmatically register a social media persona with a crafted username, email, password, and profile bio, which is operationally plausible and consistent with adversarial persona creation workflows.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:41:22.188960Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed, using valid kubectl flags and correctly nested and escaped quotes for the shell-executed curl command and its JSON payload.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates the establishment of a social media account via an API call from within a containerized environment, directly aligning with the sub-technique of creating social media personas.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:41:25.484382Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T04:07:26.745891Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid Docker flags, and correct shell syntax throughout the complex script.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper escaping, valid Docker flags, correct shell constructs (while loop, conditionals, variable expansions), and appropriate command separators throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by creating a containerized process that continuously monitors for new/modified files, packages them with tar, and exfiltrates them via HTTP POST to a remote server on a regular schedule with proper tracking of already-sent files.",
+        "semantic_justification": "The command precisely implements automated differential exfiltration (T1020) by using a Docker container with a persistent loop that identifies files modified since the last run via a timestamp sentinel file, compresses them into a tarball, and silently POSTs them to an external C2 server with host identification, fully matching the technique's description of batching, compression, scheduling, and automated HTTP-based transfer.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T05:56:59.853654Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:25:43.015584Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, proper separators, and no discernible syntax errors.",
+        "syntactic_justification": "The command is perfectly structured with balanced quotes, correct variable expansions for both host and container environments, and valid flag usage for docker, find, tar, and curl.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated, differential exfiltration via HTTP POST, using appropriate tools and techniques like containerization, timestamping, compression, and scheduled execution.",
+        "semantic_justification": "The command accurately implements automated differential exfiltration by using a timestamp file to identify new or modified files and periodically uploading them via HTTP POST, perfectly matching the T1020 technique description.",
         "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T05:57:16.676863Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:25:46.384090Z"
       }
     ],
     "llm_average_syntactic": 5.0,

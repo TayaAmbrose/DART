@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed Python code with properly balanced quotes, parentheses, and braces, using valid boto3 API calls with correct parameter syntax.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements the T1585 technique by attaching an AWS IAM policy to an existing user account ('persona_blog_writer'), which could be used by an adversary to establish persistent access while appearing legitimate through the use of a read-only policy.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T10:22:15.227585Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid Python syntax within single quotes for Bash execution, and has no observable parsing errors or unbalanced constructs.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly uses `boto3` to attach an IAM policy to an AWS user, directly aligning with the 'Establish Accounts' technique by modifying an account's permissions to 'blend into normal activity' as stated in the explanation.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T10:22:24.370308Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The bash and inline Python are well-formed with balanced quotes, proper separators, and valid boto3 IAM API usage.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 1,
         "timestamp": "2025-10-02T10:22:40.829831Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, valid Python syntax within the -c argument, and proper semicolon separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses boto3 IAM to attach a real AWS managed policy to a named persona user, which aligns with T1585 account establishment and privilege configuration, though attaching a read-only policy is more of a legitimacy-blending step than a core account creation action.",
+        "combined_score": 4.5,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:43:18.921177Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is correctly formatted for a Bash shell with properly balanced quotes and valid Boto3 library calls.",
+        "semantic_score": 4,
+        "semantic_justification": "The command successfully modifies an account's permissions to blend in, though modifying an existing user often overlaps with T1098 (Account Manipulation) as much as T1585.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:43:23.443689Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

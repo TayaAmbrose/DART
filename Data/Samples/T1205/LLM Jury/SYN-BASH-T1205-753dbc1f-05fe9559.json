@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T13:25:28.977133Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command structure, valid flags for netcat (-u for UDP, -w1 for timeout), and correct piping of the echo output.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid command substitution via $(), correct nc flags (-u for UDP, -w1 for timeout), and proper pipe usage.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending a covert UDP packet to port 53 (typically DNS) containing a special magic knock string with the hostname, which could trigger actions on a listening controller without establishing legitimate DNS communication.",
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by sending a non-DNS payload over UDP port 53 to blend with legitimate DNS traffic, using a magic trigger string with hostname identification to signal a remote controller, which is operationally plausible and consistent with the technique description.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T13:25:32.157545Z"
+        "timestamp": "2026-02-19T03:45:16.838222Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid commands, flags, arguments, pipes, and command substitution without any syntax errors.",
+        "syntactic_justification": "The command follows standard Bash syntax with correct piping, command substitution, and well-formed netcat flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command accurately implements the claimed intent of sending a custom magic trigger over UDP/53 for signaling, aligning perfectly with T1205 Traffic Signaling by using a common port for covert communication and a custom payload.",
+        "semantic_justification": "The command effectively demonstrates traffic signaling by sending a specific payload over a common port (UDP/53) to act as a trigger without using the actual DNS protocol.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T13:25:51.204499Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:45:18.576590Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T03:14:01.257506Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid flag formats, and appropriate escape sequences.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid PowerShell constructs, but mixing curl (a Unix-style alias in PowerShell) with the `@$tmp` syntax for binary upload and the `2>$null` redirection inside a PowerShell -Command string creates minor quoting and compatibility edge cases that could cause parsing issues in some environments.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by using PsExec to launch a hidden PowerShell process that periodically compresses diagnostic logs, exfiltrates them via HTTP POST to an external server, and tracks successfully sent files.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T03:14:04.010966Z"
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration: it uses PsExec for privileged remote execution, runs a hidden persistent loop that compresses log files into timestamped zips, POSTs them to an external IP via HTTPS, and tracks successfully sent files to avoid re-exfiltration \u2014 fully consistent with batching, compression, scheduling, and HTTP-based exfiltration behaviors described in the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:22:30.129977Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for psexec and powershell, and correct PowerShell cmdlet syntax and logic flow.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves automated, periodic compression and exfiltration of diagnostic logs to an external endpoint, incorporating stealth and robust file management, making it highly plausible for T1020.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T05:40:36.427476Z"
+        "syntactic_justification": "The command is well-structured with balanced quotes, correct PowerShell syntax for loops and conditionals, and appropriate use of semicolons and PSExec flags.",
+        "semantic_score": 4,
+        "semantic_justification": "The command perfectly implements automated exfiltration logic, but in default Windows PowerShell, 'curl' is an alias for 'Invoke-WebRequest', which would fail to parse the provided arguments unless 'curl.exe' is specified.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:22:45.969399Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flag formats, and appropriate variable usage throughout the bash one-liner.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by using a date-based DGA algorithm to generate domains, extracting DNS TTL values, establishing firewall rules for the resolved IP, and creating a beaconing mechanism that appears benign.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T04:57:45.779891Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct variable and command substitutions throughout.",
-        "semantic_score": 3,
-        "semantic_justification": "While the DGA resolution and beaconing aspects are perfectly aligned with T1568, the `iptables` commands explicitly mentioned in the intent will fail due to the specified 'Privilege: None' privilege level.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T04:58:08.115521Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash with balanced quoting/braces, valid operators, and parseable flags.",
@@ -46,11 +26,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T04:58:31.111664Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The overall bash -c structure is valid and most constructs are correct, but the awk commands using `{print $5}` and `{print $2}` inside herestrings with double quotes will likely fail due to shell variable expansion of `$5` and `$2` before awk receives them \u2014 they should be single-quoted as `'{print $5}'`.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 DGA behavior: it generates a domain algorithmically from the current date via SHA256, resolves it with dig, extracts the TTL to inform timing, dynamically updates iptables to permit outbound traffic to the resolved IP, and beacons over HTTPS with host metadata \u2014 fully consistent with dynamic resolution C2 tradecraft.",
+        "combined_score": 4.0,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:16:07.731445Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed bash string with balanced quotes, correct pipe usage, and valid subshell structures.",
+        "semantic_score": 2,
+        "semantic_justification": "The command fails to achieve its intent for two reasons: it requires root privileges for iptables despite the 'None' privilege claim, and the use of double quotes in 'awk \"{print $5}\"' causes the shell to evaluate $5 as a positional parameter (likely empty), resulting in failed IP/TTL extraction.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:16:14.724020Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 3.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

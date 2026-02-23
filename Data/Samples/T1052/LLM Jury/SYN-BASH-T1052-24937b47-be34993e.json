@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T08:15:49.693803Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper piping, balanced quotes, valid flags for tar/base64/dd, and correct command separators.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with proper piping, quoting, and flags, though using `dd` to write base64 text output with `bs=4m conv=sync` is slightly awkward since `conv=sync` pads blocks to the block size, which could corrupt the base64 output, but the overall syntax is parseable and would execute.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by compressing the user's Library folder, encoding it to appear as text, and writing it to a hidden file with an innocuous name on a removable volume.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T08:15:52.207449Z"
+        "semantic_justification": "The command accurately implements T1052 by compressing the Library folder with tar, base64-encoding it to disguise binary data as text, writing it to a removable USB volume with a deceptive filename (.printerlogs.txt), and using sync to ensure data is flushed \u2014 all consistent with staging, obfuscation, and physical medium exfiltration behaviors described in the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:35:43.178785Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced quoting, and valid flag usage for all commands and their arguments.",
+        "syntactic_justification": "The command uses standard syntax for tar, base64, and dd with correct piping, quoting, and logical operators.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly packages sensitive user data, base64-encodes it for obfuscation, writes it to a hidden, benign-named file on a removable drive, and ensures write completion, fully aligning with the T1052 technique and the stated intent.",
+        "semantic_justification": "The command effectively packages sensitive macOS user data, obfuscates it as a text-like hidden file, and writes it to a standard external media mount point.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T08:16:03.924326Z"
+        "timestamp": "2026-02-18T22:35:47.152203Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

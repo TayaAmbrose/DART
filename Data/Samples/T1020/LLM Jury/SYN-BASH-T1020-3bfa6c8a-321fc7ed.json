@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T04:15:35.397956Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid Docker and AWS CLI flags, and correct shell syntax for the continuous loop.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper shell escaping, valid Docker flags, correct environment variable syntax, and properly chained commands using semicolons and &&.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by creating a persistent container that periodically compresses logs, uploads them to an S3 bucket using valid AWS credentials, removes local evidence, and repeats every two hours.",
+        "semantic_justification": "The command fully implements T1020 automated exfiltration: it runs a persistent background loop that compresses /var/log contents into timestamped tarballs and uploads them to an S3 bucket using AWS CLI with hardcoded credentials, with a 2-hour sleep interval providing scheduling behavior consistent with automated exfiltration.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T05:59:46.245402Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:26:25.048590Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, valid flags for Docker and AWS CLI, correct command separators, and no syntax errors.",
+        "syntactic_justification": "The command is perfectly formed with correct shell syntax, balanced quoting, valid Docker flags, and proper use of semicolons and logical operators.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1020 Automated Exfiltration, utilizing Docker to package and continuously transfer host logs to an S3 bucket in a highly plausible and operationally sound manner.",
+        "semantic_justification": "The command perfectly demonstrates T1020 by automating the collection, compression, and scheduled transfer of local data to a remote S3 bucket using a containerized toolset.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T05:59:58.347391Z"
+        "timestamp": "2026-02-18T22:26:27.867595Z"
       }
     ],
     "llm_average_syntactic": 5.0,

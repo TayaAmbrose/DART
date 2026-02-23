@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper syntax, balanced quotes/braces, appropriate error handling, and valid parameter usage throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by authenticating to and querying the paid SecurityScorecard API service to gather security intelligence about a target domain, storing the results for later analysis.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:54:16.731405Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed PowerShell, with correct syntax for variables, cmdlets, control flow, and argument passing.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying a specified paid, closed-source API (SecurityScorecard) to collect target intelligence, using appropriate tools and robust error handling.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:54:32.255985Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid hashtable syntax, proper separators, and correct cmdlet/parameter usage.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T12:54:38.693616Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, parentheses, and quotes, proper semicolons as separators, valid cmdlet syntax, and correct use of try/catch error handling throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the paid SecurityScorecard API (a closed commercial intelligence source) using token-based authentication to retrieve organizational security ratings for a target domain, storing results for reconnaissance purposes, which aligns precisely with the technique's description of querying paid technical databases to collect targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:54:24.939259Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is well-structured, uses correct syntax for variables, try-catch blocks, and cmdlet parameters, with all brackets and quotes properly balanced.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the T1597 technique by querying a non-public, paid security intelligence API (SecurityScorecard) to gather reconnaissance data on a target domain.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:54:28.535084Z"
       }
     ],
     "llm_average_syntactic": 5.0,

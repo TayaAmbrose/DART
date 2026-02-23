@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T03:59:27.602358Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper flag formats, valid Docker syntax, and correct shell command structure within the container.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper shell escaping within the inner SSH command string, valid Docker flags, correct volume mount syntax, and properly structured while loop with semicolons.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by using Docker to run a persistent container that continuously syncs /home directory contents to a remote server at regular intervals (every 15 minutes) using rsync over SSH, with proper volume mounting and network access.",
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration: it uses Docker to isolate the process, mounts /home read-only and the SSH key, runs rsync over SSH in a persistent loop with 15-minute intervals, uses quiet/incremental flags to reduce footprint, disables host key checking to avoid interactive prompts, and transfers to an external attacker-controlled IP \u2014 fully matching the described automated, scheduled, low-noise exfiltration behavior.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T05:54:58.669867Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:25:00.629014Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, valid flags, correct command separators, and proper nesting for Docker and shell execution.",
+        "syntactic_justification": "The command is perfectly structured with correct Docker volume mounting, shell looping, and nested quoting for the rsync/ssh execution.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of automated, quiet, incremental exfiltration of the /home directory over SSH, utilizing appropriate tools, arguments, and persistence for T1020.",
+        "semantic_justification": "The use of rsync over SSH in a timed loop within a container is a highly realistic and effective method for automated, incremental exfiltration (T1020).",
         "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T05:55:13.647000Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:25:04.802261Z"
       }
     ],
     "llm_average_syntactic": 5.0,

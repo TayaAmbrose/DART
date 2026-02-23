@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), valid flags, balanced quotes, and correct syntax for mount/umount operations.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by mounting a JFFS2 filesystem, replacing the critical init binary with a modified version, setting appropriate permissions, and properly unmounting to ensure persistence across reboots.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T19:28:14.259919Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced quotes, proper command separators (`;` and `&&`), and valid flags.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the T1601 technique by mounting a typical embedded filesystem (JFFS2 on MTD) and replacing a critical system binary (`/sbin/init`), thereby implanting a persistent modification within the system image of a network device.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T19:28:23.519903Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Commands are correctly separated with ';' and '&&', quotes are balanced, and options/paths conform to standard Linux utilities.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T19:28:38.901120Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of && and ; separators, valid flags for mount/cp/chmod/umount, and correct command chaining throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by mounting a JFFS2 flash partition (common in embedded/network devices), replacing the init binary with a patched version to achieve persistent rootfs modification, setting correct permissions, and cleanly unmounting \u2014 all operationally plausible steps for in-storage firmware tampering.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:24:05.567730Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command string uses correct shell syntax, proper command chaining with semicolons and logical ANDs, and valid utility flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by mounting an MTD partition, replacing a critical boot binary (init), and ensuring filesystem integrity via sync.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:24:07.192571Z"
       }
     ],
     "llm_average_syntactic": 5.0,

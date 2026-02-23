@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T07:48:19.523634Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and appropriate error redirection.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of bash -c with single-quoted compound statement, valid command separators (&&, |), correct flag usage for all tools (ls, mkdir, mount, tar, gzip, cp, shred, sync, umount), and proper variable expansion.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1052 by identifying a USB device, mounting it, compressing sensitive root directory data, copying it to the USB with a hidden filename, securely removing the temporary file, and unmounting the device.",
+        "semantic_justification": "The command precisely implements T1052 by auto-detecting a USB partition via /dev/disk/by-id, mounting it, archiving and compressing sensitive /root contents, copying the archive to the USB under a disguised hidden filename (.thumb), securely deleting the local temp file with shred to reduce forensic traces, and cleanly unmounting \u2014 fully consistent with physical medium exfiltration with obfuscation and anti-forensics.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T07:48:21.999619Z"
+        "timestamp": "2026-02-18T22:34:43.480357Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using balanced quotes, valid command separators (&&, |), correct flag formats, and proper command substitution.",
+        "syntactic_justification": "The command uses correct shell syntax, balanced quoting, and proper chaining of commands with logical operators.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly achieves its claimed intent by identifying a USB, mounting it, compressing `/root` content, copying it to the USB under a hidden name, securely deleting the temporary file, and unmounting, directly embodying the T1052 technique.",
+        "semantic_justification": "The sequence accurately implements the identification, mounting, staging, and obfuscation required for exfiltration over a physical medium.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T07:48:37.614482Z"
+        "timestamp": "2026-02-18T22:34:47.233172Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T06:53:43.026333Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), valid flags (-p, -pR), and correct path specifications.",
+        "syntactic_justification": "The command is perfectly well-formed with valid use of mkdir -p, &&, cp -pR, proper path quoting conventions, and no syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by creating a hidden directory (.Trashes/501) on a USB drive and copying HR documents there with preserved timestamps (-pR flag), making the exfiltration difficult to detect.",
+        "semantic_justification": "The command accurately implements T1052 by copying sensitive HR documents to a USB drive while hiding them in the macOS .Trashes/501 directory (a legitimate system folder that appears innocuous) and renaming the directory to .syslog to further evade detection, with -p flag preserving timestamps to avoid modification-time-based detection.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T06:53:46.114491Z"
+        "timestamp": "2026-02-18T22:31:00.249045Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid commands, flags, paths, and proper use of the logical AND operator `&&`.",
+        "syntactic_justification": "The command uses standard Bash syntax with valid flags for mkdir and cp, correctly chained with the logical AND operator.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent, using appropriate tools and arguments to copy sensitive data to a hidden, system-like directory on a USB drive, preserving timestamps and renaming the file for evasion, which directly aligns with T1052.",
+        "semantic_justification": "The command effectively stages data on a removable medium using a hidden directory structure that mimics macOS system defaults to evade detection.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:53:54.608795Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:31:01.411164Z"
       }
     ],
     "llm_average_syntactic": 5.0,

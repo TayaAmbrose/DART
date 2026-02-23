@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper variable assignments, command substitutions, arithmetic operations, balanced quotes, and correct use of pipe operators and command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by generating three time-based domain names with different DGA-like patterns, calculating a dynamic port based on the current time, and attempting to connect to each domain in sequence with proper fallback mechanisms.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T06:54:40.982855Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct variable assignments, command piping, arithmetic expansion, and logical `OR` operators, ensuring proper execution in Bash.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements time-based DGA candidates with dynamically generated ports across multiple dynamic DNS providers, directly aligning with the runtime algorithmic determination and resiliency aspects of T1568 for C2 beaconing.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T06:54:48.895696Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command is well-formed with balanced quoting, valid Bash arithmetic and pipes, and correct use of curl flags and logical OR chaining.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T06:55:09.787288Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolons as separators, valid arithmetic expansion, correct curl flags, and proper variable interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by using time-seeded SHA256 hashing to generate three distinct DGA domain candidates across different DDNS providers (dynu.net, duckdns.org, ddns.net) with a time-derived rotating port, then attempting each in sequence for C2 resilience \u2014 fully consistent with dynamic resolution, endpoint rotation, and fallback beaconing behaviors described in the technique.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:25:58.087663Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed for a Bash environment, with correct variable assignments, subshells, arithmetic expansions, and logical operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates a time-based DGA (Domain Generation Algorithm) by using the system clock to generate dynamic hostnames and ports across multiple Dynamic DNS providers, which is the core of MITRE ATT&CK T1568.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:26:01.948021Z"
       }
     ],
     "llm_average_syntactic": 5.0,

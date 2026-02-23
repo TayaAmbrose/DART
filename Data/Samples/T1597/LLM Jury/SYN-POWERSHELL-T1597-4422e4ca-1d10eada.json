@@ -18,16 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper error handling with try/catch, and correct use of PowerShell syntax for web requests, JSON conversion, and file operations.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by authenticating to and querying Censys (a paid/gated intelligence source) to gather information about a target domain's TLS certificates, saving the results for later use in targeting.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:45:02.160856Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The PowerShell command is well-formed with balanced quotes/braces, valid hashtables and cmdlets, correct separators, and proper use of headers/body for Invoke-WebRequest.",
@@ -38,14 +28,24 @@
         "timestamp": "2025-10-02T11:45:15.288167Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for variable assignments, command execution, error handling, and API interaction.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, proper string interpolation, valid cmdlet usage, correct JSON conversion pipeline, and appropriate error handling via try/catch blocks.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly implements T1597 by performing an authenticated query against Censys, an account-gated internet intelligence platform, to gather specific host data (certificate subject) for target reconnaissance.",
+        "semantic_justification": "The command accurately implements T1597 by authenticating to the Censys paid API using account credentials from environment variables, querying a closed/subscription-gated intelligence source for TLS certificate data tied to a specific target domain, and saving structured results for further use in targeting \u2014 fully consistent with querying paid/private databases for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:49:13.336409Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct PowerShell syntax for API interaction, including proper variable expansion, header construction, and error handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately utilizes the Censys v2 API to perform a technical reconnaissance query consistent with searching closed or technical data sources.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T11:45:17.223610Z"
+        "timestamp": "2026-02-19T00:49:18.067692Z"
       }
     ],
     "llm_average_syntactic": 5.0,

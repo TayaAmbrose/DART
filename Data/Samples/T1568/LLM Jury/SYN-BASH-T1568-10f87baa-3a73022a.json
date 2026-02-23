@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flag formats, and correct escape sequences throughout the complex bash one-liner.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1568 Dynamic Resolution technique by using a date-based DGA algorithm to generate domains, querying them through DNS-over-HTTPS to avoid local DNS logs, configuring firewall rules for the resolved endpoint, and establishing a C2 channel on a randomized port.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T06:52:22.862536Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid command separators, correct flag formats, and appropriate use of command substitutions and variable expansions.",
-        "semantic_score": 4,
-        "semantic_justification": "The command expertly demonstrates dynamic resolution via DGA, DoH, and random port generation, and attempts a C2 beacon, though the `iptables` rules would fail to apply without root privileges, creating an operational realism gap given the stated 'Privilege: None'.",
-        "combined_score": 4.5,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T06:52:57.940093Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash with balanced quoting, valid pipes/semicolons, correct escaping of inner double-quotes, and valid flags for curl/grep/cut/iptables.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T06:53:19.291355Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper semicolons and conditional logic, valid flag usage for all tools (curl, iptables, shuf, grep), and correct bash -c quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by generating a time-based DGA domain, resolving it via DNS-over-HTTPS to evade local DNS logging, dynamically selecting a random port, configuring iptables firewall rules to permit the C2 traffic, and beaconing with host identification \u2014 all operationally plausible and tightly aligned with dynamic resolution C2 techniques.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:25:41.714040Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows correct Bash syntax, uses valid flags for all utilities (date, md5sum, cut, curl, grep, shuf, iptables), and handles quoting correctly.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a DGA and DoH resolution; however, it requires root privileges to execute the iptables commands despite the metadata stating 'Privilege: None'.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:25:45.921136Z"
       }
     ],
     "llm_average_syntactic": 5.0,

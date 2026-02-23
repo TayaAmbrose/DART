@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags for all tools used (docker run, find, xargs, shred, sync), and follows correct syntax for bash conditional statements.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using a container to access PostgreSQL data files and then employing the shred utility with secure deletion parameters (-n 3 overwrites 3 times, -z adds zeros, -u unlinks) to make the data unrecoverable, followed by sync to ensure changes are written to disk.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T00:35:40.390919Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quoting, valid Docker and Bash syntax, and correctly used flags for all utilities.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively leverages `docker run --volumes-from` to access the target data and then uses `find` piped to `xargs` and `shred -n 3 -z -u` to robustly and irreversibly destroy and delete all files in the PostgreSQL data directory, aligning perfectly with T1485 Data Destruction.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T00:35:49.561519Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command is well-formed with valid docker flags, balanced quoting, and a correct bash if/find/xargs/shred pipeline.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T00:36:20.136459Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of bash -lc with a single-quoted compound statement, valid find/xargs/shred flags, and correct command separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 by using --volumes-from to access the target container's PostgreSQL data directory, then employing shred with 3 overwrite passes plus a final zero-pass (-n 3 -z) and file deletion (-u) on every file found, followed by sync to flush to disk, making recovery effectively impossible.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:38:47.098097Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly uses Docker flags and a well-formed bash one-liner with properly nested conditional logic and piped commands.",
+        "semantic_score": 5,
+        "semantic_justification": "The use of shred via a sidecar container to securely wipe a database volume is a highly effective and realistic implementation of Data Destruction (T1485).",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:38:49.798344Z"
       }
     ],
     "llm_average_syntactic": 5.0,

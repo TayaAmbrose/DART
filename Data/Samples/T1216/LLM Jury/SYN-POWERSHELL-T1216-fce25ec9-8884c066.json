@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T22:00:06.460789Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, valid flags (//nologo), correct path structure, and appropriate use of parameters for the PubPrn.vbs script.",
+        "syntactic_justification": "The command is perfectly well-formed with valid wscript.exe flags (//nologo), a correct absolute path to PubPrn.vbs, and properly formatted arguments including the script: URI scheme for the remote scriptlet.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1216 (System Script Proxy Execution) by using wscript.exe to execute the legitimate signed PubPrn.vbs script as a proxy to load and execute a remote scriptlet from an attacker-controlled server.",
+        "semantic_justification": "This is a textbook T1216 abuse of PubPrn.vbs \u2014 a Microsoft-signed VBScript \u2014 invoked via wscript.exe to proxy execution of a remote .sct scriptlet file over HTTP, which is the exact documented exploitation method for this technique that bypasses application whitelisting.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T04:05:01.191801Z"
+        "confidence": 0.98,
+        "timestamp": "2026-02-19T00:07:27.570422Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid executable, flags, paths, and arguments, making it parseable and runnable.",
+        "syntactic_justification": "The command follows the correct syntax for wscript.exe, including valid flags and arguments for the PubPrn.vbs script.",
         "semantic_score": 5,
-        "semantic_justification": "The command accurately utilizes wscript.exe and PubPrn.vbs to proxy the execution of a remote scriptlet, directly aligning with the documented T1216 technique of abusing trusted system scripts for code execution.",
+        "semantic_justification": "The command accurately implements a well-known LOLBAS technique that leverages PubPrn.vbs to execute a remote scriptlet via a script moniker, perfectly aligning with MITRE ATT&CK T1216.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T04:05:04.841554Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:07:29.511057Z"
       }
     ],
     "llm_average_syntactic": 5.0,

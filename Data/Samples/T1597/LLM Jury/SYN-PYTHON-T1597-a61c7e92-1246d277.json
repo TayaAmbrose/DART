@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, error handling, balanced parentheses/braces, appropriate function calls, and follows Python syntax conventions.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries SecurityTrails, a paid closed-source intelligence platform, retrieves subdomain information for a target domain using an API key stored in AWS Secrets Manager, and stores the results in S3.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:35:56.156512Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with no syntax errors, balanced structures, and valid function calls and variable assignments.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly queries a commercial, paid intelligence source (SecurityTrails API) for non-public information (subdomains) and stores the results, directly aligning with T1597's description of 'querying paid technical databases' to 'collect intelligence'.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:36:03.818574Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid, parseable Python with balanced structures, correct imports, and no syntax errors.",
@@ -45,6 +25,26 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T11:36:20.019590Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is syntactically well-formed with balanced parentheses, proper string formatting, valid imports, correct exception handling, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the paid SecurityTrails API (a closed/commercial intelligence source) for subdomain reconnaissance, retrieving the API key from AWS Secrets Manager, validating input, and storing results in S3, which is operationally realistic and fully aligned with the technique description.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:48:39.825334Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly well-formed with correct library imports, proper indentation for the control flow, and valid use of the boto3 and requests libraries.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements T1597 by querying a paid commercial technical database (SecurityTrails) using an API key retrieved from a cloud secret store and logging the intelligence to an S3 bucket.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:48:43.406210Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, command substitution, valid flags for both 'find' and 'shred' commands, and correct use of the '-exec' action with proper termination.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using 'shred' to securely and irreversibly destroy files within a Docker volume, overwriting them multiple times (-n 2), zeroing them out (-z), removing them after shredding (-u), and forcing the operation (-f).",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T01:50:54.576060Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid command substitutions, and correct flags for find, docker, and shred.",
-        "semantic_score": 3,
-        "semantic_justification": "The command correctly identifies tools and methods for data destruction within a Docker volume, but the specified 'Privilege: None' makes it operationally implausible as both 'docker' and 'shred' (on typical Docker volume files) require elevated permissions.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T01:51:13.923899Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash with balanced quoting, valid find and shred flags, and correct -exec {} + usage.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T01:51:23.536446Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed with balanced quotes and valid flags, but using `find` with a command-substitution argument as the search path may cause issues if the mount point path contains spaces, and the `+` terminator for `-exec shred` is non-standard since shred doesn't accept multiple file arguments the way some tools do (though it does accept multiple files).",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses `docker volume inspect` to resolve the mount point, then applies `shred -n 2 -z -u -f` to securely overwrite and delete files within the Docker volume, which is a textbook T1485 data destruction technique targeting containerized application data.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:42:04.113554Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses perfectly formed Bash syntax, including correct command substitution, Go templating for Docker, and standard find/shred flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately identifies the host path for a Docker volume and uses the shred utility to securely and irreversibly destroy the data, aligning perfectly with T1485.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:42:07.802694Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

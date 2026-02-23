@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct crontab syntax for scheduling a task.",
-        "semantic_score": 5,
-        "semantic_justification": "The command aligns perfectly with T1585 (Establish Accounts) by automating regular social media activity to maintain a persistent online persona through an established Mastodon account using an API token.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T10:07:30.845143Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, correct use of pipes, redirections, command substitution, and valid flags for all commands involved.",
-        "semantic_score": 5,
-        "semantic_justification": "The command flawlessly achieves its stated intent of scheduling daily social media activity to maintain an active persona, directly aligning with the 'blend into normal activity' aspect of the T1585 'Establish Accounts' technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T10:07:38.482801Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed cron append pattern with balanced quoting and valid curl flags, preserving runtime expansions for cron.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.78,
         "timestamp": "2025-10-02T10:08:21.087309Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced parentheses and proper piping to crontab, but the redirection `>> $HOME/mastodon_post.json` inside the cron job string appends only stdout while curl's `-sS` output goes to stdout, and the subshell `$(cat $HOME/.masto_token)` inside single quotes within the echo string will not expand at scheduling time but will expand at execution time, which is actually correct behavior\u2014minor quoting complexity but functionally valid.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1585 persona maintenance by scheduling automated daily social media posts via the Mastodon API using a stored bearer token, which is operationally plausible for keeping a fake account active, though the append redirection of the JSON response is slightly misplaced (it appends the curl output rather than capturing it cleanly) and the cron schedule (10 9 * * *) is realistic for simulating human-like activity.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:41:42.006118Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly uses the standard subshell-and-pipe pattern to append a new entry to the user's crontab while handling the absence of existing entries gracefully.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively automates activity for a social media persona via a scheduled task, which directly supports the objective of maintaining a realistic account presence as described in T1585.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:41:44.049297Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

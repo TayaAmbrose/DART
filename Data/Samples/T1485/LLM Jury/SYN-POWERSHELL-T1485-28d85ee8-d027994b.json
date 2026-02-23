@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Azure PowerShell syntax, balanced quotes, valid parameters for Invoke-AzVMRunCommand, and a properly escaped Linux shell command as the script string.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using dd to overwrite free space with zeros on the /mnt/data filesystem, effectively destroying any residual data that may have been previously deleted but not physically overwritten.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T00:44:15.288819Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, valid PowerShell and shell syntax, and proper command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the described data destruction technique, using `dd` with `/dev/zero` and `conv=fsync` to overwrite free space, followed by `sync` and removal of the filler file, making it operationally plausible and effective.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T00:44:23.283175Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Azure PowerShell cmdlet with correct parameters and a valid quoted Bash script using dd, proper operators, and balanced quoting.",
@@ -44,11 +24,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T00:44:50.068467Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell cmdlet is well-formed with balanced quotes, valid parameters, and the embedded shell script uses correct dd flags, logical operators, and command separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements free-space wiping via dd with /dev/zero to overwrite residual data remnants, then removes the filler file, which aligns with T1485 anti-forensic data destruction; however, this technique targets unallocated space rather than actively destroying live data, making it more of a data sanitization/anti-forensic action than direct destructive impact, and the 'None' privilege level is unrealistic since writing to /mnt/data and executing via AzVMRunCommand typically requires elevated permissions.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:39:16.183780Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed Azure PowerShell cmdlet with a correctly escaped and syntactically sound Linux shell script string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively implements a free-space wipe using dd and sync, which aligns with the anti-forensic/data destruction goals of T1485.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:39:19.045568Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and braces, proper imports, valid AWS boto3 API calls, and correct JSON formatting for the output.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 (Establish Accounts) by creating new AWS IAM access keys for persistence while deactivating old ones to avoid detection, maintaining access to the AWS environment through credential rotation.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T09:24:45.761653Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 3,
-        "syntactic_justification": "The command is mostly well-formed but contains a runtime syntax error in the final print statement, attempting to access `newk['AccessKey']['AccessKeyId']` and `newk['AccessKey']['SecretAccessKey']` where `newk` is already the AccessKey dictionary, leading to a KeyError.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the claimed intent of rotating API credentials for an existing user to maintain persistence, using appropriate Boto3 calls to list, create, and inactivate keys, which directly supports the 'abuse accounts to gain persistent access' aspect of T1585.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T09:25:01.469685Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The python3 -c one-liner is well-formed with balanced quotes, proper separators, and valid Python syntax.",
@@ -44,11 +24,31 @@
         "combined_score": 4.5,
         "confidence": 0.78,
         "timestamp": "2025-10-02T09:25:27.955949Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses and proper boto3 API calls, though there is a minor bug where `newk['AccessKey']['AccessKeyId']` should be `newk['AccessKeyId']` since `newk` is already the `AccessKey` object returned from `create_access_key`.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 credential rotation for persistence \u2014 it creates a new IAM access key for an existing persona, deactivates old keys to avoid detection, and exfiltrates the new credentials, which is operationally realistic for maintaining persistent cloud access while mimicking legitimate key hygiene.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:38:21.859903Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with correct quote balancing, proper semicolon separators, and valid Python syntax.",
+        "semantic_score": 3,
+        "semantic_justification": "The command contains a logic error: 'newk' is assigned the content of the 'AccessKey' dictionary, but the subsequent print statement attempts to index into it again with ['AccessKey'], which will cause a KeyError at runtime; additionally, it fails to account for the AWS limit of two access keys per user, which often prevents creation before deactivation.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:38:31.590975Z"
       }
     ],
-    "llm_average_syntactic": 4.333,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.5,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

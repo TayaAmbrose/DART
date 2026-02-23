@@ -18,16 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, proper imports, and correct syntax for file operations, hash calculation, and comparison logic.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly addresses T1601 (Modify System Image) by implementing a detection mechanism that validates the integrity of a network device's firmware image against a known good reference hash, which is a recommended mitigation for this technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T17:01:13.642460Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The python3 -c one-liner is properly quoted, uses valid Python syntax with balanced parentheses and f-strings, and has no parsing errors.",
@@ -38,14 +28,24 @@
         "timestamp": "2025-10-02T17:01:36.517418Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python one-liner is perfectly well-formed with correct syntax, balanced quotes, and valid constructs for all operations.",
-        "semantic_score": 4,
-        "semantic_justification": "The command accurately implements a checksum comparison for detecting image modification, directly aligning with T1601 detection signals, but the explicit `assert os.geteuid()==0` contradicts the stated 'Privilege: None', creating a minor realism gap in its operational feasibility within the given context.",
-        "combined_score": 4.5,
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper string formatting, valid module imports, correct use of semicolons as statement separators, and proper f-string syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements firmware integrity verification for T1601 detection by computing SHA-256 of the live IOS-XE image, comparing it against a stored golden baseline hash, and exiting with a non-zero code on mismatch \u2014 exactly the kind of integrity validation recommended to detect unauthorized system image modification on Cisco network devices.",
+        "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T17:01:39.522291Z"
+        "timestamp": "2026-02-19T01:11:20.119234Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python syntax is perfectly formed, using valid imports, correct f-string formatting, and balanced quoting for a shell-executed one-liner.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements an integrity check on a realistic Cisco IOS-XE path, though reading a large binary file entirely into memory via .read() could cause resource exhaustion on embedded hardware.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:11:24.086531Z"
       }
     ],
     "llm_average_syntactic": 5.0,

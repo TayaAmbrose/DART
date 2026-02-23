@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T18:59:41.273526Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper variable declarations, correct method calls, and appropriate semicolons for statement separation.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, proper string quoting, valid .NET class instantiation, correct method chaining, and proper semicolon separators throughout the script block.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique (T1205) by sending an HTTP HEAD request with a custom encoded header that serves as a covert signal to a listening system, potentially triggering actions like opening WinRM (port 5985).",
+        "semantic_justification": "The command precisely implements T1205 Traffic Signaling by decoding a Base64-encoded custom HTTP header ('X-Trigger: open-5985') and embedding it in a HEAD request to a target host, which is a realistic and operationally plausible covert signaling mechanism that could trigger a remote listener to open WinRM (port 5985) or alter configuration without transferring a payload body.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:32:23.598028Z"
+        "timestamp": "2026-02-19T04:08:27.951879Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced syntax, proper cmdlet/method calls, correct variable assignments, and appropriate use of semicolons and operators.",
+        "syntactic_justification": "The PowerShell command and nested script block are perfectly formed, with correct variable assignments, class instantiations, and method calls.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1205 Traffic Signaling by embedding a base64-encoded, custom HTTP header within a legitimate HEAD request to deliver a specific trigger signal, fulfilling the stated intent of coordinating actions.",
+        "semantic_justification": "The command effectively implements T1205 by constructing a custom HTTP HEAD request with an obfuscated trigger header, accurately reflecting the traffic signaling technique.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T03:32:29.203772Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:08:29.895739Z"
       }
     ],
     "llm_average_syntactic": 5.0,

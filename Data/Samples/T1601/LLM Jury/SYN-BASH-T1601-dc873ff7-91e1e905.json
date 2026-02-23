@@ -16,26 +16,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (;, &&, ||), valid flags, balanced quotes, and correct redirection operators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively implements a firmware/boot image integrity check by generating SHA256 checksums of all boot files and comparing them against a previously stored baseline, which directly addresses the T1601 technique of detecting system image modifications.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T19:57:09.745603Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using balanced syntax, valid flags, and correct command separators for Bash.",
-        "semantic_score": 4,
-        "semantic_justification": "The command logically and effectively performs file integrity checks to detect system image tampering, directly aligning with the technique, but its operational plausibility on 'Network Devices' with 'None' privilege is questionable due to potential lack of tools and required file access.",
-        "combined_score": 4.5,
-        "confidence": 1,
-        "timestamp": "2025-10-02T19:57:23.115364Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash with correct -exec termination, piping, sorting, redirection, and logical operators.",
@@ -44,11 +24,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T19:57:45.148792Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with proper use of -exec, shell escaping, pipe, redirection, &&, and || operators, all balanced and syntactically valid in Bash.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements boot partition integrity checking by generating SHA256 checksums and diffing against a baseline, which is a legitimate detection mechanism for T1601 firmware tampering, though the 'Privilege: None' claim is unrealistic since reading /boot typically requires elevated privileges on most systems.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:26:14.448726Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash utilities, pipes, and logical operators with perfectly valid syntax and balanced characters.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements an integrity check to detect system image modifications, though accessing and checksumming /boot files typically requires root privileges rather than 'None'.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:26:18.203865Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T10:20:46.712189Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper use of mkdir -p for directory creation, balanced quotes, valid flags (-Rp for recursive and preserving attributes), and correct command chaining with &&.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-p for mkdir, -Rp for cp), proper use of && operator, and correct variable expansion syntax for $HOME.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 (Exfiltration Over Physical Medium) by creating a hidden directory (.proj) on an external volume and recursively copying user project files to it for potential physical exfiltration.",
+        "semantic_justification": "The command accurately implements T1052 by creating a hidden directory (dot-prefixed .proj) on an external volume (/Volumes/BACKUP, a macOS mount point for removable media) and recursively copying project files there with preserved attributes, directly matching physical medium exfiltration with obfuscation via hidden folder naming.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T10:20:49.738535Z"
+        "timestamp": "2026-02-18T22:42:00.624688Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, and correct command separators.",
+        "syntactic_justification": "The command uses standard Bash syntax with proper quoting, valid flags for mkdir and cp, and a correct logical operator.",
         "semantic_score": 5,
-        "semantic_justification": "The command appropriately uses `mkdir` to create a hidden directory on an external volume and `cp` with recursive and preserve attributes flags to copy sensitive project files, perfectly aligning with the described exfiltration technique and intent.",
+        "semantic_justification": "The command accurately implements physical exfiltration by copying files to a hidden directory on a standard macOS external mount point while preserving file attributes.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T10:20:57.695464Z"
+        "timestamp": "2026-02-18T22:42:02.602128Z"
       }
     ],
     "llm_average_syntactic": 5.0,

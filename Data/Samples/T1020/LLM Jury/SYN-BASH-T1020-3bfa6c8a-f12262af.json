@@ -28,28 +28,28 @@
         "timestamp": "2025-10-01T05:00:09.494687Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid Docker and curl flags, and correct shell syntax for the embedded script.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and valid flags, though the shell -c string passed to Docker has a subtle issue: the environment variable HN is set via -e at Docker run time but expanded in the host shell before being passed, meaning the inner shell script references $HN correctly only if it's exported into the container environment, which works here since -e HN=$(hostname) sets it as a container env var accessible to the inner sh -c script.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by creating a persistent Docker container that compresses /var/backups and sends it daily via HTTPS to an external server, with hostname identification and timestamps.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T05:00:12.250628Z"
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration by mounting /var/backups read-only, compressing its contents with tar, streaming the archive via HTTPS POST to an external IP with a timestamped filename, running in a detached background container with a 24-hour loop \u2014 fully consistent with automated, scheduled, compressed exfiltration over HTTPS.",
+        "combined_score": 4.5,
+        "confidence": 0.92,
+        "timestamp": "2026-02-18T22:28:38.238518Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, valid flags, correct command separators, and no discernible syntax errors in either the Docker or the shell commands.",
-        "semantic_score": 4,
-        "semantic_justification": "The command perfectly achieves automated data exfiltration using appropriate tools and arguments, aligning strongly with MITRE ATT&CK T1020, but the stated 'Privilege: None' conflicts with the actual elevated privilege required to execute `docker run`.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T05:00:44.561085Z"
+        "syntactic_justification": "The command is perfectly well-formed, using correct shell syntax for variables, subshells, pipes, and loops, alongside valid Docker and tool-specific flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command aligns perfectly with T1020 by automating the compression (tar), scheduling (while loop/sleep), and exfiltration (curl) of data from a sensitive directory (/var/backups) using a plausible containerized approach.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:28:49.491410Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
     "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,

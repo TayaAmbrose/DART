@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T07:13:32.734680Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper pipe syntax, valid flags for both tar (-czf) and dd (of=, bs=), and correct path specifications.",
+        "syntactic_justification": "The command is perfectly well-formed with valid tar flags (-czf with stdout dash), a proper pipe to dd, and correct dd arguments (of= and bs=1m are valid macOS dd syntax).",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by compressing user pictures and exfiltrating them to a removable USB drive with the file disguised as a system file (.thumbs.db) to avoid detection.",
+        "semantic_justification": "The command accurately implements T1052 by streaming a compressed archive of ~/Pictures directly to a disguised file (.thumbs.db mimics a Windows thumbnail cache) on an external USB volume (/Volumes/USB/), using dd for efficient block-level writes, and the obfuscated filename helps evade casual inspection \u2014 all consistent with physical medium exfiltration tradecraft.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T07:13:35.793719Z"
+        "timestamp": "2026-02-18T22:32:22.067346Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid flags and operators, and exhibits no syntax errors or impossible constructs.",
+        "syntactic_justification": "The command uses standard Unix syntax with correctly placed pipes, flags, and paths for a macOS environment.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the claimed intent by archiving and compressing pictures, streaming them to a disguised file on a mounted USB drive using `dd`, perfectly aligning with the T1052 technique for exfiltration over a physical medium with data disguise.",
+        "semantic_justification": "The command successfully packages data from a user directory and streams it to a hidden file on a typical macOS mount point for external media, perfectly matching the technique.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T07:13:44.011801Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:32:23.804338Z"
       }
     ],
     "llm_average_syntactic": 5.0,

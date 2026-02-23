@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T13:29:29.439472Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper Python syntax within the command, and correct use of sudo for elevated privileges.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses and quotes, valid Python inline syntax, correct Scapy imports and chaining with the `/` operator, and proper flag formatting.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using Scapy to craft a TCP SYN packet with a specific sequence number (0xBADC0DE) that serves as a covert signal to a listening system.",
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by crafting a TCP SYN packet with a distinctive magic sequence number (0xBADC0DE) to port 22, which is a classic single-packet authorization (SPA/port-knocking) covert signaling technique, requiring raw socket privileges via sudo and correctly using Scapy for packet crafting.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T13:29:32.008007Z"
+        "timestamp": "2026-02-19T03:45:22.268181Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct Python syntax, balanced quotes, and valid Scapy function calls and arguments.",
+        "syntactic_justification": "The command uses correct shell quoting and valid Scapy library syntax for crafting and sending a raw TCP packet.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely implements a covert traffic signaling technique using an abnormal TCP sequence number within a SYN packet to a common service, which is highly plausible for authorization or command and control.",
+        "semantic_justification": "The use of a specific, non-random TCP sequence number (0xBADC0DE) accurately implements a covert traffic signal or trigger as described in MITRE ATT&CK T1205.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T13:29:45.680644Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:45:24.212532Z"
       }
     ],
     "llm_average_syntactic": 5.0,

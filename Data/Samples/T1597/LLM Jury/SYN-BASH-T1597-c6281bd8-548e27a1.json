@@ -19,26 +19,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper curl syntax, balanced quotes, valid flags, and correct output redirection.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements T1597 (Search Closed Sources) by querying Hunter.io, a paid intelligence service, to gather email patterns for a target domain with appropriate rate limiting and logging.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:53:26.264743Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, and correct command structure for Bash.",
-        "semantic_score": 5,
-        "semantic_justification": "The command accurately calls a paid subscription service (Hunter.io) to gather intelligence on a target domain, perfectly aligning with the T1597 'Search Closed Sources' technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:53:34.189685Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command uses valid curl flags, balanced quoting for headers/URL/write-out, proper output redirection, and is fully parseable.",
@@ -47,6 +27,26 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T13:53:48.682994Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid curl flags (-fsS, --retry, --connect-timeout, --max-time, --compressed, -H, -o, -w), proper shell variable expansion, and correct append redirection to the log file.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying Hunter.io, a paid subscription-based email intelligence service, to enumerate professional email patterns for a target domain, which directly aligns with the technique's description of querying paid/closed-source databases for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:59:19.809944Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed with correctly balanced quotes, valid curl flags, and proper shell redirection.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately utilizes a paid API (Hunter.io) to perform technical reconnaissance on a target domain, which is a direct implementation of T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:59:22.371659Z"
       }
     ],
     "llm_average_syntactic": 5.0,

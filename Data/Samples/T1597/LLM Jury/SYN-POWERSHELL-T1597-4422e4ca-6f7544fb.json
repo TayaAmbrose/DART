@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper syntax, balanced quotes/braces, correct error handling with try/catch, appropriate variable assignments, and proper API request formatting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by using ZoomInfo's paid API with authentication to gather non-public company intelligence data, storing results locally, and maintaining logs of the reconnaissance activity.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:40:13.727116Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, braces, correct command separators, and valid PowerShell cmdlets and parameters.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597, using a paid API (ZoomInfo) to gather company intelligence, employing appropriate PowerShell tools and realistic API interaction for the claimed intent.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:40:22.326252Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The PowerShell command is well-formed with balanced braces/quotes, valid parameters, and proper try/catch and pipeline usage.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T12:40:35.807727Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper use of try/catch, valid cmdlet syntax, and correct string interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1597 by authenticating to ZoomInfo's paid enrichment API using a Bearer token, querying closed-source company intelligence for a specific target domain, and logging structured results \u2014 fully consistent with adversarial use of paid/private data sources for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:53:17.032420Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with correct use of hashtables, variable interpolation, try-catch blocks, and cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by programmatically querying a paid business intelligence API (ZoomInfo) for target reconnaissance and logging the results.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:53:19.922410Z"
       }
     ],
     "llm_average_syntactic": 5.0,

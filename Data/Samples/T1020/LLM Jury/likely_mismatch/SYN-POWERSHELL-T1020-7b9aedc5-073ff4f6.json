@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T04:38:23.261028Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 1,
-        "syntactic_justification": "The command is a placeholder marked as [REDACTED] with only a description of functionality rather than actual executable code.",
-        "semantic_score": 3,
-        "semantic_justification": "The description aligns with T1020 (Automated Exfiltration) by describing a persistent SMB-based exfiltration loop that batches and transfers data, but without actual code it's impossible to verify implementation details.",
-        "combined_score": 2.0,
-        "confidence": 0.8,
-        "timestamp": "2025-10-01T04:38:31.630598Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 0,
+        "syntactic_justification": "The command is explicitly marked as a redacted non-executable placeholder with no actual code present, making it impossible to evaluate for syntactic correctness.",
+        "semantic_score": 2,
+        "semantic_justification": "The description conceptually aligns with T1020 automated exfiltration via SMB using 'net use' and a persistent loop, but without actual executable code the semantic alignment is only theoretical and cannot be verified as operationally plausible.",
+        "combined_score": 1.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:27:31.352997Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 1,
-        "syntactic_justification": "The provided 'command' is a descriptive placeholder, explicitly labeled as non-executable, and lacks any specific syntax for parsing or execution.",
+        "syntactic_justification": "The command field contains a natural language description and a placeholder rather than executable PowerShell code.",
         "semantic_score": 5,
-        "semantic_justification": "The described routine of using 'net use' to establish a persistent SMB session and then automate batching and shipping data to a UNC path perfectly embodies the T1020 Automated Exfiltration technique.",
+        "semantic_justification": "The described workflow\u2014establishing a persistent SMB session, utilizing a loop for periodic batching, and exfiltrating to a UNC path\u2014is a highly accurate and realistic implementation of T1020.",
         "combined_score": 3.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:07:22.697973Z"
+        "timestamp": "2026-02-18T22:27:36.820604Z"
       }
     ],
-    "llm_average_syntactic": 1.0,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 2.0,
+    "llm_average_syntactic": 0.667,
+    "llm_average_semantic": 2.667,
+    "llm_average_score": 1.667,
     "llm_verdict": "likely_mismatch",
     "sandbox_trace_id": null,
     "mitre_match_score": null

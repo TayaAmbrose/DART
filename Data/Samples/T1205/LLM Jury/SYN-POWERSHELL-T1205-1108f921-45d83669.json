@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T13:20:18.674654Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, parentheses, and quotes, proper variable declarations, correct method calls, and appropriate semicolons for statement separation.",
+        "syntactic_justification": "The PowerShell command uses valid syntax, balanced braces, and correct .NET object method calls for UDP communication.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a UDP client that sends a specific 'WAKEUP:MDNS' trigger message to port 5353, which could activate a dormant agent waiting for this specific signal.",
+        "semantic_justification": "The command accurately implements traffic signaling by sending a custom-encoded string to a common service port to trigger a remote action.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T13:20:22.065762Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:44:17.495011Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with no syntax errors, balanced punctuation, and valid cmdlet/method calls.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, proper semicolons as statement separators, correct .NET class instantiation, and valid method calls throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the described intent of signaling a dormant agent via a crafted UDP packet, which is a direct implementation of the Traffic Signaling (T1205) technique.",
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by sending a custom 'WAKEUP:MDNS' payload over UDP to port 5353 (mDNS) to wake a dormant agent, mimicking legitimate mDNS traffic while embedding a covert signal, which is operationally plausible and requires no elevated privileges.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T13:20:33.538629Z"
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T03:44:19.255372Z"
       }
     ],
     "llm_average_syntactic": 5.0,

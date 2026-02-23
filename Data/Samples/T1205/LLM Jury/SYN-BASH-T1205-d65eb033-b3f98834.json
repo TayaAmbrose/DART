@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T15:30:43.850839Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax, flags, and command separators, with balanced quotes and appropriate use of placeholders.",
-        "semantic_score": 3,
-        "semantic_justification": "While the `curl` command perfectly demonstrates T1205 by signaling via a custom header, the subsequent `networksetup` commands, which are part of the stated intent, require administrative privileges on macOS and will fail under the claimed 'Privilege: None', making the full claimed intent unachievable.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T15:31:10.372153Z"
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid curl flags and headers, proper && chaining, and correct networksetup subcommand syntax for macOS.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 by sending a covert application-layer signal via a custom HTTP header (X-Trigger: 1337) to an unusual endpoint, then configures the macOS system proxy to route HTTPS traffic through a local listener on the same port, which is operationally coherent and realistic for traffic signaling combined with C2 redirection.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:52:53.340420Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), balanced quotes, valid flags for both curl and networksetup commands, and follows correct syntax for all tools used.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending a covert HTTP header ('X-Trigger: 1337') to a potential C2 server and then configuring the system's secure web proxy settings to potentially enable a backdoor communication channel.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:13:48.814053Z"
+        "syntactic_justification": "The command uses proper bash syntax, correct flag formatting for curl and networksetup, and correctly chains commands using the logical AND operator.",
+        "semantic_score": 4,
+        "semantic_justification": "The use of a custom HTTP header effectively demonstrates traffic signaling (T1205), though the subsequent network configuration commands typically require administrative privileges on macOS.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:52:56.820122Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

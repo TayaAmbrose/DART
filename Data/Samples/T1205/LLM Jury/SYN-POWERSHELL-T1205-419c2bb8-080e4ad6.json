@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T13:45:02.622079Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper PowerShell syntax for Invoke-Command, correct parameter usage, and valid regular expression pattern matching.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces and proper escaping, though the double-backslash in the path string and the regex escape sequences (e.g., `\\s+`, `\\b`) may behave unexpectedly inside a double-quoted string passed through Invoke-Command's ScriptBlock, potentially causing minor parsing issues in edge cases.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by monitoring firewall logs for specific UDP broadcast packets (Wake-on-LAN magic packets) and using them as a covert signal to temporarily allow RDP access from the sender's IP address.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T13:45:05.579159Z"
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by monitoring Windows Firewall logs for a covert trigger (UDP/9 broadcast with WoL-characteristic packet sizes 102 or 108 bytes), then dynamically creating a time-limited inbound RDP firewall rule for the signaling source IP, which is a realistic and operationally plausible port-knocking/traffic-signaling mechanism for covert C2 access.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:46:00.191401Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flag formats, and no discernible syntax errors in PowerShell.",
+        "syntactic_justification": "The command is a well-formed PowerShell script block using valid cmdlets, proper quoting, balanced braces, and correct pipeline usage.",
         "semantic_score": 3,
-        "semantic_justification": "The command's logic aligns strongly with the T1205 Traffic Signaling technique, using a WoL packet as a covert trigger for a temporary RDP firewall rule; however, the stated 'Privilege: None' makes the command operationally unfeasible as all firewall modification cmdlets require administrative privileges.",
+        "semantic_justification": "While the logic of monitoring a firewall log for a 'knock' is sound, the regex is semantically flawed because it searches for the literal string 'size' (e.g., '\\bsize\\s+102'), which does not appear in the standard space-delimited Windows Firewall log format. Additionally, the command requires Administrator privileges and WinRM enabled for localhost, despite the 'Privilege: None' label.",
         "combined_score": 4.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T13:45:54.640761Z"
+        "timestamp": "2026-02-19T03:46:11.417259Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

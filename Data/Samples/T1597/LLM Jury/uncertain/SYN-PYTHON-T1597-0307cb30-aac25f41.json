@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1597",
+  "platform": "Linux",
+  "shell": "Python",
+  "command": "python3 -c 'import os,sys,json,http.client,urllib.parse; dom=os.environ.get(\"TARGET_DOMAIN\",\"example.com\"); key=os.environ[\"WHOISXML_API_KEY\"]; q=\"/whoisserver/WhoisService?\"+urllib.parse.urlencode({\"apiKey\":key,\"domainName\":dom,\"outputFormat\":\"JSON\"}); c=http.client.HTTPSConnection(\"www.whoisxmlapi.com\",timeout=15); c.request(\"GET\",q,headers={\"Accept\":\"application/json\"}); r=c.getresponse(); b=r.read();\ntry:\n j=json.loads(b.decode());\nexcept Exception:\n j={\"raw\":b.decode(\"utf-8\",\"ignore\")};\nif r.status==200:\n print(json.dumps(j))\nelse:\n sys.stderr.write(f\"HTTP {r.status} {r.reason}: \"+(b[:200].decode(\"utf-8\",\"ignore\"))+\"\\n\"); sys.exit(1)'\n",
+  "explanation": "Queries WhoisXML API (paid) for WHOIS data of the target domain via HTTPS and returns structured JSON.",
+  "rationale_steps": [
+    "Construct a parameterized query string using a securely sourced API key.",
+    "Perform HTTPS GET to WhoisXML endpoint and request JSON output.",
+    "Parse and print JSON; handle error cases and avoid leaking secrets."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1597-0307cb30-aac25f41",
+  "source_prompt_hash": "0307cb30",
+  "timestamp_utc": "2025-09-30T06:31:45.744266Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The python3 -c snippet is well-formed with balanced quotes, valid imports, proper newlines/indentation for try/except/if blocks, and parseable statements.",
+        "semantic_score": 5,
+        "semantic_justification": "It uses a paid closed-source WhoisXML API over HTTPS with an API key to fetch WHOIS data for a target domain and returns JSON, aligning with T1597 behavior.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T12:20:33.431939Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python one-liner is mostly well-formed with balanced parentheses and valid constructs, though the multi-line formatting within the -c string (with bare newlines) may cause shell parsing issues depending on how it's executed.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying a paid closed-source WHOIS API (WhoisXML API) using an API key to retrieve domain registration intelligence, which is a textbook example of searching closed/paid data sources for targeting information.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:52:01.189504Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 2,
+        "syntactic_justification": "Python's grammar does not allow compound statements like 'try...except' or 'if...else' to be chained on a single line with semicolons, nor can an 'else' block exist on the same line as the 'if' block.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly demonstrates the technique by querying a well-known paid WHOIS technical database (WhoisXML API) to gather intelligence on a target domain.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:52:15.428725Z"
+      }
+    ],
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -18,26 +18,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper semicolon separators, correct variable assignments, conditional logic, and valid PowerShell cmdlets with appropriate parameters.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements a system image integrity verification mechanism by establishing a baseline hash, comparing it to the current hash, alerting on changes, and using both PowerShell and certutil for redundant verification - directly addressing the T1601 technique's detection recommendations.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:39:18.526932Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for variable assignment, conditional logic, cmdlets, and includes a valid Windows native command with appropriate parameters.",
-        "semantic_score": 4,
-        "semantic_justification": "The command correctly implements file hash comparison to detect modifications to the system image, directly aligning with T1601 detection signals; however, the 'Set-Content' operation to establish or update the baseline file would typically require elevated privileges for the specified 'C:\\images' path, creating a minor realism gap for a 'None' privilege level.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T18:39:45.033692Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced quotes/parentheses, proper semicolon separators, and valid cmdlets/flags that should parse and run.",
@@ -46,11 +26,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T18:39:48.393035Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses and quotes, valid cmdlets, and proper semicolon separators, though the inline if/else logic mixing Set-Content in the else branch (which updates the baseline when no change is detected) is syntactically valid but slightly complex for a one-liner.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements T1601 detection by establishing a SHA256 baseline for install.wim, comparing it against the current hash to alert on unauthorized modification, and using certutil as a secondary verification tool, which is operationally sound and directly aligned with system image integrity verification.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:19:28.844789Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed PowerShell with balanced parentheses, correct variable usage, and proper semicolon delimiters for multiple statements.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately performs the integrity check described in the explanation; however, it is a defensive/detection command rather than an adversarial implementation of T1601, and writing to the C:\\ root directory usually requires higher privileges than 'None'.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:19:36.274896Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

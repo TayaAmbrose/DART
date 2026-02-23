@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T18:19:21.086429Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced syntax, correct command separators, and valid PowerShell parameters.",
-        "semantic_score": 3,
-        "semantic_justification": "The command correctly implements a UDP listener and base64 decoding for a signal, aligning with T1205, but cannot achieve its full stated intent of creating a firewall rule due to insufficient privileges ('Privilege: None' as per prompt), and the listener is not persistent.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T18:19:48.370658Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid parameter names, and correct object instantiation syntax.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, parentheses, and quotes, proper semicolon separators, and valid .NET class instantiation syntax throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a UDP listener on port 49152 that waits for a specific encoded signal ('OPEN:5985') which, when received, triggers the creation of a firewall rule to allow WinRM access.",
+        "semantic_justification": "The command accurately implements a UDP magic-packet/traffic-signaling listener (T1205) that receives a packet on a high ephemeral port, decodes a base64-encoded trigger string, and conditionally creates a firewall rule to open WinRM port 5985, which is operationally coherent and realistic for port-knocking style C2 activation.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:27:06.773065Z"
+        "timestamp": "2026-02-19T04:05:38.483419Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script block using valid .NET classes, correct variable assignments, and balanced delimiters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements a UDP listener that waits for a specific base64-encoded payload to trigger a firewall rule modification, perfectly demonstrating the Traffic Signaling technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:05:40.893398Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

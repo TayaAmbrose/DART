@@ -17,16 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and braces, proper exception handling, and valid Python syntax throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1597 technique by querying SecurityTrails (a closed-source intelligence platform) using API authentication to gather domain intelligence, which aligns perfectly with searching closed sources for targeting information.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T14:16:02.763513Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The python3 -c string is properly single-quoted with balanced quotes/braces, valid Python syntax (including f-strings and indentation), and correct command separators.",
@@ -37,19 +27,29 @@
         "timestamp": "2025-10-02T14:16:30.287629Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed, with balanced quotes, parentheses, and braces, and valid syntax for all operations.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed Python embedded in a shell one-liner, but the multi-line formatting with bare newlines inside the single-quoted string may cause parsing issues depending on the shell context, though the logic and structure are otherwise valid.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying a known subscription-based domain intelligence service (SecurityTrails) via an API key to collect information, which is a direct example of 'Search Closed Sources'.",
+        "semantic_justification": "The command accurately implements T1597 by querying SecurityTrails, a paid subscription-based closed-source intelligence platform, using API key authentication over HTTPS to retrieve domain intelligence for targeting purposes, which is precisely the behavior described in the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:59:59.875871Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed Python one-liner using standard libraries with correct syntax, balanced delimiters, and proper error handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a programmatic query to a subscription-based technical intelligence database (SecurityTrails), which is a core behavior of T1597.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T20:51:35.915541Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:00:03.220173Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null

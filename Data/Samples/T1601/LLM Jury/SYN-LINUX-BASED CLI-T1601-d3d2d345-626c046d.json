@@ -17,26 +17,6 @@
     "syntax_ok": null,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags, correct command separators, and appropriate redirection of stderr.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements a baseline integrity check by reading the kernel partition from an MTD device, computing its SHA256 hash, and saving the result to a file - which aligns perfectly with detecting T1601 firmware/image modifications.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:28:37.141088Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced quoting, valid flags, and proper command separators for a Linux-based CLI.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command correctly uses appropriate tools (dd, sha256sum) to assess kernel image integrity related to T1601, the claim of 'Privilege: None' is semantically incorrect and operationally implausible for reading from a raw MTD partition like /dev/mtdblock2 on most Linux-based network devices.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T18:28:50.081274Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Commands are well-formed with balanced quotes, proper separators, valid options, and correct redirection/piping.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T18:29:00.847173Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid semicolon separators, correct pipe usage, proper dd flags (if, bs, count), valid redirection of stderr, and correct tee usage.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses dd to read from an MTD block device and pipes to sha256sum with tee for logging, which is a realistic integrity baseline check for embedded/network device kernel partitions relevant to T1601 detection; the minor gap is that reading only 8MB may not capture the full kernel partition, and the explanation's framing as 'before modifying' slightly undermines the defensive framing, but the tooling and approach are operationally plausible.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:19:00.642072Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Linux utilities with correct syntax, balanced quotes, and proper piping/redirection.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly reads an MTD partition to generate a hash for integrity verification, though accessing /dev/mtdblock devices typically requires root privileges despite the 'None' designation.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:19:01.455641Z"
       }
     ],
     "llm_average_syntactic": 5.0,

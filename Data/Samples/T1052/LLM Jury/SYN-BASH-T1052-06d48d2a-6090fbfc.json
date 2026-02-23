@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T09:29:04.704162Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags (tar -cf, dd of=, bs=1m), and correct pipe syntax.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid tar flags (-cf -), proper pipe operator, and valid dd arguments (of=, bs=1m) all correctly structured for Bash on macOS.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1052 technique by creating a tar archive of financial documents and writing it directly to a removable volume with a hidden filename (.f.dat), enabling physical exfiltration.",
+        "semantic_justification": "The command accurately implements T1052 by streaming a tar archive of finance documents directly onto a mounted USB volume (/Volumes/EXFIL/) as a hidden dot-file (.f.dat), which is operationally plausible for discreet physical exfiltration on macOS without requiring elevated privileges.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:29:07.428826Z"
+        "timestamp": "2026-02-18T22:39:29.474485Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid `tar` and `dd` syntax, correct flag arguments, balanced quoting for paths, and a properly formed pipe.",
+        "syntactic_justification": "The command uses standard Bash syntax with proper quoting, piping, and valid flags for both tar and dd.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by using `tar` to package documents and `dd` to write the stream to a hidden file on a plausible macOS USB mount point, directly supporting the physical exfiltration technique.",
+        "semantic_justification": "The command accurately streams a directory's contents into a hidden file on a mounted external volume, perfectly reflecting the physical exfiltration technique on macOS.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T09:29:16.437435Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:39:30.195257Z"
       }
     ],
     "llm_average_syntactic": 5.0,

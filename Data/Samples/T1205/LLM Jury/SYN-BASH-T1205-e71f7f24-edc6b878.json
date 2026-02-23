@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T18:10:49.566968Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, employing correct `sudo bash -c` encapsulation, valid `iptables` flags and module usage, proper command separators, and correctly quoted `vtysh -c` arguments.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper semicolons as separators, valid iptables flags and options, and correct vtysh syntax throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command correctly implements a multi-stage port knocking sequence using `iptables -m recent` to enable SSH access, a clear example of Traffic Signaling (T1205), followed by a plausible `vtysh` command to establish a static route for further C2 or data movement.",
+        "semantic_justification": "The command accurately implements a classic port-knocking sequence (1111\u21922222\u21923333\u219222) using iptables 'recent' module with time windows, which is a textbook Traffic Signaling technique (T1205) for covertly triggering SSH access, and the vtysh static route addition is operationally plausible as a supporting network configuration on a routing device.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T18:11:10.620199Z"
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T04:05:15.028299Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid iptables syntax, correct command separators, and proper use of the bash -c construct to execute multiple commands.",
+        "syntactic_justification": "The command uses correctly nested quotes, valid iptables modules/flags, and standard vtysh command-line arguments for FRRouting/Quagga.",
         "semantic_score": 5,
-        "semantic_justification": "The command implements a sophisticated port knocking sequence (1111\u21922222\u21923333) that temporarily opens SSH access using iptables' recent module, followed by a network route configuration via vtysh, which aligns perfectly with the Traffic Signaling technique by creating a covert authentication mechanism.",
+        "semantic_justification": "The iptables logic correctly implements a stateful port-knocking sequence (1111->2222->3333) using the 'recent' module to eventually permit SSH, and the vtysh command properly adds a static route as described.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:25:23.959245Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:05:19.225019Z"
       }
     ],
     "llm_average_syntactic": 5.0,
