@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1597",
+  "platform": "Linux",
+  "shell": "Python",
+  "command": "python3 -c 'import os,sys,json,http.client; ip=os.environ.get(\"TARGET_IP\",\"8.8.8.8\"); key=os.environ[\"GREYNOISE_API_KEY\"]; c=http.client.HTTPSConnection(\"api.greynoise.io\",timeout=15); h={\"key\":key,\"Accept\":\"application/json\"}; c.request(\"GET\",\"/v2/noise/context/\"+ip,headers=h); r=c.getresponse(); b=r.read();\ntry:\n j=json.loads(b.decode());\nexcept Exception:\n j={\"raw\":b.decode(\"utf-8\",\"ignore\")};\nif r.status==200:\n print(json.dumps(j))\nelse:\n sys.stderr.write(f\"HTTP {r.status} {r.reason}: \"+(b[:200].decode(\"utf-8\",\"ignore\"))+\"\\n\"); sys.exit(1)'\n",
+  "explanation": "Pulls enterprise context from GreyNoise (subscription) for a target IP to assess exposure/noise, returning JSON.",
+  "rationale_steps": [
+    "Read API key and target IP from environment variables.",
+    "Send authenticated HTTPS GET to the GreyNoise context endpoint.",
+    "Print parsed JSON, log and exit on non-200 responses."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1597-0307cb30-f340e0cb",
+  "source_prompt_hash": "0307cb30",
+  "timestamp_utc": "2025-09-30T06:31:45.744266Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is properly quoted and contains valid, parseable Python 3 code with balanced delimiters and correct control flow.",
+        "semantic_score": 5,
+        "semantic_justification": "It queries the paid GreyNoise API for IP context using a subscription key, directly aligning with T1597’s use of closed sources for intelligence collection.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T13:19:43.878213Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command is mostly well-formed Python embedded in a shell one-liner, but the multi-line formatting with a bare newline inside the single-quoted shell argument and the try/except block split across lines would cause parsing issues in most shells without proper line continuation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the GreyNoise enterprise API (a paid/subscription closed source) using an API key to retrieve threat intelligence context on a target IP, which is a realistic and operationally plausible use of a paid threat-intel feed for reconnaissance.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:56:25.849382Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed Python one-liner with correct imports, variable assignments, and properly nested quoting for a shell environment.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a query to a known threat intelligence API (GreyNoise) using a subscription key to gather non-public context on a target IP, aligning perfectly with T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:56:26.567963Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

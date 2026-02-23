@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$pre=(Get-FileHash 'C:\\images\\boot.wim' -Algorithm SHA256).Hash; dism /Unmount-Image /MountDir:C:\\bemount /Commit | Out-Null; $post=(Get-FileHash 'C:\\images\\boot.wim' -Algorithm SHA256).Hash; if($pre -ne $post){Write-Output 'boot.wim modified'}; certutil -hashfile C:\\images\\boot.wim SHA256",
+  "explanation": "Commits modifications to the boot.wim system image and validates integrity change by comparing pre/post hashes, aligning with T1601 system image patching verification.",
+  "rationale_steps": [
+    "Hash boot.wim prior to committing changes.",
+    "Commit modifications to the mounted boot image.",
+    "Hash boot.wim after commit and compare for confirmation.",
+    "Record the new hash with certutil."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-dc7ef01c-d75af157",
+  "source_prompt_hash": "dc7ef01c",
+  "timestamp_utc": "2025-09-30T04:49:19.161651Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell one-liner has balanced quoting/parentheses, valid cmdlets and switches, and proper separators, making it fully parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "It commits a DISM-mounted WIM and compares pre/post hashes of boot.wim to verify modification, aligning with system image tampering, though it assumes the mount corresponds to that file and generally requires administrative privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T17:31:37.404930Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The PowerShell pipeline is well-formed with balanced parentheses and proper semicolons, though mixing DISM's stdout suppression via `Out-Null` with its exit code handling is slightly awkward and the certutil command appended at the end is a separate tool invocation that works but feels loosely chained.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly captures a pre-commit hash of boot.wim, commits DISM mount changes (which would modify the image per T1601), captures a post-commit hash, and compares them to detect modification—this is operationally plausible for verifying system image patching, though the 'None' privilege claim is unrealistic since DISM /Unmount-Image /Commit requires administrator privileges.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:14:02.229877Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax with proper variable assignments, command separators, and correctly formatted DISM and certutil flags.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements the modification and integrity check of a boot image (T1601), though it incorrectly claims 'None' for privileges as DISM operations require Administrator rights.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:14:04.666913Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

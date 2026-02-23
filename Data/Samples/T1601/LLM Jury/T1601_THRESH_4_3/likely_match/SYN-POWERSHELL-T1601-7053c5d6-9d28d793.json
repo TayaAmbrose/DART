@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "dism /Mount-Wim /WimFile:C:\\Images\\install.wim /Index:1 /MountDir:C:\\Mount\\Install; $h=(Get-FileHash 'C:\\Mount\\Install\\Windows\\System32\\winlogon.exe' -Algorithm SHA256).Hash; if ($h -ne (Get-Content 'C:\\Baselines\\winlogon.exe.sha256')) { Write-Output 'winlogon.exe tampered in image' }; dism /Unmount-Wim /MountDir:C:\\Mount\\Install /Discard",
+  "explanation": "Computes an offline hash of a critical binary within the mounted image and compares it to a baseline to detect unauthorized patching inside the system image.",
+  "rationale_steps": [
+    "Mount the system image for offline file access.",
+    "Hash a critical system binary inside the image.",
+    "Compare with a trusted baseline checksum to detect tampering.",
+    "Unmount the image without saving changes."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-7053c5d6-9d28d793",
+  "source_prompt_hash": "7053c5d6",
+  "timestamp_utc": "2025-09-30T04:53:44.701470Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell one-liner is well-formed with balanced quotes and parentheses, valid DISM flags, and proper semicolon separators.",
+        "semantic_score": 4,
+        "semantic_justification": "It correctly mounts a WIM, hashes an offline binary, compares to a baseline for tamper detection, and unmounts, but typically requires administrative privileges and a pre-existing empty mount directory.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T16:56:17.014376Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid PowerShell constructs, but chaining DISM commands with semicolons alongside PowerShell in a single pipeline may cause issues depending on execution context, and the DISM commands lack proper quoting around paths with spaces.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements offline image integrity verification by mounting a WIM file, hashing a critical system binary (winlogon.exe) against a stored baseline, and discarding changes on unmount — directly aligned with T1601 detection methodology for unauthorized patching inside system images.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:11:07.370067Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct PowerShell and DISM syntax with proper argument separators and balanced parentheses.",
+        "semantic_score": 4,
+        "semantic_justification": "While the logic correctly audits image integrity, the command requires Administrator privileges to run DISM, contrary to the 'None' privilege level claimed.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:11:09.816783Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

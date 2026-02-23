@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "echo \"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef  /dev/mtd0\" | sha256sum -c -",
+  "explanation": "Validates the raw flash (MTD) system image region against a known checksum to ensure the modified firmware remains intact.",
+  "rationale_steps": [
+    "Maintain a reference hash for the targeted MTD partition.",
+    "Run offline integrity checks to confirm persisting modifications."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-dc873ff7-f1e834d4",
+  "source_prompt_hash": "dc873ff7",
+  "timestamp_utc": "2025-09-30T04:57:26.660610Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quoting, a proper pipe, and valid sha256sum -c usage reading the checksum line from stdin.",
+        "semantic_score": 4,
+        "semantic_justification": "It correctly verifies the hash of the MTD device against a known checksum (appropriate for firmware integrity checking), but typically requires elevated permissions and assumes the correct partition (/dev/mtd0) for the system image.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2025-10-02T17:03:55.204366Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard piping and valid sha256sum flags to check a hash against a specific device path.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly validates a flash partition's integrity, though accessing /dev/mtd0 typically requires root privileges rather than 'None'.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:11:41.244360Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and valid pipe usage, but sha256sum -c expects a specific format ('hash  filename') and reading directly from /dev/mtd0 as a filename in the checksum file may not work as intended since sha256sum -c tries to open the named file rather than a block/char device in all implementations.",
+        "semantic_score": 3,
+        "semantic_justification": "The intent to validate a flash MTD region against a known checksum aligns with firmware integrity verification relevant to T1601, but sha256sum -c reads the file path from the checksum line and opening /dev/mtd0 this way may not reliably hash the full flash region as intended; a more operationally correct approach would pipe 'dd if=/dev/mtd0' output into sha256sum directly for comparison.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:11:41.370071Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

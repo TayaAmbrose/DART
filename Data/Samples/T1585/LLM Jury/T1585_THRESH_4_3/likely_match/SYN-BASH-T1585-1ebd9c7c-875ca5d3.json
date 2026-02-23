@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1585",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "curl -sS -X POST https://api.mail.tm/accounts -H 'Content-Type: application/json' -d '{\"address\":\"persona.writer@mail.tm\",\"password\":\"Str0ngPass!2345\"}'",
+  "explanation": "Creates a disposable email inbox via a documented API to support persona registrations and validations.",
+  "rationale_steps": [
+    "Use a public, documented email service API to programmatically create an inbox.",
+    "Pair the inbox with persona naming conventions to appear consistent.",
+    "Capture the JSON response (account id, etc.) for later token retrieval and verification handling."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1585-1ebd9c7c-875ca5d3",
+  "source_prompt_hash": "1ebd9c7c",
+  "timestamp_utc": "2025-09-30T07:18:03.942980Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command uses valid curl flags with balanced single/double quotes and properly formatted JSON body and header.",
+        "semantic_score": 5,
+        "semantic_justification": "It POSTs the required address and password to the mail.tm /accounts endpoint to create a disposable email account, directly aligning with Establish Accounts (T1585).",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T09:17:40.098979Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct curl flags (-sS, -X, -H, -d), valid JSON payload, and proper HTTP POST syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 by using the documented mail.tm API to programmatically create a disposable email account, which is a realistic and operationally plausible method for establishing throwaway personas used in adversary account creation workflows.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:37:54.780473Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct curl flags, balanced quotes, and valid JSON formatting for the payload.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly utilizes the public Mail.tm API to establish a new email account, which directly aligns with the T1585 technique for creating accounts to support persona development.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:37:56.764044Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

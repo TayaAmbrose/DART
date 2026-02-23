@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ErrorActionPreference='Stop'; $account='admin@example.com'; $out='C:\\ProgramData\\recon\\hibp_admin_example.com.json'; New-Item -ItemType Directory -Force -Path C:\\ProgramData\\recon | Out-Null; $log='C:\\ProgramData\\recon\\recon.log'; try { $key=$env:HIBP_API_KEY; if([string]::IsNullOrWhiteSpace($key)){ throw 'HIBP_API_KEY not set'; } $headers=@{ 'hibp-api-key'=$key; 'Accept'='application/json'; 'User-Agent'='Recon-Admin/1.0' }; $uri=\"https://haveibeenpwned.com/api/v3/breachedaccount/$account?truncateResponse=true\"; $resp=Invoke-WebRequest -Uri $uri -Headers $headers -Method Get -UseBasicParsing -TimeoutSec 45 -ErrorAction SilentlyContinue; if($resp -and ($resp.StatusCode -ge 200) -and ($resp.StatusCode -lt 300) -and ($resp.Headers['Content-Type'] -match 'application/json')){ ($resp.Content | ConvertFrom-Json) | ConvertTo-Json -Depth 6 | Set-Content -Path $out -Encoding UTF8 } elseif($resp -and $resp.StatusCode -eq 404){ Add-Content -Path $log -Value \"$(Get-Date -Format o) HIBP no breach data for $account (404).\" } else { Add-Content -Path $log -Value \"$(Get-Date -Format o) HIBP non-success or non-JSON for $account. Status=$($resp.StatusCode)\" } } catch { Add-Content -Path $log -Value \"$(Get-Date -Format o) HIBP error for $account: $($_.Exception.Message)\" }",
+  "explanation": "Checks the paid Have I Been Pwned API (closed-source) for breach exposure of a specific corporate account and records structured results or a no-data condition.",
+  "rationale_steps": [
+    "Authenticate to the closed-source HIBP API with a key and proper User-Agent.",
+    "Perform a targeted query to minimize noise.",
+    "Handle 200 and 404 outcomes cleanly; parse JSON on success.",
+    "Log outcomes without exposing secrets."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1597-e22d193f-dbc48235",
+  "source_prompt_hash": "e22d193f",
+  "timestamp_utc": "2025-09-30T06:29:30.632581Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced braces/quotes, valid parameters, and proper separators throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "Accurately queries a paid closed-source HIBP API with an API key and stores/logs results consistent with T1597, though the 404 no-data path may not trigger due to Invoke-WebRequest using -ErrorAction SilentlyContinue.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T11:31:12.280625Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper semicolons as separators, valid cmdlet syntax, and correct string interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the paid Have I Been Pwned API (a closed/subscription data source) using an API key from environment variables, targeting a specific corporate account, and storing structured breach intelligence results to disk for reconnaissance purposes.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T00:48:11.029497Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with correct variable assignments, balanced braces, proper header construction, and valid use of try-catch blocks.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately leverages the paid Have I Been Pwned API to perform reconnaissance on a target account, which perfectly exemplifies querying closed-source intelligence per T1597.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:48:13.374848Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

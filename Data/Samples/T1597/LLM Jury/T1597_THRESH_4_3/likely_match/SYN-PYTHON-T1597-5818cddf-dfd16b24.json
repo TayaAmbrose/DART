@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1597",
+  "platform": "Kubernetes",
+  "shell": "Python",
+  "command": "import os, json, logging, sys\nfrom kubernetes import client, config\nfrom kubernetes.stream import stream\n\nlogging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')\nns = os.getenv('KUBE_NAMESPACE', 'default')\npod = os.getenv('KUBE_POD', 'util-python-0')\ncontainer = os.getenv('KUBE_CONTAINER')\ntry:\n    try:\n        config.load_incluster_config()\n    except Exception:\n        config.load_kube_config()\n    v1 = client.CoreV1Api()\n    inner = \"import os, sys, json, logging, requests; logging.basicConfig(level=logging.INFO); domain=os.environ.get('TARGET_DOMAIN','example.com'); url=f'https://www.virustotal.com/api/v3/domains/{domain}'; headers={'x-apikey': os.environ['VT_API_KEY']};\\ntry:\\n    r=requests.get(url, headers=headers, timeout=15); r.raise_for_status(); print(json.dumps({'source':'virustotal','domain':domain,'data':r.json()}))\\nexcept Exception as e:\\n    print(json.dumps({'source':'virustotal','domain':domain,'error':str(e)})); sys.exit(1)\"\n    resp = stream(v1.connect_get_namespaced_pod_exec, pod, ns, command=['python3','-c', inner], container=container, stderr=True, stdin=False, stdout=True, tty=False)\n    print(resp)\nexcept Exception as e:\n    logging.error('collection_failed', exc_info=e); sys.exit(1)\n",
+  "explanation": "Retrieves domain intelligence from the closed-source VirusTotal API using an API key, focusing on domain metadata and related observations without performing any active scans.",
+  "rationale_steps": [
+    "Authenticate to VirusTotal with API key header.",
+    "Query a single domain and return the JSON result for downstream analysis."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1597-5818cddf-dfd16b24",
+  "source_prompt_hash": "5818cddf",
+  "timestamp_utc": "2025-09-30T06:41:43.112780Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The multi-line Python script is well-formed with balanced quotes (including the embedded -c code) and a valid Kubernetes stream exec invocation.",
+        "semantic_score": 5,
+        "semantic_justification": "It execs into a Kubernetes pod and queries the private VirusTotal API with an API key to retrieve domain intelligence, directly matching T1597 closed-source collection.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T14:04:46.826400Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with proper imports, exception handling, and Kubernetes API usage, though the embedded inner script string uses a mix of semicolons and newline escapes that could cause parsing issues in edge cases.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the closed-source VirusTotal API (a paid/subscription threat intelligence feed) for domain intelligence using an API key, executed within a Kubernetes pod to collect targeting information about a domain.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:59:39.017011Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code and the nested sub-shell command are correctly structured, with proper handling of Kubernetes API objects, string escaping, and error handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively demonstrates T1597 by querying VirusTotal ( a standard closed-source technical intelligence provider) for domain metadata using an API key extracted from a target environment.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:59:43.564276Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

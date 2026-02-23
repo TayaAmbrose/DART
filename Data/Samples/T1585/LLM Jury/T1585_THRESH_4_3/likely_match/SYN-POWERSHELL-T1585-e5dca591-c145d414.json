@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1585",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "aws iam attach-user-policy --user-name emma.j.taylor --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess; aws iam list-attached-user-policies --user-name emma.j.taylor --output json",
+  "explanation": "Attaches a benign, common AWS managed policy (ReadOnlyAccess) to avoid suspicion and then retrieves attached policies for records, reinforcing the persona as low-risk.",
+  "rationale_steps": [
+    "Assign non-invasive permissions typical of analysts/observers.",
+    "Immediately verify and log the granted permissions.",
+    "Keep privileges minimal to reduce scrutiny while maintaining realism."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1585-e5dca591-c145d414",
+  "source_prompt_hash": "e5dca591",
+  "timestamp_utc": "2025-09-30T07:41:19.853635Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Two valid AWS CLI commands are correctly separated by a PowerShell semicolon with proper flags and no quoting issues.",
+        "semantic_score": 4,
+        "semantic_justification": "Modifying an existing IAM user’s permissions and enumerating attached policies fits abusing/modifying accounts under T1585, but it requires IAM rights despite 'Privilege: None' and does not create a new account.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T10:41:09.867271Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "Both AWS CLI commands are perfectly well-formed with valid flags, properly formatted ARN, correct semicolon separator, and valid --output flag.",
+        "semantic_score": 4,
+        "semantic_justification": "The commands correctly attach a ReadOnlyAccess policy to an existing user and verify the attachment, which aligns with T1585 account manipulation to reinforce a low-risk persona, though this is more account modification than account establishment, and the 'None' privilege claim is unrealistic since IAM policy attachment requires iam:AttachUserPolicy permissions.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:43:38.368033Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid AWS CLI syntax and the standard PowerShell semicolon separator to chain two well-formed commands.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses the AWS CLI to assign a managed policy to a user and verify the assignment, matching the intent of manipulating account permissions to blend in.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:43:40.190987Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

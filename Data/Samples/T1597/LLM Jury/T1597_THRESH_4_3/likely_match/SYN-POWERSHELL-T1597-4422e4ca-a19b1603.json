@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; $ts=Get-Date -Format o; try { $b=[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(\"$env:DEHASHED_EMAIL`:$env:DEHASHED_KEY\")); $headers=@{ 'Authorization'=\"Basic $b\"; 'Accept'='application/json' }; $r=Invoke-WebRequest -Uri 'https://api.dehashed.com/search?query=domain:contoso.com&size=50' -Headers $headers -Method Get -ErrorAction Stop; ($r.Content | ConvertFrom-Json | Select-Object -ExpandProperty entries | Select-Object email,username,password,ip_address,obtained_from | ConvertTo-Json -Depth 6) | Out-File -FilePath \"$env:TEMP\\dehashed_contoso_leaks.json\" -Encoding utf8; Add-Content -Path \"$env:TEMP\\recon.log\" -Value \"$ts Dehashed success contoso.com\" } catch { Add-Content -Path \"$env:TEMP\\recon.log\" -Value \"$ts Dehashed error: $($_.Exception.Message)\" }",
+  "explanation": "Queries Dehashed (subscription-based breach database) with Basic auth for entries tied to the victim domain, selecting only high-value fields and logging execution.",
+  "rationale_steps": [
+    "Authenticate with closed-source breach index using secure headers.",
+    "Search for compromised credentials associated with the domain.",
+    "Minimize noise by selecting specific fields and save as JSON.",
+    "Log results without exposing secrets."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1597-4422e4ca-a19b1603",
+  "source_prompt_hash": "4422e4ca",
+  "timestamp_utc": "2025-09-30T06:22:12.312465Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes/braces, valid type/property references, proper try/catch, and correct pipelines and headers.",
+        "semantic_score": 5,
+        "semantic_justification": "It authenticates to the Dehashed paid breach database, queries for a target domain, extracts relevant fields, and saves/logs results, directly aligning with T1597 Search Closed Sources.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T13:41:40.125792Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper semicolon separators, valid cmdlet syntax, and correct try/catch structure throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1597 by authenticating to the Dehashed paid breach database API using Basic auth with environment-variable credentials, querying for leaked records tied to a specific victim domain, extracting high-value fields (email, username, password, IP), and logging results — fully consistent with querying closed/subscription data sources for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T00:58:19.689996Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed, using valid syntax for setting TLS protocols, handling environment variables, performing API requests, and managing JSON data with proper error handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the T1597 technique by using valid API parameters and authentication methods to query Dehashed, a prominent closed-source breach database, for target intelligence.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:58:22.365250Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

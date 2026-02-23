@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "iptables -I INPUT -m recent --name t1205_mdns --rcheck --seconds 60 -p tcp --dport 53530 -j ACCEPT; iptables -I INPUT -p udp --dport 5353 -m string --string \"_t1205._udp.local\" --algo bm -m recent --name t1205_mdns --set -j LOG --log-prefix \"T1205-mDNS-SIGNAL \"; nc -l -p 53530 -k >/dev/null 2>&1 &",
+  "explanation": "Detects a crafted mDNS query string (_t1205._udp.local) on UDP/5353. The firewall logs the event and temporarily allows TCP/53530 for the source, with nc listening. Emulates service-discovery-based traffic signaling.",
+  "rationale_steps": [
+    "Parse mDNS query content for a covert key",
+    "Log unusual mDNS service names as detection telemetry",
+    "Open a hidden port only after the mDNS signal is observed"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-19973fec-acebe68e",
+  "source_prompt_hash": "19973fec",
+  "timestamp_utc": "2025-09-30T03:30:48.198488Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Three semicolon-separated commands are well-formed with valid iptables and nc flags and balanced quoting.",
+        "semantic_score": 3,
+        "semantic_justification": "The logic correctly uses mDNS payload matching and the recent module to signal and allow TCP/53530 with logging and nc listening, but it requires root to modify iptables so the stated 'Privilege: None' makes it non-operational as-is.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T17:28:52.230406Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with properly chained semicolons, balanced quotes, valid iptables flags including --name, --rcheck, --seconds, -m string, --algo bm, and nc flags, with correct backgrounding via &.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 traffic signaling by using a crafted mDNS service discovery string (_t1205._udp.local) on UDP/5353 as a knock signal that temporarily opens TCP/53530 via iptables recent module, with nc listening as the triggered backdoor — a realistic and operationally coherent port-knocking variant using protocol mimicry.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T04:01:12.252463Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command string uses correct bash syntax, including proper semicolons for sequencing, valid backgrounding with ampersand, and well-formed iptables and netcat arguments.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively emulates traffic signaling by using iptables' string matching and 'recent' modules to implement a trigger; however, it incorrectly lists the privilege level as 'None' when iptables requires root/sudo to modify the kernel's firewall rules.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:01:31.330100Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

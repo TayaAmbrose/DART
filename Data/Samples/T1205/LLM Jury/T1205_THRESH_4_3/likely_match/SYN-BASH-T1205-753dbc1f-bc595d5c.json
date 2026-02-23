@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "for p in 4000 4010 4020; do echo -n \"KNOCK$(printf %02d \"$p\")\" | nc -u -w1 192.0.2.255 \"$p\"; sleep 0.2; done",
+  "explanation": "Broadcasts a short UDP knock sequence with simple payload tags across three ports to signal presence to any listening backdoor. Detection: monitor broadcast traffic spikes and repeated sequences across adjacent high ports.",
+  "rationale_steps": [
+    "Generates discrete UDP packets with identifiable, but unobfuscated, markers.",
+    "Targets broadcast to reach hidden listeners without knowing exact hosts.",
+    "Uses timing to preserve order of the knock.",
+    "Detect via IDS rules for repeated broadcast knocks and unusual high-port UDP."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-753dbc1f-bc595d5c",
+  "source_prompt_hash": "753dbc1f",
+  "timestamp_utc": "2025-09-30T05:37:53.725688Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash for-loop with balanced quoting, correct command separators, and valid nc flags.",
+        "semantic_score": 4,
+        "semantic_justification": "Implements UDP-based signaling/knocking with tagged payloads aligning to T1205, though the TEST-NET broadcast address and netcat variant nuances may affect real-world delivery.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T12:56:54.641706Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid bash for-loop syntax, correct use of printf, nc flags (-u for UDP, -w1 for timeout), and proper semicolons and sleep between iterations.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a UDP-based port knocking/signaling sequence aligned with T1205, sending tagged payloads across sequential ports to signal a listening backdoor, though using a broadcast address (192.0.2.255) is somewhat unrealistic since 192.0.2.0/24 is TEST-NET documentation space and broadcast-based C2 signaling is uncommon in practice compared to unicast targeting.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T03:42:11.704545Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses perfectly valid Bash loop syntax, correct variable expansion, and standard netcat flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a port-knocking signaling sequence using UDP packets with specific payloads and timing, directly aligning with the Traffic Signaling technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:42:12.862139Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

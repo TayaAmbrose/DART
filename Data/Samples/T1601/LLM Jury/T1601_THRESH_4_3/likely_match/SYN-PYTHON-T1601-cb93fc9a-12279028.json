@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Linux",
+  "shell": "Python",
+  "command": "import difflib, binascii\n\nbase = \"/root/baselines/vmlinuz-golden\"\ncur = \"/boot/vmlinuz\"\n\ndef hexdump_head(p, n=4096):\n    with open(p, 'rb') as f:\n        data = f.read(n)\n    return [binascii.hexlify(data[i:i+16]).decode() + \"\\n\" for i in range(0, len(data), 16)]\n\nprint(\"\".join(difflib.unified_diff(hexdump_head(base), hexdump_head(cur), fromfile=\"baseline_vmlinuz\", tofile=\"current_vmlinuz\")))",
+  "explanation": "Generates a hex-diff of the leading 4 KiB of the kernel image against a golden baseline to spot signs of tampering in the system image.",
+  "rationale_steps": [
+    "Read the head of the current and golden kernel images.",
+    "Convert bytes to hex lines for stable textual comparison.",
+    "Use difflib unified_diff to highlight any changed regions."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1601-cb93fc9a-12279028",
+  "source_prompt_hash": "cb93fc9a",
+  "timestamp_utc": "2025-09-30T04:58:58.620992Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid Python snippet with correct imports, balanced structures, and a proper call to difflib.unified_diff.",
+        "semantic_score": 4,
+        "semantic_justification": "It correctly generates a unified hex diff of the first 4 KiB of the kernel image versus a baseline to detect tampering, but the baseline path under /root contradicts the 'Privilege: None' claim.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T18:53:06.952795Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically correct with balanced parentheses, proper imports, valid function definitions, and correct string formatting throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements a hex-diff comparison of the first 4 KiB of the current kernel image against a golden baseline, which is a realistic and operationally sound detection method for T1601 (Modify System Image) tampering.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:20:38.273927Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly well-formed with correct imports, valid function definitions, proper indentation, and balanced delimiters.",
+        "semantic_score": 4,
+        "semantic_justification": "The script correctly implements a hex-comparison for detection of T1601; however, accessing the baseline file in /root/ typically requires root privileges, contradicting the 'None' privilege requirement.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:20:44.308565Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

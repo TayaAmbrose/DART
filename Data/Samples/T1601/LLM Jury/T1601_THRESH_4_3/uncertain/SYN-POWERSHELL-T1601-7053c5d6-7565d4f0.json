@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "dism /Mount-Wim /WimFile:C:\\Images\\install.wim /Index:1 /MountDir:C:\\Mount\\Install; dism /Image:C:\\Mount\\Install /Get-Drivers /Format:Table > C:\\Temp\\drivers_current.txt; fc C:\\Baselines\\drivers_baseline.txt C:\\Temp\\drivers_current.txt; dism /Unmount-Wim /MountDir:C:\\Mount\\Install /Discard",
+  "explanation": "Extracts the list of drivers from the offline image and compares it against a baseline to identify unauthorized driver insertions or removals.",
+  "rationale_steps": [
+    "Mount the image to query its driver catalog.",
+    "Export the current driver list from the offline image.",
+    "Use fc to diff against a known-good driver inventory.",
+    "Unmount without committing to avoid altering the image."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-7053c5d6-7565d4f0",
+  "source_prompt_hash": "7053c5d6",
+  "timestamp_utc": "2025-09-30T04:53:44.701470Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are properly separated by semicolons, redirection is valid in PowerShell, and DISM flags/arguments are well-formed with no quoting issues.",
+        "semantic_score": 3,
+        "semantic_justification": "It plausibly mounts and queries an offline image to detect driver changes (relevant to T1601 detection), but in PowerShell 'fc' resolves to Format-Custom unless 'fc.exe' is called and DISM mounting typically requires elevation, so the comparison step and overall execution may fail as written.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-02T17:42:08.049208Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The commands are well-formed with valid DISM flags and proper semicolon separators, though running multiple DISM commands sequentially with semicolons in PowerShell is valid but the privilege annotation of 'None' is incorrect since DISM /Mount-Wim typically requires elevated privileges.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly mounts a WIM image offline, extracts driver information, and compares it against a baseline using fc, which is a legitimate integrity-checking approach aligned with T1601 detection (identifying unauthorized driver insertions in firmware/OS images), though the /Discard flag discards changes rather than preserving the mount state, which is appropriate for read-only inspection.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:14:40.671875Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command sequence uses valid DISM syntax, proper PowerShell statement separators (;), and correct redirection operators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly mounts a WIM, lists drivers, and compares them to a baseline; however, it incorrectly lists 'Privilege: None' when DISM operations require Administrator rights.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:14:44.689208Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

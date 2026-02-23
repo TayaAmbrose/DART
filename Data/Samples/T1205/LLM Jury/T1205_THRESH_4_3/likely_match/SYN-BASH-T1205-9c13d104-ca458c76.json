@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "for p in 2222 3333 4444; do nc -z -w1 198.51.100.5 \"$p\"; sleep 0.3; done",
+  "explanation": "Generates a TCP SYN-based port-knock sequence to 198.51.100.5 to trigger a hidden rule change on the remote host. No local root needed to send, but the effect is to enable a device function remotely via signaling. Detection: alert on sequential SYNs to non-service ports and sudden success on previously filtered ports.",
+  "rationale_steps": [
+    "Choose non-standard TCP ports for the knock pattern.",
+    "Use netcat in zero-I/O scan mode to emit SYNs quickly.",
+    "Maintain timing expected by the remote listener.",
+    "Remote system uses the sequence as a magic trigger to open access.",
+    "Detection: IDS for unusual SYNs to random ports; compare pre/post firewall accept logs."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-9c13d104-ca458c76",
+  "source_prompt_hash": "9c13d104",
+  "timestamp_utc": "2025-09-30T05:40:25.546732Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid Bash for-loop with balanced quoting and standard nc flags; command separators and arguments are correct.",
+        "semantic_score": 5,
+        "semantic_justification": "Sends a timed sequence of TCP SYN probes to specific ports using nc -z, which plausibly implements port knocking as traffic signaling under T1205 without requiring privileges.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T12:55:03.129637Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with a valid bash for loop, proper variable quoting, correct nc flags (-z for zero-I/O scan mode, -w1 for timeout), valid semicolons as separators, and balanced structure throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a TCP port-knock sequence (a classic T1205 traffic signaling technique) by sending sequential SYN packets to ports 2222, 3333, 4444 with brief delays, which is precisely how port-knocking daemons (e.g., knockd) are triggered to dynamically alter firewall rules on the remote host.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T03:42:02.483124Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash loop syntax and valid Netcat flags that are well-formed and parseable.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly implements a sequential TCP port-knock pattern, which is a classic example of Traffic Signaling (T1205).",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:42:02.516278Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

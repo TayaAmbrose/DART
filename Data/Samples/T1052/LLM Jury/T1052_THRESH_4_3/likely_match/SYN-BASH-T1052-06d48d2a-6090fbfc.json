@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "tar -cf - \"$HOME/Documents/finance\" | dd of=\"/Volumes/EXFIL/.f.dat\" bs=1m",
+  "explanation": "Packages finance documents into a tar stream and writes it directly as a single file onto the USB device for discreet physical exfiltration.",
+  "rationale_steps": [
+    "Stream selected sensitive data (finance) into a single archive without touching the network.",
+    "Write the stream directly to a file on the mounted removable media using dd.",
+    "Use a generic filename to reduce attention on the USB media.",
+    "All actions remain on-host and offline."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-06d48d2a-6090fbfc",
+  "source_prompt_hash": "06d48d2a",
+  "timestamp_utc": "2025-09-30T05:16:28.232349Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed pipeline with valid tar and dd options, balanced quoting, and correct flag usage.",
+        "semantic_score": 5,
+        "semantic_justification": "Creates a tar archive of the specified directory and writes it as a hidden file to a mounted USB volume, aligning with physical media exfiltration on macOS.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T09:29:04.704162Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid tar flags (-cf -), proper pipe operator, and valid dd arguments (of=, bs=1m) all correctly structured for Bash on macOS.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by streaming a tar archive of finance documents directly onto a mounted USB volume (/Volumes/EXFIL/) as a hidden dot-file (.f.dat), which is operationally plausible for discreet physical exfiltration on macOS without requiring elevated privileges.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:39:29.474485Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax with proper quoting, piping, and valid flags for both tar and dd.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately streams a directory's contents into a hidden file on a mounted external volume, perfectly reflecting the physical exfiltration technique on macOS.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:39:30.195257Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

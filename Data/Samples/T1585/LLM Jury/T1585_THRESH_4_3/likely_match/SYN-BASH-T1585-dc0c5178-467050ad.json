@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1585",
+  "platform": "Kubernetes",
+  "shell": "Bash",
+  "command": "kubectl run persona-social-login -n personas --rm -i --restart=Never --image=curlimages/curl:8.8.0 --command -- sh -lc 'curl -sS -X POST https://api.example-social.test/v1/auth/login -H \"Content-Type: application/json\" -H \"Accept: application/json\" -d \"{\\\"username\\\":\\\"artisanal_outreach\\\",\\\"password\\\":\\\"S3cure!Passw0rd\\\"}\"'",
+  "explanation": "Obtains an access token for the persona via login, enabling automated maintenance actions.",
+  "rationale_steps": [
+    "Authenticate the persona to retrieve an API token in JSON.",
+    "Token can drive subsequent profile and activity management."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1585-dc0c5178-467050ad",
+  "source_prompt_hash": "dc0c5178",
+  "timestamp_utc": "2025-09-30T07:32:30.045514Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with valid kubectl flags, balanced quoting, and correctly escaped JSON in the curl payload.",
+        "semantic_score": 4,
+        "semantic_justification": "It logs into an existing social account via a Kubernetes-run curl pod to obtain an access token, aligning with the 'abuse accounts' aspect of T1585 though it does not create a new account.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T09:59:22.867227Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes (including properly escaped inner JSON quotes), valid kubectl flags (--rm, -i, --restart=Never), correct namespace specification, and a valid shell invocation chain.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements automated credential-based login to obtain an access token for a social media persona account, which aligns with T1585 account maintenance/abuse, though the use of a Kubernetes ephemeral pod as the execution environment adds operational complexity that slightly reduces realism for a simple login action, and the placeholder domain reduces full plausibility.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:40:55.417692Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct kubectl syntax, proper flag usage, and correctly escaped JSON within the curl command.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates automated interaction with an account service to obtain credentials, which supports the persona management aspect of T1585, though it is technically a login rather than a creation event.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:40:58.803304Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

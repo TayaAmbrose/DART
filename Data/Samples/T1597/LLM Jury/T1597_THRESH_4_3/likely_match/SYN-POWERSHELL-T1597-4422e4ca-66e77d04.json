@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; $ts=Get-Date -Format o; try { $b=[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(\"$env:PT_USER`:$env:PT_KEY\")); $headers=@{ 'Authorization'=\"Basic $b\"; 'Accept'='application/json' }; $r=Invoke-WebRequest -Uri 'https://api.passivetotal.org/v2/enrichment/subdomains?query=contoso.com' -Headers $headers -Method Get -ErrorAction Stop; ($r.Content | ConvertFrom-Json | Select-Object -Property query,subdomains | ConvertTo-Json -Depth 6) | Out-File -FilePath \"$env:TEMP\\passivetotal_subdomains_contoso.json\" -Encoding utf8; Add-Content -Path \"$env:TEMP\\recon.log\" -Value \"$ts PassiveTotal success contoso.com\" } catch { Add-Content -Path \"$env:TEMP\\recon.log\" -Value \"$ts PassiveTotal error: $($_.Exception.Message)\" }",
+  "explanation": "Uses RiskIQ PassiveTotal (paid/closed) with Basic auth to enumerate subdomains for a target domain, extracting structured data and logging the transaction.",
+  "rationale_steps": [
+    "Form secure Basic auth header from environment credentials.",
+    "Query closed-source subdomain enrichment endpoint for the target.",
+    "Select relevant fields and save as JSON.",
+    "Write minimal operational logs without sensitive data."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1597-4422e4ca-66e77d04",
+  "source_prompt_hash": "4422e4ca",
+  "timestamp_utc": "2025-09-30T06:22:12.312465Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced delimiters, valid hashtable and pipeline syntax, proper headers, and correct use of try/catch and TLS setting.",
+        "semantic_score": 5,
+        "semantic_justification": "Authenticates to and queries the paid RiskIQ PassiveTotal API for subdomains, processes JSON, writes results, and logs activity, aligning precisely with T1597 use of closed sources.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T11:52:38.770229Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper semicolons as separators, valid cmdlet syntax, and correct string interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1597 by authenticating to RiskIQ PassiveTotal (a paid closed-source threat intelligence platform) via Basic auth using environment-variable-stored credentials, querying the subdomain enrichment API for a target domain, parsing and saving structured JSON output, and logging the transaction — fully consistent with querying paid/private databases for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T00:49:31.468168Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard PowerShell syntax with correct variable assignments, try/catch blocks, and properly formatted cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by querying a known closed-source intelligence provider (PassiveTotal) using valid API parameters and authentication methods.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:49:32.801183Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

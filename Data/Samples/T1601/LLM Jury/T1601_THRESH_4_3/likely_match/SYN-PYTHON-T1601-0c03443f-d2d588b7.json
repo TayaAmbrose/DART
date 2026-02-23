@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Python",
+  "command": "python3 - <<'PY'\nimport os, sys, subprocess, filecmp, json\nif os.geteuid() != 0:\n    sys.exit(\"root required\")\n\ncur_img = \"/boot/flash/system.img\"\ngold_img = \"/opt/golden/system.img\"\nmnt_cur = \"/mnt/img_current\"\nmnt_gold = \"/mnt/img_golden\"\n\nos.makedirs(mnt_cur, exist_ok=True)\nos.makedirs(mnt_gold, exist_ok=True)\nsubprocess.check_call([\"mount\", \"-o\", \"ro,loop\", cur_img, mnt_cur])\nsubprocess.check_call([\"mount\", \"-o\", \"ro,loop\", gold_img, mnt_gold])\n\ndc = filecmp.dircmp(mnt_cur, mnt_gold)\nreport = {\"left_only\": dc.left_only, \"right_only\": dc.right_only, \"diff_files\": dc.diff_files}\nprint(json.dumps(report))\n\nsubprocess.call([\"umount\", mnt_gold])\nsubprocess.call([\"umount\", mnt_cur])\nPY",
+  "explanation": "Mounts current and golden images read-only and computes a directory comparison to identify modified or added files within the system image contents.",
+  "rationale_steps": [
+    "Require root to loop-mount image files.",
+    "Mount both images read-only to prevent changes while inspecting.",
+    "Use filecmp.dircmp to enumerate added/removed/different files and output as JSON."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1601-0c03443f-d2d588b7",
+  "source_prompt_hash": "0c03443f",
+  "timestamp_utc": "2025-09-30T04:56:19.919567Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The heredoc is correctly quoted, the Python script is valid, and the mount/umount invocations are well-formed and balanced.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly mounts both images read-only and outputs a JSON diff of their top-level differences, but it requires root despite the stated 'Privilege: None' and the comparison is non-recursive, reducing completeness.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T16:55:13.919657Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python heredoc is perfectly well-formed with balanced quotes, proper imports, valid subprocess calls, and correct JSON serialization logic.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a defensive integrity check aligned with T1601 detection mitigations by mounting both current and golden images read-only and performing a directory comparison to identify tampered or added files, though it uses shallow filecmp.dircmp rather than cryptographic hash comparison which reduces detection thoroughness, and the privilege field incorrectly states 'None' when the script explicitly requires root.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:10:47.387839Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed Python script wrapped in a standard shell heredoc, featuring correct imports, proper indentation, and valid use of the subprocess and filecmp modules.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a system image integrity check by mounting loopback devices and performing a directory comparison, directly addressing the detection signals described in the MITRE T1601 technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:10:55.758746Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

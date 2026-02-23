@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1216",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "WITHHELD_FOR_SAFETY - mshta variant: remote scriptlet (.sct) loading from PowerShell",
+  "explanation": "Shows PowerShell starting mshta to load a remote scriptlet resource, abusing the script host to proxy execution under a trusted binary.",
+  "rationale_steps": [
+    "Use PowerShell to spawn mshta with a URL or path to a scriptlet resource",
+    "The signed host interprets and runs scriptlet code on load",
+    "This can bypass basic allowlists focused on parent process or binary signatures",
+    "Detect by correlating process creation, network connection, and rare file extensions tied to mshta",
+    "Apply control policies to block scriptlet interpretation by mshta where not needed"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1216-b60f034d-b4c337e9",
+  "source_prompt_hash": "b60f034d",
+  "timestamp_utc": "2025-09-30T07:02:44.293218Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command text is withheld, so its exact syntax, quoting, and flags cannot be validated and it is not runnable as provided.",
+        "semantic_score": 2,
+        "semantic_justification": "PowerShell launching mshta to fetch a remote .sct aligns more with signed binary proxy execution (mshta/regsvr32) than T1216 system script proxies, and .sct is not a native mshta payload type.",
+        "combined_score": 1.5,
+        "confidence": 0.6,
+        "timestamp": "2025-10-02T04:34:38.867100Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 0,
+        "syntactic_justification": "The command was withheld for safety and no actual syntax is available to evaluate.",
+        "semantic_score": 3,
+        "semantic_justification": "The described technique of using PowerShell to invoke mshta with a remote .sct scriptlet is a known and plausible proxy execution method, but it maps more precisely to T1218.005 (Signed Binary Proxy Execution: Mshta) than to T1216 (System Script Proxy Execution via signed scripts like PubPrn.vbs), reducing semantic alignment with the stated technique.",
+        "combined_score": 1.5,
+        "confidence": 0.4,
+        "timestamp": "2026-02-19T00:11:16.584129Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 0,
+        "syntactic_justification": "The command field contains a safety redaction placeholder and a descriptive title rather than any functional or parseable code.",
+        "semantic_score": 0,
+        "semantic_justification": "The provided text is a description of a technique and does not contain the arguments or tool invocations necessary to perform the operation described.",
+        "combined_score": 0.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:11:32.272644Z"
+      }
+    ],
+    "llm_average_syntactic": 0.333,
+    "llm_average_semantic": 1.667,
+    "llm_average_score": 1.0,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

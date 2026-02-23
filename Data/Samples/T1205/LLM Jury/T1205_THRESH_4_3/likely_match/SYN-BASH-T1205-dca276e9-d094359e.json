@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "sudo iptables -A INPUT -p udp --dport 11111 -m recent --name T1205_K1 --set -j LOG --log-prefix \"T1205_KNOCK1 \"",
+  "explanation": "Establishes the first step of a port-knock sequence using UDP/11111 as a covert signal, tracking the source with recent to emulate traffic signaling.",
+  "rationale_steps": [
+    "Use an uncommon UDP port as the initial signal in a multi-step activation flow.",
+    "Leverage -m recent to persist state per source IP and log the event."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-dca276e9-d094359e",
+  "source_prompt_hash": "dca276e9",
+  "timestamp_utc": "2025-09-30T03:32:21.448422Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid iptables rule using correct flags (-A INPUT, -p udp --dport, -m recent --name ... --set, -j LOG with balanced quoted prefix) and parseable syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "Logs and records sources hitting UDP/11111 using the recent module, establishing a first port-knock signal consistent with Traffic Signaling (T1205).",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-01T13:24:38.972752Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid iptables flags, correct module syntax for `-m recent`, and proper log-prefix quoting.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements the first step of a port-knock sequence using iptables with the `recent` module to track source IPs that send UDP to port 11111, which is a realistic and operationally plausible implementation of traffic signaling (T1205), though it only logs rather than also setting the recent entry for use in subsequent knock rules, slightly reducing full operational completeness.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:45:11.593264Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid iptables syntax, including the proper flags for the recent module and the LOG target.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses the iptables recent module to track source IPs hitting a specific port, which is a standard method for implementing the first stage of a port-knocking sequence.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:45:13.532803Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

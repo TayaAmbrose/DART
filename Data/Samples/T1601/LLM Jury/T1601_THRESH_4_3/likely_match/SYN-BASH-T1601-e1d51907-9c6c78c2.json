@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "dd if=/boot/initramfs-$(uname -r).img of=/var/tmp/initramfs.cur bs=1M && md5sum /var/tmp/initramfs.cur baseline/initramfs.img && diff -u <(od -An -tx1 -w16 -v /var/tmp/initramfs.cur) <(od -An -tx1 -w16 -v baseline/initramfs.img)",
+  "explanation": "Copies the active initramfs and compares both checksum and byte-level hex output to detect unauthorized modifications.",
+  "rationale_steps": [
+    "Copy the initramfs image using dd for consistent block-level reads.",
+    "Compute MD5 checksums for a quick comparison against a baseline.",
+    "Use od to produce hex dumps and perform a unified diff for precise change visualization."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-e1d51907-9c6c78c2",
+  "source_prompt_hash": "e1d51907",
+  "timestamp_utc": "2025-09-30T04:41:42.466219Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed Bash with valid process substitution, proper flags, and correct chaining operators.",
+        "semantic_score": 4,
+        "semantic_justification": "It copies the active initramfs and enables detection via hashes and a byte-level diff against a baseline, though the md5sum outputs are not programmatically compared and path assumptions may vary by distro.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2025-10-02T18:43:58.452401Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with proper use of process substitution, command substitution via $(uname -r), valid dd/md5sum/diff/od flags, correct && separators, and balanced parentheses and angle brackets.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements initramfs integrity verification by copying the active image, computing an md5sum against a baseline, and performing a byte-level hex diff — all directly relevant to T1601 detection; the minor gap is that 'None' privilege is understated since reading /boot/initramfs typically requires root or elevated permissions on most Linux systems.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:19:57.617247Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, utilizing valid Bash process substitution, logical operators, and correct flag usage for all included utilities (dd, md5sum, diff, and od).",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements an integrity check for the Linux boot image by comparing the current initramfs against a baseline using both checksums and byte-level diffs, which is a primary detection method for T1601.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:20:01.815667Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

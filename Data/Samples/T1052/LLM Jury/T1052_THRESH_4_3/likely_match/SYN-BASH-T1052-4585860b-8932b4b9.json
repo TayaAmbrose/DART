@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1052",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "tar -C \"$HOME\" -czf - Pictures | dd of=\"/dev/disk/by-uuid/1234-ABCD\" bs=2M oflag=direct iflag=fullblock status=none",
+  "explanation": "Archives the Pictures directory and writes it to the USB partition via its UUID, ensuring stability across reboots and avoiding filesystem-level writes.",
+  "rationale_steps": [
+    "Create a compressed archive stream of target data",
+    "Reference the external partition via by-uuid path",
+    "Use dd with large block size and direct I/O to write the stream to raw media"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-4585860b-8932b4b9",
+  "source_prompt_hash": "4585860b",
+  "timestamp_utc": "2025-09-30T05:09:05.177002Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The pipeline is well-formed with valid tar and dd options, balanced quoting, and proper piping.",
+        "semantic_score": 3,
+        "semantic_justification": "It correctly streams a gzipped tar of $HOME/Pictures to a USB block device by UUID (aligning with exfiltration to physical media and bypassing filesystem writes), but it generally requires root to write to block devices and would likely corrupt any existing filesystem on the target, reducing operational plausibility under the stated 'Privilege: None'.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T10:38:09.889885Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for tar (C, c, z, f), dd (of, bs, oflag, iflag, status), proper pipe usage, and correct variable expansion with double quotes around $HOME.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by archiving the Pictures directory via tar to stdout and piping it directly to a raw USB device identified by UUID using dd with direct I/O flags, bypassing filesystem-level writes to evade detection — fully consistent with physical medium exfiltration staging and transfer behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:42:35.645240Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid tar and dd flags, correctly handles pipes, and uses proper shell variable referencing.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively stages and writes data to a physical medium, though writing directly to a block device via /dev/ typically requires root privileges, contradicting the 'None' privilege level provided.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:42:38.184256Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

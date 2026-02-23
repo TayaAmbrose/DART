@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "try { $key=$env:WHOISXML_API_KEY; if([string]::IsNullOrWhiteSpace($key)){ throw 'Missing WHOISXML_API_KEY'; }; $uri=\"https://www.whoisxmlapi.com/whoisserver/WhoisService?apiKey=$key&domainName=example.com&outputFormat=JSON\"; $resp=Invoke-RestMethod -Method Get -Uri $uri -Headers @{Accept='application/json'} -TimeoutSec 25 -ErrorAction Stop; $resp | ConvertTo-Json -Depth 6 } catch { Add-Content -Path \"$env:TEMP\\ti_t1597.log\" -Value (\"[WhoisXML] \" + $_.Exception.Message) }",
+  "explanation": "Pulls WHOIS data for example.com from WhoisXML, a commercial closed-source service. Utilizes HTTPS and parameterized API key; returns JSON.",
+  "rationale_steps": [
+    "Obtain API key from environment and construct a minimal GET request.",
+    "Leverage trusted vendor endpoint over TLS with JSON output.",
+    "Use timeout and error handling to avoid noisy retries.",
+    "Convert results to JSON and log any exceptions."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1597-5763c3d9-d53562ec",
+  "source_prompt_hash": "5763c3d9",
+  "timestamp_utc": "2025-09-30T06:24:43.674049Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced braces/quotes, proper try/catch, valid parameters for Invoke-RestMethod, and correct hashtable and string usage.",
+        "semantic_score": 5,
+        "semantic_justification": "Uses a paid WhoisXML API with an API key to retrieve WHOIS data over HTTPS, aligning with T1597’s use of closed/paid sources for intelligence collection.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T13:32:08.017641Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, proper try/catch structure, correct string interpolation, valid Invoke-RestMethod flags, and proper semicolon separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying WhoisXML API, a commercial closed-source paid intelligence service, using an API key to retrieve WHOIS data for a target domain, which directly aligns with adversaries querying paid technical databases for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:57:11.725308Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed PowerShell script using correct syntax for try-catch blocks, variable assignments, .NET method calls, and cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying a commercial, paid WHOIS data provider using a legitimate API interaction pattern commonly used by adversaries for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:57:15.198466Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

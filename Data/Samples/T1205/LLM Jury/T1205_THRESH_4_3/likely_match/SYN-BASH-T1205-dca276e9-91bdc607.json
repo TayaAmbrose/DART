@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "sudo iptables -A INPUT -p tcp --dport 443 --tcp-flags FIN,SYN,RST,PSH,ACK,URG SYN -m ttl --ttl-eq 42 -m length --length 60 -m recent --name T1205_TCP_SIG --set -j LOG --log-prefix \"T1205_TCP_SIG \"",
+  "explanation": "Identifies SYN packets to 443 with an unusual fixed TTL and packet length used as a low-level covert activation signal (traffic signaling via crafted TCP parameters).",
+  "rationale_steps": [
+    "Combine TTL and exact packet size constraints to model a magic packet.",
+    "Mark and log such packets to detect signaling patterns atypical of normal TLS."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-dca276e9-91bdc607",
+  "source_prompt_hash": "dca276e9",
+  "timestamp_utc": "2025-09-30T03:32:21.448422Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed iptables rule with valid modules, flags, and balanced quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "Detects and logs TCP SYNs to port 443 with specific TTL and packet length, plausibly identifying covert traffic signaling consistent with T1205.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T18:07:40.908584Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid iptables syntax, properly chained modules (-m ttl, -m length, -m recent), balanced flags, and correct LOG target with prefix.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements detection/logging of a traffic signaling pattern (crafted SYN packets with specific TTL=42 and length=60 to port 443) consistent with T1205 covert activation signals, though it only logs rather than triggers a payload, and the 'None' privilege field contradicts the required sudo/root privileges for iptables.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T04:04:31.925940Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid iptables syntax, correctly utilizes multiple match modules (ttl, length, recent), and maintains proper flag formatting and quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a detection or trigger mechanism for traffic signaling by filtering for specific, non-standard packet attributes often used in covert activation.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:04:34.580008Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

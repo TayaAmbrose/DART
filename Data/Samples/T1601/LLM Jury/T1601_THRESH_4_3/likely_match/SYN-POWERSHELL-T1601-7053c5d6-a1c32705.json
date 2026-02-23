@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$expected='A1B2C3D4E5F60718293A4B5C6D7E8F90112233445566778899AABBCCDDEEFF00'; if ((Get-FileHash 'C:\\Images\\install.wim' -Algorithm SHA256).Hash -ne $expected) { Write-Output 'INTEGRITY MISMATCH: install.wim' } else { Write-Output 'install.wim OK' }",
+  "explanation": "Computes the SHA256 of an installation image and compares it with a known-good value to verify integrity after potential image modification.",
+  "rationale_steps": [
+    "Establish expected checksum from a trusted source.",
+    "Compute current SHA256 of the WIM file as Administrator.",
+    "Compare to detect unauthorized modifications to the system image."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-7053c5d6-a1c32705",
+  "source_prompt_hash": "7053c5d6",
+  "timestamp_utc": "2025-09-30T04:53:44.701470Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell one-liner with balanced quotes/braces, valid cmdlet usage, and correct property access.",
+        "semantic_score": 4,
+        "semantic_justification": "Accurately computes and compares a SHA256 hash to verify image integrity (detection/mitigation relevant to T1601) but does not perform system image modification itself.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2025-10-02T19:15:58.422752Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper string quoting, valid cmdlet usage (Get-FileHash with -Algorithm flag), correct conditional logic, and proper semicolon separators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements integrity verification of an installation image (install.wim) using SHA256 hashing via Get-FileHash and comparison against a known-good expected hash, which is precisely the detection/mitigation approach for T1601 (Modify System Image) — verifying that a firmware/OS image has not been tampered with.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:22:33.368073Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard PowerShell syntax, including correct variable assignment, comparison operators, and object property access.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements an integrity check for a Windows image file, which is a direct method for detecting the unauthorized modifications described in T1601.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:22:34.516452Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

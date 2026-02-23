@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1585",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "( crontab -l 2>/dev/null; echo '45 9 15 * * /usr/bin/env GITHUB_TOKEN=$(cat /etc/persona/github.token) curl -sS -X PUT -H \"Authorization: token ${GITHUB_TOKEN}\" -H \"Accept: application/vnd.github+json\" https://api.github.com/user/starred/hashicorp/terraform -o /dev/null -w \"{\\\"http_code\\\":%{http_code}}\\n\" >> /var/log/persona_github_star.json 2>&1' ) | crontab -",
+  "explanation": "Schedules a periodic GitHub action (starring a popular repo) to generate natural activity for the persona.",
+  "rationale_steps": [
+    "Use a benign action that does not contact targets",
+    "Operate with a token-scoped API request via cron",
+    "Log machine-readable results to JSON for review"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1585-0ea28953-b7d92250",
+  "source_prompt_hash": "0ea28953",
+  "timestamp_utc": "2025-09-30T07:23:20.258442Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed subshell and pipe, balanced quoting, valid cron timing, and valid curl flags.",
+        "semantic_score": 2,
+        "semantic_justification": "Intended to simulate social account activity for T1585, but ${GITHUB_TOKEN} is expanded before env sets it (likely empty) and writing to /var/log plus reading /etc/persona/github.token typically require elevated privileges, so the action likely fails.",
+        "combined_score": 3.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T10:11:12.499071Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper crontab append pattern, balanced parentheses, and valid curl flags, though the embedded JSON format string with escaped quotes inside single-quoted echo may cause issues in some shell environments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1585 persona maintenance by scheduling a recurring GitHub API action (starring a repo) using a stored token to generate authentic-looking activity that blends the fake account into normal user behavior patterns.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:42:00.971895Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using standard subshell patterns to append to a crontab, correct cron timing syntax, and properly quoted curl arguments.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements persona activity to blend into normal GitHub behavior, though the use of /etc/ and /var/log/ paths typically requires root privileges, which conflicts with the 'None' privilege level specified.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:42:06.765068Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

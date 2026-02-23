@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$sys='C:\\mount\\Windows\\System32\\winload.exe'; $psh=(Get-FileHash $sys -Algorithm SHA256).Hash; $ct=(certutil -hashfile $sys SHA256 | Select-String -Pattern '^[0-9A-F]{64}$').Line; if($psh -ne $ct){Write-Output 'Hash tool mismatch on winload.exe'} else {Write-Output (\"winload.exe hash \" + $psh)}",
+  "explanation": "Cross-validates the hash of a critical boot binary inside the mounted system image using both PowerShell and certutil to detect tampering, a verification activity under T1601.",
+  "rationale_steps": [
+    "Compute SHA256 of winload.exe within the offline image via Get-FileHash.",
+    "Compute SHA256 via certutil and normalize to the hex string line.",
+    "Compare both results to detect manipulation or tampering.",
+    "Output a warning on mismatch to flag integrity issues."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-dc7ef01c-f0e0127e",
+  "source_prompt_hash": "dc7ef01c",
+  "timestamp_utc": "2025-09-30T04:49:19.161651Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes and parentheses, valid cmdlets/parameters, and proper statement separators.",
+        "semantic_score": 3,
+        "semantic_justification": "It hashes the target file with two tools to cross-check, but does not compare against a trusted baseline and likely fails to parse certutil’s spaced hash output, so it only partially supports T1601 detection.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-02T18:47:21.556062Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced quotes, parentheses, and valid semicolons, though the certutil regex pattern '^[0-9A-F]{64}$' may not reliably match certutil's lowercase hex output without case-insensitive handling, creating a potential edge-case failure.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements dual-tool hash cross-validation of a critical boot binary (winload.exe) in a mounted image path, which is a legitimate integrity verification approach aligned with T1601 detection; the minor gap is that certutil outputs lowercase hex while the regex expects uppercase, potentially causing false mismatches, and the path 'C:\\mount\\Windows\\System32\\' implies an offline mounted image context that is operationally plausible but not explicitly established.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:20:14.000993Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell syntax is perfectly valid, featuring correct variable assignments, command piping, regex usage within Select-String, and balanced conditional blocks.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic of cross-validating a file hash using two different utilities is a valid verification step for T1601, the command will fail in practice because certutil's output contains spaces between hex bytes and the regex provided expects a contiguous 64-character string, leading to a false 'mismatch' report.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:20:20.666162Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.0,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

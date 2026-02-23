@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "srm -rfm \"/Library/Application Support/AcmeApp/Data\"",
+  "explanation": "Recursively wipes an application’s data directory with multi-pass overwrite to disrupt availability of its data.",
+  "rationale_steps": [
+    "Identify a single application's data path to focus impact.",
+    "Use -r to remove nested files and -m for multi-pass overwrite.",
+    "Execute as root to ensure all files can be securely deleted."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-45236c1a-ccaf355a",
+  "source_prompt_hash": "45236c1a",
+  "timestamp_utc": "2025-09-30T07:56:40.760169Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Uses valid srm short-option cluster (-rfm) with balanced quotes around a space-containing path and no parsing errors.",
+        "semantic_score": 3,
+        "semantic_justification": "While srm recursively overwrites and deletes data consistent with T1485, it likely requires elevated privileges for /Library and may be absent or ineffective on modern macOS/APFS, reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-02T00:49:08.176139Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and valid flag format, though 'srm' accepts '-r', '-f', and '-m' (medium overwrite) flags but the combined '-rfm' flag ordering is valid in most implementations.",
+        "semantic_score": 4,
+        "semantic_justification": "srm (secure remove) is a legitimate macOS secure deletion tool that supports recursive (-r), force (-f), and medium multi-pass overwrite (-m) modes, making this well-aligned with T1485 data destruction intent targeting an application data directory, though srm was deprecated/removed in macOS 10.15+ reducing real-world applicability.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:39:23.345745Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Bash syntax with properly quoted paths and valid flag combinations for the srm utility.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements secure data destruction, though the specified path (/Library) typically requires administrative privileges rather than 'None', and srm is deprecated on modern macOS versions.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:39:25.087033Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

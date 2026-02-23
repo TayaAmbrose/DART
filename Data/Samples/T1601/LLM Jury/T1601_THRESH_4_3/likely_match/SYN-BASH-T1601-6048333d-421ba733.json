@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "base=$(losetup -fP --show /bootflash/prod_system.img) && mod=$(losetup -fP --show /var/tmp/modified_system.img) && mkdir -p /mnt/base /mnt/mod && mount ${base}p1 /mnt/base && mount ${mod}p1 /mnt/mod && diff -ruN /mnt/base /mnt/mod && umount /mnt/base /mnt/mod && losetup -d \"$base\" \"$mod\"",
+  "explanation": "Mounts the root partitions from both the golden and modified system images and recursively diffs them to enumerate all unauthorized changes.",
+  "rationale_steps": [
+    "Loop-mount both images to access their filesystems (requires root).",
+    "Perform a recursive diff of full filesystem trees to identify exact modifications.",
+    "Unmount and detach loop devices to leave minimal traces."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-6048333d-421ba733",
+  "source_prompt_hash": "6048333d",
+  "timestamp_utc": "2025-09-30T04:32:34.003779Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash command chain with balanced quoting, valid flags, and proper use of losetup, mount, diff, umount, and cleanup.",
+        "semantic_score": 4,
+        "semantic_justification": "It mounts two image partitions and diffs their contents to detect modifications (aligned with T1601 detection), but it assumes the root is on p1, actually requires root despite 'None', and should prefer read-only mounts to avoid altering images.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T19:22:35.578202Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, correct use of && chaining, valid losetup/mount/diff flags, and proper variable interpolation throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses losetup to mount disk images as loop devices and diff to enumerate changes between a golden and modified system image, which is operationally sound for detecting unauthorized firmware modifications per T1601, though the 'Privilege: None' claim is incorrect since losetup and mounting require root privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:22:56.817868Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct bash syntax, proper variable substitution, valid command separators, and standard flags for all tools involved.",
+        "semantic_score": 4,
+        "semantic_justification": "While the command accurately performs the comparison described, it requires root privileges to execute losetup and mount, which contradicts the 'None' privilege level provided.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:23:00.501808Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

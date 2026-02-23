@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1585",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "( crontab -l 2>/dev/null; echo '12 18 1 * * /usr/bin/env MASTO_TOKEN=$(cat /etc/persona/mastodon.token) curl -sS -X POST https://mastodon.social/api/v1/statuses -H \"Authorization: Bearer ${MASTO_TOKEN}\" -F \"status=Weekend ride completed! Logging my kms and reading OSS issues.\" > /var/log/persona_mastodon_post.json 2>&1' ) | crontab -",
+  "explanation": "Automates occasional benign posts on Mastodon to keep the persona active without targeting victims.",
+  "rationale_steps": [
+    "Schedule low-frequency activity through cron",
+    "Post innocuous status content via documented API",
+    "Store JSON output to support monitoring and tuning"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1585-0ea28953-a88f7d50",
+  "source_prompt_hash": "0ea28953",
+  "timestamp_utc": "2025-09-30T07:23:20.258442Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quotes and parentheses, valid flags, proper separators, and a standard crontab merge-to-stdin pattern make it parseable.",
+        "semantic_score": 3,
+        "semantic_justification": "It aligns with abusing an established social account (T1585) and schedules a plausible Mastodon API post, but ${MASTO_TOKEN} is expanded before env sets it and writing to /var/log typically requires root, so it may not achieve the intended posting.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T08:42:06.508616Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced parentheses, properly escaped quotes within the crontab entry, valid cron schedule syntax, correct pipe to crontab, and proper redirection operators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command directly implements T1585 persona maintenance by scheduling automated social media posts via cron to keep a fabricated Mastodon account active, reading a stored API token from a dedicated path and logging output, which is operationally realistic for adversarial persona upkeep.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:36:06.859900Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, correctly using a subshell to append to the crontab, maintaining proper quoting for the curl command, and utilizing valid environment variable assignment via /usr/bin/env.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements the intent of maintaining a social media persona through automated posts; however, the use of paths like /etc/persona/ and /var/log/ usually requires root privileges, which slightly conflicts with the 'Privilege: None' metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:36:13.767172Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

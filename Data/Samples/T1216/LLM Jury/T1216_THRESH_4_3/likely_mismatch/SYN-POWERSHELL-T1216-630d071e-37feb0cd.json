@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1216",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[withheld] PowerShell spawning cscript.exe to invoke the Microsoft-signed PubPrn.vbs with atypical arguments indicative of proxy execution (details redacted for safety).",
+  "explanation": "This pattern reflects Signed Script Proxy Execution by abusing PubPrn.vbs via cscript.exe from a PowerShell session. Adversaries may coerce the signed admin script into spawning an unintended child process, effectively proxying execution to bypass application control.",
+  "rationale_steps": [
+    "Parent process is powershell.exe running under a standard user context.",
+    "Child process cscript.exe loads PubPrn.vbs from Printing_Admin_Scripts in System32/SysWOW64.",
+    "Command line shows unusual or non-standard arguments not typical for printer administration tasks (e.g., unexpected quotes, redirections, or network paths).",
+    "A subsequent unexpected child process (e.g., cmd.exe, powershell.exe, or rundll32.exe) spawns from cscript.exe.",
+    "Event chain: powershell.exe -> cscript.exe -> PubPrn.vbs -> anomalous process indicates proxy execution."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1216-630d071e-37feb0cd",
+  "source_prompt_hash": "630d071e",
+  "timestamp_utc": "2025-09-30T06:59:07.952821Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "No concrete command string is provided—only a description—so it is not runnable or parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The described behavior (PowerShell spawning cscript.exe to run PubPrn.vbs with proxying arguments) aligns with T1216 Signed Script Proxy Execution on Windows, though missing specifics prevent full validation.",
+        "combined_score": 2.5,
+        "confidence": 0.3,
+        "timestamp": "2025-10-02T04:40:06.790220Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is explicitly withheld/redacted, so no actual syntax can be evaluated, leaving only a descriptive placeholder rather than a parseable command.",
+        "semantic_score": 4,
+        "semantic_justification": "The described pattern of PowerShell spawning cscript.exe to invoke PubPrn.vbs with atypical arguments is a well-documented and operationally plausible implementation of T1216 Signed Script Proxy Execution, accurately reflecting how adversaries abuse this Microsoft-signed script to bypass application control.",
+        "combined_score": 2.5,
+        "confidence": 0.6,
+        "timestamp": "2026-02-19T00:12:52.776551Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 0,
+        "syntactic_justification": "The provided command is a natural language description containing a redaction placeholder rather than an executable command string.",
+        "semantic_score": 0,
+        "semantic_justification": "Since the command is withheld and redacted, there is no implementation to evaluate against the claimed technique or to check for operational feasibility.",
+        "combined_score": 0.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:13:28.329289Z"
+      }
+    ],
+    "llm_average_syntactic": 0.667,
+    "llm_average_semantic": 2.667,
+    "llm_average_score": 1.667,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

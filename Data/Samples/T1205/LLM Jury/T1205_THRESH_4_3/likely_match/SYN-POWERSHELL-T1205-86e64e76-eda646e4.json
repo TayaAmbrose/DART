@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "$gw='192.0.2.255'; Test-NetConnection -ComputerName $gw -Port 7 -InformationLevel Quiet | Out-Null; $mac='AA-BB-CC-DD-EE-FF'; $mb=$mac.Split('-') | ForEach-Object {[byte]('0x'+$_)}; $pkt = @([byte]0xFF,[byte]0xFF,[byte]0xFF,[byte]0xFF,[byte]0xFF,[byte]0xFF); 1..16 | ForEach-Object { $pkt += $mb }; $udp = New-Object System.Net.Sockets.UdpClient; $udp.EnableBroadcast = $true; $udp.Send($pkt, $pkt.Length, $gw, 7) | Out-Null",
+  "explanation": "Sends a WOL-formatted magic packet to a directed broadcast address on UDP/7 to trigger device wake. Detection: flag directed broadcasts carrying WOL signatures; monitor for WOL packets outside authorized windows or VLANs.",
+  "rationale_steps": [
+    "Validate reachability to the directed broadcast on UDP/7 using Test-NetConnection.",
+    "Build the correct WOL magic packet structure.",
+    "Transmit the packet to the subnet broadcast to wake the device.",
+    "Defenders: alert on WOL packets traversing routing boundaries or outside maintenance windows."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-86e64e76-eda646e4",
+  "source_prompt_hash": "86e64e76",
+  "timestamp_utc": "2025-09-30T05:55:46.844640Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell syntax is well-formed with balanced quoting, valid pipelines, and correct method/property usage.",
+        "semantic_score": 4,
+        "semantic_justification": "It correctly builds and sends a WOL magic packet over UDP broadcast aligning with Traffic Signaling, though the TEST-NET address and use of port 7 may reduce real-world effectiveness.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T16:44:55.330777Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, proper semicolons as separators, valid array construction, correct .NET socket API usage, and no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly constructs a Wake-on-LAN magic packet (6x 0xFF followed by 16 repetitions of the target MAC) and sends it via UDP broadcast, which aligns with T1205 traffic signaling by embedding a trigger signal in legitimate-looking network traffic; the minor gap is that WoL typically uses port 9 rather than port 7, and the preliminary Test-NetConnection check on port 7 is slightly unusual but not operationally implausible.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:57:07.298639Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell syntax is perfectly formed, uses correct object methods, and handles byte array construction correctly.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately constructs a standard Wake-on-LAN magic packet and sends it to a broadcast address, aligning perfectly with the intent of signaling a host.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:57:09.751294Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

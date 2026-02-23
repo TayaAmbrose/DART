@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1216",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "WITHHELD_FOR_SAFETY - mshta variant: remote HTA over HTTP(S) invoked from PowerShell",
+  "explanation": "Illustrates the abuse of a Microsoft-signed script host (mshta) launched by PowerShell to proxy-execute code hosted in a remote HTA. This is characteristic of System Script Proxy Execution while relying solely on native components.",
+  "rationale_steps": [
+    "PowerShell starts a signed Windows script host (mshta.exe), creating a trusted parent-child chain",
+    "mshta loads a remote HTA resource, executing script content under a Microsoft-signed process",
+    "This pattern often evades naive application control rules that trust signed hosts",
+    "Defenders should monitor PowerShell spawning mshta with network destinations and HTA file indicators",
+    "Harden via WDAC/AppLocker to block or constrain mshta usage unless explicitly required"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1216-b60f034d-fc77b4aa",
+  "source_prompt_hash": "b60f034d",
+  "timestamp_utc": "2025-09-30T07:02:44.293218Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "No concrete command string is provided; the placeholder is not runnable or parseable as-is.",
+        "semantic_score": 2,
+        "semantic_justification": "Using mshta to load a remote HTA from PowerShell is plausible but maps more closely to Signed Binary Proxy Execution: Mshta (T1218.005) than to System Script Proxy Execution (T1216).",
+        "combined_score": 1.5,
+        "confidence": 0.3,
+        "timestamp": "2025-10-01T22:27:10.203950Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is explicitly withheld, so no actual syntax can be evaluated; only the description of a mshta-based PowerShell invocation is provided, making it a non-runnable fragment.",
+        "semantic_score": 4,
+        "semantic_justification": "The described technique—using PowerShell to invoke mshta.exe with a remote HTTP(S) HTA URL—is a well-known and operationally plausible method of System Script Proxy Execution (T1216), leveraging a Microsoft-signed binary to proxy-execute remote code, though mshta is more precisely associated with T1218.005 rather than T1216 specifically.",
+        "combined_score": 2.5,
+        "confidence": 0.6,
+        "timestamp": "2026-02-19T00:08:31.306894Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 1,
+        "syntactic_justification": "The provided text is a descriptive placeholder and technique name rather than an executable PowerShell command.",
+        "semantic_score": 1,
+        "semantic_justification": "The command string is missing the necessary arguments and logic required to perform the proxy execution described in the MITRE technique.",
+        "combined_score": 1.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:09:07.778407Z"
+      }
+    ],
+    "llm_average_syntactic": 1.0,
+    "llm_average_semantic": 2.333,
+    "llm_average_score": 1.667,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[REDACTED: Non-executable placeholder] Event-log exfil loop: map \\\\ATTACKER_IP\\logs$ with 'net use', periodically export logs and append a hostname/timestamp, copy to UNC, then unmap.",
+  "explanation": "Conceptual periodic export-and-send of system logs to a remote SMB share created with 'net use', supporting automated, silent exfiltration.",
+  "rationale_steps": [
+    "Establish a credentialed SMB connection using net use",
+    "Export relevant event logs to a timestamped file",
+    "Copy the export to the remote UNC location",
+    "Remove the SMB mapping after transfer completes"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1020-7b9aedc5-d902271d",
+  "source_prompt_hash": "7b9aedc5",
+  "timestamp_utc": "2025-09-30T08:57:58.671267Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "The entry is a prose placeholder rather than executable PowerShell, lacking concrete syntax and thus not parseable or runnable.",
+        "semantic_score": 4,
+        "semantic_justification": "Conceptually it matches Automated Exfiltration by mapping an SMB share with net use, periodically exporting logs, tagging them, copying to UNC, and unmapping on Windows, though standard user permissions may limit access to certain event logs.",
+        "combined_score": 2.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T04:29:53.782819Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is explicitly marked as a non-executable placeholder and contains only a natural-language description rather than actual PowerShell syntax, making it entirely non-runnable as-is.",
+        "semantic_score": 4,
+        "semantic_justification": "The described conceptual workflow — mapping a remote SMB share via 'net use', periodically exporting event logs with hostname/timestamp appended, copying to the UNC path, then unmapping — accurately reflects automated exfiltration (T1020) using legitimate Windows tools and SMB as the transfer channel, though the lack of actual code reduces operational plausibility.",
+        "combined_score": 2.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:27:16.409181Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command field contains a natural language description and a placeholder rather than actual executable PowerShell code.",
+        "semantic_score": 4,
+        "semantic_justification": "The described logic aligns well with automated exfiltration, though the 'None' privilege level is unrealistic for accessing most sensitive system logs.",
+        "combined_score": 2.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:27:18.740836Z"
+      }
+    ],
+    "llm_average_syntactic": 1.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 2.5,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

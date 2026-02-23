@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Python",
+  "command": "python3 - <<'PY'\nimport os, sys, filecmp, tempfile, hashlib\nif os.geteuid() != 0:\n    sys.exit(\"root required\")\n\ncur = \"/boot/flash/system.img\"\ngold = \"/opt/golden/system.img\"\n\ndef header(path, n=4096):\n    with open(path, \"rb\") as f:\n        return f.read(n)\n\nwith tempfile.NamedTemporaryFile(delete=False) as c, tempfile.NamedTemporaryFile(delete=False) as g:\n    c.write(header(cur)); c.flush()\n    g.write(header(gold)); g.flush()\n    same = filecmp.cmp(c.name, g.name, shallow=False)\n    print(\"Headers identical:\", same)\n\nh = hashlib.sha256(); h.update(header(cur))\nprint(\"Current header sha256:\", h.hexdigest())\nPY",
+  "explanation": "Extracts and compares the first 4 KB of the current and golden images using filecmp to detect tampering in image headers; prints header hash for quick reference.",
+  "rationale_steps": [
+    "Require root to access image files in boot storage.",
+    "Write image headers to temp files and compare them with filecmp.",
+    "Compute SHA-256 of the current image header for auditing."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1601-0c03443f-05446f45",
+  "source_prompt_hash": "0c03443f",
+  "timestamp_utc": "2025-09-30T04:56:19.919567Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The here-document and Python invocation are correctly formed with balanced quoting and valid python3 '-' usage, and the Python code is syntactically valid.",
+        "semantic_score": 3,
+        "semantic_justification": "It correctly compares the first 4 KB of two images and outputs a header hash as described, but it does not implement the T1601 modification technique (it’s a detection check) and it requires root despite the declared 'Privilege: None'.",
+        "combined_score": 4.0,
+        "confidence": 0.86,
+        "timestamp": "2025-10-02T19:32:23.671235Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python heredoc is well-formed with balanced quotes, proper imports, correct indentation, valid method calls, and no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The script correctly implements firmware integrity detection by comparing the first 4KB header of the current image against a golden reference using filecmp and SHA-256, which is a legitimate detection mechanism for T1601 tampering; minor realism gap is that only 4KB header comparison may miss body-level modifications, and the privilege check exits rather than being enforced by the shell invocation.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:24:35.119677Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically correct, uses proper indentation, correctly handles heredoc input, and utilizes standard library modules appropriately.",
+        "semantic_score": 4,
+        "semantic_justification": "The script correctly compares the first 4KB of two files as described; however, it is inefficient to write memory buffers to temporary files for comparison via filecmp when a direct byte comparison would suffice, and checking only the header is a weak detection for T1601.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:24:38.103076Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

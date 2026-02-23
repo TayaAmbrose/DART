@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "tar -czf - \"$HOME/Pictures\" | dd of=\"/Volumes/USB32/.photoindex.db\" bs=4m conv=sync,noerror && sync && diskutil unmount \"/Volumes/USB32\"",
+  "explanation": "Compresses the Pictures folder and writes it to a database-looking file on the external drive using dd, then unmounts for quick removal.",
+  "rationale_steps": [
+    "Aggregate image files into a single compressed stream.",
+    "Write the stream directly to the USB device via dd.",
+    "Name the output to resemble an internal metadata file for camouflage.",
+    "Flush and unmount to complete the offline transfer."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-24937b47-c5593608",
+  "source_prompt_hash": "24937b47",
+  "timestamp_utc": "2025-09-30T05:19:16.168507Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and operators with valid tar, dd, sync, and diskutil options for macOS make it fully parseable.",
+        "semantic_score": 5,
+        "semantic_justification": "It tars and gzips the Pictures folder to a hidden, database-like file on an external volume, then syncs and unmounts for physical removal, matching exfiltration over physical medium.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T08:57:42.872188Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for tar/dd/diskutil, proper pipe and && separators, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by compressing the Pictures folder via tar, writing it to a disguised database-looking file on a USB volume using dd with appropriate block size and error-handling flags, then syncing and unmounting the drive for quick physical removal — all operationally plausible on macOS.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:37:52.837329Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid POSIX and macOS-specific syntax with proper piping, logical operators, and balanced quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively demonstrates exfiltration by compressing data, masquerading the output file, and cleanly unmounting the physical medium for removal.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:37:55.164788Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

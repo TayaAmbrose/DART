@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1585",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "New-AzADUser -DisplayName 'Noah Patel' -UserPrincipalName 'noah.patel@contoso.onmicrosoft.com' -MailNickname 'noah.patel' -PasswordProfile @{Password='P@ssw0rd!234'; ForceChangePasswordNextLogin=$false} -AccountEnabled $true -GivenName 'Noah' -Surname 'Patel' -JobTitle 'Community Manager' -Department 'Brand' -UsageLocation 'US' | Select-Object Id,DisplayName,UserPrincipalName,JobTitle,Department,AccountEnabled | ConvertTo-Json -Depth 4",
+  "explanation": "Establishes an additional cloud user to form a network of related personas, supporting more convincing interactions.",
+  "rationale_steps": [
+    "Create a second Azure AD user with coherent org details.",
+    "Enable the account and set a non-expiring initial password for immediate use.",
+    "Output key identity fields in JSON for orchestrated persona management."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1585-237a137c-e8655df4",
+  "source_prompt_hash": "237a137c",
+  "timestamp_utc": "2025-09-30T07:37:51.533004Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes and hashtable braces, valid parameter syntax, and a correct pipeline to Select-Object and ConvertTo-Json.",
+        "semantic_score": 3,
+        "semantic_justification": "It aims to create an Azure AD user consistent with T1585, but may fail due to using ForceChangePasswordNextLogin instead of ForceChangePasswordNextSignIn in PasswordProfile and it requires directory privileges contrary to the 'Privilege: None' claim.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-02T09:57:09.749398Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, valid PowerShell cmdlet syntax, proper hashtable construction for PasswordProfile, correct pipeline usage, and valid ConvertTo-Json parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command directly implements T1585 by creating a new Azure AD cloud account with realistic persona details (name, job title, department, UPN), enabled status, and no forced password reset, which aligns precisely with establishing accounts to build a network of convincing personas for follow-on operations.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:40:27.989567Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows correct PowerShell syntax for the Az module, including proper hashtable formatting for the PasswordProfile and valid piping to Select-Object and ConvertTo-Json.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately utilizes the New-AzADUser cmdlet to create a new cloud identity, which directly fulfills the T1585 technique of establishing accounts for persistence or deception.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:40:30.037432Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

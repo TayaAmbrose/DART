@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "$target='203.0.113.44'; foreach($s in @(@{Type='TCP';Port=80}, @{Type='UDP';Port=123}, @{Type='TCP';Port=22})){ if($s.Type -eq 'TCP'){ Test-NetConnection -ComputerName $target -Port $s.Port -InformationLevel Quiet | Out-Null } else { Test-NetConnection -ComputerName $target -UdpPort $s.Port -InformationLevel Quiet | Out-Null }; Start-Sleep -Milliseconds 250 }; Test-NetConnection -ComputerName $target -Port 8443 -InformationLevel Detailed",
+  "explanation": "Mixed TCP/UDP knock disguised as common services (HTTP, NTP, SSH) before contacting a hidden port 8443. Detection: detect mixed-protocol sequential probes with consistent short delays; monitor for sudden appearance of an open service after a patterned series of connections.",
+  "rationale_steps": [
+    "Choose well-known service ports to blend in.",
+    "Send a timed mixed-protocol sequence as the knock.",
+    "Attempt access to a hidden port presumed to open post-signal.",
+    "Defenders: baseline normal service access and alert on short-timed sequences across protocol types; track post-sequence port state changes."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-86e64e76-04947e23",
+  "source_prompt_hash": "86e64e76",
+  "timestamp_utc": "2025-09-30T05:55:46.844640Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid foreach/hashtable syntax, correct Test-NetConnection parameters for TCP/UDP, proper separators, and pipelines.",
+        "semantic_score": 5,
+        "semantic_justification": "Performs a timed mixed TCP/UDP port-knocking sequence to common service ports followed by a connection to 8443, aligning with T1205 Traffic Signaling (port knocking) behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T17:00:33.387141Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, proper hashtable syntax, valid foreach loop structure, correct cmdlet usage, and proper semicolon separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a port-knocking/traffic signaling sequence by probing common service ports (HTTP/80, NTP/123, SSH/22) in a mixed TCP/UDP pattern with consistent 250ms delays before connecting to the hidden port 8443, which is a realistic and operationally plausible implementation of T1205 traffic signaling to trigger a listener.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T03:58:20.669719Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 3,
+        "syntactic_justification": "The PowerShell syntax (loops, hash tables, conditionals) is perfectly formed, but the command uses a non-existent parameter '-UdpPort' for the Test-NetConnection cmdlet, which will cause a runtime error.",
+        "semantic_score": 2,
+        "semantic_justification": "The command fails to achieve its mixed-protocol signaling intent because Test-NetConnection is a TCP/ICMP tool and cannot perform the UDP 'knock' required for the sequence.",
+        "combined_score": 2.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:58:29.247193Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.167,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

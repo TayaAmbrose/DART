@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "find /var/log/audit -maxdepth 1 -type f -name 'audit.log.*' -print0 | xargs -0 wipe -f",
+  "explanation": "Destroys rotated Linux audit logs by securely overwriting them, leaving current audit.log untouched.",
+  "rationale_steps": [
+    "Target only rotated audit logs to avoid disrupting active logging.",
+    "Use null-delimited piping to safely handle filenames.",
+    "wipe ensures contents are overwritten before unlinking, making recovery highly unlikely."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-f1119aef-0aea93a3",
+  "source_prompt_hash": "f1119aef",
+  "timestamp_utc": "2025-09-30T08:06:57.630497Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The pipeline uses valid find, xargs, and wipe options with balanced quoting and proper -print0/-0 pairing.",
+        "semantic_score": 3,
+        "semantic_justification": "The command correctly targets rotated audit logs and uses a secure wipe utility, but on typical Linux systems /var/log/audit is root-owned so running without elevated privileges will fail to overwrite the files.",
+        "combined_score": 4.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T01:56:22.347396Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, correct use of -print0/xargs -0 pairing, valid find flags (-maxdepth, -type, -name), and proper pipe syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly targets rotated audit logs (audit.log.*) while leaving the active audit.log untouched, and uses 'wipe -f' for secure overwriting consistent with T1485 anti-forensic log destruction, though 'wipe' is a less common utility that may not be installed by default and the 'None' privilege claim is unrealistic since /var/log/audit typically requires root access.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:42:12.432697Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard find and xargs syntax with proper null-terminator handling and balanced quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately targets rotated audit logs and utilizes a recognized secure-deletion utility to perform data destruction as described.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:42:13.918151Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

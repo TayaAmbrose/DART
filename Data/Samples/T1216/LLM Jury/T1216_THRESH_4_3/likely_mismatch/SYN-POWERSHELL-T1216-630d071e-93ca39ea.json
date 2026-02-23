@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1216",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[withheld] PowerShell spawning mshta.exe to load script content leading to a secondary process launch, indicative of proxy execution (details redacted).",
+  "explanation": "mshta.exe (a Microsoft-signed script host) can proxy execution of script content that then launches additional binaries, abusing trust in the signed utility.",
+  "rationale_steps": [
+    "Identify powershell.exe as parent of mshta.exe, which is atypical for normal workflows.",
+    "mshta.exe command line points to script content (local/embedded/remote) with unusual parameters.",
+    "Unexpected child process (e.g., cmd.exe or powershell.exe) spawns from mshta.exe.",
+    "Network egress or remote path usage correlates with the mshta session.",
+    "No corresponding user-driven HTA UI interaction observed (headless behavior)."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1216-630d071e-93ca39ea",
+  "source_prompt_hash": "630d071e",
+  "timestamp_utc": "2025-09-30T06:59:07.952821Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "No concrete command is provided—only a descriptive statement—so it is not parseable or runnable as-is.",
+        "semantic_score": 4,
+        "semantic_justification": "PowerShell spawning mshta.exe to execute script content that launches a secondary process is a plausible and well-known T1216 proxy execution pattern, though operational specifics are missing.",
+        "combined_score": 2.5,
+        "confidence": 0.2,
+        "timestamp": "2025-10-01T21:57:32.800121Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is explicitly withheld/redacted, providing only a descriptive summary rather than an actual parseable command string, making syntactic evaluation impossible.",
+        "semantic_score": 3,
+        "semantic_justification": "The described behavior (PowerShell spawning mshta.exe to proxy script execution leading to a secondary process) is operationally plausible and aligns with T1216 proxy execution abuse, but mshta.exe is more precisely associated with T1218.005 (Signed Binary Proxy Execution) rather than T1216 (System Script Proxy Execution), creating a partial technique misalignment.",
+        "combined_score": 2.0,
+        "confidence": 0.4,
+        "timestamp": "2026-02-19T00:07:05.818837Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 1,
+        "syntactic_justification": "The provided command field contains a natural language description and placeholders rather than functional, executable code.",
+        "semantic_score": 2,
+        "semantic_justification": "The use of mshta.exe is a technique categorized under T1218.005 (System Binary Proxy Execution), whereas T1216 specifically targets the abuse of signed script files like .vbs or .js.",
+        "combined_score": 1.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:07:23.529626Z"
+      }
+    ],
+    "llm_average_syntactic": 1.0,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 2.0,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

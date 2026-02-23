@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1585",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "New-AzADUser -DisplayName 'Avery Reed' -UserPrincipalName 'avery.reed@contoso.onmicrosoft.com' -MailNickname 'avery.reed' -PasswordProfile @{Password='P@ssw0rd!234'; ForceChangePasswordNextLogin=$false} -AccountEnabled $true -GivenName 'Avery' -Surname 'Reed' -JobTitle 'Marketing Associate' -Department 'Brand' -UsageLocation 'US' | Select-Object Id,DisplayName,UserPrincipalName,JobTitle,Department,AccountEnabled | ConvertTo-Json -Depth 4",
+  "explanation": "Creates a new cloud-only Azure AD user that serves as a believable marketing persona, establishing an account for future operations.",
+  "rationale_steps": [
+    "Invoke Az PowerShell to create a fully enabled Azure AD user with realistic profile attributes.",
+    "Ensure mailbox eligibility via UsageLocation and MailNickname for a plausible email identity.",
+    "Return essential properties in JSON for automation and tracking."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1585-237a137c-f28a87c0",
+  "source_prompt_hash": "237a137c",
+  "timestamp_utc": "2025-09-30T07:37:51.533004Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid pipeline, and correctly structured parameters including the PasswordProfile hashtable.",
+        "semantic_score": 5,
+        "semantic_justification": "Appropriately uses New-AzADUser to create a new Azure AD user—directly aligning with T1585 Establish Accounts—and then selects and outputs details to JSON (assuming requisite privileges and module availability).",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T10:50:10.107185Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, valid PowerShell hashtable syntax for the PasswordProfile parameter, proper pipeline chaining, and correct ConvertTo-Json usage.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1585 by using New-AzADUser to create a believable cloud-only Azure AD persona with realistic marketing department attributes, a persistent password (ForceChangePasswordNextLogin=$false), and enabled account status, fully consistent with establishing accounts for future adversarial operations.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:44:05.735180Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows correct PowerShell syntax, uses valid Az module parameters, and correctly handles the hashtable for the PasswordProfile.",
+        "semantic_score": 5,
+        "semantic_justification": "The command successfully creates a new Azure AD user with realistic attributes to facilitate account establishment and blending in, matching the T1585 technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:44:07.206419Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

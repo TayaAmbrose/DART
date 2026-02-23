@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "$mac='00-11-22-33-44-55';$m=$mac -split '[:-]';$mb=$m|ForEach-Object{[Convert]::ToByte($_,16)};$wol=New-Object System.Collections.Generic.List[byte];1..6|ForEach-Object{$wol.Add(0xFF)};1..16|ForEach-Object{$mb|ForEach-Object{$wol.Add($_)}};& netsh advfirewall firewall add rule name='WOL-UDP9' dir=out action=allow protocol=UDP remoteport=9 remoteip=255.255.255.255 >$null;$u=New-Object System.Net.Sockets.UdpClient;$u.EnableBroadcast=$true;$b=$wol.ToArray();$u.Send($b,$b.Length,'255.255.255.255',9) >$null",
+  "explanation": "Generates a Wake-on-LAN magic packet (6 bytes of FF followed by 16 repetitions of the target MAC) and broadcasts it to UDP/9, potentially waking a remote pivot host. A netsh firewall rule is added to ensure the broadcast is allowed. Admin rights may be required in locked-down environments.",
+  "rationale_steps": [
+    "Construct a correct WoL magic packet payload for the target MAC.",
+    "Temporarily ensure outbound UDP/9 broadcast is permitted via netsh and send the packet.",
+    "Detection: watch for UDP/9 broadcasts with 102-byte WoL signature, and new outbound firewall rules allowing broadcast traffic."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-3c835ea5-55be3f31",
+  "source_prompt_hash": "3c835ea5",
+  "timestamp_utc": "2025-09-30T05:43:16.300607Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes and separators; valid list/byte handling, netsh invocation, and UdpClient usage with acceptable redirections.",
+        "semantic_score": 4,
+        "semantic_justification": "Accurately crafts and broadcasts a WoL magic packet and attempts to allow outbound UDP/9, aligning with traffic signaling to trigger a remote action, though success depends on WoL support, network scope, and possible admin requirement for the firewall rule.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T16:47:09.741082Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, proper semicolon separators, valid .NET class instantiations, correct pipeline usage, and no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly constructs a WoL magic packet (6x 0xFF + 16 repetitions of MAC bytes) and broadcasts it over UDP/9, which is a legitimate traffic signaling technique to wake a remote host; however, the MITRE T1205 alignment is somewhat indirect since WoL is a niche signaling vector, and the netsh firewall rule addition requires admin privileges despite the privilege field claiming 'None'.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T03:57:14.051700Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is perfectly formed, uses correct .NET class calls, and properly handles variable pipelines and command separators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately constructs a standard Wake-on-LAN magic packet and implements the necessary firewall and socket configurations to transmit it as a broadcast signal.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:57:16.797977Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

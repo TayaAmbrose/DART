@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "sha256sum /root/firmware_orig.img /root/firmware_mod.img && mkdir -p /mnt/orig /mnt/mod && mount -o loop /root/firmware_orig.img /mnt/orig && mount -o loop /root/firmware_mod.img /mnt/mod && diff -qr /mnt/orig /mnt/mod || true; umount /mnt/mod; umount /mnt/orig",
+  "explanation": "Compares original and modified firmware images by both checksums and file-level differences to validate injected changes.",
+  "rationale_steps": [
+    "Hash both images to establish distinct identities.",
+    "Mount images and perform a recursive diff to enumerate modifications.",
+    "Clean up mounts to avoid leaving traces."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-dc873ff7-ae0d8f66",
+  "source_prompt_hash": "dc873ff7",
+  "timestamp_utc": "2025-09-30T04:57:26.660610Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash one-liner with valid flags, correct operator chaining, and no quoting or parsing issues.",
+        "semantic_score": 3,
+        "semantic_justification": "The logic correctly hashes, loop-mounts, and diffs images to validate changes, but it realistically requires root access and utilities not typically available on network devices despite the stated 'Privilege: None'.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T18:52:25.375731Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with proper use of &&, ||, and ; separators, balanced quoting, valid flags for sha256sum, mkdir, mount, diff, and umount, and no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses sha256sum for checksum comparison and loop-mounts both firmware images to perform file-level diff, which is a realistic and appropriate method for validating injected changes between original and modified firmware images aligned with T1601; the minor gap is that 'None' privilege is listed but mount typically requires root, and the cleanup with umount is handled gracefully.",
+        "combined_score": 4.5,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:20:32.473530Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command chain uses standard Bash operators, valid flags, and correct separators to execute a sequence of operations.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively compares firmware contents, though it incorrectly claims 'None' for privileges as mounting and accessing /root require root/sudo, and it assumes the images are directly mountable without offsets.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:20:35.480891Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "$evs = Get-WinEvent -LogName 'Microsoft-Windows-DNS-Client/Operational' -MaxEvents 1000 | Where-Object { $_.Id -in 3008,3009 } | ForEach-Object { $_.Properties[2].Value } | Where-Object { $_ } | Select-Object -Unique; $susp = $evs | Where-Object { ($_ -split '\\.')[0] -match '[a-z]{6,}\\d{3,}' -or $_.Length -gt 30 }; $payload = @{ timestamp=(Get-Date).ToUniversalTime().ToString('o'); suspected=$susp } | ConvertTo-Json -Depth 3; Invoke-WebRequest -UseBasicParsing -ContentType 'application/json' -Method POST -Body $payload 'https://siem.example.local/api/ingest/dns-dga'",
+  "explanation": "Defensive telemetry for T1568: analyzes DNS Client Operational log for domains with DGA-like patterns and reports to SIEM using Invoke-WebRequest.",
+  "rationale_steps": [
+    "Read recent DNS query events from Windows DNS Client Operational log.",
+    "Extract queried domains and deduplicate.",
+    "Apply simple heuristic for DGA-like patterns (long labels, alphanumeric mix).",
+    "Send suspected domains to SIEM."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1568-044d57b5-a298dca4",
+  "source_prompt_hash": "044d57b5",
+  "timestamp_utc": "2025-09-30T04:07:31.423921Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces and quotes, valid cmdlets and parameters, proper statement separators, and a correctly bound positional URI for Invoke-WebRequest.",
+        "semantic_score": 4,
+        "semantic_justification": "It queries DNS Client Operational events, extracts candidate domain names, applies a reasonable DGA heuristic, and posts results to a SIEM, aligning with defensive detection for T1568, though reliance on specific event property indexes and simple patterns may reduce robustness.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T05:16:19.366875Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces, proper piping, and valid cmdlet usage, though the URL argument to Invoke-WebRequest is positionally placed after the named parameters without the -Uri flag, which is technically valid but unconventional and could cause issues in strict parsing contexts.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements defensive telemetry for T1568 by querying the DNS Client Operational log for relevant event IDs (3008/3009), applying heuristic DGA pattern matching (long alphabetic prefixes followed by digits, or long domain lengths), deduplicating results, and forwarding structured JSON to a SIEM endpoint, which is operationally plausible and well-aligned with the described detection intent.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:18:02.823551Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with correct use of pipes, variable assignments, object filtering, and cmdlet syntax.",
+        "semantic_score": 3,
+        "semantic_justification": "While the script logic for DGA detection is sound, the property index used ('Properties[2]') for DNS Client Event IDs 3008/3009 usually points to the QueryStatus (an integer) rather than the QueryName (index 0), meaning the regex will likely fail to find matches.",
+        "combined_score": 4.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:18:07.898055Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

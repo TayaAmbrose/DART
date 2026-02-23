@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "sudo iptables -A INPUT -p icmp --icmp-type echo-request -m length --length 96 -m recent --rcheck --seconds 15 --name T1205_K2 -m recent --name T1205_K3 --set -j LOG --log-prefix \"T1205_KNOCK3 \"",
+  "explanation": "Final knock of a multi-protocol signaling chain: an ICMP echo-request of specific size within 15s of step 2, emulating covert multi-packet activation.",
+  "rationale_steps": [
+    "Use an ICMP payload length constraint to encode a signaling feature.",
+    "Confirm proper sequence with recent before marking completion and logging."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-dca276e9-7e97cf28",
+  "source_prompt_hash": "dca276e9",
+  "timestamp_utc": "2025-09-30T03:32:21.448422Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid iptables syntax with correct modules (icmp, length, recent), proper flag usage, and balanced quoting.",
+        "semantic_score": 4,
+        "semantic_justification": "The rule detects an ICMP echo-request of exact length within a 15s window tied to a prior recent list, sets a final knock marker and logs (consistent with T1205 signaling), but it requires root privileges so may fail under the stated 'Privilege: None'.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T19:12:25.983532Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with valid iptables flags and balanced quoting, but chaining two `-m recent` modules with different `--name` values and mixing `--rcheck` and `--set` in a single rule is syntactically unusual and may behave unexpectedly depending on the iptables version, though it is technically parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling final stage by matching a specific-length ICMP echo-request within a 15-second window of a prior knock (T1205_K2) and recording the source in a new recent list (T1205_K3) with logging, which aligns well with T1205 covert multi-packet activation sequences, though the LOG target only logs rather than triggering a payload or opening access, making it a detection/monitoring stub rather than a fully operational knock trigger.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T04:09:59.193021Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid iptables syntax and correctly implements flags for the match extensions (length, icmp, and recent) and the LOG target.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a stage of a port-knocking sequence by checking for specific packet attributes (ICMP type and size) and stateful timing requirements using the iptables 'recent' module.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:09:59.474376Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

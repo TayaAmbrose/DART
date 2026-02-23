@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$d=(Get-Disk | Where-Object BusType -eq 'USB' | Select-Object -First 1); $p=(Get-Partition -DiskNumber $d.Number | Where-Object DriveLetter | Select-Object -First 1); if(-not $p){ Initialize-Disk -Number $d.Number -PartitionStyle MBR -PassThru | New-Partition -UseMaximumSize -AssignDriveLetter | Format-Volume -FileSystem exFAT -NewFileSystemLabel \"Media\" -Confirm:$false | Out-Null; $p=(Get-Partition -DiskNumber $d.Number | Where-Object DriveLetter | Select-Object -First 1)}; $dl=$p.DriveLetter; Expand-Archive -Path \"C:\\Temp\\snapshot.zip\" -DestinationPath \"$dl:\\.cache\" -Force",
+  "explanation": "Initializes and formats a USB if needed, then extracts a snapshot archive onto a hidden-like directory on the removable media.",
+  "rationale_steps": [
+    "Detect the USB disk and ensure it has a mounted partition.",
+    "If absent, create partition, format, and assign a drive letter.",
+    "Expand a local archive into a concealed folder on the USB."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-5d877001-04928752",
+  "source_prompt_hash": "5d877001",
+  "timestamp_utc": "2025-09-30T05:25:30.107478Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 4,
+        "syntactic_justification": "The pipeline, quoting, and separators are well-formed, but the use of 'Where-Object DriveLetter' omits an operator/scriptblock and is a nonstandard form that can cause parameter binding issues.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly enumerates a USB disk, (re)partitions/formats it, and writes extracted data to it consistent with exfiltration over a physical medium, but may fail to select a partition due to the Where-Object misuse and actually requires administrative privileges despite the 'None' claim.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T07:47:09.541472Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper semicolon separators, correct variable assignments, valid cmdlet names and parameters, and properly quoted strings throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements T1052 by detecting a USB drive, initializing/formatting it if needed, and extracting a staged archive (snapshot.zip) to a dot-prefixed hidden-like directory on the removable media, which aligns well with staging and transferring data to physical media; the minor gap is that 'None' privilege is understated since disk initialization typically requires elevated privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T22:34:35.716224Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly structured with correct piping, variable assignment, and conditional logic.",
+        "semantic_score": 4,
+        "semantic_justification": "While the command effectively automates USB preparation and data transfer for exfiltration, it requires administrative privileges to initialize and format disks, which contradicts the 'None' privilege level provided.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:34:38.696112Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

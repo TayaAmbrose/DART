@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "echo \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /mnt/flash/system.img\" | sha256sum -c -",
+  "explanation": "Validates the active system image against an attacker-controlled checksum to confirm a modified image is present and intact.",
+  "rationale_steps": [
+    "Attacker establishes a known hash for their tampered image.",
+    "Verifies the onboard image integrity to ensure persistence remains in place."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-dc873ff7-70d8440b",
+  "source_prompt_hash": "dc873ff7",
+  "timestamp_utc": "2025-09-30T04:57:26.660610Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting with a valid pipe and correct sha256sum -c - usage with properly formatted 'hash  file' input.",
+        "semantic_score": 4,
+        "semantic_justification": "It verifies the image against a provided (attacker-controlled) checksum consistent with T1601 validation behavior, though the example hash is unrealistic for a system image and success depends on tool availability and read permissions on the device.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T19:42:26.796591Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct pipe usage, valid sha256sum flags (-c -), and proper heredoc-style input via echo.",
+        "semantic_score": 3,
+        "semantic_justification": "The command correctly uses sha256sum -c to validate a system image checksum, and the explanation's claim that it validates against an 'attacker-controlled checksum' is plausible for confirming a modified image is intact, but the hash used (e3b0c44...) is the SHA-256 of an empty string, which undermines operational realism and suggests the example is not grounded in an actual modified image scenario.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:25:50.729849Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed Bash pipeline using standard utility flags and correctly formatted input for sha256sum.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively verifies the integrity of a system image file against a specific hash, which is a plausible verification step for an adversary who has modified a system image on a Linux-based network device.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:25:52.737171Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

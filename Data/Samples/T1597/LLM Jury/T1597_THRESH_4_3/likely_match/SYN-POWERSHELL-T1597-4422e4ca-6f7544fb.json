@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; $ts=Get-Date -Format o; try { $headers=@{ 'Authorization'=\"Bearer $env:ZOOMINFO_TOKEN\"; 'Accept'='application/json' }; $body=@{ website='contoso.com' } | ConvertTo-Json; $r=Invoke-WebRequest -Uri 'https://api.zoominfo.com/enrich/company' -Headers $headers -Method Post -ContentType 'application/json' -Body $body -ErrorAction Stop; ($r.Content | ConvertFrom-Json | Select-Object -ExpandProperty company -ErrorAction SilentlyContinue | Select-Object name,website,employeeCount,revenue,industry | ConvertTo-Json -Depth 6) | Out-File -FilePath \"$env:TEMP\\zoominfo_company_contoso.json\" -Encoding utf8; Add-Content -Path \"$env:TEMP\\recon.log\" -Value \"$ts ZoomInfo success contoso.com\" } catch { Add-Content -Path \"$env:TEMP\\recon.log\" -Value \"$ts ZoomInfo error: $($_.Exception.Message)\" }",
+  "explanation": "Uses ZoomInfo's paid enrichment API with Bearer token to obtain company size, revenue, and industry details for the target, returning structured data and logging status.",
+  "rationale_steps": [
+    "Authenticate to a commercial data broker API using Bearer token.",
+    "Post the target website to the enrichment endpoint.",
+    "Select high-value company attributes and save as JSON.",
+    "Log outcomes to support auditing and reliability."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1597-4422e4ca-6f7544fb",
+  "source_prompt_hash": "4422e4ca",
+  "timestamp_utc": "2025-09-30T06:22:12.312465Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces/quotes, valid parameters, and proper try/catch and pipeline usage.",
+        "semantic_score": 5,
+        "semantic_justification": "It queries a paid ZoomInfo enrichment API using a Bearer token to obtain non-public company data and logs the result, aligning precisely with T1597.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T12:40:35.807727Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper use of try/catch, valid cmdlet syntax, and correct string interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1597 by authenticating to ZoomInfo's paid enrichment API using a Bearer token, querying closed-source company intelligence for a specific target domain, and logging structured results — fully consistent with adversarial use of paid/private data sources for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:53:17.032420Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with correct use of hashtables, variable interpolation, try-catch blocks, and cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by programmatically querying a paid business intelligence API (ZoomInfo) for target reconnaissance and logging the results.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:53:19.922410Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

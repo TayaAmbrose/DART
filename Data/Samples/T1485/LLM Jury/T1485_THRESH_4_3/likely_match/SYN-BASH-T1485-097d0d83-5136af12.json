@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "find /var/log/myapp -xdev -type f -mtime +14 -exec shred -n 2 -z -u -f {} +",
+  "explanation": "Overwrites and removes application log files older than 14 days in a targeted log directory.",
+  "rationale_steps": [
+    "Select only aging log files for destruction to keep scope narrow.",
+    "Overwrite file contents to ensure data is irrecoverable from disk.",
+    "Remove files after overwriting to eliminate their directory entries."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-097d0d83-5136af12",
+  "source_prompt_hash": "097d0d83",
+  "timestamp_utc": "2025-09-30T07:53:07.976516Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid GNU find syntax with proper -exec ... {} + usage and correct shred flags.",
+        "semantic_score": 4,
+        "semantic_justification": "It finds files older than 14 days in /var/log/myapp and overwrites then deletes them via shred, but success depends on permissions often requiring elevated rights in /var/log.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T00:35:36.730096Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid find flags (-xdev, -type f, -mtime +14), a properly structured -exec clause using shred with valid options (-n 2, -z, -u, -f), and correct use of the '+' terminator for batch execution.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely achieves the stated intent by using shred (a secure overwrite tool) with multiple overwrite passes (-n 2), a final zero-overwrite (-z), and file removal (-u) on log files older than 14 days in a targeted directory, directly implementing T1485 anti-forensic log destruction.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:38:40.953537Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard GNU find syntax and valid flags for shred, correctly utilizing the -exec ... {} + construct.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately identifies files based on age and applies a secure deletion tool (shred) as described in MITRE ATT&CK T1485.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:38:43.176005Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

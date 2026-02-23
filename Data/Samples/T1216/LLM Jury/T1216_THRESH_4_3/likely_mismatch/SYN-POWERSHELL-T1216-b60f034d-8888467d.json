@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1216",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "WITHHELD_FOR_SAFETY - mshta variant: signed-host proxy execution of locally cached HTA with minimal UI",
+  "explanation": "Captures mshta launched by PowerShell with parameters to minimize UI, proxy-executing a locally cached HTA while attempting to blend into normal activity.",
+  "rationale_steps": [
+    "Use PowerShell to start mshta with flags or context that avoid user prompts/windows",
+    "Execute locally cached HTA content to reduce network indicators",
+    "Rely on Microsoft-signed binary trust to traverse basic application control",
+    "Hunt for mshta instances with no visible window, short lifetimes, and suspicious parentage",
+    "Use ASR rules to block Office/PowerShell spawning script interpreters"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1216-b60f034d-8888467d",
+  "source_prompt_hash": "b60f034d",
+  "timestamp_utc": "2025-09-30T07:02:44.293218Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "No concrete command is provided (placeholder only), so it is not runnable or parseable as-is.",
+        "semantic_score": 2,
+        "semantic_justification": "While mshta can proxy-execute an HTA with minimal UI, that aligns with Signed Binary Proxy Execution (T1218) rather than System Script Proxy Execution (T1216), and no actual command was provided to verify behavior.",
+        "combined_score": 1.5,
+        "confidence": 0.3,
+        "timestamp": "2025-10-01T21:05:27.354299Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 2,
+        "syntactic_justification": "The command is withheld for safety, so no actual syntax can be evaluated; only a descriptive label is provided, making it impossible to assess well-formedness.",
+        "semantic_score": 3,
+        "semantic_justification": "The described behavior (PowerShell launching mshta with UI-minimizing parameters to proxy-execute a locally cached HTA) is operationally plausible and loosely related to T1216 signed-host proxy execution, though mshta is more precisely T1218.005 and the description lacks specifics needed to confirm full alignment.",
+        "combined_score": 2.5,
+        "confidence": 0.4,
+        "timestamp": "2026-02-19T00:02:38.783983Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 1,
+        "syntactic_justification": "The provided text is a placeholder description and not a functional, runnable command string.",
+        "semantic_score": 1,
+        "semantic_justification": "The command describes an mshta-based execution (T1218.005), which is a signed binary proxy, not a system script proxy (T1216) which specifically involves abusing signed VBS/JS scripts like PubPrn.vbs.",
+        "combined_score": 1.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:03:04.507141Z"
+      }
+    ],
+    "llm_average_syntactic": 1.333,
+    "llm_average_semantic": 2.0,
+    "llm_average_score": 1.667,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

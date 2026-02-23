@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[REDACTED: Non-executable placeholder] Drive-mapped exfil: use 'net use Z:' to map \\\\ATTACKER_IP\\z$, then recursively copy filtered file types to Z: silently, and disconnect the drive.",
+  "explanation": "Demonstrates using a drive letter mapping via 'net use' to silently transfer targeted file types to a remote SMB share in an automated fashion.",
+  "rationale_steps": [
+    "Map an SMB share to a drive letter using net use with explicit credentials",
+    "Filter and copy selected files to the mapped drive without prompts",
+    "Optionally track transferred items to avoid duplication",
+    "Remove the drive mapping to conceal activity"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1020-7b9aedc5-1fb466f1",
+  "source_prompt_hash": "7b9aedc5",
+  "timestamp_utc": "2025-09-30T08:57:58.671267Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "It is a descriptive placeholder rather than an actual command sequence, so it is not runnable or parseable as-is.",
+        "semantic_score": 3,
+        "semantic_justification": "The approach conceptually matches automated exfiltration via mapping an SMB drive and copying files, but using the admin-only z$ share with no credentials and lacking concrete flags/commands reduces practical plausibility.",
+        "combined_score": 2.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T02:13:12.269285Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is a non-executable natural language placeholder/description rather than actual runnable code, containing no real syntax, just a prose description of what commands would be used.",
+        "semantic_score": 3,
+        "semantic_justification": "The described approach (net use to map a remote SMB share, recursive copy of filtered file types, then disconnect) is operationally plausible and aligns with T1020 automated exfiltration concepts, but the absence of actual executable commands, specific file type filters, copy mechanisms, or silent flags makes it only a partial conceptual match.",
+        "combined_score": 2.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:19:22.778430Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 1,
+        "syntactic_justification": "The provided text is a natural language description and a placeholder rather than a functional, executable PowerShell command.",
+        "semantic_score": 5,
+        "semantic_justification": "The described procedure—mounting a remote drive via SMB, recursively copying targeted data, and unmounting to clear traces—is a standard and effective method for automated exfiltration.",
+        "combined_score": 3.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:19:28.817401Z"
+      }
+    ],
+    "llm_average_syntactic": 1.0,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 2.333,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

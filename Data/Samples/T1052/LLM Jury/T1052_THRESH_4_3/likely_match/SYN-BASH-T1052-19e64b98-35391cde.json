@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "sudo hdiutil create -srcdevice /dev/rdisk0s1 -format UDZO /Volumes/USB/.rdisk0s1_backup.dmg",
+  "explanation": "Images a raw internal partition into a compressed DMG directly on the external drive to stage a block-level snapshot for offline removal.",
+  "rationale_steps": [
+    "Read directly from a raw device for comprehensive capture.",
+    "Write the image to removable media in a single artifact.",
+    "Compression reduces footprint and write time.",
+    "All actions occur locally, enabling physical-media exfiltration."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-19e64b98-35391cde",
+  "source_prompt_hash": "19e64b98",
+  "timestamp_utc": "2025-09-30T05:31:52.812086Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed hdiutil create invocation with valid -srcdevice and -format flags and a proper output path, no quoting or parsing issues.",
+        "semantic_score": 5,
+        "semantic_justification": "Creates a compressed DMG of a specified raw partition directly onto an external USB volume using sudo, effectively staging data for physical exfiltration consistent with T1052.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2025-10-01T09:22:55.936615Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid hdiutil flags (-srcdevice, -format, UDZO), proper path syntax, and no quoting or structural issues.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately uses macOS hdiutil to create a compressed (UDZO format) block-level disk image of an internal partition directly onto an external USB volume, which precisely matches the T1052 technique of staging data on a physical medium for offline removal, with the hidden filename (dot-prefixed) adding realistic evasion behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:39:10.303197Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows the correct hdiutil syntax for creating a compressed disk image from a raw device source with valid flags and paths.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by using a native macOS tool to create a block-level backup of a partition directly to a physical medium for exfiltration.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:39:11.968072Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

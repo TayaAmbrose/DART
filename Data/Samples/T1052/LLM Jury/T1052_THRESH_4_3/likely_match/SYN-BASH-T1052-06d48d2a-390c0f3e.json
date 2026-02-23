@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "mkdir -p \"/Volumes/PRIVATE/.mail\" && cp -Rp \"$HOME/Library/Containers/com.apple.mail/Data/Library/Mail\" \"/Volumes/PRIVATE/.mail/\"",
+  "explanation": "Copies local Apple Mail data to a hidden directory on a USB device for offline removal.",
+  "rationale_steps": [
+    "Identify local mail store under the user's Library path.",
+    "Create a hidden target folder on the attached external drive.",
+    "Copy recursively preserving timestamps and permissions.",
+    "Keep operations entirely local to the host."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-06d48d2a-390c0f3e",
+  "source_prompt_hash": "06d48d2a",
+  "timestamp_utc": "2025-09-30T05:16:28.232349Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with balanced quotes, proper use of &&, and valid macOS cp flags and quoted paths.",
+        "semantic_score": 5,
+        "semantic_justification": "Recursively stages Apple Mail data into a hidden directory on a likely removable volume under /Volumes, aligning with exfiltration over physical media.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-01T09:07:10.136850Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of && for chaining, valid flags (-p for mkdir, -Rp for cp), and correct variable expansion with $HOME.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by creating a hidden directory (dot-prefixed .mail) on a mounted USB volume (/Volumes/PRIVATE/) and recursively copying Apple Mail data from the correct macOS container path, fully aligning with physical medium exfiltration of email data.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:38:15.145558Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax, correct flags for mkdir and cp, and properly handles paths with quotes and environment variables.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately targets a standard macOS mail storage path and utilizes a typical external volume mount point to perform exfiltration as described in T1052.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:38:17.798869Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

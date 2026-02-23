@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Python",
+  "command": "python3 - <<'PY'\nimport os, sys, subprocess, tempfile, filecmp, hashlib\nif os.geteuid() != 0:\n    sys.exit(\"root required\")\n\nbootdev = \"/dev/mmcblk0p1\"\nimg = \"/boot/flash/system.img\"\n\nwith tempfile.NamedTemporaryFile(delete=False) as snap, tempfile.NamedTemporaryFile(delete=False) as ref:\n    subprocess.check_call([\"dd\", \"if=\" + bootdev, \"of=\" + snap.name, \"bs=1M\", \"count=16\"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)\n    subprocess.check_call([\"dd\", \"if=\" + img, \"of=\" + ref.name, \"bs=1M\", \"count=16\"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)\n    same = filecmp.cmp(snap.name, ref.name, shallow=False)\n    print(\"Boot partition snapshot matches first 16MB of image:\", same)\n    h = hashlib.md5()\n    with open(snap.name, \"rb\") as f:\n        for b in iter(lambda: f.read(1<<20), b\"\"):\n            h.update(b)\n    print(\"Snapshot md5:\", h.hexdigest())\nPY",
+  "explanation": "Captures a privileged snapshot of the boot partition and compares it to the corresponding segment of the deployed image, verifying that on-disk boot contents reflect the modified image.",
+  "rationale_steps": [
+    "Require root to read raw block device and run dd.",
+    "Create comparable 16MB slices from the boot partition and image file.",
+    "Use filecmp to verify equality and compute MD5 for the snapshot as a quick integrity reference."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1601-0c03443f-fcf176f8",
+  "source_prompt_hash": "0c03443f",
+  "timestamp_utc": "2025-09-30T04:56:19.919567Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The heredoc is correctly quoted and the Python code is valid with proper dd arguments and subprocess usage.",
+        "semantic_score": 4,
+        "semantic_justification": "It runs as root to snapshot the boot partition and compares it to the start of a system image, supporting T1601 detection for image tampering, though it only checks the first 16MB and assumes partition-to-image alignment.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T19:05:09.908902Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python heredoc is well-formed with balanced quotes, proper imports, correct subprocess calls, and valid hashlib/filecmp usage with no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly reads the live boot partition via dd, compares it to the stored image file, and computes an MD5 checksum — all consistent with T1601 detection/verification of firmware integrity — though MD5 is cryptographically weak for integrity validation and the explanation frames this as verifying a 'modified image' rather than detecting unauthorized modification, slightly inverting the defensive framing.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:21:36.639492Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses a correctly formatted Python heredoc and valid Python 3 syntax, including proper library imports and subprocess handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The script effectively demonstrates a verification step for T1601 by comparing a block device's boot partition against a system image to ensure modifications are persistent, using realistic paths and tools for network devices.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:21:40.528614Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

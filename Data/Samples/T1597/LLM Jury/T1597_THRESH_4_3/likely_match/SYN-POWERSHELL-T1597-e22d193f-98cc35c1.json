@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ErrorActionPreference='Stop'; $domain='example.com'; $out='C:\\ProgramData\\recon\\securityscorecard_example.com.json'; New-Item -ItemType Directory -Force -Path C:\\ProgramData\\recon | Out-Null; $log='C:\\ProgramData\\recon\\recon.log'; try { $token=$env:SSC_API_TOKEN; if([string]::IsNullOrWhiteSpace($token)){ throw 'SSC_API_TOKEN not set'; } $headers=@{ 'Authorization'=\"Token $token\"; 'Accept'='application/json' }; $uri=\"https://api.securityscorecard.io/companies/$domain\"; $resp=Invoke-WebRequest -Uri $uri -Headers $headers -Method Get -UseBasicParsing -TimeoutSec 45 -ErrorAction Stop; if(($resp.StatusCode -ge 200) -and ($resp.StatusCode -lt 300) -and ($resp.Headers['Content-Type'] -match 'application/json')){ ($resp.Content | ConvertFrom-Json) | ConvertTo-Json -Depth 6 | Set-Content -Path $out -Encoding UTF8 } else { Add-Content -Path $log -Value \"$(Get-Date -Format o) SecurityScorecard non-success or non-JSON for $domain. Status=$($resp.StatusCode)\" } } catch { Add-Content -Path $log -Value \"$(Get-Date -Format o) SecurityScorecard error for $domain: $($_.Exception.Message)\" }",
+  "explanation": "Retrieves organization security ratings from the paid SecurityScorecard API (closed-source) using token authentication and stores normalized JSON.",
+  "rationale_steps": [
+    "Authenticate with a token to a subscription service.",
+    "Request the company profile by domain using HTTPS.",
+    "Validate and convert JSON output for storage.",
+    "Implement standard error logging."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1597-e22d193f-98cc35c1",
+  "source_prompt_hash": "e22d193f",
+  "timestamp_utc": "2025-09-30T06:29:30.632581Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid hashtable syntax, proper separators, and correct cmdlet/parameter usage.",
+        "semantic_score": 5,
+        "semantic_justification": "It authenticates to and queries a paid SecurityScorecard API for organization data and stores the JSON, matching T1597’s use of closed-source intelligence sources.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T12:54:38.693616Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, parentheses, and quotes, proper semicolons as separators, valid cmdlet syntax, and correct use of try/catch error handling throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the paid SecurityScorecard API (a closed commercial intelligence source) using token-based authentication to retrieve organizational security ratings for a target domain, storing results for reconnaissance purposes, which aligns precisely with the technique's description of querying paid technical databases to collect targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:54:24.939259Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is well-structured, uses correct syntax for variables, try-catch blocks, and cmdlet parameters, with all brackets and quotes properly balanced.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the T1597 technique by querying a non-public, paid security intelligence API (SecurityScorecard) to gather reconnaissance data on a target domain.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:54:28.535084Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

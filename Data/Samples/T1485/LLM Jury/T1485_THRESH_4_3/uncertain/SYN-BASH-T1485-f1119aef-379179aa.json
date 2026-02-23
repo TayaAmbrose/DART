@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "wipe -f /var/crash/*.crash",
+  "explanation": "Permanently destroys crash dump files by overwriting their contents prior to deletion.",
+  "rationale_steps": [
+    "Limit scope to the standard crash dump directory and file extension.",
+    "Use wipe to ensure data is overwritten, not merely unlinked.",
+    "Prevent leakage of memory-resident secrets captured in crashes by making dumps unrecoverable."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-f1119aef-379179aa",
+  "source_prompt_hash": "f1119aef",
+  "timestamp_utc": "2025-09-30T08:06:57.630497Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash command with a valid flag and a globbing pattern; no quoting or parsing issues.",
+        "semantic_score": 3,
+        "semantic_justification": "Uses an appropriate secure deletion tool to overwrite and remove crash dumps, but /var/crash is typically root-owned and the glob may not match, so under 'Privilege: None' it may fail to achieve the intended data destruction.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T01:44:13.651173Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with a valid flag (-f for force), a recognized tool (wipe), and a properly specified glob path with no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The `wipe` tool on Linux does perform secure overwriting before deletion, and targeting `/var/crash/*.crash` files aligns with destroying forensic artifacts (crash dumps), though `wipe` is a less common utility and may not be installed by default, and the 'None' privilege level is questionable since crash dump files are typically root-owned.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:41:06.023591Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Bash syntax with a valid utility and flags.",
+        "semantic_score": 4,
+        "semantic_justification": "While the command effectively performs data destruction, accessing and wiping files in /var/crash typically requires root privileges, which contradicts the 'None' privilege level specified.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:41:06.376468Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

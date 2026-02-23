@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "python3 -c \"from scapy.all import *; send(IP(dst='203.0.113.1', id=4242)/UDP(dport=65000)/Raw(load=b'KNOCK'), verbose=False)\"",
+  "explanation": "Sends a UDP packet to port 65000 with a distinctive IP ID (4242) and short payload acting as a magic signal. A listener can watch for the unusual IP ID value as the trigger to enable functionality. Detection: inspect metadata anomalies such as fixed IP ID values headed to high ports and correlate with rule changes.",
+  "rationale_steps": [
+    "Craft a UDP packet to a high, likely closed port.",
+    "Embed the covert signal in the IP.id field and payload.",
+    "Transmit toward the network device expected to react.",
+    "Detection: IDS/pcap to flag repeated constant IP.id values to infrastructure IPs and subsequent firewall mutations."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-bba1a632-da3d2ab5",
+  "source_prompt_hash": "bba1a632",
+  "timestamp_utc": "2025-09-30T05:49:31.290544Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed python3 -c command with balanced quotes and parentheses using valid Scapy constructs and arguments.",
+        "semantic_score": 4,
+        "semantic_justification": "It crafts and sends a UDP packet with a chosen IP ID and payload consistent with traffic signaling (T1205), but typically needs root/CAP_NET_RAW and the platform may lack Scapy/Python on many network devices.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T15:46:26.598163Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper Python inline syntax, correct Scapy layer stacking using the `/` operator, and valid flag usage.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by crafting a UDP packet with a distinctive fixed IP ID (4242) and magic payload 'KNOCK' to a high port, which serves as a covert trigger signal that a listener can detect to enable functionality, fully consistent with port-knock and traffic signaling techniques.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T03:53:38.499930Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed Python one-liner using Scapy, with correct quoting, balanced parentheses, and valid library imports.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements traffic signaling by crafting a custom IP/UDP packet with a specific ID field and payload, serving as a textbook trigger for port knocking or C2 activation.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:53:40.758071Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

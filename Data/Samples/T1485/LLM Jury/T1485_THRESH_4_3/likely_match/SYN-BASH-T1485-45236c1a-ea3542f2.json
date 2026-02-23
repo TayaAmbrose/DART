@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "srm -rfm \"/Users/marketing/Pictures/Photos Library.photoslibrary\"",
+  "explanation": "Securely and recursively destroys the Photos library package for a specific user, preventing recovery of images.",
+  "rationale_steps": [
+    "Choose a single user's Photos library to avoid broader system damage.",
+    "Use -r for recursive deletion of the package's internal structure.",
+    "Use -m for multi-pass overwriting to ensure irrecoverability."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-45236c1a-ea3542f2",
+  "source_prompt_hash": "45236c1a",
+  "timestamp_utc": "2025-09-30T07:56:40.760169Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed command with valid srm flags (-r -f -m) and a properly quoted path.",
+        "semantic_score": 4,
+        "semantic_justification": "Uses srm to recursively and forcefully wipe the Photos library package, aligning with data destruction, but effectiveness and execution depend on user permissions and srm’s availability/limitations on APFS/SSDs.",
+        "combined_score": 4.5,
+        "confidence": 0.78,
+        "timestamp": "2025-10-02T02:04:23.942989Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-r for recursive, -f for force, -m for medium overwrite passes), and a properly quoted path containing spaces.",
+        "semantic_score": 5,
+        "semantic_justification": "srm (secure remove) is a macOS/Unix secure deletion tool that overwrites file data before unlinking, making recovery forensically difficult; using it recursively on a .photoslibrary package (a directory bundle) is operationally accurate for irreversibly destroying a user's photo library as described in the explanation.",
+        "combined_score": 5.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:42:52.652401Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Bash syntax with properly quoted paths and valid combined flags for the srm utility.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately uses the srm tool with appropriate recursive and secure-wipe flags to target a specific macOS data directory, perfectly aligning with T1485.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:42:54.291734Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

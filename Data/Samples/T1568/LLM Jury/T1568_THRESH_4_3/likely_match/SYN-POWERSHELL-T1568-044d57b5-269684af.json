@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "$domains=(Get-DnsClientCache).Name | Select-Object -Unique; function Get-Entropy([string]$s){ if(!$s){return 0} $freq=@{}; $s.ToCharArray()|ForEach-Object{ $freq[$_]=1+($freq[$_] -as [int]) }; $len=$s.Length; ( $freq.Keys | ForEach-Object{ $p=$freq[$_]/$len; -($p*[math]::Log($p,2)) } ) | Measure-Object -Sum | Select-Object -ExpandProperty Sum }; $sus=$domains | Where-Object { Get-Entropy (($_ -split '\\.')[0]) -gt 3.5 }; $json=@{ ts=(Get-Date).ToUniversalTime().ToString('o'); suspect=$sus }|ConvertTo-Json -Depth 3; $json | Set-Content -Path \"$env:TEMP\\dga_suspects.json\"; Invoke-WebRequest -UseBasicParsing -Method POST -ContentType 'application/json' -Body $json 'https://soc.example.local/webhook/dga-alert'",
+  "explanation": "Defensive heuristic for T1568: calculates Shannon entropy of first labels to identify DGA-like domains in cache and alerts a SOC webhook.",
+  "rationale_steps": [
+    "Enumerate unique domains from DNS cache.",
+    "Compute entropy for the first label of each domain.",
+    "Select domains with high entropy indicative of DGAs.",
+    "Store results locally and notify SOC via webhook."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1568-044d57b5-269684af",
+  "source_prompt_hash": "044d57b5",
+  "timestamp_utc": "2025-09-30T04:07:31.423921Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell is well-formed with balanced delimiters, valid pipelines, and a properly defined function and comparisons.",
+        "semantic_score": 4,
+        "semantic_justification": "It implements a reasonable DGA-detection heuristic over the DNS client cache and reports to a webhook, though using the Name property from Get-DnsClientCache may fail on some systems where RecordName/Entry is used instead.",
+        "combined_score": 4.5,
+        "confidence": 0.68,
+        "timestamp": "2025-10-02T05:21:18.258456Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces, valid pipeline usage, and correct cmdlet syntax, though the `Get-Entropy` function call inside `Where-Object` lacks a pipe or proper invocation pattern (missing `-gt` comparison on the function call result may cause issues depending on PowerShell version, and the URL argument to `Invoke-WebRequest` is positionally placed after `-Body` without `-Uri`).",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a defensive T1568 detection heuristic by extracting DNS cache entries, computing Shannon entropy on first-level domain labels to flag algorithmically generated names (DGA detection), serializing suspects to JSON, and forwarding alerts to a SOC webhook — all operationally plausible and well-aligned with the technique's detection signals.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:18:41.234713Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script with correct syntax, balanced brackets, valid variable assignments, and proper use of pipeline and .NET method calls.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements a defensive Shannon entropy heuristic to identify potentially randomized DGA domains within the local DNS cache and provides a realistic workflow for alerting a SOC via a JSON webhook.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:18:54.832274Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

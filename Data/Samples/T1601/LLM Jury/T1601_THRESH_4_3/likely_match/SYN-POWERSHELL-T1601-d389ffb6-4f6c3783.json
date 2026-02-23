@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Powershell",
+  "command": "$manifest = \"C:\\ProgramData\\NetOS\\baseline\\image_manifest.sha256\"; Get-Content $manifest | ForEach-Object { if ($_.Trim()) { $parts = $_.Trim() -split '\\s+', 2; $expected = $parts[0].ToUpper(); $path = $parts[1]; $actual = (Get-FileHash -Algorithm SHA256 -Path $path).Hash.ToUpper(); if ($actual -ne $expected) { Write-Error \"Mismatch: $path\" } } }",
+  "explanation": "Validates a set of critical image components against a baseline manifest of expected hashes to detect unauthorized system image modifications.",
+  "rationale_steps": [
+    "Load a privileged baseline manifest mapping files to expected SHA256 values.",
+    "Iterate each entry and compute the actual SHA256 via Get-FileHash.",
+    "Compare expected vs actual for each file.",
+    "Flag any file that fails integrity verification."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-d389ffb6-4f6c3783",
+  "source_prompt_hash": "d389ffb6",
+  "timestamp_utc": "2025-09-30T04:38:26.610534Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell command is well-formed with balanced quotes/braces, valid operators, and proper statement separators.",
+        "semantic_score": 4,
+        "semantic_justification": "It computes SHA-256 hashes from a manifest and flags mismatches to detect image tampering, but assumes a Windows/PowerShell environment and accessible paths on a network device with no privilege requirements, which may not be realistic.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T17:42:42.097310Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, parentheses, and quotes, proper use of semicolons as separators, valid cmdlet names and parameters, and correct string splitting and comparison logic.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements SHA256 hash validation against a baseline manifest to detect unauthorized image modifications (aligned with T1601 detection), though it represents a defensive/detection measure rather than the adversarial technique itself, and the assumption that PowerShell runs natively on network devices reduces operational plausibility slightly.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:14:48.610882Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is well-structured, uses correct syntax for loops, string splitting, and variable assignment, and correctly handles the pipeline.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a file integrity check to detect image modification, though PowerShell is an uncommon shell for traditional network devices unless they are Windows-based controllers or VNFs.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:14:52.222513Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

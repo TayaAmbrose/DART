@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "dd if=/dev/sda of=/var/tmp/system_current.img bs=4M status=progress && sha256sum /var/tmp/system_current.img | awk '{print $1 \"  /var/tmp/system_current.img\"}' > /var/tmp/system_current.sha256 && diff -u baseline/system.sha256 /var/tmp/system_current.sha256",
+  "explanation": "Creates a full disk image snapshot and compares its SHA-256 signature line against a stored baseline signature to detect any unauthorized system image changes.",
+  "rationale_steps": [
+    "Use dd to image the entire disk to a temporary file.",
+    "Compute and format the SHA-256 signature line for the captured image.",
+    "Diff the signature line against a baseline signature file to confirm integrity."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-e1d51907-98fd98e7",
+  "source_prompt_hash": "e1d51907",
+  "timestamp_utc": "2025-09-30T04:41:42.466219Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash pipeline with valid dd, sha256sum, awk, and diff usage, balanced quoting, and correct operators.",
+        "semantic_score": 3,
+        "semantic_justification": "It implements a plausible integrity-check to detect system image tampering (relevant to T1601 detection), but it does not modify the image and typically requires root to read /dev/sda despite the 'Privilege: None' claim.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T18:46:25.947703Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with proper use of &&, pipe operators, balanced quoting, valid flags for dd (if, of, bs, status), sha256sum, awk, and diff (-u), with consistent file path references throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a defensive integrity-checking workflow aligned with T1601 detection mitigations—imaging the disk with dd, computing a SHA-256 checksum, and diffing against a baseline—though it requires root privileges to read /dev/sda (contradicting the 'None' privilege claim), and comparing only the checksum line rather than the full image hash file is a minor realism gap.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:20:07.121785Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command sequence uses correct bash syntax, valid flags for all utilities, and proper piping and redirection.",
+        "semantic_score": 2,
+        "semantic_justification": "The command requires root privileges to read the raw device (despite the metadata stating None), and imaging a live system to its own partition will cause checksum mismatches and potential disk exhaustion.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:20:08.896797Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 4.0,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

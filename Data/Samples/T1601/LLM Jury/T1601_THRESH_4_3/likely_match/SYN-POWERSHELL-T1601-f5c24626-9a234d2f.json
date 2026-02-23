@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "dism /Mount-Image /ImageFile:C:\\images\\install_clean.wim /Index:1 /MountDir:C:\\Mount\\Base; dism /Mount-Image /ImageFile:C:\\images\\install_mod.wim /Index:1 /MountDir:C:\\Mount\\Win; Add-Content -Path C:\\Mount\\Win\\Windows\\System32\\drivers\\etc\\hosts -Value \"127.0.0.1 update.windows.com\"; $b=(Get-FileHash C:\\Mount\\Base\\Windows\\System32\\drivers\\etc\\hosts -Algorithm SHA256).Hash; $m=(Get-FileHash C:\\Mount\\Win\\Windows\\System32\\drivers\\etc\\hosts -Algorithm SHA256).Hash; Compare-Object @($b) @($m)",
+  "explanation": "Edits the offline image's hosts file and compares hashes against the baseline to verify the modification.",
+  "rationale_steps": [
+    "Mount both images with DISM (requires Administrator).",
+    "Append an entry to the hosts file in the modified image.",
+    "Compute and Compare-Object the SHA256 hashes of the hosts files."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-f5c24626-9a234d2f",
+  "source_prompt_hash": "f5c24626",
+  "timestamp_utc": "2025-09-30T04:51:19.633456Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are properly separated by semicolons, DISM flags are valid, quotes and parentheses are balanced, and PowerShell cmdlet usage is correct.",
+        "semantic_score": 4,
+        "semantic_justification": "It mounts two WIM images, modifies the hosts file in the mounted image, and compares hashes as claimed, but omits commit/unmount steps and requires elevated privileges not reflected in the 'Privilege: None' declaration.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2025-10-02T17:30:44.453984Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with valid DISM flags, proper semicolon separators, and balanced parentheses, though chaining DISM commands with semicolons in PowerShell works but mixing cmd-style tools with PS cmdlets in a single line can cause minor execution context issues.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly mounts two WIM images offline using DISM, modifies the hosts file in the modified image (a realistic firmware/image tampering action aligned with T1601), and then computes and compares SHA256 hashes to verify the modification was applied, which is operationally plausible and consistent with the technique; the only minor gap is that the privilege level is listed as 'None' when DISM mount operations typically require administrator privileges.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:13:52.705184Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, proper DISM flag formatting, and correct command separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively modifies a mounted image's configuration as described, though it lacks the necessary administrative privileges and a commit step to save the changes back to the WIM file.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:13:57.359038Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

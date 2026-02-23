@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "knock 203.0.113.10 7000 8000 9000 -d 200",
+  "explanation": "Sends a timed TCP port-knocking sequence to a host running knockd; upon correct sequence, the daemon can open a hidden service (e.g., SSH on 22) for the knocking source. Detection: correlate rapid connection attempts to closed/high ports from the same source and alert on knockd-triggered iptables changes.",
+  "rationale_steps": [
+    "Transmit TCP SYNs to ports 7000, 8000, 9000 with 200ms delay.",
+    "Remote knockd matches the sequence and temporarily whitelists the source IP for a protected port (e.g., 22).",
+    "User can then attempt a follow-on connection to the newly opened port.",
+    "Defenders should monitor firewall logs for repeated hits on closed ports and sudden rule changes enabling new ports."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-4e50b45e-7a5857af",
+  "source_prompt_hash": "4e50b45e",
+  "timestamp_utc": "2025-09-30T05:51:10.007150Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly follows knock client syntax with host, ports, and a valid -d delay flag, with no quoting or parsing issues.",
+        "semantic_score": 5,
+        "semantic_justification": "It performs a timed TCP port-knocking sequence suitable for triggering knockd rules, matching T1205 traffic signaling behavior and requiring no elevated privileges on Linux.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-01T14:59:38.331340Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid flags (-d for delay in milliseconds), correct argument ordering (host followed by ports), and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 port-knocking traffic signaling: `knock` is the correct client tool for knockd, the three sequential ports (7000, 8000, 9000) form the knock sequence, and `-d 200` sets a 200ms inter-knock delay, which is operationally realistic for triggering a hidden service on a remote daemon.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T03:50:16.957367Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows the standard syntax for the knock utility, including the host, a series of ports, and the valid -d flag for delay.",
+        "semantic_score": 5,
+        "semantic_justification": "Port knocking is a primary example of Traffic Signaling (T1205), using a specific sequence of network packets to trigger an action on a remote host.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:50:25.371843Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

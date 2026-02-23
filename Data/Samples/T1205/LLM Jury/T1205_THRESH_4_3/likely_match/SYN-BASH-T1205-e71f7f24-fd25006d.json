@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "sudo bash -c 'tcpdump -ni eth0 -l \"arp and ether src 00:de:ad:be:ef:00 and arp[6:2]=2\" -c 1 && vtysh -c \"conf t\" -c \"ip route 192.168.200.0/24 192.0.2.254\"'",
+  "explanation": "Treats a gratuitous ARP reply from a specific MAC as a layer-2 magic signal, then adds a static route via vtysh to enable a hidden path. Detection: baseline ARP behavior on infra ports and alert on unexpected ARP replies from unusual MACs coupled with new route insertions.",
+  "rationale_steps": [
+    "Listen for a crafted ARP reply from a preselected MAC address as the trigger.",
+    "On match, perform a configuration change by adding a static route using vtysh.",
+    "Detect with ARP monitoring/DAI and FRR configuration change audits."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-e71f7f24-fd25006d",
+  "source_prompt_hash": "e71f7f24",
+  "timestamp_utc": "2025-09-30T06:04:49.943820Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command uses balanced quotes, valid tcpdump/vtysh flags, correct BPF filter syntax, and proper chaining with && within sudo bash -c.",
+        "semantic_score": 4,
+        "semantic_justification": "It waits for an ARP reply from a specific MAC and then adds a static route via vtysh (a traffic-triggered action aligned with T1205), but it does not specifically verify that the ARP reply is gratuitous.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T15:16:52.678505Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and proper use of &&, but the tcpdump filter string uses a BPF expression with mixed quoting that may cause issues on some shells, and the -l flag is misused (it enables line buffering, not a filter — the filter should not be prefixed with -l).",
+        "semantic_score": 4,
+        "semantic_justification": "The overall concept is sound — using a specific ARP reply from a hardcoded MAC as a layer-2 trigger signal (T1205) to then inject a static route via vtysh is a realistic and creative traffic signaling implementation on network devices, though the tcpdump flag misuse (-l instead of just passing the filter as a positional argument) slightly reduces operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:51:45.266682Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed with balanced nested quotes, correct boolean operators, and valid flags for both tcpdump and vtysh.",
+        "semantic_score": 5,
+        "semantic_justification": "The logic of using tcpdump with a capture count of 1 as a blocking trigger for subsequent command execution is a highly effective and plausible implementation of L2 traffic signaling.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:51:47.872124Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

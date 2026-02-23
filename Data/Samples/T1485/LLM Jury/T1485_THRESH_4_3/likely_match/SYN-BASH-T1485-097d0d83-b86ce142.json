@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "xargs -0 -a /root/shred_targets.list shred -n 3 -z -u -f --",
+  "explanation": "Reads a curated NUL-delimited list of target files and securely shreds each one.",
+  "rationale_steps": [
+    "Use a predefined target list to precisely control which files are destroyed.",
+    "Overwrite each file with multiple passes and a zeroing pass to prevent recovery.",
+    "Remove the files post-overwrite to eliminate directory references."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-097d0d83-b86ce142",
+  "source_prompt_hash": "097d0d83",
+  "timestamp_utc": "2025-09-30T07:53:07.976516Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid GNU xargs options (-0, -a) and a correctly formed shred invocation with appropriate flags (-n, -z, -u, -f) and option terminator (--).",
+        "semantic_score": 4,
+        "semantic_justification": "It reads a NUL-delimited list and securely deletes the listed files via shred (aligning with T1485), though it may run once with no operands if the list is empty and can fail on inaccessible files or certain filesystems/SSDs.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T01:25:38.921279Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed with valid flags for both xargs and shred, though the placement of '--' at the end after shred's flags is slightly unconventional (it should separate xargs options from the command, not trail at the end), but xargs will pass it to shred which will treat it as end-of-options, making it functionally acceptable.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 Data Destruction by using shred with 3 overwrite passes (-n 3), a final zero-overwrite pass (-z), file unlinking (-u), and forced permission override (-f) on a NUL-delimited target list read via xargs -0 -a, which is operationally realistic and fully aligned with secure file destruction techniques.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:40:50.693048Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid xargs and shred flags, including proper handling of NUL-terminated input and standard option delimiters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly executes the Secure Deletion aspect of T1485 by using shred with appropriate flags to overwrite, truncate, and remove a list of targeted files.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:40:51.510215Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

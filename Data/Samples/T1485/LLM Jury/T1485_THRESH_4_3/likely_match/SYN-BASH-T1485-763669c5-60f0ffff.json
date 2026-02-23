@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1485",
+  "platform": "Containers",
+  "shell": "Bash",
+  "command": "docker run --rm -v config:/config debian bash -lc 'find /config -type f -name \"*.pem\" -print0 | xargs -0 -r shred -n 3 -z -u; sync'",
+  "explanation": "Targets sensitive certificate material in the 'config' volume by name, using three-pass overwrite and deletion, followed by a sync.",
+  "rationale_steps": [
+    "Mount the config volume",
+    "Select only *.pem files to avoid unnecessary destruction",
+    "Use shred with multiple passes and zero-fill, then unlink",
+    "Sync changes to disk"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-763669c5-60f0ffff",
+  "source_prompt_hash": "763669c5",
+  "timestamp_utc": "2025-09-30T08:01:03.936632Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting with valid docker run and bash -lc usage, proper command separation, and correct find/xargs/shred flags.",
+        "semantic_score": 5,
+        "semantic_justification": "Finds .pem files in the mounted volume and securely overwrites then deletes them with shred followed by sync, fitting data destruction (T1485) in a container context.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T02:41:33.908376Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid Docker flags, correct find/xargs/shred pipeline syntax, proper null-delimiter handling (-print0/-0), and valid shred flags (-n 3 -z -u).",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely targets PEM certificate files in a named Docker volume using shred with three-pass overwrite, zero-fill, and unlink (-u), followed by sync to flush to disk, fully aligning with T1485 secure deletion of sensitive cryptographic material to prevent recovery.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:44:42.319944Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Docker and Bash syntax, properly quotes the internal command string, and uses standard Unix utility flags correctly.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively leverages a container to mount a persistent volume and utilizes shred to securely delete specific sensitive files, perfectly aligning with the Data Destruction technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:44:45.014175Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

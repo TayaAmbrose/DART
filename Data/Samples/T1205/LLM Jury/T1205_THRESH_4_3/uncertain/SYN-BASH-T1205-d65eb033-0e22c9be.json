@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "python3 -c 'import socket,binascii; mac=\"00:11:22:33:44:55\".replace(\":\",\"\"); pkt=binascii.unhexlify(\"FF\"*6+mac*16); s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM); s.setsockopt(socket.SOL_SOCKET,socket.SO_BROADCAST,1); s.sendto(pkt,(\"255.255.255.255\",9))' && networksetup -setproxyautodiscovery \"Wi-Fi\" on",
+  "explanation": "Generates a Wake-on-LAN magic packet (6x FF followed by 16x MAC) to wake a dormant host that will act as a pivot, then enables proxy auto-discovery. Detection: alert on broadcast UDP/9 packets carrying WOL format and subsequent network configuration changes.",
+  "rationale_steps": [
+    "Craft the exact WOL magic packet for MAC 00:11:22:33:44:55 and broadcast it to UDP port 9.",
+    "Wake the target host to bring an otherwise quiet node online for later use.",
+    "Enable WPAD/PAC discovery to steer traffic once the pivot is up.",
+    "Detect by monitoring broadcast WOL traffic patterns and auditing proxy auto-discovery state changes."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-d65eb033-0e22c9be",
+  "source_prompt_hash": "d65eb033",
+  "timestamp_utc": "2025-09-30T06:10:08.592373Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is properly quoted and forms a valid WOL packet send, and the &&-chained macOS networksetup command with quoted service name and correct flag is well-formed.",
+        "semantic_score": 3,
+        "semantic_justification": "It does send a valid Wake-on-LAN packet and enables proxy auto-discovery, but this is not a covert or embedded signaling channel typical of T1205 and the proxy change is orthogonal, with success contingent on WOL/network support.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T18:08:39.665536Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python one-liner has balanced quotes and parentheses, valid socket API calls, and proper bash chaining with &&, though the string repetition syntax `\"FF\"*6` inside an f-string-like context within binascii.unhexlify is actually incorrect Python — it should be `b'FF'*6` or `'FF'*6` passed to unhexlify, but the overall structure is mostly parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly constructs a Wake-on-LAN magic packet (6 bytes of 0xFF followed by 16 repetitions of the target MAC) and broadcasts it over UDP port 9, which is a legitimate WOL mechanism that could be used as a traffic signal to wake a dormant pivot host; the subsequent `networksetup -setproxyautodiscovery` command on macOS is a plausible follow-on action, though the connection between WOL signaling and proxy auto-discovery as a T1205 technique is somewhat indirect.",
+        "combined_score": 4.0,
+        "confidence": 0.78,
+        "timestamp": "2026-02-19T04:04:41.136918Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is correctly formatted and the shell command uses valid logic and proper separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately generates a valid Wake-on-LAN packet and attempts to change proxy settings, although networksetup commands typically require root privileges on macOS.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:04:45.574899Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

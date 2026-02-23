@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "dism /Mount-Wim /WimFile:C:\\Images\\install.wim /Index:1 /MountDir:C:\\Mount\\Install; dism /Image:C:\\Mount\\Install /Enable-Feature /FeatureName:TelnetClient /All; dism /Unmount-Wim /MountDir:C:\\Mount\\Install /Commit; Get-FileHash C:\\Images\\install.wim -Algorithm SHA256; fc /b C:\\Images\\install_clean.wim C:\\Images\\install.wim",
+  "explanation": "Modifies the offline system image by enabling an OS feature and then verifies the resulting image integrity against a baseline, consistent with image patching behavior.",
+  "rationale_steps": [
+    "Mount the target WIM for servicing with administrative privileges.",
+    "Enable a feature offline to alter the system image state.",
+    "Commit changes to bake the modification into the image.",
+    "Confirm the image differs from the baseline via hash and fc."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-7053c5d6-1155953e",
+  "source_prompt_hash": "7053c5d6",
+  "timestamp_utc": "2025-09-30T04:53:44.701470Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are well-formed PowerShell statements with valid DISM and Get-FileHash syntax, proper separators, and no quoting issues for the given paths.",
+        "semantic_score": 4,
+        "semantic_justification": "It mounts and modifies an offline Windows image consistent with T1601 and then attempts integrity verification, but in PowerShell 'fc' resolves to Format-Custom (use fc.exe or cmd /c fc) and the action requires elevated privileges despite 'None'.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T18:23:19.170644Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The commands are well-formed with valid DISM flags and PowerShell cmdlets, though mixing cmd-style `fc` with PowerShell in a single session may cause minor compatibility issues depending on execution context.",
+        "semantic_score": 4,
+        "semantic_justification": "The sequence accurately demonstrates T1601 offline image modification (mounting a WIM, enabling a feature, committing changes) and includes integrity verification steps, though enabling TelnetClient is a relatively benign example and the privilege level of 'None' is incorrect since DISM image mounting and modification requires administrator privileges.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:18:15.324190Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command string is correctly structured for PowerShell using semicolons as separators and valid flag formats for both DISM and Get-FileHash.",
+        "semantic_score": 4,
+        "semantic_justification": "The DISM commands accurately reflect the technique, but the 'fc' utility is a default alias for 'Format-Custom' in Windows PowerShell, which would cause the final verification step to fail.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:18:26.807459Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

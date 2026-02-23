@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "find /var/crash -xdev -type f \\( -name '*.core' -o -name 'core.*' -o -name '*.crash' \\) -exec shred -n 2 -z -u -f {} +",
+  "explanation": "Targets crash dump files for secure destruction to eliminate sensitive memory snapshots.",
+  "rationale_steps": [
+    "Select only crash dump patterns within a specific directory to avoid broad impact.",
+    "Overwrite the dump files to destroy residual memory data.",
+    "Remove files after shredding to clear directory entries and reduce metadata remnants."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-097d0d83-8dd5d961",
+  "source_prompt_hash": "097d0d83",
+  "timestamp_utc": "2025-09-30T07:53:07.976516Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with correctly escaped parentheses, valid find predicates, and a proper -exec shred {} + invocation with valid flags.",
+        "semantic_score": 4,
+        "semantic_justification": "It appropriately locates crash dump files and securely overwrites/removes them (T1485), but non-root privileges will block deletion of typical root-owned files and shred’s effectiveness can be limited on journaled filesystems.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T00:54:06.378813Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper escaping of parentheses and -o operators within find's expression, valid shred flags (-n 2 -z -u -f), and correct use of -exec with + terminator.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely targets crash dump files (*.core, core.*, *.crash) in /var/crash using find with -xdev to stay on the same filesystem, then securely destroys them with shred (2 overwrite passes, final zero-out, unlink, and force), which directly aligns with T1485 data destruction via secure deletion to eliminate sensitive memory snapshots that could aid forensic analysis.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:39:40.603457Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses perfectly formed find syntax with correctly escaped parentheses, logical OR operators, and the efficient -exec {} + termination.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately targets standard crash dump locations and filenames using shred to securely overwrite and delete sensitive forensic artifacts as described.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:39:41.475893Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

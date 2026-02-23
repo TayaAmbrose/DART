@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[REDACTED: Non-executable placeholder] Automated mirror using robocopy: map \\\\ATTACKER_IP\\sync$ with 'net use' and run a continuous robocopy with monitoring switches to send changes as they occur.",
+  "explanation": "Conceptual use of a persistent directory mirror to a remote SMB share for continuous automated exfiltration using 'net use' and a file mirroring utility.",
+  "rationale_steps": [
+    "Establish SMB session with net use to the attacker-controlled share",
+    "Initiate a mirror/sync operation that tracks and sends file changes",
+    "Throttle or quiet operations to avoid attention",
+    "Tear down SMB mapping when complete"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1020-7b9aedc5-8bc64afa",
+  "source_prompt_hash": "7b9aedc5",
+  "timestamp_utc": "2025-09-30T08:57:58.671267Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "This is a descriptive placeholder rather than an actual PowerShell command, so it is not parseable or runnable as-is.",
+        "semantic_score": 4,
+        "semantic_justification": "Conceptually using a mapped SMB share with net use and a continuously running robocopy with monitoring options is a valid and plausible method for automated exfiltration on Windows, though concrete switches, credentials, and persistence details are omitted.",
+        "combined_score": 2.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T03:49:19.846375Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is explicitly marked as a non-executable placeholder and contains no actual runnable syntax — it is a natural language description rather than a formed command.",
+        "semantic_score": 3,
+        "semantic_justification": "The conceptual approach is technically sound and aligns well with T1020 (using 'net use' to map an attacker-controlled SMB share and robocopy with monitoring switches for continuous mirroring constitutes automated exfiltration), but the absence of actual command syntax makes it impossible to verify operational correctness of flags, paths, or scheduling logic.",
+        "combined_score": 2.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:24:23.678060Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command provided is a natural language description and a placeholder rather than executable PowerShell code.",
+        "semantic_score": 5,
+        "semantic_justification": "The logic of mapping a remote share and using 'robocopy' with monitoring switches (/MON or /MOT) is a highly realistic and effective method for automated exfiltration.",
+        "combined_score": 3.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:24:25.247567Z"
+      }
+    ],
+    "llm_average_syntactic": 1.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 2.5,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

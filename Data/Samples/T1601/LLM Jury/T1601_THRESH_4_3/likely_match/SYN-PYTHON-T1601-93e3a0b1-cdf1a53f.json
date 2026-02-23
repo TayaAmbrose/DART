@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Python",
+  "command": "python3 -c 'import os,hashlib,sys; assert os.geteuid()==0; img=\"/bootflash/cat9k_iosxe.SPA.17.09.03.SPA.bin\"; ref=\"/bootflash/golden/cat9k_iosxe.SPA.17.09.03.SPA.bin.sha256\"; calc=hashlib.sha256(open(img,\"rb\").read()).hexdigest(); exp=open(ref).read().split()[0]; print(f\"{img} sha256={calc} expected={exp}\"); sys.exit(0 if calc==exp else 2)'",
+  "explanation": "Computes the SHA-256 of the current IOS-XE image and compares it to a stored baseline hash to detect unauthorized modification.",
+  "rationale_steps": [
+    "Run as root to access system image in bootflash.",
+    "Compute SHA-256 of the image file.",
+    "Read expected SHA-256 from a baseline file and compare.",
+    "Exit non-zero if mismatch is detected."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1601-93e3a0b1-cdf1a53f",
+  "source_prompt_hash": "93e3a0b1",
+  "timestamp_utc": "2025-09-30T04:36:55.673131Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The python3 -c one-liner is properly quoted, uses valid Python syntax with balanced parentheses and f-strings, and has no parsing errors.",
+        "semantic_score": 4,
+        "semantic_justification": "It correctly hashes the IOS-XE image and compares to a baseline for tamper detection, but minor realism gaps exist (unnecessary root assertion, reading the entire image into memory, and potential lack of python3 on some IOS-XE environments).",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2025-10-02T17:01:36.517418Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper string formatting, valid module imports, correct use of semicolons as statement separators, and proper f-string syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements firmware integrity verification for T1601 detection by computing SHA-256 of the live IOS-XE image, comparing it against a stored golden baseline hash, and exiting with a non-zero code on mismatch — exactly the kind of integrity validation recommended to detect unauthorized system image modification on Cisco network devices.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:11:20.119234Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python syntax is perfectly formed, using valid imports, correct f-string formatting, and balanced quoting for a shell-executed one-liner.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements an integrity check on a realistic Cisco IOS-XE path, though reading a large binary file entirely into memory via .read() could cause resource exhaustion on embedded hardware.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:11:24.086531Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

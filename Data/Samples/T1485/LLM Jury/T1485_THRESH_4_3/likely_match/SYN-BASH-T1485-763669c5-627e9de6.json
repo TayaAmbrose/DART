@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1485",
+  "platform": "Containers",
+  "shell": "Bash",
+  "command": "docker run --rm -v /srv/app/uploads:/target:rw ubuntu bash -lc 'find /target -xdev -type f -print0 | xargs -0 -r shred -n 2 -z -u; sync'",
+  "explanation": "Binds a host-backed uploads directory into a helper container and irreversibly deletes files via multi-pass overwrite and zeroing, then syncs to disk.",
+  "rationale_steps": [
+    "Bind-mount the specific host directory used by the container",
+    "Constrain operations to the target mount",
+    "Shred files securely and remove them",
+    "Flush writes with sync"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-763669c5-627e9de6",
+  "source_prompt_hash": "763669c5",
+  "timestamp_utc": "2025-09-30T08:01:03.936632Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed docker command with balanced quoting and valid flags for find, xargs, and shred, and a properly sequenced sync.",
+        "semantic_score": 5,
+        "semantic_justification": "Mounts a host directory and uses shred with multiple passes and deletion followed by sync to destroy file contents, directly aligning with Data Destruction (T1485).",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T00:51:29.256463Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid Docker volume mount syntax, correct bash -lc invocation, properly chained find/xargs/shred pipeline with valid flags (-n 2 -z -u), and a trailing sync call.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 by mounting a host directory into a container and using shred with multi-pass overwrite (-n 2), zeroing (-z), and file removal (-u) on all regular files found recursively, followed by sync to flush to disk, making recovery extremely difficult and fully aligning with the data destruction technique.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T01:39:35.362286Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Docker syntax, properly balanced quotes, valid find/xargs piping, and standard shred flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively uses a container to securely wipe host-resident data via a bind mount, perfectly aligning with T1485 (Data Destruction).",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:39:35.862766Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

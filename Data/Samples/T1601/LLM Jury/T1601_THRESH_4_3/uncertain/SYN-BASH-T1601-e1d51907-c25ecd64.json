@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "dd if=/dev/sda bs=512 count=1 of=/var/tmp/mbr_full.bin && md5sum /var/tmp/mbr_full.bin baseline/mbr_full.bin && diff -u <(hexdump -C /var/tmp/mbr_full.bin) <(hexdump -C baseline/mbr_full.bin)",
+  "explanation": "Captures the full 512-byte MBR (boot code + partition table) and compares it byte-for-byte and via checksum to a baseline to verify system image integrity.",
+  "rationale_steps": [
+    "Copy the first 512 bytes of the disk (entire MBR) with dd.",
+    "Compute MD5 checksums for quick comparison against a known-good MBR.",
+    "Perform a hexdump-based unified diff to visualize any differences at the byte level."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-e1d51907-c25ecd64",
+  "source_prompt_hash": "e1d51907",
+  "timestamp_utc": "2025-09-30T04:41:42.466219Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid Bash command sequence with correct dd, md5sum, hexdump, and diff usage and balanced process substitutions.",
+        "semantic_score": 4,
+        "semantic_justification": "It captures the first 512 bytes (MBR) and provides a byte-level diff against a baseline, but md5sum does not automatically compare checksums and reading /dev/sda generally requires elevated privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T19:59:01.231738Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses for process substitution, proper use of &&, valid flags for dd/md5sum/diff/hexdump, and correct Bash syntax throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly captures the 512-byte MBR, performs checksum comparison, and does a hex diff against a baseline to verify boot sector integrity, which is a valid detection/mitigation approach for T1601; however, reading /dev/sda typically requires root privileges (contradicting the 'None' privilege claim), and the technique itself is defensive/detection-oriented rather than an adversarial modification action.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:26:22.074640Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using valid Bash syntax, correct tool flags, and proper process substitution for the diff operation.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic for comparing the MBR is sound, the command will fail with 'Permission denied' because reading /dev/sda requires root privileges, which contradicts the 'None' privilege requirement.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:26:27.950720Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

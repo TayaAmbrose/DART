@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "hdiutil makehybrid -o /Volumes/USB/.update.iso ~/Documents -udf -udf-volume-name \"System Update\"",
+  "explanation": "Creates a UDF hybrid image from local documents directly onto the USB with a benign volume label to disguise staged data.",
+  "rationale_steps": [
+    "Package files into a single image for easy removable transfer.",
+    "Use a system-like label to blend with legitimate content.",
+    "Write output straight to the external drive.",
+    "No network dependency; exfiltration relies on physical removal."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-19e64b98-447c6eac",
+  "source_prompt_hash": "19e64b98",
+  "timestamp_utc": "2025-09-30T05:31:52.812086Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quoting and valid hdiutil makehybrid flags (-o, -udf, -udf-volume-name) and plausible paths.",
+        "semantic_score": 5,
+        "semantic_justification": "It creates a UDF disk image of ~/Documents with an innocuous volume label directly on the mounted USB volume, aligning with staging and disguising data for exfiltration over a physical medium.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T08:26:09.452670Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid hdiutil flags and follows correct Bash syntax for pathing and string quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately leverages native macOS utilities to stage and disguise data on a removable volume as described in the MITRE technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:36:11.234685Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid hdiutil flags (-o, -udf, -udf-volume-name), and correct argument ordering for macOS hdiutil makehybrid.",
+        "semantic_score": 3,
+        "semantic_justification": "While hdiutil makehybrid correctly creates a UDF hybrid ISO image from ~/Documents with a deceptive volume name, writing the output ISO directly to /Volumes/USB/ creates a disk image file on the USB rather than directly copying files, which adds an extra step and the hidden filename (.update.iso) partially aligns with the disguise intent, but the operational flow is somewhat indirect for T1052 exfiltration since the adversary would need to mount and extract the ISO elsewhere rather than having directly accessible files.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:36:11.952325Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

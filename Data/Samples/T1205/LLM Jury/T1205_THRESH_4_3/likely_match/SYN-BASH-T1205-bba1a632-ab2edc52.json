@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "sudo ethtool -s eth0 wol a && sudo python3 -c \"from scapy.all import *; send(ARP(pdst='192.0.2.55', psrc='192.0.2.66', hwsrc='00:11:22:33:44:55'), verbose=False)\"",
+  "explanation": "Configures the NIC to wake on ARP and then transmits a crafted ARP packet to act as the covert wake signal on the segment. Administrator rights are needed for ethtool. Detection: watch for ethtool WoL mode changes and anomalous ARP storms or spoofed ARP from unusual hosts.",
+  "rationale_steps": [
+    "Enable WoL on ARP frames (wol a) via ethtool (sudo).",
+    "Use Scapy to generate a specific ARP frame as the trigger.",
+    "Deliver the ARP to the device to activate behavior.",
+    "Detection: ARP inspection for spoofed psrc/hwsrc and config monitoring of NIC WoL modes."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-bba1a632-ab2edc52",
+  "source_prompt_hash": "bba1a632",
+  "timestamp_utc": "2025-09-30T05:49:31.290544Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Properly quoted and chained with &&, valid ethtool wol flag, and a balanced Python -c snippet with correct parentheses and quoting.",
+        "semantic_score": 4,
+        "semantic_justification": "It uses ethtool to enable ARP-based WoL and Scapy to emit a crafted ARP as a signaling packet (aligned with T1205), though the WoL change applies only locally and using send() for ARP plus the immediate self-sent signal makes operational context somewhat idealized.",
+        "combined_score": 4.5,
+        "confidence": 0.79,
+        "timestamp": "2025-10-01T19:43:47.663562Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes and parentheses, valid ethtool flags, proper && separator, and correct Python3 inline syntax with scapy imports.",
+        "semantic_score": 3,
+        "semantic_justification": "While the ARP packet crafting with scapy is plausible as a covert signaling mechanism, the ethtool WoL mode 'a' (ARP) is a real option but is a local NIC configuration that affects the receiving host's wake behavior rather than acting as a trigger signal sender, creating a conceptual mismatch where the attacker would need to configure the target's NIC (not their own) for ARP-based WoL to function as described; additionally, using ARP as a T1205 traffic signal is unconventional compared to typical implementations.",
+        "combined_score": 4.0,
+        "confidence": 0.75,
+        "timestamp": "2026-02-19T04:13:22.322864Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct ethtool syntax, standard bash operators, and a perfectly formed Python one-liner using the Scapy library with balanced quotes and parentheses.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates the configuration of a network interface to respond to a specific traffic signal (ARP) and provides the corresponding packet generation logic, aligning perfectly with the Traffic Signaling technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:13:25.417222Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

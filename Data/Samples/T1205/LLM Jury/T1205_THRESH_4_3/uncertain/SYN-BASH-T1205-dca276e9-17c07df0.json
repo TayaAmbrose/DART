@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "sudo iptables -A INPUT -p gre -m length --length 24 -m recent --name T1205_GRE --set -j LOG --log-prefix \"T1205_GRE_SIG \"",
+  "explanation": "Watches for minimal GRE frames acting as covert control pings to trigger behavior, reflecting T1205 signaling via less common protocols.",
+  "rationale_steps": [
+    "Target GRE protocol packets with an atypically small size to indicate signaling.",
+    "Persist state and log to surface covert control attempts using GRE."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-dca276e9-17c07df0",
+  "source_prompt_hash": "dca276e9",
+  "timestamp_utc": "2025-09-30T03:32:21.448422Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid iptables syntax with recognized modules/flags and balanced quoting, so it should parse and load.",
+        "semantic_score": 3,
+        "semantic_justification": "It attempts to detect covert signaling by logging GRE packets and marking sources, but the exact length 24 is unrealistically small for GRE (likely never matching) and only inspects INPUT traffic to the host, limiting effectiveness.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T17:49:09.530936Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows correct iptables syntax, properly utilizing the length and recent modules with valid flags and quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a detection mechanism for signaling by identifying minimal GRE packets (IP + GRE header only) and tracking them using the recent module.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:02:50.642926Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with valid iptables flags and modules, though combining `-m recent --set` with `-j LOG` in a single rule is unusual (recent module typically pairs with --rcheck/--update for matching, and --set just records without filtering), making it syntactically valid but functionally awkward.",
+        "semantic_score": 3,
+        "semantic_justification": "The command attempts to detect T1205 GRE-based signaling by logging minimal 24-byte GRE frames, which is a plausible detection approach, but the use of `--set` without a subsequent `--rcheck` rule means the recent module only records IPs without actually leveraging rate/frequency analysis, and the length of 24 bytes for a minimal GRE frame is debatable (standard GRE header is 4-16 bytes plus IP overhead), reducing operational precision.",
+        "combined_score": 3.5,
+        "confidence": 0.75,
+        "timestamp": "2026-02-19T04:02:53.202652Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

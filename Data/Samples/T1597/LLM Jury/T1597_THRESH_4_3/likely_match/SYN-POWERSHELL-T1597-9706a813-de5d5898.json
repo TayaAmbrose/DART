@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$ErrorActionPreference='Stop'; $pscp='pscp.exe'; $log=\"$env:ProgramData\\NetAdmin\\logs\\T1597.log\"; $host='sftp.spycloud.com'; $user=$env:SPYCLOUD_USER; $key=$env:SPYCLOUD_PPK; $hostkey=$env:SPYCLOUD_HOSTKEY; $remote='/customer_exports/daily/credential-exposures-20250930.csv.gz'; $dest='C:\\Intel\\SpyCloud\\credential-exposures-20250930.csv.gz'; New-Item -ItemType Directory -Path (Split-Path $dest) -Force | Out-Null; try { & $pscp -scp -batch -q -C -P 22 -i $key -hostkey $hostkey \"$user@$host:$remote\" \"$dest\"; if($LASTEXITCODE -ne 0){ throw \"pscp exit code $LASTEXITCODE\" }; $hash=(Get-FileHash -Algorithm SHA256 -Path $dest).Hash; $status=[pscustomobject]@{ technique='T1597'; source=$host; remote_path=$remote; local_path=$dest; sha256=$hash; success=$true; ts=(Get-Date).ToString('o') } } catch { $status=[pscustomobject]@{ technique='T1597'; source=$host; remote_path=$remote; local_path=$dest; success=$false; error=$_.Exception.Message; ts=(Get-Date).ToString('o') } } finally { $json=$status|ConvertTo-Json -Compress; New-Item -ItemType Directory -Path (Split-Path $log) -Force | Out-Null; Add-Content -Path $log -Value $json; Write-Output $json }",
+  "explanation": "Retrieves a closed-source breach exposure export from SpyCloud over SCP with key-based authentication, suitable for private credential exposure assessment.",
+  "rationale_steps": [
+    "Use authenticated access to a commercial data broker feed (closed source).",
+    "Download a specific daily export quietly to avoid excessive log noise.",
+    "Verify file integrity and log a compact JSON status for traceability.",
+    "Avoids any user targeting or delivery activity, focusing strictly on data collection."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1597-9706a813-de5d5898",
+  "source_prompt_hash": "9706a813",
+  "timestamp_utc": "2025-09-30T06:49:27.618571Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced try/catch/finally, correct quoting, valid PSCP flags, and proper hashtable and pipeline usage.",
+        "semantic_score": 4,
+        "semantic_justification": "It retrieves a closed-source SpyCloud export with key-based auth, hashes and logs it—aligned with T1597—though forcing SCP against an sftp.* host may fail if the server is SFTP-only.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-02T13:45:36.240754Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, braces, and parentheses, proper semicolon separators, valid try/catch/finally blocks, and correct cmdlet syntax throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by using pscp.exe to retrieve a credential exposure export from SpyCloud (a legitimate closed-source threat intelligence vendor) over SCP with key-based authentication, storing credentials in environment variables, computing a SHA256 hash for integrity verification, and logging structured JSON output — all operationally plausible for querying a paid closed-source intelligence feed.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:58:50.585724Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed PowerShell script using correct syntax for variables, try-catch-finally blocks, external process execution, and object manipulation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by automating the retrieval of a non-public data export from a known closed-source intelligence provider (SpyCloud) using industry-standard tools and authentication.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:58:53.071586Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

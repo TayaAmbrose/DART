@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "for p in 11111 22222 33333; do nc -u -z -w1 target.example \"$p\"; sleep 1; done && ssh -p 4422 user@target.example",
+  "explanation": "Sends a sequence of UDP port knocks (11111, 22222, 33333) to signal a remote knock daemon/firewall to temporarily open SSH on port 4422, then immediately attempts an SSH connection. Detection: monitor for short, ordered bursts of UDP packets to high, normally closed ports; review firewall logs for repeated hits to uncommon UDP ports followed by new ACCEPT rules for an SSH port.",
+  "rationale_steps": [
+    "Generate a specific UDP knock sequence to signal a hidden service.",
+    "Remote device updates its firewall to open SSH based on the observed sequence.",
+    "Immediately connect via SSH to the now-open port to establish persistence.",
+    "Detect by alerting on repeated, timed UDP hits to closed ports and sudden exposure of SSH ports."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-9e1e4684-fe8ea9f3",
+  "source_prompt_hash": "9e1e4684",
+  "timestamp_utc": "2025-09-30T05:53:05.592837Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash for-loop with correct separators, balanced quoting, and commonly valid nc/ssh flags.",
+        "semantic_score": 5,
+        "semantic_justification": "Implements UDP port knocking to signal opening SSH and then connects, matching T1205 traffic signaling behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.96,
+        "timestamp": "2025-10-01T12:59:53.820303Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with a valid for loop, proper semicolons, correct nc flags (-u -z -w1), balanced quotes, and a valid && chained SSH command.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements UDP port knocking (a classic T1205 traffic signaling technique) by sending ordered UDP probes to three high ports with 1-second intervals, then immediately connecting via SSH on the expected unlocked port, which is operationally realistic and aligns precisely with how knock daemons work.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T03:42:38.118441Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses a perfectly formed Bash loop, valid netcat flags for UDP scanning, and correct logical operators to sequence the SSH connection.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a classic port knocking sequence to signal a remote firewall to open a specific port, perfectly aligning with T1205.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:42:38.524858Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

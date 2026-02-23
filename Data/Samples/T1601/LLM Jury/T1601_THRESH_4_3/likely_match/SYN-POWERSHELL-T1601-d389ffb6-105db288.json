@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Powershell",
+  "command": "$img = \"C:\\ProgramData\\NetOS\\images\\system.img\"; $expected = (Get-ItemProperty -Path \"HKLM:\\SOFTWARE\\NetOS\\Firmware\" -Name \"ExpectedSHA256\").ExpectedSHA256.ToUpper(); $actual = (Get-FileHash -Algorithm SHA256 -Path $img).Hash.ToUpper(); if ($actual -ne $expected) { Write-Error \"Registry baseline mismatch\" } else { Write-Output \"Registry baseline match\" }",
+  "explanation": "Validates the system image against an expected SHA256 stored in a protected registry location (Administrator-only) to detect unauthorized changes.",
+  "rationale_steps": [
+    "Read expected SHA256 from a protected registry key.",
+    "Compute the image's SHA256 with Get-FileHash.",
+    "Compare expected vs actual.",
+    "Alert if the registry baseline does not match the on-disk image."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-d389ffb6-105db288",
+  "source_prompt_hash": "d389ffb6",
+  "timestamp_utc": "2025-09-30T04:38:26.610534Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes and braces using valid cmdlets and parameters.",
+        "semantic_score": 3,
+        "semantic_justification": "It computes a SHA256 of a Windows file and compares it to a registry baseline as described, but assumes a Windows registry/PowerShell environment for 'Network Devices' and claims no privilege despite referencing an admin-protected key, reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.74,
+        "timestamp": "2025-10-02T17:36:46.409881Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is perfectly well-formed with balanced parentheses, proper string quoting, valid cmdlet usage (Get-ItemProperty, Get-FileHash), correct property chaining, and proper if/else block syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a firmware/system image integrity check by comparing a SHA256 hash against a registry baseline, which is a valid detection mitigation for T1601, though the registry baseline itself could be tampered by an adversary with sufficient privileges, and the 'None' privilege claim is inconsistent since reading HKLM registry keys typically requires at least user-level access and the registry key is described as Administrator-only.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:14:13.956358Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard PowerShell syntax with correct variable assignment, cmdlet usage, property access, and conditional logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively performs an integrity check by comparing a file's SHA256 hash against a stored registry value, which is a primary method for detecting the system image modifications described in T1601.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:14:17.421423Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

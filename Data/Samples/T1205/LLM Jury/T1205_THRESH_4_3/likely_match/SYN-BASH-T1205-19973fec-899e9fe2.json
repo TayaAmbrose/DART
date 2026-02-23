@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "iptables -I INPUT -m recent --name t1205_syslog --rcheck --seconds 60 -p tcp --dport 6010 -j ACCEPT; iptables -I INPUT -p udp --dport 514 -m string --string \"<133>T1205\" --algo bm -m recent --name t1205_syslog --set -j LOG --log-prefix \"T1205-SYSLOG-SIGNAL \"; nc -l -p 6010 -k >/dev/null 2>&1 &",
+  "explanation": "Watches syslog (UDP/514) for a crafted PRI-tagged message containing T1205. On match, logs and temporarily opens TCP/6010 for the sender, where nc is listening. Simulates syslog-based signaling.",
+  "rationale_steps": [
+    "Match a specific syslog PRI and message token",
+    "Use iptables LOG target to flag the anomaly",
+    "Whitelist the emitter for a short window to a controlled port"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-19973fec-899e9fe2",
+  "source_prompt_hash": "19973fec",
+  "timestamp_utc": "2025-09-30T03:30:48.198488Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are well-formed with valid flags, balanced quotes, correct separators, and proper redirections.",
+        "semantic_score": 4,
+        "semantic_justification": "The rules detect a crafted syslog UDP packet to set a recent list and temporarily allow TCP/6010 where nc listens, matching traffic signaling behavior, but it needs root privileges and specific iptables modules/order to function reliably.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T14:16:00.534283Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, valid iptables flags and modules, correct use of semicolons as separators, and a properly backgrounded nc listener.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a port-knocking/traffic-signaling mechanism using syslog UDP/514 as the signal channel with iptables recent module to dynamically open TCP/6010, closely matching T1205 semantics, though the 'None' privilege claim is incorrect since iptables manipulation requires root, and nc listening on port 6010 without binding to a specific source IP means any host could connect once the rule is set.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:47:47.906338Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command sequence uses correct iptables module syntax and netcat flags with proper shell redirection and backgrounding.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic correctly implements a knock-and-open trigger using the iptables 'recent' module based on a specific payload, though it requires root privileges not noted in the description.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:47:51.337269Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

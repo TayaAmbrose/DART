@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "tar -czf - \"$HOME/Documents\" | dd of=\"/Volumes/UNTITLED/.ds_store.tmp\" bs=4m conv=sync,noerror && sync && diskutil unmount \"/Volumes/UNTITLED\"",
+  "explanation": "Streams a compressed archive of the user's Documents to a hidden-looking file on an attached USB volume using dd, then syncs and unmounts the drive for physical removal.",
+  "rationale_steps": [
+    "Compress local data to reduce size and consolidate files.",
+    "Write the stream directly to the external drive with dd to ensure sequential, local-only transfer.",
+    "Use a hidden-style filename to blend in on the removable media.",
+    "Flush buffers and unmount to finalize the offline exfiltration."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-24937b47-a6ffa7ec",
+  "source_prompt_hash": "24937b47",
+  "timestamp_utc": "2025-09-30T05:19:16.168507Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The pipeline is properly structured with balanced quotes, valid tar and dd options, and correct use of pipes and && separators.",
+        "semantic_score": 5,
+        "semantic_justification": "It archives and compresses the Documents directory to a hidden-looking file on a mounted USB volume, then syncs and unmounts the drive, aligning with exfiltration over a physical medium (T1052).",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2025-10-01T06:42:15.366554Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid pipe and && separators, correct flag formats for tar, dd, and diskutil, and proper variable expansion.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by streaming a compressed archive of Documents to a hidden-looking file (.ds_store.tmp mimics macOS metadata) on a USB volume via dd, then syncing and unmounting the drive for physical removal — fully consistent with the technique's staging, obfuscation, and physical exfiltration behaviors.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:30:30.595894Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct piping, valid flags for tar, dd, and diskutil, and properly quotes paths to handle potential spaces.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively stages, compresses, and obfuscates data onto a removable medium and prepares it for physical removal, perfectly matching the T1052 technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:30:32.812117Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

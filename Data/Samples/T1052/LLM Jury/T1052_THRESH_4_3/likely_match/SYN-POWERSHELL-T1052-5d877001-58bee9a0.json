@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$dl=(Get-Volume | Where-Object {$_.DriveType -eq 'Removable'} | Select-Object -First 1 -ExpandProperty DriveLetter); Expand-Archive -Path \"C:\\Temp\\HR.zip\" -DestinationPath \"$dl:\\Media\\HR\" -Force",
+  "explanation": "Expands a pre-staged ZIP archive of sensitive HR data directly onto a removable drive, writing exfiltration data offline.",
+  "rationale_steps": [
+    "Identify the removable drive letter.",
+    "Extract a local ZIP archive onto the USB device.",
+    "Force overwrite to minimize prompts and artifacts."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-5d877001-58bee9a0",
+  "source_prompt_hash": "5d877001",
+  "timestamp_utc": "2025-09-30T05:25:30.107478Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell assignment, pipeline, semicolon separator, and Expand-Archive invocation are well-formed with balanced quotes and correct variable expansion.",
+        "semantic_score": 5,
+        "semantic_justification": "It locates a removable drive and expands a staged ZIP archive onto it, directly writing data to a physical medium in line with T1052.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T09:36:02.351649Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper semicolon separator, correct PowerShell cmdlet syntax, valid parameter names, and properly quoted string interpolation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by dynamically detecting a removable drive via Get-Volume, then extracting a pre-staged ZIP archive of sensitive HR data onto that removable medium, which is operationally realistic and directly aligned with physical medium exfiltration behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:40:09.724708Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct PowerShell syntax, properly handles variable assignment, pipeline filtering, and string interpolation for the destination path.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately identifies a removable drive and uses a native utility to move staged data to that physical medium, perfectly aligning with the T1052 technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:40:12.489979Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

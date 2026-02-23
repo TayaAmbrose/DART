@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "sudo bash -c 'iptables -A INPUT -p udp --dport 50000 -m string --algo bm --string \"MAGIC-OPEN-161\" -m recent --name AUTH161 --set -j DROP; iptables -A INPUT -p udp --dport 161 -m recent --name AUTH161 --rcheck --seconds 120 -j ACCEPT; ciscoconf --apply \"snmp-server community public ro 99\"; (sleep 120; ciscoconf --apply \"no snmp-server community public ro 99\") &'",
+  "explanation": "Uses iptables to mark sources that send a magic UDP payload 'MAGIC-OPEN-161' and temporarily allows their SNMP for 120s; ciscoconf briefly enables an SNMP community bound to ACL 99. Requires sudo.",
+  "rationale_steps": [
+    "Match a magic payload on UDP/50000 to set a recent list (signal).",
+    "Allow UDP/161 for marked sources for 120 seconds via firewall.",
+    "Enable a temporary SNMP community via ciscoconf, then remove it.",
+    "Detection: alert on UDP payload strings to 50000 and transient SNMP community creation/removal."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-7a393370-61417de7",
+  "source_prompt_hash": "7a393370",
+  "timestamp_utc": "2025-09-30T06:01:37.763989Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command has balanced quotes and parentheses, proper separators, and valid iptables options, so it is well-formed and parseable.",
+        "semantic_score": 3,
+        "semantic_justification": "It uses a magic UDP payload and iptables recent matching to signal a temporary SNMP window aligning with T1205, but it relies on a nonstandard 'ciscoconf' tool, mixes Linux iptables with Cisco-style config on 'Network Devices', and assumes firewall/ACL defaults that may not actually restrict SNMP to only signaled sources.",
+        "combined_score": 4.0,
+        "confidence": 0.66,
+        "timestamp": "2025-10-01T18:41:39.440556Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes, parentheses, and proper separators, though `ciscoconf` is a non-standard/fictional tool and the background subshell `(sleep 120; ...) &` is syntactically valid bash.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling mechanism using iptables string matching to detect a magic UDP payload and temporarily authorize SNMP access, aligning well with T1205 (Traffic Signaling), though `ciscoconf` is a fictional utility and real network device management would use different tooling (e.g., netconf, direct config files), slightly reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T04:06:48.825526Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct bash syntax, balanced quotes, proper command separators, and valid iptables module flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a traffic signaling/port knocking mechanism using iptables string matching and the recent module to temporarily open a port based on a hidden trigger.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:06:51.489621Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

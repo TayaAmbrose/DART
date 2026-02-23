@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "try { $st=$env:SECURITYTRAILS_API_KEY; if([string]::IsNullOrWhiteSpace($st)){ throw 'Missing SECURITYTRAILS_API_KEY'; }; $uri='https://api.securitytrails.com/v1/domain/example.com/subdomains?children_only=false&include_inactive=true'; $resp=Invoke-RestMethod -Method Get -Uri $uri -Headers @{APIKEY=$st; Accept='application/json'} -TimeoutSec 25 -ErrorAction Stop; $resp | ConvertTo-Json -Depth 6 } catch { Add-Content -Path \"$env:TEMP\\ti_t1597.log\" -Value (\"[SecurityTrails] \" + $_.Exception.Message) }",
+  "explanation": "Queries SecurityTrails' paid API for historical and current subdomains of example.com, leveraging a closed-source dataset. Authenticates with API key header and provides structured JSON output.",
+  "rationale_steps": [
+    "Use API key from environment to avoid exposing secrets in the command.",
+    "Query a single domain with flags to include inactive subdomains for completeness.",
+    "Limit request scope and use a timeout to prevent excessive noise.",
+    "Serialize the response to JSON and log errors on failure."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1597-5763c3d9-b1c8db9a",
+  "source_prompt_hash": "5763c3d9",
+  "timestamp_utc": "2025-09-30T06:24:43.674049Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced try/catch, valid hashtable headers, proper parameters, and correct quoting/semicolons.",
+        "semantic_score": 5,
+        "semantic_justification": "Queries the paid SecurityTrails API using an API key to retrieve subdomains from a closed-source dataset, aligning directly with T1597.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T13:17:50.765821Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, proper try/catch structure, correct hashtable syntax for headers, valid cmdlet usage, and proper string handling throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying SecurityTrails' paid closed-source API using an authenticated API key to retrieve historical and current subdomain intelligence for a target domain, which is a textbook example of leveraging paid/private data sources for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:56:19.081999Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script with correct variable handling, balanced braces, valid .NET method calls, and proper cmdlet usage.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the T1597 technique by programmatically querying a known commercial/closed-source intelligence API (SecurityTrails) using valid authentication and endpoint parameters.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:56:21.349439Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

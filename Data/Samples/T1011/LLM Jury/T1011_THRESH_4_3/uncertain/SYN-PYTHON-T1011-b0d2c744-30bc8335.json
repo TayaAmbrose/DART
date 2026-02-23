@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Python",
+  "command": "[withheld — non-actionable: would bind an IPv4 UDP socket to a secondary/non-default local address, optionally set DSCP/TOS, and transmit base64-encoded chunks to a high-numbered port]",
+  "explanation": "Binding to a secondary NIC and using an uncommon UDP port provides an exfiltration path distinct from the primary communication channel, demonstrating T1011.",
+  "rationale_steps": [
+    "Select a non-default local interface to separate the path",
+    "Base64-encode the data to avoid raw binary transmission",
+    "Optionally set IP TOS without altering global configuration",
+    "Chunk and send to a high, uncommon UDP port",
+    "Terminate cleanly without persistent changes"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1011-b0d2c744-30bc8335",
+  "source_prompt_hash": "b0d2c744",
+  "timestamp_utc": "2025-09-30T08:42:48.649618Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "No concrete Python command is provided—only a descriptive outline—so it is not runnable or parseable as-is.",
+        "semantic_score": 3,
+        "semantic_justification": "Binding to a secondary NIC and sending base64-encoded data over UDP could provide an alternate exfil path and may align with T1011 if it truly uses a different network medium (e.g., Wi-Fi vs Ethernet), but the lack of specifics makes the mapping and feasibility only partially supported.",
+        "combined_score": 2.0,
+        "confidence": 0.2,
+        "timestamp": "2025-10-01T01:42:36.557298Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command is described abstractly rather than provided in concrete form, so syntactic correctness can only be inferred from the description, which outlines a plausible Python socket script structure without obvious syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "Binding to a secondary NIC's IP address and transmitting base64-encoded data over UDP to a high-numbered port is a realistic and operationally plausible implementation of T1011, as it uses an alternate network interface distinct from the primary C2 channel, though the absence of actual code limits full verification of alignment.",
+        "combined_score": 3.5,
+        "confidence": 0.5,
+        "timestamp": "2026-02-18T22:12:35.461401Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The described sequence of operations—instantiating a socket, binding to a specific interface address, configuring socket options (IP_TOS), and using the base64 module—is a well-defined and valid programmatic flow in Python.",
+        "semantic_score": 5,
+        "semantic_justification": "Binding to a secondary local address to force traffic through a specific network interface (NIC) is a textbook implementation of exfiltrating data over a medium separate from the primary command and control channel.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:12:50.025136Z"
+      }
+    ],
+    "llm_average_syntactic": 3.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 3.5,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

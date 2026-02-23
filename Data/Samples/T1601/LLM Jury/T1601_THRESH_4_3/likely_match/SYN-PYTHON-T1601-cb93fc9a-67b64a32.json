@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Linux",
+  "shell": "Python",
+  "command": "import os, glob, hashlib, difflib\n\ncandidates = sorted(glob.glob(\"/boot/initramfs-*.img\") + glob.glob(\"/boot/initramfs-*\") + glob.glob(\"/boot/initrd.img-*\"), reverse=True)\ncur = candidates[0] if candidates else None\nif not cur:\n    raise SystemExit(\"No initramfs/initrd image found\")\n\nbase_hash_file = \"/root/baselines/initramfs.sha256\"\nexp = open(base_hash_file).read().strip().split()[0]\n\nh = hashlib.sha256()\nwith open(cur, \"rb\") as f:\n    for chunk in iter(lambda: f.read(1024 * 1024), b\"\"):\n        h.update(chunk)\ncurr = h.hexdigest()\nprint(\"\\n\".join(difflib.unified_diff([exp + \"\\n\"], [curr + \"\\n\"], fromfile=\"baseline_initramfs_sha256\", tofile=f\"current_{os.path.basename(cur)}_sha256\")) or (\"OK: \" + curr + \" \" + os.path.basename(cur)))",
+  "explanation": "Computes the SHA-256 of the current initramfs/initrd image and compares it with a baseline to detect injected content.",
+  "rationale_steps": [
+    "Identify the latest initramfs/initrd image under /boot.",
+    "Compute its SHA-256 and compare to a stored baseline hash.",
+    "Emit a unified diff of expected vs. current hash."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1601-cb93fc9a-67b64a32",
+  "source_prompt_hash": "cb93fc9a",
+  "timestamp_utc": "2025-09-30T04:58:58.620992Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Python 3 code with valid imports, balanced structures, and parseable expressions.",
+        "semantic_score": 4,
+        "semantic_justification": "Accurately hashes and compares the current initramfs/initrd against a baseline to detect changes consistent with system image tampering, though it relies on a single baseline and targets boot images rather than firmware specifically.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T18:25:03.010844Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically well-formed with balanced parentheses, proper string formatting, correct use of f-strings, and valid module usage throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements initramfs/initrd integrity verification by computing SHA-256 of the current image and comparing it against a stored baseline, which is a direct and operationally sound detection method for T1601 (Modify System Image) targeting in-storage firmware/boot image tampering on Linux systems.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:18:30.273596Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is perfectly well-formed, using correct syntax for globbing, file handling, SHA-256 hashing, and conditional logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements a detection mechanism for T1601 by calculating the checksum of the boot image and comparing it against a known baseline to identify unauthorized modifications.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:18:38.137647Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

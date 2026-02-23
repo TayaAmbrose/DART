@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1485",
+  "platform": "Containers",
+  "shell": "Bash",
+  "command": "docker run --rm -v logs:/target ubuntu bash -lc 'find /target -type f -print0 | xargs -0 -r shred -n 1 -z -u; dd if=/dev/zero of=/target/.wipe bs=10M || true; sync; rm -f /target/.wipe'",
+  "explanation": "Securely overwrites and deletes files in the 'logs' volume, then fills free space with zeros to sanitize remnants before syncing and removing the filler file.",
+  "rationale_steps": [
+    "Mount the logs volume into a helper container",
+    "Shred all files with at least one pass and zeroing",
+    "Overwrite free space with zeros to remove residual data",
+    "Sync and remove filler to complete the wipe"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-763669c5-88250ac8",
+  "source_prompt_hash": "763669c5",
+  "timestamp_utc": "2025-09-30T08:01:03.936632Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed docker run with balanced quoting, valid flags, and correctly chained commands and separators.",
+        "semantic_score": 5,
+        "semantic_justification": "Uses shred to securely overwrite and delete files in the mounted volume and dd to zero-fill free space followed by sync and cleanup, aligning with data destruction (T1485).",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T01:59:38.836578Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolons as command separators, valid flags for shred (-n 1 -z -u), dd, and rm, and correct use of xargs with null-delimited input.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1485 data destruction by using shred to securely overwrite and delete each file in the Docker volume, then filling free space with zeros via dd to sanitize remnants, followed by sync and cleanup — all operationally plausible and well-aligned with the technique's secure deletion and anti-forensic goals.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:42:23.856094Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Docker and Bash syntax, including proper piping, null-termination for xargs, and error handling for the disk-filling step.",
+        "semantic_score": 5,
+        "semantic_justification": "The sequence of operations (shredding files followed by wiping free space) accurately implements data destruction and anti-forensic techniques consistent with T1485.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:42:27.051053Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

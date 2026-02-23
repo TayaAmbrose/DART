@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1585",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$tok=(Get-AzAccessToken -ResourceUrl 'https://graph.microsoft.com').Token; $uid=(Get-AzADUser -UserPrincipalName 'avery.reed@contoso.onmicrosoft.com').Id; $skus=Invoke-RestMethod -Headers @{Authorization='Bearer ' + $tok} -Uri 'https://graph.microsoft.com/v1.0/subscribedSkus' -Method GET; $skuId=($skus.value | Where-Object {$_.skuPartNumber -match 'ENTERPRISEPACK|STANDARDPACK'} | Select-Object -First 1 -ExpandProperty skuId); Invoke-RestMethod -Headers @{Authorization='Bearer ' + $tok} -Uri ('https://graph.microsoft.com/v1.0/users/' + $uid + '/assignLicense') -Method POST -Body (@{addLicenses=@(@{skuId=$skuId}); removeLicenses=@()} | ConvertTo-Json) -ContentType 'application/json' | ConvertTo-Json -Depth 5",
+  "explanation": "Assigns a Microsoft 365 license so the persona has an active mailbox and collaboration capabilities, making the account usable and persistent.",
+  "rationale_steps": [
+    "List available SKUs, select a common M365 license for mailbox capability.",
+    "Assign the license to the persona user via Graph API.",
+    "Output the Graph response as JSON for record-keeping."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1585-237a137c-41563976",
+  "source_prompt_hash": "237a137c",
+  "timestamp_utc": "2025-09-30T07:37:51.533004Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The one-liner is well-formed PowerShell with balanced quoting/parentheses, valid cmdlets/parameters, proper hashtables, and correct JSON body construction and separators.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly assigns an M365 license via Graph to enable mailbox/collaboration as claimed, but requires prior authentication, sufficient directory privileges, and available license units, and its mapping to T1585 is somewhat interpretive.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T09:24:41.315631Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, braces, and quotes, proper semicolon separators, valid cmdlet syntax, and correct REST method invocations throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements license assignment via Microsoft Graph API — retrieving an access token, resolving the user's object ID, querying available SKUs for E3/E1 licenses, and POSTing to the assignLicense endpoint — which directly enables a persistent, functional account with mailbox capabilities as described, aligning well with T1585 account establishment and persistence objectives.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:38:14.000384Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a series of well-formed PowerShell statements using correct variable assignment, command separators, and proper JSON conversion for REST API interaction.",
+        "semantic_score": 5,
+        "semantic_justification": "The logic correctly retrieves an OAuth token, identifies a specific user, filters available licenses, and performs the license assignment via Microsoft Graph, aligning perfectly with the intent to establish functional account capabilities.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:38:17.535236Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

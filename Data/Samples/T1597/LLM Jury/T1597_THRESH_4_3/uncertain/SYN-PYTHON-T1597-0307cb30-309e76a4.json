@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1597",
+  "platform": "Linux",
+  "shell": "Python",
+  "command": "python3 -c 'import os,sys,json,http.client; dom=os.environ.get(\"TARGET_DOMAIN\",\"example.com\"); key=os.environ[\"VT_API_KEY\"]; c=http.client.HTTPSConnection(\"www.virustotal.com\",timeout=15); h={\"x-apikey\":key,\"Accept\":\"application/json\"}; c.request(\"GET\",\"/api/v3/domains/\"+dom,headers=h); r=c.getresponse(); b=r.read();\ntry:\n j=json.loads(b.decode());\nexcept Exception:\n j={\"raw\":b.decode(\"utf-8\",\"ignore\")};\nif r.status==200:\n print(json.dumps(j))\nelse:\n sys.stderr.write(f\"HTTP {r.status} {r.reason}: \"+(b[:200].decode(\"utf-8\",\"ignore\"))+\"\\n\"); sys.exit(1)'\n",
+  "explanation": "Queries VirusTotal (API key required) for reputation/intel on the target domain and outputs structured JSON.",
+  "rationale_steps": [
+    "Use x-apikey header to authenticate securely over HTTPS.",
+    "Request domain intelligence from the v3 API endpoint.",
+    "Parse JSON safely and handle errors without dumping secrets."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1597-0307cb30-309e76a4",
+  "source_prompt_hash": "0307cb30",
+  "timestamp_utc": "2025-09-30T06:31:45.744266Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses balanced quoting and valid Python code with proper imports, headers, and control flow.",
+        "semantic_score": 5,
+        "semantic_justification": "It queries the VirusTotal closed-source API for domain intelligence with an API key and returns JSON, aligning with T1597.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T13:43:55.728724Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command is mostly well-formed Python embedded in a shell one-liner, but the multi-line formatting with bare newlines inside the single-quoted shell argument would cause parsing issues in most shells without proper line continuation or heredoc handling.",
+        "semantic_score": 4,
+        "semantic_justification": "Querying VirusTotal's paid/authenticated API for domain reputation intelligence aligns well with T1597 (searching closed/paid sources), as VirusTotal's full API requires a subscription key and provides non-public aggregated threat intelligence, though VirusTotal is more of a semi-public threat intel platform than a dark-market or strictly closed source.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:58:37.168306Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 2,
+        "syntactic_justification": "The command is syntactically invalid because Python's grammar does not allow block keywords like 'except' or 'else' to follow semicolons on the same line as their preceding block headers in a one-liner.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly implements the technique by querying a well-known technical intelligence database (VirusTotal) using an API key to gather non-public reputation data on a target domain.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:58:46.492438Z"
+      }
+    ],
+    "llm_average_syntactic": 3.333,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.0,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

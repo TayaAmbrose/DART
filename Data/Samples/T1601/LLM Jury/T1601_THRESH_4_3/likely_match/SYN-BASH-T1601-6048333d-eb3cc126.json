@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "diff -u <(tar -tf /bootflash/prod_system.tar | LC_ALL=C sort) <(tar -tf /var/tmp/modified_system.tar | LC_ALL=C sort)",
+  "explanation": "Diffs file lists of a tar-archived system image to identify additions/removals introduced by the tampered image.",
+  "rationale_steps": [
+    "List contents of the original and modified image tarballs.",
+    "Sort and diff the listings to enumerate structural changes in the system image."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-6048333d-eb3cc126",
+  "source_prompt_hash": "6048333d",
+  "timestamp_utc": "2025-09-30T04:32:34.003779Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash using valid diff options, process substitution, and correct tar and sort usage with no quoting or balancing issues.",
+        "semantic_score": 4,
+        "semantic_justification": "Accurately diffs sorted file lists from two tarred system images to detect additions/removals relevant to T1601, though it assumes Bash/process substitution availability on the device and may require privileges to read /bootflash.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T17:09:06.056357Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses for process substitution, valid flags for both diff (-u) and tar (-tf), proper pipe to sort with LC_ALL=C, and correct bash process substitution syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses diff with process substitution to compare sorted file listings from two tar archives to detect additions or removals in a potentially tampered system image, which is a valid forensic/detection approach for T1601; minor realism gap is that /bootflash/ is a Cisco IOS path but bash process substitution may not be available on all network device shells, and comparing only file lists misses content-level tampering.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:12:10.294135Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, including process substitution, pipes, and standard flags for diff and tar.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately compares the file inventories of two system image archives to identify additions or removals, which is a standard procedure for analyzing modified firmware images.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:12:12.020838Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

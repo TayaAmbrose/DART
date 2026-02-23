@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$ErrorActionPreference='Stop'; $pscp='pscp.exe'; $log=\"$env:ProgramData\\NetAdmin\\logs\\T1597.log\"; $host='sftp.flashpoint-intel.com'; $user=$env:FP_USER; $key=$env:FP_PPK; $hostkey=$env:FP_HOSTKEY; $remote='/feeds/closed_web/daily/closedweb-20250930.json.gz'; $dest='C:\\Intel\\Flashpoint\\closedweb-20250930.json.gz'; New-Item -ItemType Directory -Path (Split-Path $dest) -Force | Out-Null; try { & $pscp -scp -batch -q -C -P 22 -i $key -hostkey $hostkey \"$user@$host:$remote\" \"$dest\"; if($LASTEXITCODE -ne 0){ throw \"pscp exit code $LASTEXITCODE\" }; $hash=(Get-FileHash -Algorithm SHA256 -Path $dest).Hash; $status=[pscustomobject]@{ technique='T1597'; source=$host; remote_path=$remote; local_path=$dest; sha256=$hash; success=$true; ts=(Get-Date).ToString('o') } } catch { $status=[pscustomobject]@{ technique='T1597'; source=$host; remote_path=$remote; local_path=$dest; success=$false; error=$_.Exception.Message; ts=(Get-Date).ToString('o') } } finally { $json=$status|ConvertTo-Json -Compress; New-Item -ItemType Directory -Path (Split-Path $log) -Force | Out-Null; Add-Content -Path $log -Value $json; Write-Output $json }",
+  "explanation": "Collects a subscription-only closed-web intelligence feed from Flashpoint using SCP with host key pinning, then records a JSON audit entry.",
+  "rationale_steps": [
+    "Connect to a paid, closed-source intelligence provider with pinned SSH host key.",
+    "Transfer compressed JSON data using quiet, non-interactive mode for operational security.",
+    "Compute SHA-256 and log a structured acquisition record.",
+    "Limits scope to closed-source collection, avoiding other techniques."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1597-9706a813-14aa9e58",
+  "source_prompt_hash": "9706a813",
+  "timestamp_utc": "2025-09-30T06:49:27.618571Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell is well-formed with balanced braces/quotes, valid parameter usage, proper try/catch/finally structure, and correct invocation of pscp.exe.",
+        "semantic_score": 5,
+        "semantic_justification": "It fetches a subscription-only feed from a closed-source provider using authenticated file transfer with host key pinning and records a JSON audit, directly aligning with T1597.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T13:02:47.023933Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, braces, and parentheses, proper semicolon separators, valid try/catch/finally blocks, and correct flag syntax for pscp.exe.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately models T1597 by downloading a subscription-only closed-web intelligence feed from Flashpoint via SCP with credential and host-key pinning, logging a structured audit entry, though using pscp.exe (PuTTY SCP) rather than native PowerShell SFTP is a minor realism gap, and the technique typically describes adversaries querying/purchasing data rather than scripted automated retrieval from a legitimate subscription service.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:55:25.395914Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script uses correct syntax, proper variable interpolation, valid try-catch-finally blocks, and appropriate command separators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately emulates the acquisition of closed-source intelligence (T1597) by downloading a non-public feed from a known threat-intelligence provider (Flashpoint) using standard protocols and logging the outcome.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:55:26.802635Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

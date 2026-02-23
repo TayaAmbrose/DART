@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "find \"/Users/jdoe/Library/Mail\" -type f \\( -name \"*.emlx\" -o -name \"*.mbox\" \\) -exec srm -fP {} +",
+  "explanation": "Wipes mail message and mailbox files for a single user using multi-pass secure deletion.",
+  "rationale_steps": [
+    "Constrain scope to one user’s Mail data to limit collateral impact.",
+    "Select only mail-related file types with find to avoid deleting settings.",
+    "Overwrite with -P and force with -f to ensure permanent deletion."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-45236c1a-532953ca",
+  "source_prompt_hash": "45236c1a",
+  "timestamp_utc": "2025-09-30T07:56:40.760169Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quotes and escaped parentheses with correct find predicates and -exec ... {} + syntax using plausible srm flags.",
+        "semantic_score": 4,
+        "semantic_justification": "Securely deletes targeted mail files consistent with data destruction, but typical Apple Mail .mbox are directories not matched by -type f and srm may be missing on modern macOS.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T02:23:27.971005Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses and quotes, valid find predicates using -o with proper grouping via \\( \\), correct -exec with + terminator, and valid srm flags -f and -P.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1485 by using srm (secure remove) with -f (force) and -P (multi-pass overwrite per DoD 5220.22-M) to securely and irrecoverably destroy .emlx and .mbox mail files in the macOS user mail directory, fully aligning with the secure deletion aspect of Data Destruction.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:43:57.881961Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses perfectly formed find syntax, including properly escaped parentheses for logical grouping and the correct -exec terminator.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately targets macOS Mail files in the correct directory and uses the srm utility with appropriate flags for multi-pass secure deletion.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:43:59.313800Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

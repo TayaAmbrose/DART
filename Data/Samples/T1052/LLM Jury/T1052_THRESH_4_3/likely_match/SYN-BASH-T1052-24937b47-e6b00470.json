@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "tar -czf - \"$HOME/Desktop\" | dd of=\"/Volumes/USB/.fseventsd/0000000000000001\" bs=4m conv=sync,noerror && sync",
+  "explanation": "Streams a compressed archive of the Desktop into a file that resembles an fseventsd record on the removable drive, using dd for direct write.",
+  "rationale_steps": [
+    "Create a compressed stream of the target directory.",
+    "Use dd to place the stream into a plausible system metadata location on the USB.",
+    "Keep the action entirely local to the host.",
+    "Sync to finalize write operations."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-24937b47-e6b00470",
+  "source_prompt_hash": "24937b47",
+  "timestamp_utc": "2025-09-30T05:19:16.168507Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed pipeline using tar to stdout and dd with valid options, balanced quoting, and proper separators.",
+        "semantic_score": 5,
+        "semantic_justification": "It gzip-archives the Desktop and writes it to a plausibly hidden file within a mounted USB volume, aligning with exfiltration over a physical medium and obfuscation, assuming the target path exists.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T07:13:04.012627Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid pipe and && separators, correct tar/dd flag syntax, and proper use of $HOME variable expansion.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by streaming a compressed archive of the Desktop directly to a removable USB volume disguised as an fseventsd system file (a clever obfuscation technique), using dd for direct block-level writing and sync to ensure data is flushed — all operationally plausible on macOS without elevated privileges.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:32:15.365584Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, properly balanced quotes, correct pipe usage, and valid flags for both tar and dd.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively compresses data and writes it to a disguised path on a removable volume, perfectly illustrating exfiltration over physical media with basic obfuscation.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:32:17.968201Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

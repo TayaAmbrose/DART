@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "sudo bash -c 'tcpdump -lni eth0 -U \"udp and (port 7 or port 9) and ether dst ff:ff:ff:ff:ff:ff\" -vv -XX | awk \"/ff ff ff ff ff ff/ {print; exit}\" && vtysh -c \"conf t\" -c \"ip route 10.99.0.0/16 192.0.2.254\"'",
+  "explanation": "Listens for a WoL-style magic packet pattern on UDP/7 or UDP/9; upon detection, installs a static route via vtysh as an activation step. Detection: baseline and alert on WoL broadcasts on network device interfaces and verify unexpected route insertions.",
+  "rationale_steps": [
+    "Use tcpdump to sniff for broadcast UDP packets carrying the FF preamble indicative of WoL.",
+    "If observed, treat it as a magic trigger and add a static route to open a covert management path.",
+    "Detect via SPAN/ERSPAN capture for WoL from routers and by monitoring FRR/vtysh route change events."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-e71f7f24-244435e4",
+  "source_prompt_hash": "e71f7f24",
+  "timestamp_utc": "2025-09-30T06:04:49.943820Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and parentheses with valid flags; pipeline and && chaining are well-formed and parseable.",
+        "semantic_score": 3,
+        "semantic_justification": "Conceptually aligns with traffic-signaling by waiting for WoL-like broadcasts to trigger a vtysh route change, but the awk regex likely won't match tcpdump -XX output (missing -e and byte-grouping mismatch) so the trigger may never fire, and it requires root despite the 'None' privilege claim.",
+        "combined_score": 4.0,
+        "confidence": 0.78,
+        "timestamp": "2025-10-01T17:01:32.373199Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid piping, but the awk pattern matching on hex dump output from tcpdump -XX may not reliably match 'ff ff ff ff ff ff' as a literal string due to formatting variations, making it functionally fragile though syntactically parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a traffic signaling trigger by monitoring for WoL-style broadcast packets on UDP echo/discard ports and using that signal to activate a covert route insertion via vtysh, which aligns well with T1205's concept of using network signals to trigger actions, though the awk-based detection of the magic packet pattern from tcpdump hex output is an imprecise method that reduces operational reliability.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:58:34.790230Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-structured with properly nested quotes, correct command piping, and valid flags for tcpdump, awk, and vtysh.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively implements traffic signaling by using tcpdump to monitor for a specific WoL-style packet and triggering a legitimate routing change once the signal is detected.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:58:36.793995Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

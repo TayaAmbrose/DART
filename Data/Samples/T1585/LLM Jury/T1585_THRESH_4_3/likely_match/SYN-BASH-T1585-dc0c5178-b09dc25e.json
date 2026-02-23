@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1585",
+  "platform": "Kubernetes",
+  "shell": "Bash",
+  "command": "kubectl run persona-codehub-register -n personas --rm -i --restart=Never --image=curlimages/curl:8.8.0 --command -- sh -lc 'curl -sS -X POST https://api.example-code.test/api/v1/users -H \"Content-Type: application/json\" -H \"Accept: application/json\" -d \"{\\\"username\\\":\\\"artisanal-outreach\\\",\\\"email\\\":\\\"artisanal.outreach@example-mail.test\\\",\\\"password\\\":\\\"S3cure!Passw0rd\\\",\\\"full_name\\\":\\\"Avery Outreach\\\"}\"'",
+  "explanation": "Creates a developer platform account to establish a technical footprint for the persona.",
+  "rationale_steps": [
+    "Register a code hosting account with consistent persona attributes.",
+    "Supports cross-platform persona continuity and reputation."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1585-dc0c5178-b09dc25e",
+  "source_prompt_hash": "dc0c5178",
+  "timestamp_utc": "2025-09-30T07:32:30.045514Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and escaping with valid kubectl flags and a well-formed curl JSON POST payload.",
+        "semantic_score": 5,
+        "semantic_justification": "Creates a new user account via an API using curl, which directly implements Establish Accounts (T1585) in a plausible manner.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T09:08:07.869837Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes (including properly escaped inner JSON quotes), valid kubectl flags (--rm, -i, --restart=Never, --image, --command), and correct curl arguments with proper JSON payload structure.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 by using a ephemeral Kubernetes pod to register a new developer platform account via a REST API POST request, establishing a technical persona footprint with realistic credentials and identity fields, fully consistent with the technique's account establishment behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:37:37.527349Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly uses kubectl run flags, handles shell execution with proper quoting, and includes a valid, escaped JSON payload for the curl request.",
+        "semantic_score": 5,
+        "semantic_justification": "The command successfully leverages a temporary pod to perform an HTTP POST request for account creation on a target API, which aligns perfectly with the Establish Accounts technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:37:40.704496Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

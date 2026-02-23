@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "sudo bash -c 'for p in 2222 3333 4444; do hping3 -S -c 1 -p $p 10.0.0.2 >/dev/null; done; ciscoconf --apply \"ip access-list extended MGMT-REMOTE; permit tcp host 10.0.0.2 any eq 22\"'",
+  "explanation": "Sends a TCP SYN knock sequence to 10.0.0.2 (2222→3333→4444), then readies an ACL for that peer to access SSH. Requires sudo to craft packets with hping3.",
+  "rationale_steps": [
+    "Generate a multi-port knock sequence toward a peer to signal hidden service activation (T1205).",
+    "Adjust device ACL via ciscoconf to permit management from the peer.",
+    "No obfuscation; relies on specific port sequence signaling.",
+    "Detection: IDS/NetFlow alerts for odd SYNs to unusual ports and sudden ACL permitting 10.0.0.2."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-7a393370-ed1a10da",
+  "source_prompt_hash": "7a393370",
+  "timestamp_utc": "2025-09-30T06:01:37.763989Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command uses balanced quoting, valid hping3 flags, a well-formed for-loop, and proper command separators with no parsing issues.",
+        "semantic_score": 4,
+        "semantic_justification": "The hping3 loop correctly performs a SYN knock sequence consistent with T1205 and the configuration line prepares an ACL permitting SSH from 10.0.0.2, but practicality is reduced by assumptions about tool availability on network devices, sudo access, and the ACL not being attached to any interface/control-plane.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T16:16:31.584660Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The bash -c string is well-formed with balanced quotes, valid for-loop syntax, and proper semicolons, though 'ciscoconf' is a non-standard/fictional tool whose argument quoting and subcommand syntax cannot be fully validated.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knock sequence using hping3 SYN packets across three ports to signal a peer, then applies an ACL to permit SSH access from that peer — accurately representing T1205 traffic signaling to trigger a firewall rule change, though 'ciscoconf' is a fictional CLI wrapper that reduces operational realism.",
+        "combined_score": 4.0,
+        "confidence": 0.78,
+        "timestamp": "2026-02-19T03:55:12.504061Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is syntactically correct Bash, utilizing a valid loop, proper command substitution, correct quoting, and appropriate command separators.",
+        "semantic_score": 3,
+        "semantic_justification": "While the signaling (hping3 loop) aligns with T1205, 'ciscoconf' is not a standard system utility, and the logic of sending a knock sequence to a target then immediately opening a local ACL for that same target is slightly atypical for port knocking implementations.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:55:21.146431Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

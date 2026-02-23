@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "iptables -I INPUT -m recent --name t1205_dns --rcheck --seconds 60 -p tcp --dport 9091 -j ACCEPT; iptables -I INPUT -p udp --dport 53 -m string --string \"MAGICDNS\" --algo bm -m recent --name t1205_dns --set -j LOG --log-prefix \"T1205-DNS-SIGNAL \"; nc -l -p 9091 -k >/dev/null 2>&1 &",
+  "explanation": "Watches for a crafted UDP/53 payload containing the ASCII token MAGICDNS, logs it, and temporarily allows TCP/9091 for the sender. Simulates DNS-layer signaling to activate a gated listener.",
+  "rationale_steps": [
+    "Match unusual DNS application data to set a recent list entry",
+    "Log the anomalous DNS packet for detection",
+    "Enable a hidden listener only for recently signaled sources"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-19973fec-658bfd28",
+  "source_prompt_hash": "19973fec",
+  "timestamp_utc": "2025-09-30T03:30:48.198488Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are well-formed with correct iptables and nc flags, balanced quotes, proper separators, and valid redirections.",
+        "semantic_score": 4,
+        "semantic_justification": "Effectively uses a DNS-payload token to set a recent list and conditionally ACCEPT TCP/9091 for 60 seconds, aligning with T1205 traffic signaling, but requires root privileges (not 'None') and assumes an underlying drop policy for the gating to matter.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T15:38:54.605276Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, valid iptables flags and modules, correct use of semicolons as separators, and a valid backgrounded nc listener.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 DNS-layer traffic signaling by using iptables string matching to detect a magic token in UDP/53 traffic, setting a recent-match entry to temporarily gate TCP/9091 access for the signaling host, and establishing a persistent listener — fully consistent with the technique's port-knocking/signal-triggered activation pattern.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:53:00.820892Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid iptables syntax for the recent and string match modules, correctly chains commands with semicolons, and utilizes proper shell redirection and backgrounding.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly implements the traffic signaling technique by using a specific DNS payload to trigger a firewall exception, though it realistically requires root privileges despite the metadata stating 'None'.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:53:06.036094Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

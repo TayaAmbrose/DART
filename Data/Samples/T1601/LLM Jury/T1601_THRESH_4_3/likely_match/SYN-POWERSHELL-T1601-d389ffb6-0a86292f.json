@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Powershell",
+  "command": "$images = \"C:\\ProgramData\\NetOS\\images\\bankA.img\",\"C:\\ProgramData\\NetOS\\images\\bankB.img\"; $baselineDir = \"C:\\ProgramData\\NetOS\\baseline\"; foreach ($img in $images) { $base = Join-Path $baselineDir ([IO.Path]::GetFileName($img)); if ((Get-FileHash $img -Algorithm SHA256).Hash -ne (Get-FileHash $base -Algorithm SHA256).Hash) { Write-Error \"Bank integrity mismatch: $img\" } }",
+  "explanation": "Checks multiple boot banks' images against their baselines to detect tampering with redundant system image slots used by network devices.",
+  "rationale_steps": [
+    "Enumerate banked image files (admin-only paths).",
+    "Compute SHA256 of each bank image with Get-FileHash.",
+    "Compute SHA256 of the corresponding baseline images.",
+    "Report any bank that does not match its baseline."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-d389ffb6-0a86292f",
+  "source_prompt_hash": "d389ffb6",
+  "timestamp_utc": "2025-09-30T04:38:26.610534Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid PowerShell syntax with balanced delimiters, correct cmdlets/parameters, and proper use of foreach, Join-Path, and Get-FileHash.",
+        "semantic_score": 5,
+        "semantic_justification": "It compares SHA-256 hashes of each specified image against a matching-named baseline and flags mismatches, effectively detecting potential T1601-style system image tampering for network device images.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T17:14:45.589884Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is perfectly well-formed with balanced quotes, parentheses, braces, proper use of foreach loop, Join-Path, Get-FileHash cmdlets, and valid string array initialization.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements integrity checking of dual boot bank images against SHA256 baselines, which is a valid detection mechanism for T1601 firmware tampering, though running this on a Windows host via PowerShell to check network device firmware images stored at local paths is a slight realism gap since network device firmware typically resides on the device itself rather than a Windows filesystem.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:33:39.695874Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is perfectly formed with correct variable assignments, loop structures, .NET method calls, and cmdlet usage.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements an integrity check using SHA256 hashes to compare system images against a baseline, which is a primary detection method for T1601.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:33:53.599672Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

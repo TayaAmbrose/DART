@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "find /tmp/projectX -xdev -maxdepth 1 -type f -exec shred -n 1 -z -u -f {} +",
+  "explanation": "Securely overwrites and deletes only the immediate files in a specific temporary project directory.",
+  "rationale_steps": [
+    "Limit depth and filesystem traversal to avoid affecting unrelated directories.",
+    "Perform an overwrite pass with a final zeroing for irrecoverability.",
+    "Unlink files after shredding to ensure they are fully removed."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-097d0d83-329270be",
+  "source_prompt_hash": "097d0d83",
+  "timestamp_utc": "2025-09-30T07:53:07.976516Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid find syntax with -exec ... +, correct placement of {} and well-formed shred flags, no quoting or parsing issues.",
+        "semantic_score": 4,
+        "semantic_justification": "It targets only immediate files in /tmp/projectX and securely overwrites then deletes them via shred, aligning with data destruction, though effectiveness depends on file permissions and filesystem behavior.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T00:41:24.693582Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed and parseable with valid flags for both find and shred, though using `+` as the terminator with `-exec shred` may cause issues since shred accepts multiple files but the behavior depends on the implementation; using `\\;` would be safer for per-file execution.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses shred with overwrite (-n 1), zero-out (-z), unlink (-u), and force (-f) flags to securely delete files in a specific temporary directory, with -xdev preventing filesystem crossing and -maxdepth 1 limiting scope to immediate files, perfectly aligning with T1485 secure deletion behavior.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:39:11.059813Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard GNU find syntax and valid shred flags in a well-formed bash structure.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely executes the described intent of secure data destruction on a specific directory using the appropriate tool for T1485.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:39:11.571540Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

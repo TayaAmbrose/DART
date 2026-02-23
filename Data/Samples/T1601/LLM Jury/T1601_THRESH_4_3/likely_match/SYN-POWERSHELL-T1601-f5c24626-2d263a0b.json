@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "dism /Mount-Image /ImageFile:C:\\images\\install_clean.wim /Index:1 /MountDir:C:\\Mount\\Base; dism /Mount-Image /ImageFile:C:\\images\\install_mod.wim /Index:1 /MountDir:C:\\Mount\\Win; New-Item -ItemType Directory -Force -Path \"C:\\Mount\\Win\\Users\\Default\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\" | Out-Null; Set-Content -Path \"C:\\Mount\\Win\\Users\\Default\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\init.ps1\" -Value \"rem placeholder\"; Compare-Object (Get-ChildItem -Name \"C:\\Mount\\Base\\Users\\Default\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\" -ErrorAction SilentlyContinue) (Get-ChildItem -Name \"C:\\Mount\\Win\\Users\\Default\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\" -ErrorAction SilentlyContinue)",
+  "explanation": "Plants a startup script in the Default user profile within the offline image and uses Compare-Object to confirm the file appears only in the modified image.",
+  "rationale_steps": [
+    "Mount the clean and modified images (Admin).",
+    "Write a startup script into the offline Default profile of the modified image.",
+    "Compare directory listings between baseline and modified with Compare-Object."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-f5c24626-2d263a0b",
+  "source_prompt_hash": "f5c24626",
+  "timestamp_utc": "2025-09-30T04:51:19.633456Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with proper semicolons, balanced quotes/parentheses, valid DISM and cmdlet parameters, and parseable Compare-Object expressions.",
+        "semantic_score": 4,
+        "semantic_justification": "Mounts WIM images, injects a startup script into the offline image, and compares contents to verify modification—consistent with modifying a system image (T1601), though it requires admin rights and a .ps1 in Startup may not auto-execute by default.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T20:29:31.535005Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper semicolon separators, valid DISM flags, correct PowerShell cmdlet syntax, and properly escaped paths throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements offline image modification by mounting both a clean and modified WIM image, injecting a startup script into the Default user profile's Startup folder within the modified image, and then using Compare-Object to verify the planted file exists only in the modified image — directly aligning with T1601's technique of modifying system images to introduce persistence.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:27:54.184970Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct PowerShell syntax, proper DISM flags, and balanced delimiters throughout the multi-command string.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic effectively demonstrates mounting and injecting a persistence script into an offline image, though DISM operations strictly require administrative privileges which contradicts the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:27:57.106986Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

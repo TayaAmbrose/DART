@@ -1,0 +1,60 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "bash -lc 'ufw --force enable && ufw default deny incoming && ufw logging high && iptables -I ufw-before-input 1 -p tcp --dport 1111 -m state --state NEW -m recent --name K1 --set && iptables -I ufw-before-input 1 -p tcp --dport 2222 -m state --state NEW -m recent --rcheck --seconds 10 --name K1 -m recent --name K2 --set && iptables -I ufw-before-input 1 -p tcp --dport 3333 -m state --state NEW -m recent --rcheck --seconds 10 --name K2 -m recent --name K3 --set && iptables -I ufw-before-input 1 -p tcp --dport 22 -m state --state NEW -m recent --rcheck --seconds 20 --name K3 -j ACCEPT'",
+  "explanation": "Sets up a three-step TCP port-knocking sequence (1111, 2222, 3333). Only after the correct ordered knocks does the firewall accept new SSH connections from the knocking source for a short window. This leverages signaling via specific connection attempts to trigger a hidden rule (T1205.001 Port Knocking). Detection: Inspect ufw/iptables logs for rapid sequential SYNs on high ports and sudden accepted SSH from the same source.",
+  "rationale_steps": [
+    "Enable ufw, set default deny incoming, and turn on logging.",
+    "Record knock step 1 on TCP/1111 using the recent module.",
+    "Verify step 1 then record step 2 on TCP/2222.",
+    "Verify step 2 then record step 3 on TCP/3333.",
+    "If step 3 was seen within 20s, accept new TCP/22 from that source.",
+    "Detect by correlating unusual sequential connection attempts and subsequent SSH allow in /var/log/ufw.log."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-eb871457-de9cb3ed",
+  "source_prompt_hash": "eb871457",
+  "timestamp_utc": "2025-09-30T03:48:01.284804Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed bash command with balanced quoting and valid ufw/iptables flags chained with &&.",
+        "semantic_score": 4,
+        "semantic_justification": "Implements a three-step port knocking sequence using iptables recent within the ufw-before-input chain to allow SSH, but it requires root privileges despite 'Privilege: None'.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T18:03:42.762877Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and proper use of && separators, though the iptables rules combining --rcheck with --set in a single rule chain may cause parsing issues depending on the iptables version, as multiple -m recent modules in one rule can be ambiguous.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205.001 port knocking by using iptables 'recent' module to track sequential SYN packets on ports 1111, 2222, and 3333 within time windows, only accepting SSH on port 22 after the correct knock sequence, which is a textbook implementation of traffic signaling for covert access.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T04:04:14.988321Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed, uses correct shell escaping, valid iptables modules (recent, state), and correct ufw syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a multi-stage port knocking sequence using the iptables 'recent' module within the UFW framework, correctly handling state transitions and temporal windows.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:04:19.867629Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; $ts=Get-Date -Format o; try { $headers=@{ 'Authorization'=\"Token $env:GREYNOISE_TOKEN\"; 'Accept'='application/json' }; $r=Invoke-WebRequest -Uri 'https://api.greynoise.io/v3/community/198.51.100.10' -Headers $headers -Method Get -ErrorAction Stop; ($r.Content | ConvertFrom-Json | Select-Object ip,classification,noise,link,last_seen | ConvertTo-Json -Depth 6) | Out-File -FilePath \"$env:TEMP\\greynoise_ip_198_51_100_10.json\" -Encoding utf8; Add-Content -Path \"$env:TEMP\\recon.log\" -Value \"$ts GreyNoise success 198.51.100.10\" } catch { Add-Content -Path \"$env:TEMP\\recon.log\" -Value \"$ts GreyNoise error: $($_.Exception.Message)\" }",
+  "explanation": "Queries GreyNoise (account-gated) for intelligence on a specific IP using token-based authentication to understand exposure/noise characteristics, saving structured results and logging activity.",
+  "rationale_steps": [
+    "Use token-based header to access a closed threat intel source.",
+    "Request IP intelligence from the community endpoint.",
+    "Persist selected fields as JSON to minimize noise.",
+    "Log success/failure with timestamps for traceability."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1597-4422e4ca-a63f6d51",
+  "source_prompt_hash": "4422e4ca",
+  "timestamp_utc": "2025-09-30T06:22:12.312465Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid cmdlets, proper separators, and a correct try/catch structure.",
+        "semantic_score": 4,
+        "semantic_justification": "It queries a closed, account-gated GreyNoise API using token auth, processes JSON, and logs/output results consistent with T1597, though the header scheme and use of a documentation IP may limit actual success.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T11:55:54.892041Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper use of try/catch, valid cmdlet syntax, and correct string interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying GreyNoise (a paid/account-gated closed-source threat intelligence API) using token-based authentication, retrieving IP intelligence data, saving structured JSON output, and logging activity — all operationally plausible and aligned with the technique's description of querying non-public/subscriber intelligence sources.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:49:55.971237Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax throughout, including proper .NET class calls, variable assignments, try/catch blocks, and correct piping for JSON manipulation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements a query to a third-party intelligence provider (GreyNoise) using authentication, aligning perfectly with the intent of searching closed sources for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:49:59.589410Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

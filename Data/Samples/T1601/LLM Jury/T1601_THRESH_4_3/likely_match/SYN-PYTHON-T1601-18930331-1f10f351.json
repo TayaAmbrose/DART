@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Linux",
+  "shell": "Python",
+  "command": "python3 -c \"import os,hashlib,json; h=lambda p: hashlib.sha256(open(p,'rb').read()).hexdigest(); m=json.load(open('/var/lib/img-baseline/boot_manifest.json')); diffs=[]; [diffs.append((p,m.get(p),h(p))) for root,_,fs in os.walk('/boot') for f in fs for p in [os.path.join(root,f)] if m.get(p)!=h(p)]; print('BOOT_MANIFEST_DIFFS', len(diffs)); [print('CHANGED',p,exp,'->',hv) for (p,exp,hv) in diffs]\"",
+  "explanation": "Walks /boot, hashing each file and comparing against a stored manifest to reveal altered system image components.",
+  "rationale_steps": [
+    "Covers entire boot image surface, aligning with T1601 monitoring of modified system images.",
+    "Uses hashlib to validate per-file checksums against a baseline manifest.",
+    "Operates in a privileged directory holding boot-critical files."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1601-18930331-1f10f351",
+  "source_prompt_hash": "18930331",
+  "timestamp_utc": "2025-09-30T04:46:14.515402Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced quoting, valid list comprehensions, proper separators, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "It computes SHA-256 hashes of /boot files and compares them to a baseline manifest to detect modifications, aligning with detection for T1601.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T19:27:03.820578Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python one-liner is largely well-formed with balanced parentheses and valid syntax, though the list comprehension used for side effects (appending and printing) is unconventional and the nested list comprehension with walrus-style assignment via `for p in [os.path.join(root,f)]` is valid but unusual, making it slightly fragile in edge cases.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a boot image integrity check by walking /boot, computing SHA-256 hashes of each file, and comparing them against a stored baseline manifest — directly aligned with T1601 detection mitigations (integrity and checksum validation of firmware/boot images) and operationally realistic.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:23:59.128308Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly well-formed, using correct imports, valid list comprehensions for side effects, and properly balanced quotes.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements an integrity check of the /boot directory against a baseline manifest to detect modifications consistent with T1601.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:24:01.693432Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

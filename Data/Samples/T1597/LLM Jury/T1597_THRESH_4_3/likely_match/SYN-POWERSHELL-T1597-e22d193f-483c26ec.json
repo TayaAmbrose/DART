@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ErrorActionPreference='Stop'; $domain='example.com'; $out='C:\\ProgramData\\recon\\riskiq_subdomains_example.com.json'; New-Item -ItemType Directory -Force -Path C:\\ProgramData\\recon | Out-Null; $log='C:\\ProgramData\\recon\\recon.log'; try { $user=$env:PT_USER; $key=$env:PT_KEY; if([string]::IsNullOrWhiteSpace($user) -or [string]::IsNullOrWhiteSpace($key)){ throw 'PassiveTotal credentials not set'; } $token=[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(\"$user`:$key\")); $headers=@{ 'Authorization'=\"Basic $token\"; 'Accept'='application/json' }; $uri=\"https://api.riskiq.net/pt/v2/enrichment/subdomains/lookup/$domain\"; $resp=Invoke-WebRequest -Uri $uri -Headers $headers -Method Get -UseBasicParsing -TimeoutSec 45 -ErrorAction Stop; if(($resp.StatusCode -ge 200) -and ($resp.StatusCode -lt 300) -and ($resp.Headers['Content-Type'] -match 'application/json')){ ($resp.Content | ConvertFrom-Json) | ConvertTo-Json -Depth 6 | Set-Content -Path $out -Encoding UTF8 } else { Add-Content -Path $log -Value \"$(Get-Date -Format o) PassiveTotal non-success or non-JSON for $domain. Status=$($resp.StatusCode)\" } } catch { Add-Content -Path $log -Value \"$(Get-Date -Format o) PassiveTotal error for $domain: $($_.Exception.Message)\" }",
+  "explanation": "Uses authenticated access to RiskIQ PassiveTotal (a closed-source, subscription intelligence platform) to enumerate subdomains and store results as JSON.",
+  "rationale_steps": [
+    "Build Basic Auth header from credentials stored in environment variables.",
+    "Query the closed-source enrichment endpoint for subdomains.",
+    "Validate response headers and status, then parse and write JSON.",
+    "Record any exceptions to a log file without leaking secrets."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1597-e22d193f-483c26ec",
+  "source_prompt_hash": "e22d193f",
+  "timestamp_utc": "2025-09-30T06:29:30.632581Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell one-liner is well-formed with balanced quotes/braces, valid separators, correct parameter usage, and parseable constructs.",
+        "semantic_score": 4,
+        "semantic_justification": "It authentically queries a closed-source (RiskIQ PassiveTotal) API with credentials to enumerate subdomains and store JSON, aligning with T1597, though the specific endpoint path may be slightly off depending on current API conventions.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T12:11:17.052439Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, parentheses, and braces, proper semicolons as separators, valid cmdlet syntax, and correct string interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by authenticating to RiskIQ PassiveTotal (a legitimate closed-source, subscription-based threat intelligence platform) via API credentials stored in environment variables, querying the subdomain lookup endpoint, and saving results to disk — fully consistent with adversarial use of paid intelligence feeds for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:51:16.758442Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is well-structured with balanced braces, proper variable assignments, and correct use of try-catch blocks and cmdlets.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements the technique by programmatically querying the RiskIQ (PassiveTotal) API, a closed intelligence source, to perform reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:51:20.503448Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

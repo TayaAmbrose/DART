@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "srm -fP \"/Users/alice/Library/Messages/chat.db\"",
+  "explanation": "Permanently wipes the Messages chat database for a specific user to destroy communication records.",
+  "rationale_steps": [
+    "Identify a single high-value database file for targeted destruction.",
+    "Use srm with -P to overwrite the file multiple times before unlinking.",
+    "Force deletion with -f to prevent interactive prompts."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-45236c1a-18a5a709",
+  "source_prompt_hash": "45236c1a",
+  "timestamp_utc": "2025-09-30T07:56:40.760169Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed command with valid combined flags and balanced quoting around the file path.",
+        "semantic_score": 4,
+        "semantic_justification": "Appropriately uses a secure-deletion tool to destroy the Messages database (aligning with data destruction), though effectiveness may be limited on modern macOS/APFS or if srm is missing and related WAL/SHM files or snapshots persist.",
+        "combined_score": 4.5,
+        "confidence": 0.7,
+        "timestamp": "2025-10-02T02:26:12.083687Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-f for force, -P for overwrite passes), and a properly specified file path.",
+        "semantic_score": 5,
+        "semantic_justification": "srm (secure remove) is a macOS secure deletion tool, the -f and -P flags force deletion with multiple overwrite passes, and targeting chat.db (the SQLite database storing iMessage/SMS records) is a precise and operationally realistic method to destroy communication records for a specific user.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:44:09.553441Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Bash syntax with valid flag formatting and properly quoted absolute file paths.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses a secure removal utility to target the specific iMessage database path on macOS, directly achieving the goal of destroying communication records in line with MITRE ATT&CK T1485.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:44:18.050980Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

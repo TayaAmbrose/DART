@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "install -m 0644 /root/firmware_mod.img /mnt/flash/system.img && sha256sum /mnt/flash/system.img > /mnt/flash/system.img.sha256",
+  "explanation": "Overwrites the legitimate system image with a malicious one and writes a checksum file to make the change look routine.",
+  "rationale_steps": [
+    "Replace the bootable image with an attacker-modified firmware.",
+    "Generate a checksum to verify the malicious image and blend in with maintenance artifacts."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-dc873ff7-f5ff04ab",
+  "source_prompt_hash": "dc873ff7",
+  "timestamp_utc": "2025-09-30T04:57:26.660610Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with a valid install flag, proper && chaining, and correct output redirection with no quoting issues.",
+        "semantic_score": 4,
+        "semantic_justification": "Assuming sufficient privileges and typical Linux-based network device layout, it would replace the system image and write a checksum file consistent with T1601, though practicality depends on permissions and device-specific tooling/paths.",
+        "combined_score": 4.5,
+        "confidence": 0.7,
+        "timestamp": "2025-10-02T18:09:08.121819Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid use of `install` with `-m 0644` flag, `&&` chaining, `sha256sum` with output redirection, and consistent file paths throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by overwriting the legitimate system image with a malicious firmware file on a network device's flash storage, then generating a plausible-looking checksum file to disguise the tampering as routine maintenance — directly matching the technique's description of replacing the monolithic image and evading integrity checks.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:16:52.765093Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, properly formatted flags for the install utility, and correct logical operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately performs a system image replacement and checksum update, which is a textbook implementation of T1601 on Linux-based network devices.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:16:55.216771Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

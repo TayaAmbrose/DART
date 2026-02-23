@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[REDACTED: Non-executable placeholder] Batch registry/file export: map \\\\ATTACKER_IP\\reg$ with 'net use', export registry hives or configs to files, copy to the UNC path, then unmap.",
+  "explanation": "High-level automation to collect and exfiltrate configuration/registry data by staging to files and sending them via an SMB share mapped with 'net use'.",
+  "rationale_steps": [
+    "Connect to a remote SMB share using net use",
+    "Export target registry hives/configs to temporary files",
+    "Transfer the staged files to the remote UNC path",
+    "Disconnect SMB session and remove temporary files"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1020-7b9aedc5-a47edbf7",
+  "source_prompt_hash": "7b9aedc5",
+  "timestamp_utc": "2025-09-30T08:57:58.671267Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "This is a non-executable high-level description/placeholder rather than a concrete, parseable PowerShell command.",
+        "semantic_score": 4,
+        "semantic_justification": "Conceptually, mapping an SMB share with net use, exporting registry/config files, copying them to the UNC path, and unmapping aligns with automated exfiltration on Windows, though practical execution may require credentials/elevation and concrete commands.",
+        "combined_score": 2.5,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T02:03:57.193214Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is explicitly a non-executable placeholder/description rather than actual runnable syntax, containing no real commands, just a high-level prose description of steps.",
+        "semantic_score": 4,
+        "semantic_justification": "The described workflow (net use to map a UNC share, export registry hives/configs to files, copy to the mapped share, then unmap) is operationally coherent and accurately represents automated exfiltration of registry/configuration data via SMB, aligning well with T1020, though the lack of actual commands leaves implementation details unverified.",
+        "combined_score": 2.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:19:03.436850Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 1,
+        "syntactic_justification": "The input is a natural language description and a placeholder rather than a functional PowerShell command.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic described (mounting SMB, exporting data, and copying) accurately represents automated exfiltration, although registry hive exports typically require higher privileges than 'None'.",
+        "combined_score": 2.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:19:07.500275Z"
+      }
+    ],
+    "llm_average_syntactic": 1.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 2.5,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "dd if=/dev/sda bs=446 count=1 of=/var/tmp/mbr_code.bin && sha256sum /var/tmp/mbr_code.bin baseline/mbr_code.bin && diff -u <(sha256sum /var/tmp/mbr_code.bin | awk '{print $1}') <(sha256sum baseline/mbr_code.bin | awk '{print $1}')",
+  "explanation": "Reads only the MBR boot code (first 446 bytes) and compares its checksum to a baseline to detect or confirm unauthorized changes to the bootloader code.",
+  "rationale_steps": [
+    "Use dd to copy the first 446 bytes of the disk (MBR boot code) to a file.",
+    "Generate and display SHA-256 checksums for the current and baseline MBR boot code.",
+    "Diff the checksums to quickly confirm integrity or detect tampering."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-e1d51907-2e5b4fe0",
+  "source_prompt_hash": "e1d51907",
+  "timestamp_utc": "2025-09-30T04:41:42.466219Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is valid Bash with correct dd options, proper use of process substitution, balanced quoting, and appropriate command chaining.",
+        "semantic_score": 4,
+        "semantic_justification": "It detects bootloader code tampering by hashing the first 446 bytes of the MBR and comparing to a baseline, but it typically requires root access despite 'Privilege: None' and may not cover UEFI-centric boot paths.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T20:05:57.189359Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced parentheses and proper use of &&, process substitution, and pipes, though the sha256sum comparison in the middle step is slightly redundant given the diff that follows, and reading /dev/sda without root privileges would fail despite the 'None' privilege claim.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly extracts the MBR boot code (first 446 bytes, which is the boot code portion excluding the partition table and signature) using dd and performs a checksum comparison against a baseline to detect unauthorized bootloader modifications, which aligns well with T1601 detection/integrity validation, though the privilege level listed as 'None' is incorrect since reading /dev/sda typically requires root or disk group membership.",
+        "combined_score": 4.0,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:26:46.666323Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed bash one-liner using valid process substitution, piping, and logical operators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately extracts the MBR boot code and performs an integrity check, but it requires root privileges to read /dev/sda, contradicting the 'None' privilege label.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:26:50.902275Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "$d=((Get-DnsClientCache).Name | Where-Object { $_ -match '\\.' } | Select-Object -Unique | Get-Random); $ips=@(); 1..5 | ForEach-Object { $res=Invoke-WebRequest -UseBasicParsing -Headers @{accept='application/dns-json'} \"https://dns.google/resolve?name=$d&type=A\"; $ips+=((($res.Content|ConvertFrom-Json).Answer).data); Start-Sleep -Seconds 12 }; $uniq=($ips | Where-Object {$_} | Select-Object -Unique); if ($uniq.Count -ge 3) { Invoke-WebRequest -UseBasicParsing -Method POST -ContentType 'application/json' -Body (@{domain=$d; ipCount=$uniq.Count; ips=$uniq; ts=(Get-Date).ToUniversalTime().ToString('o')}|ConvertTo-Json -Depth 3) 'https://siem.example.local/api/ingest/fastflux' }",
+  "explanation": "Defensive fast-flux check for T1568: repeats DNS resolution via DoH and flags rapid IP churn indicative of dynamic resolution C2 infrastructure.",
+  "rationale_steps": [
+    "Select a domain from the DNS cache.",
+    "Resolve it multiple times via DoH over a short interval.",
+    "Count distinct IPs to detect churn.",
+    "Report fast-flux suspects to SIEM."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1568-044d57b5-bd6f75e4",
+  "source_prompt_hash": "044d57b5",
+  "timestamp_utc": "2025-09-30T04:07:31.423921Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid pipelines, parameters, and control structures; no obvious parse errors.",
+        "semantic_score": 4,
+        "semantic_justification": "It repeatedly resolves a domain via DoH, measures unique A record churn, and reports to a SIEM—consistent with a defensive check for T1568—though it naively picks a random cached domain and relies on a public resolver’s caching, which limits robustness.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T07:22:46.350302Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced parentheses, braces, and quotes, though the nested array access `(($res.Content|ConvertFrom-Json).Answer).data` may fail if Answer is null or a single object rather than an array, and the final URL string is unquoted after the closing parenthesis of the body argument, which could cause a parse error in strict environments.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a defensive fast-flux detection workflow by pulling a cached domain, repeatedly resolving it via Google's DoH API over ~60 seconds, collecting unique IPs, and posting results to a SIEM endpoint when IP churn (≥3 unique IPs) is detected—accurately targeting T1568 fast-flux behavior—though using the local DNS cache as the domain source is an unusual heuristic that may miss externally resolved C2 domains not yet cached.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:27:56.564786Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-constructed PowerShell one-liner with correct syntax, proper use of pipelines, balanced delimiters, and valid API interaction logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively implements a defensive heuristic for T1568 by identifying IP address churn (fast-flux) for a domain sampled from the local cache, using out-of-band DNS-over-HTTPS to verify resolution behavior.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:28:10.551303Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

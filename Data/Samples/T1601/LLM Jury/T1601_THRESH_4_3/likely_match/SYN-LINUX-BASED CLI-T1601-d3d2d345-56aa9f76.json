@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Linux-based CLI",
+  "command": "echo 'T1601 verify: hashing entire rootfs partition'; dd if=/dev/mtdblock5 bs=1M 2>/dev/null | sha256sum | tee /tmp/T1601_rootfs.sha256",
+  "explanation": "Generates a SHA256 hash of the root filesystem partition to validate or document the current system image before or after malicious alteration.",
+  "rationale_steps": [
+    "Read the rootfs partition directly from flash to avoid filesystem artifacts.",
+    "Compute a cryptographic hash to check integrity or track changes.",
+    "Store the hash to support stealthy version control of malicious patches."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-LINUX-BASED CLI-T1601-d3d2d345-56aa9f76",
+  "source_prompt_hash": "d3d2d345",
+  "timestamp_utc": "2025-09-30T02:47:56.896050Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed pipeline with balanced quotes, valid redirection, and correct use of dd, sha256sum, and tee separated by semicolons.",
+        "semantic_score": 4,
+        "semantic_justification": "Appropriately hashes the raw rootfs partition to support image integrity verification aligned with T1601 detection, but typically requires elevated privileges and the correct device node, which may limit practical execution as stated.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T20:21:45.007289Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid pipe operators, correct dd flags, and proper use of tee for output redirection.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses dd to read a raw MTD block device (common on embedded/network devices) and pipes it through sha256sum to generate a hash for integrity verification, which is directly relevant to T1601 detection/documentation workflows, though the specific device path /dev/mtdblock5 is assumed and may not correspond to the rootfs on all devices.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:27:41.394347Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Linux utilities with correct syntax, proper piping, and balanced quoting.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately reads an MTD partition to generate a checksum for image verification, though it realistically requires root privileges which contradicts the provided metadata.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:27:43.021961Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

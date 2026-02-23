@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1216",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[withheld] PowerShell initiating rundll32.exe to load a signed system library that in turn interprets script/HTML for proxy execution (details redacted).",
+  "explanation": "rundll32.exe can be abused to load trusted components that evaluate script-like content and then spawn additional processes, serving as a proxy for execution.",
+  "rationale_steps": [
+    "Process chain with powershell.exe -> rundll32.exe with suspicious DLL entry point usage.",
+    "Command line includes atypical parameters indicating script/HTML interpretation.",
+    "rundll32.exe spawns an interpreter or unrelated process immediately after launch.",
+    "Lack of corresponding UI or system configuration changes expected for legitimate usage.",
+    "Binary path and signature validate as Microsoft-signed; behavior is the anomaly."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1216-630d071e-01f5e969",
+  "source_prompt_hash": "630d071e",
+  "timestamp_utc": "2025-09-30T06:59:07.952821Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "No actual command string was provided (details redacted), so it is a non-runnable fragment rather than a parseable command.",
+        "semantic_score": 2,
+        "semantic_justification": "Using PowerShell to launch rundll32 to load a signed library for script/HTML interpretation is operationally plausible but aligns with Signed Binary Proxy Execution (rundll32/mshtml) rather than T1216's system script proxies (e.g., cscript/wscript with signed .vbs), and no specific arguments are shown.",
+        "combined_score": 1.5,
+        "confidence": 0.4,
+        "timestamp": "2025-10-01T22:04:08.137266Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is explicitly withheld/redacted, providing only a high-level description rather than actual syntax, making it impossible to evaluate as a runnable command.",
+        "semantic_score": 3,
+        "semantic_justification": "The described technique of using PowerShell to invoke rundll32.exe with a signed system library to proxy script/HTML execution is conceptually plausible and loosely aligned with T1216 (e.g., using mshtml.dll or similar), but rundll32 abuse is more precisely T1218.011, and the redacted details prevent confirming whether a true signed script proxy (like PubPrn.vbs) is actually involved.",
+        "combined_score": 2.0,
+        "confidence": 0.4,
+        "timestamp": "2026-02-19T00:07:34.077366Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is provided as a natural language description and a redacted placeholder rather than executable code, making it a fragment that cannot be run.",
+        "semantic_score": 2,
+        "semantic_justification": "The command describes a signed binary proxy execution (T1218.011) via rundll32.exe rather than the system script proxy execution (T1216) requested, which specifically involves abusing signed scripts like .vbs or .wsf files via script hosts.",
+        "combined_score": 1.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:07:56.841772Z"
+      }
+    ],
+    "llm_average_syntactic": 1.0,
+    "llm_average_semantic": 2.333,
+    "llm_average_score": 1.667,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

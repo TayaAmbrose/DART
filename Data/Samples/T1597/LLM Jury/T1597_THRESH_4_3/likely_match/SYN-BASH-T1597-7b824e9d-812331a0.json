@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -lc 'set -euo pipefail; ts=$(date -u +%FT%TZ); d=$(date -u +%F); dest=/opt/ti/closed/registries/$d; mkdir -p \"$dest\"; if scp -q -P 22 -i /etc/ssh/keys/corpdata_ed25519 -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/etc/ssh/known_hosts_corpdata -o IdentitiesOnly=yes feedreader@sftp.corpdata-secure.com:/exports/registries/acme_corp/latest.json{,.sha256} \"$dest\"/ && (cd \"$dest\" && sha256sum -c latest.json.sha256); then printf \"{\\\"timestamp\\\":\\\"%s\\\",\\\"technique\\\":\\\"T1597\\\",\\\"source\\\":\\\"corpdata-secure\\\",\\\"artifact\\\":\\\"%s/latest.json\\\",\\\"status\\\":\\\"verified\\\"}\\n\" \"$ts\" \"$dest\" | tee -a /var/log/ti_fetch.json; else printf \"{\\\"timestamp\\\":\\\"%s\\\",\\\"technique\\\":\\\"T1597\\\",\\\"source\\\":\\\"corpdata-secure\\\",\\\"status\\\":\\\"error\\\"}\\n\" \"$ts\" >&2; fi'",
+  "explanation": "Securely retrieves a subscription-only corporate registry dataset (JSON) via the vendor's SFTP portal, verifies integrity, and logs a JSON status. This aligns with T1597 by accessing closed-source commercial records.",
+  "rationale_steps": [
+    "Authenticate to sftp.corpdata-secure.com using an approved SSH key with strict host key validation.",
+    "Download the latest corporate registry JSON and its checksum.",
+    "Validate file integrity with sha256sum.",
+    "Store artifacts in a controlled directory and emit a JSON status log."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1597-7b824e9d-812331a0",
+  "source_prompt_hash": "7b824e9d",
+  "timestamp_utc": "2025-09-30T06:47:02.517764Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed with balanced single/double quotes and braces, valid scp/printf options, proper use of set -euo pipefail, and a correct if/then/else structure with pipelines.",
+        "semantic_score": 4,
+        "semantic_justification": "Accurately performs T1597 by pulling closed-source data via authenticated SSH, verifying integrity with sha256sum, and logging JSON status, though writing to /opt and /var/log may require privileges not accounted for.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T13:42:55.257902Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, valid flag formats for scp, proper use of set options, command separators, and correct brace expansion syntax for downloading two files simultaneously.",
+        "semantic_score": 4,
+        "semantic_justification": "The command credibly implements T1597 by using SCP to retrieve a subscription-only corporate registry dataset from a named commercial feed provider with integrity verification and structured JSON logging, though it represents the defender/analyst side of closed-source intelligence access rather than an adversarial acquisition, slightly reducing alignment with the offensive framing of T1597.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:58:26.436426Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, utilizing correct shell options (set -euo pipefail), valid brace expansion for scp, properly balanced quotes, and correct conditional logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The command realistically simulates the retrieval of a closed-source commercial dataset via SFTP, incorporating professional practices like integrity verification and structured JSON logging.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:58:32.293839Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

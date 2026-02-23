@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "iptables -I INPUT -m recent --name t1205_sip --rcheck --seconds 60 -p tcp --dport 5080 -j ACCEPT; iptables -I INPUT -p udp --dport 5060 -m string --string \"REGISTER sip:knock\" --algo bm -m recent --name t1205_sip --set -j LOG --log-prefix \"T1205-SIP-SIGNAL \"; nc -l -p 5080 -k >/dev/null 2>&1 &",
+  "explanation": "Leverages SIP on UDP/5060 with a crafted REGISTER line to signal. The firewall logs and marks the source, then opens TCP/5080 where nc listens for 60s. Demonstrates SIP-based signaling and firewall interaction.",
+  "rationale_steps": [
+    "Inspect SIP registration lines for a magic pattern",
+    "Emit firewall logs to surface anomalous SIP messages",
+    "Temporarily grant access to a guarded service upon signal"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-19973fec-03c6080d",
+  "source_prompt_hash": "19973fec",
+  "timestamp_utc": "2025-09-30T03:30:48.198488Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are well-formed with balanced quotes, valid separators, and recognized iptables and nc flags.",
+        "semantic_score": 4,
+        "semantic_justification": "Implements SIP-based signaling with iptables recent to allow TCP/5080 for 60s and logs appropriately, but requires root privileges and assumes environment/netcat flag compatibility for full effect.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T15:44:32.858061Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command chain is well-formed with proper semicolons, balanced quotes, and valid iptables/nc flags, though the privilege annotation of 'None' is inconsistent since iptables requires root, which is a metadata issue rather than a syntax error.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling mechanism using SIP REGISTER as a covert signal on UDP/5060 to unlock TCP/5080 via iptables recent module, which aligns well with T1205, though the 60-second window in --rcheck applies to the recent module's time tracking rather than the nc listener duration, and nc without -k on some implementations may not persist as implied.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:53:32.560962Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command sequence is well-formed, using correct iptables module syntax and standard shell redirection/backgrounding.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly implements traffic signaling using port knocking with a SIP payload, though it requires root privileges which contradicts the provided metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:53:35.079483Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

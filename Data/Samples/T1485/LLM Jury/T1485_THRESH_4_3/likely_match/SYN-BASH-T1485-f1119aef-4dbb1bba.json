@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "kubectl exec -n prod $(kubectl get pods -n prod -l app=myapp -o jsonpath='{.items[0].metadata.name}') -- bash -lc 'wipe -f /tmp/myapp/*.tmp'",
+  "explanation": "Runs secure file wiping inside a Kubernetes pod for temporary files, targeting only the application’s temp artifacts.",
+  "rationale_steps": [
+    "Resolve a pod name dynamically in the prod namespace using a label selector.",
+    "Execute bash in the pod and run wipe on only .tmp files within the app’s temp directory.",
+    "wipe overwrites data blocks before deletion to hinder data recovery from pod storage."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-f1119aef-4dbb1bba",
+  "source_prompt_hash": "f1119aef",
+  "timestamp_utc": "2025-09-30T08:06:57.630497Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed with balanced quotes, valid command substitution, and correct kubectl exec invocation and flag usage.",
+        "semantic_score": 4,
+        "semantic_justification": "Executes secure deletion via wipe inside a pod aligning with T1485, but depends on RBAC access and the presence of bash and wipe in the container.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-02T01:57:35.173550Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced parentheses and quotes, valid kubectl subcommand substitution, proper namespace flags, jsonpath expression, and correct bash -lc invocation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses kubectl exec to run a secure wipe tool inside a Kubernetes pod targeting temporary files, which aligns with T1485 data destruction via secure deletion utilities, though 'wipe' is a less common tool that may not be present in typical container images, and the scope is limited to /tmp/*.tmp rather than impactful data.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:42:17.663375Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid bash subshell syntax, correctly formatted kubectl JSONPath, and proper argument separation for executing a command inside a container.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately targets a specific pod via labels and executes a secure deletion tool (wipe) on specific files, perfectly illustrating the Data Destruction technique in a Kubernetes environment.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:42:20.393966Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

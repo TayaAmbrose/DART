@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Python",
+  "command": "[withheld — non-actionable: would use IPv6 UDP with a specified traffic class (if available) to send base64-encoded chunks to a unicast destination on a high, uncommon port]",
+  "explanation": "IPv6-specific options and addressing provide a distinct medium from typical IPv4/HTTPS traffic, aligning with T1011.",
+  "rationale_steps": [
+    "Leverage IPv6 unicast to avoid primary IPv4 channels",
+    "Optionally set IPv6 traffic class without altering routing",
+    "Base64-encode data for ASCII-safe transport",
+    "Chunk and send via UDP to a high-numbered port",
+    "Avoids any persistent network configuration changes"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1011-b0d2c744-416c8c11",
+  "source_prompt_hash": "b0d2c744",
+  "timestamp_utc": "2025-09-30T08:42:48.649618Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "No concrete command string is provided—only a descriptive placeholder—so it is a non-runnable fragment.",
+        "semantic_score": 1,
+        "semantic_justification": "Although IPv6 UDP exfiltration via Python on Windows is plausible, this does not meet T1011’s 'other network medium' criterion (e.g., cellular, Wi‑Fi, Bluetooth), making the technique mapping misaligned.",
+        "combined_score": 1.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T01:43:05.603545Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 2,
+        "syntactic_justification": "The command is withheld and described only in abstract terms, so no actual syntax can be evaluated, resulting in a low score due to the absence of a concrete, parseable command.",
+        "semantic_score": 3,
+        "semantic_justification": "The described approach of using IPv6 UDP with base64-encoded chunks to an uncommon port is conceptually plausible for T1011 (using a distinct network medium/protocol stack), but IPv6 alone does not constitute a fundamentally different network medium as T1011 intends (e.g., cellular, Bluetooth, Wi-Fi vs. wired), making the technique mapping only partially accurate.",
+        "combined_score": 2.5,
+        "confidence": 0.5,
+        "timestamp": "2026-02-18T22:12:54.302994Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command field contains a natural language description of logic rather than executable Python code, making it a non-runnable fragment.",
+        "semantic_score": 2,
+        "semantic_justification": "The technique T1011 (Exfiltration Over Other Network Medium) specifically refers to using different physical or link-layer media like cellular or Bluetooth; using IPv6 on the same interface as IPv4 is a protocol distinction (T1048) rather than a medium distinction.",
+        "combined_score": 1.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:13:12.851539Z"
+      }
+    ],
+    "llm_average_syntactic": 1.333,
+    "llm_average_semantic": 2.0,
+    "llm_average_score": 1.667,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

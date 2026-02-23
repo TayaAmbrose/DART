@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "iptables -I INPUT -m recent --name t1205_icmp --rcheck --seconds 60 -p tcp --dport 31337 -j ACCEPT; iptables -I INPUT -p icmp --icmp-type echo-request -m string --string \"PINGOPEN\" --algo bm -m recent --name t1205_icmp --set -j LOG --log-prefix \"T1205-ICMP-SIGNAL \"; nc -l -p 31337 -k >/dev/null 2>&1 &",
+  "explanation": "Matches ICMP echo-request payloads containing the ASCII token PINGOPEN. On detection, logs and enables TCP/31337 for 60s, guarded by the signaling source, where nc listens. Shows non-TCP/UDP packet signaling with payload inspection.",
+  "rationale_steps": [
+    "Inspect ICMP payload for a specific token",
+    "Log anomalous ICMP requests for alerting",
+    "Conditionally expose a listener based on the ICMP signal"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-19973fec-fc39a832",
+  "source_prompt_hash": "19973fec",
+  "timestamp_utc": "2025-09-30T03:30:48.198488Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are well-formed with balanced quotes, valid iptables/nc flags, and proper separators/backgrounding.",
+        "semantic_score": 4,
+        "semantic_justification": "Implements ICMP payload-triggered signaling to permit TCP/31337 for 60s via the recent module with logging and an nc listener, but requires root privileges and appropriate modules to be present.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T16:54:16.711702Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, valid iptables flags and modules, correct semicolons as separators, and a properly backgrounded nc listener.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling mechanism using ICMP payload inspection with iptables string matching to conditionally open TCP/31337 for 60 seconds, accurately demonstrating T1205 behavior, though the 'None' privilege claim is incorrect since iptables manipulation requires root, and nc listening on a privileged-adjacent port without -e limits its C2 utility.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T03:57:47.388531Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid iptables module syntax and standard netcat flags with proper shell redirection and backgrounding.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic effectively implements traffic signaling (port knocking via ICMP payload), though it incorrectly specifies 'None' for privileges as iptables requires root/CAP_NET_ADMIN.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:57:50.304309Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

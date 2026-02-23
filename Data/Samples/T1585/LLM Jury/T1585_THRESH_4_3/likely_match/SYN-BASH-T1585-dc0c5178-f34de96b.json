@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1585",
+  "platform": "Kubernetes",
+  "shell": "Bash",
+  "command": "kubectl run persona-social-avatar -n personas --rm -i --restart=Never --image=curlimages/curl:8.8.0 --command -- sh -lc 'curl -sS -X POST https://api.example-social.test/v1/users/artisanal_outreach/avatar -H \"Content-Type: application/json\" -H \"Accept: application/json\" -d \"{\\\"avatar_url\\\":\\\"https://img.example-cdn.test/avatars/artisanal_outreach.png\\\"}\"'",
+  "explanation": "Adds an avatar to the persona to pass basic authenticity checks and platform heuristics.",
+  "rationale_steps": [
+    "Upload/link a profile image to complete the persona.",
+    "Reduce likelihood of automated scrutiny for incomplete profiles."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1585-dc0c5178-f34de96b",
+  "source_prompt_hash": "dc0c5178",
+  "timestamp_utc": "2025-09-30T07:32:30.045514Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed kubectl run invocation with balanced quoting and valid curl flags and JSON escaping.",
+        "semantic_score": 4,
+        "semantic_justification": "Plausibly sets an avatar for a social persona via an HTTP POST from a one-off Kubernetes pod, aligning with account establishment/abuse under T1585, but lacks authentication which reduces operational realism.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T09:42:49.162366Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes (including properly escaped inner JSON quotes), valid kubectl flags (--rm, -i, --restart=Never), correct namespace specification, and proper shell invocation via sh -lc.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1585 persona-building behavior by updating a social account avatar via API to improve authenticity and evade platform heuristics, using appropriate tools (curl in a disposable kubectl pod) and realistic API endpoint patterns, though the use of test/example domains slightly reduces operational realism.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:39:43.370346Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The kubectl command and the nested curl command are perfectly formed with correct flag usage and properly escaped JSON payload within the shell string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates the 'Establish Accounts' technique by programmatically updating account metadata (an avatar) via an API to increase the perceived legitimacy of a social media persona.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:39:47.747030Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

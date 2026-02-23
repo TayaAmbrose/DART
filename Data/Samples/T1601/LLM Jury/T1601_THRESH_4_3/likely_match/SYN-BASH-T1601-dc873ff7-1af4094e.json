@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "[ \"$(sha256sum /mnt/flash/system.img | awk '{print $1}')\" = \"$(sha256sum /var/backups/system.img | awk '{print $1}')\" ] || echo 'system image checksum mismatch: modified'",
+  "explanation": "Compares the active image's checksum to a baseline to detect unauthorized modifications.",
+  "rationale_steps": [
+    "Compute hashes for active and baseline images.",
+    "Alert if hashes differ, indicating the system image has been altered."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-dc873ff7-1af4094e",
+  "source_prompt_hash": "dc873ff7",
+  "timestamp_utc": "2025-09-30T04:57:26.660610Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash test with balanced quotes, valid command substitutions, and correct use of sha256sum and awk.",
+        "semantic_score": 4,
+        "semantic_justification": "It compares SHA-256 hashes of the active and baseline images to flag modifications, fitting T1601 detection, though it assumes file accessibility and sha256sum availability on the device.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T17:22:58.343349Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed with balanced brackets and proper use of command substitution, but the outer `[ ... ]` test construct uses `=` for string comparison which is valid in POSIX sh/bash, though the complex nested command substitutions inside `[ ]` can cause issues in some shells due to word splitting; overall parseable but edge-case fragile.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements T1601 detection by comparing the SHA-256 checksum of the active system image against a known-good baseline and alerting on mismatch, which is a textbook integrity validation approach for detecting unauthorized firmware/image modifications on network devices.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:13:31.972849Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, proper command substitution, and correctly balanced operators and quotes.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively compares the checksums of a live system image and a backup to identify potential modifications, aligning with detection strategies for T1601.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:13:33.405346Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

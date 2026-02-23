@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "$domains=(Get-DnsClientCache).Name | Select-Object -Unique; $sus=$domains | Where-Object { $label=($_ -split '\\.')[0]; $label.Length -ge 15 -or ($label -replace '\\D','').Length -ge 5 }; foreach($d in $sus){ try{ $rdap=Invoke-WebRequest -UseBasicParsing \"https://rdap.org/domain/$d\" -TimeoutSec 8; $j=$rdap.Content|ConvertFrom-Json; $changed=([datetime]($j.events | Where-Object {$_.eventAction -eq 'last changed'} | Select-Object -First 1 -ExpandProperty eventDate)); if([datetime]::UtcNow - $changed -lt [TimeSpan]::FromDays(7)){ Invoke-WebRequest -UseBasicParsing -Method POST -ContentType 'application/json' -Body (@{domain=$d; lastChanged=$changed.ToString('o')}|ConvertTo-Json) 'https://siem.example.local/api/ingest/rdap-recent-change' } } catch{} }",
+  "explanation": "Defensive prioritization for T1568: flags cached domains with long/numeric-heavy labels and recent RDAP 'last changed' events, a behavior aligned with dynamic resolution activity.",
+  "rationale_steps": [
+    "Identify suspicious label structures from cache.",
+    "Query RDAP for each domain.",
+    "Prioritize domains with recent change events.",
+    "Send prioritized list to SIEM."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1568-044d57b5-4c9492be",
+  "source_prompt_hash": "044d57b5",
+  "timestamp_utc": "2025-09-30T04:07:31.423921Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell one-liner has balanced braces and quotes, valid cmdlets and parameters, proper separators, and a parseable mix of named and positional arguments.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly detects T1568-like activity by filtering cached domains with DGA-style labels and correlating with recent RDAP changes before reporting to a SIEM, though it omits direct indicators like TTL churn, NXDOMAIN rates, or endpoint rotation.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T07:12:56.361594Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced parentheses and braces, but the final Invoke-WebRequest call has the URL argument positionally placed after the -Body parameter without a named flag, which could cause parsing ambiguity in strict environments.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a defensive T1568 detection workflow by extracting cached DNS entries, heuristically flagging long/numeric-heavy labels characteristic of DGA-generated domains, querying RDAP for recent registration changes (a valid signal for dynamic resolution infrastructure), and forwarding findings to a SIEM, though RDAP availability and the heuristic thresholds may produce false positives/negatives in practice.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:27:19.845756Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed PowerShell script with correct variable assignments, pipe operations, control flow, and balanced delimiters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively implements a defensive heuristic for T1568 by identifying high-entropy domain labels in the local DNS cache and correlating them with recent registration/update events via RDAP.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:27:22.542271Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

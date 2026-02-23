@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "mkdir -p /Volumes/USB/.Trashes/501 && cp -pR ~/Documents/HR /Volumes/USB/.Trashes/501/.syslog",
+  "explanation": "Copies sensitive files into a hidden trash-like directory on the USB, preserving timestamps to evade simple detection.",
+  "rationale_steps": [
+    "Create a hidden path on the removable drive to store data.",
+    "Copy data with preserved metadata to avoid alerting by mtimes.",
+    "Keep all operations local to the host.",
+    "Stage for physical exfiltration via the external drive."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-19e64b98-9f4c9614",
+  "source_prompt_hash": "19e64b98",
+  "timestamp_utc": "2025-09-30T05:31:52.812086Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid Bash with correct use of &&, mkdir -p, and cp -pR flags and well-formed paths.",
+        "semantic_score": 5,
+        "semantic_justification": "It creates a hidden Trash-like directory on the USB and recursively copies the HR data there with preserved timestamps, aligning with stealthy exfiltration to removable media on macOS.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2025-10-01T06:53:43.026333Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid use of mkdir -p, &&, cp -pR, proper path quoting conventions, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by copying sensitive HR documents to a USB drive while hiding them in the macOS .Trashes/501 directory (a legitimate system folder that appears innocuous) and renaming the directory to .syslog to further evade detection, with -p flag preserving timestamps to avoid modification-time-based detection.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:31:00.249045Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax with valid flags for mkdir and cp, correctly chained with the logical AND operator.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively stages data on a removable medium using a hidden directory structure that mimics macOS system defaults to evade detection.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:31:01.411164Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

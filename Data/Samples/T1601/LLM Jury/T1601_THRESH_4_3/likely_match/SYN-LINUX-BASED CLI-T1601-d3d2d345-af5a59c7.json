@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Linux-based CLI",
+  "command": "echo 'T1601 patch: ubiformat rootfs partition'; ubiformat /dev/mtd5 -y -f /tmp/mal_rootfs.ubi && sync",
+  "explanation": "Reformats and writes a malicious UBI-formatted rootfs image to the designated MTD partition, modifying the system image used at boot.",
+  "rationale_steps": [
+    "Use ubiformat to safely erase/format the UBI-capable MTD partition.",
+    "Flash a crafted UBI image containing the attacker’s modified root filesystem.",
+    "Sync to ensure the new image is fully persisted."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-LINUX-BASED CLI-T1601-d3d2d345-af5a59c7",
+  "source_prompt_hash": "d3d2d345",
+  "timestamp_utc": "2025-09-30T02:47:56.896050Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quotes and proper separators; ubiformat is invoked with valid flags and arguments, and sync is correctly chained with &&.",
+        "semantic_score": 4,
+        "semantic_justification": "Flashing a UBI image to an MTD partition via ubiformat aligns with modifying the system image (T1601), but it typically requires root privileges and a non-active target partition.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T17:14:10.637448Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid command separators (;, &&), correct flag usage for ubiformat (-y, -f), and proper sync invocation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by using ubiformat to write a malicious UBI filesystem image to an MTD partition (a realistic embedded/network device storage mechanism), followed by sync to ensure the write is committed, directly aligning with modifying the system image used at boot.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:12:37.580731Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid shell syntax, proper command separators, and correct flag usage for the ubiformat utility.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately utilizes mtd-utils to overwrite a flash partition with a new root filesystem image, directly implementing the T1601 technique on an embedded Linux platform.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:12:39.651981Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

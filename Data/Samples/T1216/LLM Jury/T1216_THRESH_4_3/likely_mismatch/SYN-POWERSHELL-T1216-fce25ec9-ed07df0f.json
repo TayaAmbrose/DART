@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1216",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "rundll32.exe javascript:\"\\..\\mshtml,RunHTMLApplication \";GetObject(\"script:C:\\\\Users\\\\Public\\\\localtask.sct\")",
+  "explanation": "Proxies execution via MSHTML and the script: moniker to run a local scriptlet under user context, avoiding direct execution mechanisms.",
+  "rationale_steps": [
+    "From PowerShell, call rundll32 to reach MSHTML's RunHTMLApplication.",
+    "In JScript, use GetObject with a local scriptlet path to execute embedded code.",
+    "Execution path uses trusted components; monitoring should focus on script: moniker usage and local .sct targets via rundll32."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1216-fce25ec9-ed07df0f",
+  "source_prompt_hash": "fce25ec9",
+  "timestamp_utc": "2025-09-30T07:05:43.585605Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 2,
+        "syntactic_justification": "In PowerShell the unescaped semicolon splits the line into two commands, causing rundll32 to miss the JScript payload and making GetObject(...) an invalid separate command despite otherwise balanced quoting.",
+        "semantic_score": 3,
+        "semantic_justification": "The command conceptually uses rundll32 with mshtml and the script: moniker to execute a local .sct (a known proxy-execution pattern more aligned with Signed Binary Proxy Execution/Rundll32 than T1216), but as given for the PowerShell shell it would not achieve the intended execution.",
+        "combined_score": 2.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T04:35:47.923893Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed and follows the known rundll32.exe javascript: moniker pattern with GetObject script: moniker, though the escaped backslash sequence '\\..' is a known quirk of this technique rather than a syntax error, making it parseable and functional.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command uses a legitimate rundll32/MSHTML/javascript proxy execution technique (related to LOLBins and AppLocker bypass), it does not align well with T1216 (System Script Proxy Execution via signed VBS scripts like PubPrn.vbs), as it leverages rundll32 with MSHTML rather than invoking a trusted signed system script via cscript/wscript, making it more accurately classified under T1218.011 (Rundll32) or T1059.007.",
+        "combined_score": 3.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:11:38.188529Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 2,
+        "syntactic_justification": "In PowerShell, the semicolon acts as a command separator, causing the second half of the JScript payload to be interpreted as a separate, invalid cmdlet rather than an argument for rundll32.",
+        "semantic_score": 3,
+        "semantic_justification": "The command correctly implements a known binary proxy execution technique (T1218.011), but it does not utilize a signed system script like PubPrn.vbs as described in the provided MITRE ATT&CK Technique T1216.",
+        "combined_score": 2.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:12:01.444745Z"
+      }
+    ],
+    "llm_average_syntactic": 2.667,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 2.833,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

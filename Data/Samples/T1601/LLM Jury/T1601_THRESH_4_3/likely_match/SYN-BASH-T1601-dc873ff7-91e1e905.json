@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "find /boot -type f -exec sha256sum {} \\; | sort -k2 > /var/tmp/boot_manifest.sha256 && diff -u /var/backups/boot_manifest.sha256 /var/tmp/boot_manifest.sha256 || true",
+  "explanation": "Generates a per-file checksum manifest of the boot partition and diffs it against a baseline to spot image-related tampering.",
+  "rationale_steps": [
+    "Hash all boot-critical files to capture current state.",
+    "Compare against a stored baseline to detect unexpected changes in the system image and related components."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-dc873ff7-91e1e905",
+  "source_prompt_hash": "dc873ff7",
+  "timestamp_utc": "2025-09-30T04:57:26.660610Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with correct -exec termination, piping, sorting, redirection, and logical operators.",
+        "semantic_score": 4,
+        "semantic_justification": "Accurately generates and compares boot file checksums to detect tampering, but assumes Linux-like tooling, a /boot path, an existing baseline, and likely elevated access on many network devices.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T19:57:45.148792Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with proper use of -exec, shell escaping, pipe, redirection, &&, and || operators, all balanced and syntactically valid in Bash.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements boot partition integrity checking by generating SHA256 checksums and diffing against a baseline, which is a legitimate detection mechanism for T1601 firmware tampering, though the 'Privilege: None' claim is unrealistic since reading /boot typically requires elevated privileges on most systems.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:26:14.448726Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash utilities, pipes, and logical operators with perfectly valid syntax and balanced characters.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements an integrity check to detect system image modifications, though accessing and checksumming /boot files typically requires root privileges rather than 'None'.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:26:18.203865Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

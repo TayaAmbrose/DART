@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1585",
+  "platform": "Kubernetes",
+  "shell": "Bash",
+  "command": "kubectl run persona-social-follow -n personas --rm -i --restart=Never --image=curlimages/curl:8.8.0 --command -- sh -lc 'curl -sS -X POST https://api.example-social.test/v1/users/artisanal_outreach/follow -H \"Content-Type: application/json\" -H \"Accept: application/json\" -H \"Authorization: Bearer tok_test_123456\" -d \"{\\\"targets\\\":[\\\"cncf_news\\\",\\\"k8s_updates\\\",\\\"oss_daily\\\"]}\"'",
+  "explanation": "Has the persona follow topical accounts to blend in and appear organically active.",
+  "rationale_steps": [
+    "Use an API token to follow a set of domain-relevant accounts.",
+    "Simulates natural interest patterns to avoid detection."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1585-dc0c5178-2dd16ad8",
+  "source_prompt_hash": "dc0c5178",
+  "timestamp_utc": "2025-09-30T07:32:30.045514Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Proper kubectl run invocation with balanced quoting and a well-formed curl POST including correctly quoted headers and escaped JSON payload.",
+        "semantic_score": 4,
+        "semantic_justification": "It uses an existing account to follow topical profiles and appear normal, aligning with abusing/maintaining accounts under T1585, though it does not create or provision the account itself.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T08:21:20.196212Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper escape sequences for the JSON body, valid kubectl and curl flags, and correct shell invocation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses a ephemeral Kubernetes pod to make an authenticated API call that follows social accounts on behalf of a persona, directly supporting T1585's account-blending behavior, though the use of a hardcoded test token and test domain slightly reduces operational realism.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:35:01.608464Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The kubectl run command is perfectly formed with valid flags, and the nested curl command correctly handles JSON escaping within the shell string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately simulates an adversary using an established cloud/container environment to perform account-warming activities on a social media profile to blend into normal activity, matching T1585.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:35:04.269959Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

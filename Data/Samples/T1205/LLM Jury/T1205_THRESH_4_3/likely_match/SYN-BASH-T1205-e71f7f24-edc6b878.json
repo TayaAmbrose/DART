@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "sudo bash -c 'iptables -I INPUT -p tcp --dport 1111 -m recent --name K1 --set -j DROP; iptables -I INPUT -p tcp --dport 2222 -m recent --rcheck --seconds 10 --name K1 -m recent --name K2 --set -j DROP; iptables -I INPUT -p tcp --dport 3333 -m recent --rcheck --seconds 10 --name K2 -m recent --name K3 --set -j DROP; iptables -I INPUT -p tcp --dport 22 -m recent --rcheck --seconds 20 --name K3 -j ACCEPT; vtysh -c \"conf t\" -c \"ip route 198.51.100.0/24 192.0.2.254\"'",
+  "explanation": "Configures iptables-based port knocking (1111→2222→3333) to temporarily open SSH (22) upon correct sequence; then sets a supporting static route via vtysh. Detection: flag ephemeral rule insertions and kernel log rate spikes; monitor unauthorized changes in ssh exposure and FRRouting static routes.",
+  "rationale_steps": [
+    "Use iptables 'recent' module to implement a three-port knock sequence controlling SSH access.",
+    "After enabling the covert access window, add a route to facilitate management reachability.",
+    "Detect via configuration auditing (iptables-save diffs), syslog for INPUT rule changes, and FRR route change monitoring."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-e71f7f24-edc6b878",
+  "source_prompt_hash": "e71f7f24",
+  "timestamp_utc": "2025-09-30T06:04:49.943820Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and separators with valid iptables recent-module and vtysh flags make the composite sudo bash -c command well-formed.",
+        "semantic_score": 5,
+        "semantic_justification": "The rules implement port-knocking via iptables recent lists to signal and temporarily open SSH (T1205), and the vtysh static route is a plausible supporting change under sudo.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T18:10:49.566968Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper semicolons as separators, valid iptables flags and options, and correct vtysh syntax throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a classic port-knocking sequence (1111→2222→3333→22) using iptables 'recent' module with time windows, which is a textbook Traffic Signaling technique (T1205) for covertly triggering SSH access, and the vtysh static route addition is operationally plausible as a supporting network configuration on a routing device.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T04:05:15.028299Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correctly nested quotes, valid iptables modules/flags, and standard vtysh command-line arguments for FRRouting/Quagga.",
+        "semantic_score": 5,
+        "semantic_justification": "The iptables logic correctly implements a stateful port-knocking sequence (1111->2222->3333) using the 'recent' module to eventually permit SSH, and the vtysh command properly adds a static route as described.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:05:19.225019Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

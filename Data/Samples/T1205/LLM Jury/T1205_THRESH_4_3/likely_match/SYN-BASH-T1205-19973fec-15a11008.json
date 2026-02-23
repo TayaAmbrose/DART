@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "iptables -I INPUT -m recent --name t1205_wol --rcheck --seconds 60 -p tcp --dport 2223 -j ACCEPT; iptables -I INPUT -p udp --dport 9 -m string --hex-string \"|ffffffffffff|\" -m recent --name t1205_wol --set -j LOG --log-prefix \"T1205-WOL-SIGNAL \"; nc -l -p 2223 -k >/dev/null 2>&1 &",
+  "explanation": "Uses a Wake-on-LAN style magic packet pattern (six 0xFF bytes) on UDP/9 as the signal. The firewall logs and adds the source to a recent list, opening TCP/2223 for 60s where nc listens. Illustrates network-level signaling via WoL characteristics.",
+  "rationale_steps": [
+    "Detect WoL magic frame signature at the firewall",
+    "Log unusual UDP/9 broadcasts/unicasts for detection",
+    "Permit gated access to a hidden service after WoL-style signal"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-19973fec-15a11008",
+  "source_prompt_hash": "19973fec",
+  "timestamp_utc": "2025-09-30T03:30:48.198488Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are well-formed with balanced quotes, valid iptables and nc flags, proper separators/redirects, and correct backgrounding.",
+        "semantic_score": 4,
+        "semantic_justification": "It implements a WoL-like UDP signal that logs and sets a recent list to open TCP/2223 for 60 seconds while nc listens, but it actually requires root privileges (contradicting the claim) and depends on the availability of the string/recent modules.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-01T19:18:42.976630Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command chain is well-formed with proper semicolons, balanced quotes, and valid iptables/nc flags, though the privilege annotation says 'None' while iptables requires root, which is a metadata inconsistency rather than a syntax error.",
+        "semantic_score": 4,
+        "semantic_justification": "The implementation correctly demonstrates T1205 port-knocking/traffic signaling by using a WoL magic packet (0xFF pattern) on UDP/9 as a trigger that opens TCP/2223 for 60 seconds via iptables recent module, which is operationally plausible, though the nc listener discards all data and the privilege requirement mismatch reduces realism.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T04:10:14.971253Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command sequence uses correct semicolons, valid iptables module flags (recent, string), correct hex-string formatting, and standard backgrounding syntax for netcat.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly implements T1205 by using a specific network pattern (WoL magic packet header) to trigger a firewall state change (iptables recent module) that opens a secondary communication channel (TCP/2223), which is a classic example of traffic signaling.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:10:19.764511Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

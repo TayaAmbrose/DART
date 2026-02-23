@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "wakeonlan -i 255.255.255.255 11:22:33:44:55:66",
+  "explanation": "Broadcasts a Wake-on-LAN magic packet (6 bytes of 0xFF followed by 16 repetitions of the MAC) to remotely power on or wake a device as part of traffic signaling. Detection: monitor for WOL packets on ports 7/9 and correlate with unauthorized device wake events.",
+  "rationale_steps": [
+    "Transmit a WOL packet to the broadcast address for MAC 11:22:33:44:55:66.",
+    "The target NIC interprets the magic sequence and wakes the device.",
+    "Once awake, hidden services can be contacted by the operator.",
+    "Defenders watch for WOL frames and unusual power state changes in asset inventory logs."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-4e50b45e-61809a22",
+  "source_prompt_hash": "4e50b45e",
+  "timestamp_utc": "2025-09-30T05:51:10.007150Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed command using a valid flag (-i) and properly formatted MAC address with no quoting or separator issues.",
+        "semantic_score": 4,
+        "semantic_justification": "Appropriately uses wakeonlan to broadcast a WoL magic packet consistent with signaling, though success depends on WoL enablement and broadcast reachability (255.255.255.255 may be filtered or not routed).",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T14:33:10.432948Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows the standard syntax for the wakeonlan utility, including the broadcast address flag and a valid MAC address format.",
+        "semantic_score": 5,
+        "semantic_justification": "Sending a Wake-on-LAN magic packet is a valid method of traffic signaling used to remotely trigger a state change in a target system, aligning perfectly with T1205.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:48:34.367150Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid flags (-i for broadcast address), a proper broadcast IP, and a correctly formatted MAC address in the expected colon-separated hex notation.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command correctly sends a Wake-on-LAN magic packet (a legitimate use of traffic signaling via a specially crafted broadcast packet), WoL is a very narrow and specific use case that only marginally fits T1205 Traffic Signaling — which typically involves embedding covert commands or triggers within traffic to coordinate C2 actions — rather than simply waking a device, making the alignment partial at best.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:48:37.236035Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "bash -lc 'ufw --force enable && ufw default deny incoming && ufw logging high && iptables -I ufw-before-input 1 -p udp --dport 7001 -m state --state NEW -m recent --name S1 --set && iptables -I ufw-before-input 1 -p tcp --dport 8001 -m tcp --syn -m recent --rcheck --seconds 10 --name S1 -m recent --name S2 --set && iptables -I ufw-before-input 1 -p udp --dport 9001 -m state --state NEW -m recent --rcheck --seconds 10 --name S2 -m recent --name S3 --set && iptables -I ufw-before-input 1 -p tcp --dport 2222 -m recent --rcheck --seconds 20 --name S3 -j ACCEPT'",
+  "explanation": "Implements a mixed-protocol knock: UDP/7001, then TCP SYN to 8001, then UDP/9001. Only after this ordered sequence does TCP/2222 open briefly to the source. This is classic T1205 signaling using a multi-step sequence across protocols. Detection: Look for the precise ordered triplet of connection attempts from the same IP and a short-lived acceptance on TCP/2222.",
+  "rationale_steps": [
+    "Enable ufw and deny incoming by default; enable logging.",
+    "Set recent:S1 on UDP/7001 arrival.",
+    "On TCP SYN to 8001 with S1 set, set S2.",
+    "On UDP/9001 with S2 set, set S3.",
+    "Accept TCP/2222 if S3 is present within 20 seconds.",
+    "Detect by correlating the specific 7001→8001(SYN)→9001 pattern in ufw/pcap logs."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-eb871457-a445aa90",
+  "source_prompt_hash": "eb871457",
+  "timestamp_utc": "2025-09-30T03:48:01.284804Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting with proper && chaining and valid ufw/iptables/recent/state flags, including permissible match-only iptables rules with side effects.",
+        "semantic_score": 4,
+        "semantic_justification": "Accurately implements a multi-step port-knock sequence using iptables recent lists in the UFW chain to briefly allow TCP/2222 for the knocking source, but it requires root privileges (contradicting 'Privilege: None') and depends on UFW/iptables backend presence.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T17:07:23.480167Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quoting, proper use of && separators, valid iptables flags and options, and no syntax errors throughout the entire chain.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements a multi-protocol port-knocking sequence (UDP/7001 → TCP SYN/8001 → UDP/9001 → TCP/2222 accept) using iptables recent module with named state tracking (S1, S2, S3) and time-bounded checks, which is a textbook T1205 traffic signaling implementation for covert access triggering.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T03:58:50.386666Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed bash string using proper logic operators (&&), balanced quotes, and correct syntax for both the UFW and iptables utilities.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements the described multi-stage port knocking sequence using the iptables 'recent' module to track state across different protocols and ports, which is a classic implementation of T1205.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:58:57.651688Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

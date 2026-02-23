@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "sudo python3 -c 'from scapy.all import sniff,UDP,Raw; sniff(filter=\"udp and port 9\", prn=lambda p: (hasattr(p, \"load\") and len(p[Raw].load) >= 102 and p[Raw].load.startswith(b\"\\xff\"*6) and print(f\"WOL-like packet from {p[0][1].src}\")))'",
+  "explanation": "Sniffs for WoL magic packet patterns (6x FF header) on UDP/9 using scapy to identify signaling. Requires root (sudo). Detection: alert on unexpected WoL traffic originating from non-management hosts.",
+  "rationale_steps": [
+    "Uses scapy to inspect UDP payloads for WoL signature bytes.",
+    "Prints source IP when a valid magic frame is observed.",
+    "Supports security monitoring of signaling behavior.",
+    "Detect via alerts on WoL frames outside of authorized maintenance windows."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-753dbc1f-21c640cd",
+  "source_prompt_hash": "753dbc1f",
+  "timestamp_utc": "2025-09-30T05:37:53.725688Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced shell and Python quoting with valid Scapy imports and function call; the command is well-formed and parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly detects WoL-like signaling on UDP/9 using Scapy and prints the source, though the hasattr/Raw check and layer indexing are somewhat brittle and may miss some cases.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T13:50:47.645452Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed with balanced parentheses and quotes, but the escaped backslashes in `b\"\\xff\"*6` within the single-quoted shell string may cause issues since `\\xff` inside single quotes won't be interpreted as a Python byte escape, potentially breaking the byte literal comparison.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses scapy to sniff UDP port 9 traffic and checks for WoL magic packet patterns (6 consecutive 0xFF bytes) to detect traffic signaling, which aligns well with T1205's concept of using protocol fields for covert signaling, though the escape sequence issue could reduce operational reliability.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:46:22.444512Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with correctly nested quotes, balanced parentheses, and valid Scapy/Python syntax.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic for detecting Wake-on-LAN packets (102 bytes, 6x FF header) is conceptually correct for signaling, the Python implementation uses b'\\\\xff' which matches the literal characters '\\xff' instead of the byte 0xFF, causing the matching logic to fail on real network traffic.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:46:37.377450Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

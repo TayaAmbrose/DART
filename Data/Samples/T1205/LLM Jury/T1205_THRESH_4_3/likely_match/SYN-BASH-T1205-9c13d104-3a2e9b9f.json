@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -lc 'MAC=\"\\x00\\x11\\x22\\x33\\x44\\x55\"; { printf \"\\xff%.0s\" {1..6}; for i in {1..16}; do printf \"$MAC\"; done; } | nc -u -b -w1 255.255.255.255 9'",
+  "explanation": "Builds a Wake-on-LAN magic packet in pure Bash (6x FF + 16x MAC) and broadcasts it via UDP/9 to wake the target system, enabling functionality for follow-on access. Root not strictly required to send a broadcast UDP, but some environments restrict broadcast; running as root aligns with raw socket and network constraints. Detection: log and alert on WoL-pattern UDP frames, especially if originating from servers that don't normally perform WoL.",
+  "rationale_steps": [
+    "Assemble the exact WoL frame with FF header and repeated MAC.",
+    "Send via UDP broadcast to the standard WoL port 9.",
+    "Wakes sleeping devices to re-enable reachable services.",
+    "Use Bash and netcat; no exotic tooling.",
+    "Detection: DPI signature for WoL; anomaly detection for broadcast spikes and out-of-profile senders."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-9c13d104-3a2e9b9f",
+  "source_prompt_hash": "9c13d104",
+  "timestamp_utc": "2025-09-30T05:40:25.546732Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 4,
+        "syntactic_justification": "Balanced quotes and braces with valid printf constructs and pipeline, though the nc -b option is implementation-specific and may not be recognized everywhere.",
+        "semantic_score": 4,
+        "semantic_justification": "It correctly crafts and broadcasts a Wake-on-LAN magic packet to UDP/9, serving as a network trigger consistent with traffic signaling, albeit not particularly covert and dependent on nc variant support.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T15:56:02.635107Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed with balanced braces and valid piping, but the `printf '\\xff%.0s' {1..6}` construct using brace expansion with printf's format repetition is non-standard and may not reliably produce 6 repetitions of \\xff in all bash versions, and the `-b` flag for nc (allow broadcast) may not be available on all nc implementations.",
+        "semantic_score": 3,
+        "semantic_justification": "While Wake-on-LAN magic packets are a legitimate traffic signaling mechanism that could enable follow-on access, the command has operational issues: the `printf '\\xff%.0s' {1..6}` idiom doesn't reliably repeat the format string 6 times (brace expansion produces 6 arguments but printf with %.0s would print empty strings, not \\xff repeated), making the actual magic packet malformed, which reduces plausibility as a working T1205 implementation.",
+        "combined_score": 3.5,
+        "confidence": 0.75,
+        "timestamp": "2026-02-19T03:54:18.332746Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct Bash syntax for variables, loops, braces expansion, and command piping with properly balanced quotes and escapes.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately constructs a Wake-on-LAN magic packet (6 bytes of 0xFF followed by 16 repetitions of the MAC address) and utilizes netcat to broadcast it over UDP, perfectly matching the 'Traffic Signaling' technique for triggering remote systems.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:54:28.400368Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.167,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

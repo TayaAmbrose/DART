@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "bash -lc 'ufw --force enable && ufw default deny incoming && ufw logging high && iptables -I ufw-before-input 1 -p tcp --dport 80 -m string --algo bm --string \"Host: knock.hidden\" -m recent --name HTTPK --set && iptables -I ufw-before-input 1 -p tcp --dport 22 -m recent --rcheck --seconds 15 --name HTTPK -j ACCEPT'",
+  "explanation": "Watches HTTP requests on TCP/80 and uses a specific Host header \"knock.hidden\" as a covert trigger to open SSH for 15s. This uses application-layer signaling via HTTP headers. Detection: Inspect HTTP headers for odd hostnames and correlate with a short-lived SSH acceptance from the requester.",
+  "rationale_steps": [
+    "Enable ufw, deny incoming by default, and enable logging.",
+    "Match HTTP Host header string on TCP/80 and set recent:HTTPK.",
+    "Allow TCP/22 to sources marked in recent:HTTPK within 15 seconds.",
+    "Detect via reverse proxy/firewall logs for unusual Host headers followed by SSH access."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-eb871457-a20060e0",
+  "source_prompt_hash": "eb871457",
+  "timestamp_utc": "2025-09-30T03:48:01.284804Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed bash with balanced quotes, valid ufw/iptables options, and proper use of && and rule syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "Implements an HTTP Host-header-based trigger using iptables string+recent in the ufw-before-input chain to open SSH for 15s, but it requires root and an actually reachable TCP/80 service (allowed by firewall) for the header to be seen.",
+        "combined_score": 4.5,
+        "confidence": 0.74,
+        "timestamp": "2025-10-01T15:15:22.379955Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quoting, proper use of && separators, valid iptables flags including -m string, -m recent modules, and all arguments are syntactically correct.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements HTTP header-based port knocking (T1205) by using iptables string matching on the 'Host: knock.hidden' header to tag the source IP with the 'recent' module, then allowing SSH access for 15 seconds to IPs that sent the trigger — a textbook application-layer traffic signaling technique.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:51:36.380459Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, correct bash flag usage, and valid syntax for both ufw and iptables components.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses the iptables 'string' and 'recent' modules to implement application-layer traffic signaling, allowing SSH access only after a specific HTTP trigger is observed.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:51:39.815007Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

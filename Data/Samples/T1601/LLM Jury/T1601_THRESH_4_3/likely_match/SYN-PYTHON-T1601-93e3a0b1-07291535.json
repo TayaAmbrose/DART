@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Python",
+  "command": "python3 -c 'import os,sys,filecmp; assert os.geteuid()==0; cur=\"/var/tmp/junos-install-usb-arm-21.4R3-S3.tgz\"; ref=\"/var/tmp/golden/junos-install-usb-arm-21.4R3-S3.tgz\"; ok=filecmp.cmp(cur,ref,shallow=False); print(\"identical\" if ok else \"different\"); sys.exit(0 if ok else 12)'",
+  "explanation": "Performs a deep binary comparison of a Junos installer archive against a golden reference to detect tampering.",
+  "rationale_steps": [
+    "Access installer archives with root permissions.",
+    "Use filecmp for a byte-for-byte comparison.",
+    "Exit non-zero when differences are found."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1601-93e3a0b1-07291535",
+  "source_prompt_hash": "93e3a0b1",
+  "timestamp_utc": "2025-09-30T04:36:55.673131Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses python3 -c with balanced quotes and valid Python statements separated by semicolons, and all functions and arguments are correctly formed.",
+        "semantic_score": 3,
+        "semantic_justification": "It accurately performs a bytewise comparison to detect potential image tampering, but this is defensive rather than modifying system images (T1601) and it unnecessarily enforces root despite 'Privilege: None'.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T17:11:34.922671Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper semicolons, valid imports, and correct string quoting throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a deep binary file comparison (filecmp.cmp with shallow=False) of a Junos firmware archive against a golden reference to detect tampering, which aligns well with T1601 detection/integrity validation, though the privilege check (assert os.geteuid()==0) is unnecessary for read-only file comparison and the explanation claims 'None' privilege while the script enforces root.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:12:15.730231Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly valid Python one-liner with correct module imports, syntax, and logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a deep binary comparison between two files to detect discrepancies, which is a valid method for verifying the integrity of a system image.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:12:18.730892Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

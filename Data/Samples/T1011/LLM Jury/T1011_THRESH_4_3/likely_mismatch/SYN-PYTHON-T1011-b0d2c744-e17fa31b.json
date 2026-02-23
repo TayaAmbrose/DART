@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Python",
+  "command": "[withheld — non-actionable: would craft ICMP Echo Request packets (AF_INET/SOCK_RAW, IPPROTO_ICMP) carrying base64-encoded payload segments with proper checksums]",
+  "explanation": "Uses ICMP echo as a non-standard application data carrier, a distinct network medium compared to normal TCP/HTTP flows, consistent with T1011.",
+  "rationale_steps": [
+    "Select ICMP as the exfil medium distinct from standard TCP/UDP",
+    "Encode data with base64",
+    "Construct ICMP echo requests with correct identifiers/sequence",
+    "Transmit in small chunks to an uncommon path",
+    "Avoids changing host network configuration"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1011-b0d2c744-e17fa31b",
+  "source_prompt_hash": "b0d2c744",
+  "timestamp_utc": "2025-09-30T08:42:48.649618Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "The provided 'command' is a descriptive placeholder rather than a concrete, parseable command line or script.",
+        "semantic_score": 2,
+        "semantic_justification": "While ICMP echo could be used for data exfiltration, the claim aligns poorly with T1011 (medium vs protocol), and on Windows crafting raw ICMP typically requires elevated privileges, contradicting the 'None' privilege assumption.",
+        "combined_score": 1.5,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T01:18:08.617995Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is explicitly withheld and replaced with a natural-language description, so there is no actual code or syntax to evaluate — it is a fragment/placeholder, not a runnable command.",
+        "semantic_score": 3,
+        "semantic_justification": "The described approach (raw ICMP sockets with base64-encoded payload segments) is a plausible and known technique for covert data exfiltration over a non-standard medium, but the mapping to T1011 is imprecise — ICMP tunneling is more accurately T1095 (Non-Application Layer Protocol) or T1048.003, and ICMP does not constitute a 'different network medium' (e.g., cellular, Bluetooth) as T1011 specifically describes.",
+        "combined_score": 2.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:08:15.058909Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is a natural language placeholder description rather than a functional Python script or executable command.",
+        "semantic_score": 1,
+        "semantic_justification": "ICMP is an alternative protocol (T1048) rather than a different network medium (T1011), and raw socket creation on Windows requires administrative privileges which contradicts the 'None' privilege requirement.",
+        "combined_score": 1.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:08:20.074905Z"
+      }
+    ],
+    "llm_average_syntactic": 1.0,
+    "llm_average_semantic": 2.0,
+    "llm_average_score": 1.5,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

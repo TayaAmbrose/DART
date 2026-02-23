@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[REDACTED: Non-executable placeholder] Service/daemon-style loop: use 'net use' to open an SMB session once, run a long-lived loop that batches and ships data quietly to the UNC path, then close the session.",
+  "explanation": "Illustrates a persistent, low-noise automated exfiltration routine that maintains a single SMB session using 'net use' while periodically sending data.",
+  "rationale_steps": [
+    "Create a long-lived SMB session to a remote share with net use",
+    "Batch and queue data for transfer at controlled intervals",
+    "Send data to the UNC path without interactive prompts",
+    "Close the SMB session and remove traces on termination"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1020-7b9aedc5-073ff4f6",
+  "source_prompt_hash": "7b9aedc5",
+  "timestamp_utc": "2025-09-30T08:57:58.671267Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 1,
+        "syntactic_justification": "The entry is a non-executable placeholder with a prose description, so it is not a parseable or runnable PowerShell command.",
+        "semantic_score": 1,
+        "semantic_justification": "Although the concept aligns with automated exfiltration via SMB, no actual command or parameters are provided, so it cannot achieve the stated behavior.",
+        "combined_score": 1.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T04:38:23.261028Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 0,
+        "syntactic_justification": "The command is explicitly marked as a redacted non-executable placeholder with no actual code present, making it impossible to evaluate for syntactic correctness.",
+        "semantic_score": 2,
+        "semantic_justification": "The description conceptually aligns with T1020 automated exfiltration via SMB using 'net use' and a persistent loop, but without actual executable code the semantic alignment is only theoretical and cannot be verified as operationally plausible.",
+        "combined_score": 1.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:27:31.352997Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command field contains a natural language description and a placeholder rather than executable PowerShell code.",
+        "semantic_score": 5,
+        "semantic_justification": "The described workflow—establishing a persistent SMB session, utilizing a loop for periodic batching, and exfiltrating to a UNC path—is a highly accurate and realistic implementation of T1020.",
+        "combined_score": 3.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:27:36.820604Z"
+      }
+    ],
+    "llm_average_syntactic": 0.667,
+    "llm_average_semantic": 2.667,
+    "llm_average_score": 1.667,
+    "llm_verdict": "likely_mismatch",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

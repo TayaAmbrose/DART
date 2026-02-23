@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "ln -sf /mnt/flash/system.img /boot/current && sha256sum /boot/current > /boot/current.sha256 && diff -u /var/backups/current.sha256 /boot/current.sha256 || true",
+  "explanation": "Redirects the boot reference to a tampered system image and generates a checksum to mask the change as a routine update.",
+  "rationale_steps": [
+    "Point the boot process at the malicious image via symlink.",
+    "Produce a checksum for the new target to appear legitimate.",
+    "Optionally compare to a baseline to verify persistence."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-dc873ff7-d282cf25",
+  "source_prompt_hash": "dc873ff7",
+  "timestamp_utc": "2025-09-30T04:57:26.660610Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with valid flags and operators; commands are correctly chained with &&/|| and redirection is proper.",
+        "semantic_score": 3,
+        "semantic_justification": "Symlinking /boot/current to a different image fits modifying the boot target, but it generally requires root, may not influence the actual boot process on network devices, and generating a new checksum plus diffing does not genuinely mask the change in trusted records.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-02T19:31:21.798777Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid use of ln, sha256sum, diff, proper && chaining, output redirection, and the || true fallback to suppress non-zero exit codes.",
+        "semantic_score": 3,
+        "semantic_justification": "The command plausibly redirects a boot reference to a tampered image and generates a checksum, but the logic is partially self-defeating — generating a new checksum and diffing it against the backup would reveal the tampering rather than mask it, and the || true only suppresses the diff exit code without actually concealing the discrepancy.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:24:25.131167Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed Bash one-liner using standard utilities, proper chaining with logical operators, and correct redirection.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates the technique by replacing a boot image reference and updating metadata, though the 'Privilege: None' designation is inaccurate as these paths typically require root access.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:24:29.574718Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

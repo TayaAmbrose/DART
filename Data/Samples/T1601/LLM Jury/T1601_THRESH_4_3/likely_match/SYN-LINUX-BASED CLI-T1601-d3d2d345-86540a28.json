@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Linux-based CLI",
+  "command": "echo 'T1601 patch: force OpenWrt sysupgrade'; sysupgrade -F -n /tmp/mal_openwrt.bin",
+  "explanation": "Forces a NOS/firmware replacement on OpenWrt-based devices, ignoring version checks and not preserving config, aligning with image modification/downgrade behavior.",
+  "rationale_steps": [
+    "Invoke sysupgrade with -F to bypass compatibility checks (common on OpenWrt routers).",
+    "Replace the combined kernel+rootfs image with a malicious build.",
+    "Avoid retaining configs (-n) to minimize rollback artifacts while persisting the new image."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-LINUX-BASED CLI-T1601-d3d2d345-86540a28",
+  "source_prompt_hash": "d3d2d345",
+  "timestamp_utc": "2025-09-30T02:47:56.896050Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Two well-formed shell commands separated by a semicolon; quotes are balanced and flags are valid for OpenWrt sysupgrade.",
+        "semantic_score": 4,
+        "semantic_justification": "Uses sysupgrade with -F and -n to force-flash an image without preserving config, aligning with firmware modification (T1601), though it typically requires root privileges and a valid image at /tmp/mal_openwrt.bin.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T20:12:44.668419Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid semicolon separator, and correct flag syntax for sysupgrade (-F for force, -n for no config preservation).",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by using OpenWrt's native sysupgrade tool with -F (force, bypassing version/compatibility checks) and -n (no config preservation) flags to flash a malicious firmware image, directly aligning with firmware image replacement behavior described in the technique.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:27:22.442137Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid shell syntax with a proper separator and correct flag usage for the OpenWrt sysupgrade utility.",
+        "semantic_score": 5,
+        "semantic_justification": "The use of the -F and -n flags correctly implements a forced, non-persistent firmware overwrite which aligns perfectly with the Modify System Image technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:27:24.694534Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

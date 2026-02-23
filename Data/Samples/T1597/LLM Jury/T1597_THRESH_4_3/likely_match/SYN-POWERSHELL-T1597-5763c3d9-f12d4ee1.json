@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "try { $key=$env:RISKIQ_API_KEY; $sec=$env:RISKIQ_API_SECRET; if([string]::IsNullOrWhiteSpace($key) -or [string]::IsNullOrWhiteSpace($sec)){ throw 'Missing RISKIQ credentials'; }; $basic=[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(\"$key`:$sec\")); $uri=\"https://api.riskiq.net/pt/v2/dns/passive?query=example.com\"; $resp=Invoke-RestMethod -Method Get -Uri $uri -Headers @{Authorization=(\"Basic \" + $basic); Accept='application/json'} -TimeoutSec 25 -ErrorAction Stop; $resp | ConvertTo-Json -Depth 6 } catch { Add-Content -Path \"$env:TEMP\\ti_t1597.log\" -Value (\"[RiskIQ PassiveTotal] \" + $_.Exception.Message) }",
+  "explanation": "Retrieves passive DNS data for example.com from RiskIQ PassiveTotal, a subscription-only closed-source dataset useful for infrastructure pivoting. Uses Basic Auth and outputs JSON.",
+  "rationale_steps": [
+    "Pull API key/secret from environment and create a Basic Auth header.",
+    "Issue a targeted passive DNS query to limit noise.",
+    "Use HTTPS with proper Accept header and short timeout.",
+    "Return JSON and log errors to a file if the request fails."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1597-5763c3d9-f12d4ee1",
+  "source_prompt_hash": "5763c3d9",
+  "timestamp_utc": "2025-09-30T06:24:43.674049Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced braces and quotes; valid try/catch, Invoke-RestMethod parameters, and hashtable headers.",
+        "semantic_score": 5,
+        "semantic_justification": "Authenticates to the RiskIQ PassiveTotal paid API and retrieves passive DNS for a domain, matching T1597 closed-source querying.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T12:31:23.030574Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, proper try/catch structure, correct string interpolation, valid method calls, and appropriate semicolon separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying RiskIQ PassiveTotal's subscription-only passive DNS API using Basic Auth with API key/secret credentials from environment variables, which is a real closed-source intelligence platform used for infrastructure pivoting, and the endpoint URI, authentication method, and JSON output handling are all operationally correct.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:52:33.759684Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed PowerShell script with balanced braces, proper variable handling, and correct use of API-calling cmdlets.",
+        "semantic_score": 5,
+        "semantic_justification": "The script correctly authenticates to and queries the RiskIQ PassiveTotal API, which is a classic example of searching a closed source for intelligence as per T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:52:35.259419Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

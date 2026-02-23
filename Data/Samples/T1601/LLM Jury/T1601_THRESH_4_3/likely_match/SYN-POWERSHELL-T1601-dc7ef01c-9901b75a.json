@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "Copy-Item 'C:\\staging\\maldrv.sys' 'C:\\mount\\Windows\\System32\\drivers\\maldrv.sys' -Force; certutil -hashfile C:\\mount\\Windows\\System32\\drivers\\maldrv.sys SHA256",
+  "explanation": "Injects an unsigned driver into the offline system image drivers directory and immediately records its hash, demonstrating malicious image patching (T1601) with integrity tracking.",
+  "rationale_steps": [
+    "Copy a malicious driver into the mounted image's drivers folder.",
+    "Hash the inserted file with certutil to log its presence and fingerprint."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-dc7ef01c-9901b75a",
+  "source_prompt_hash": "dc7ef01c",
+  "timestamp_utc": "2025-09-30T04:49:19.161651Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell command is well-formed with balanced quotes, correct use of Copy-Item and -Force, a valid semicolon separator, and proper certutil -hashfile syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "It alters an offline Windows image by copying a driver into the mounted drivers directory and hashing it, aligning with T1601, but it assumes sufficient write privileges and does not ensure the driver will load without corresponding service/registry changes.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T18:20:50.648709Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid PowerShell Copy-Item syntax with -Force flag, proper semicolon separator, and valid certutil -hashfile invocation with correct SHA256 argument.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly demonstrates offline image patching by copying a malicious driver into a mounted Windows image's drivers directory (consistent with T1601 in-storage modification) and verifying the hash, though the 'None' privilege level is unrealistic since mounting and writing to system image paths typically requires administrator privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:34:04.361446Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, including the semicolon separator, correct cmdlet usage, and valid certutil flags.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately simulates injecting a file into a mounted offline system image, though it lacks the registry modifications necessary to ensure the driver is actually loaded by the OS.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:34:09.375877Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

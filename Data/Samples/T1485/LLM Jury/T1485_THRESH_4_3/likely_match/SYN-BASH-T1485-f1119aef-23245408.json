@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "wipe -f /srv/db_dumps/*.{sql,sql.gz}",
+  "explanation": "Securely overwrites and removes plaintext and compressed database dump files.",
+  "rationale_steps": [
+    "Use Bash brace expansion to precisely target .sql and .sql.gz files in a specific dump directory.",
+    "Run wipe in forced mode to avoid interactive prompts.",
+    "By overwriting data blocks and removing directory entries, wipe makes DB dumps unrecoverable."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-f1119aef-23245408",
+  "source_prompt_hash": "f1119aef",
+  "timestamp_utc": "2025-09-30T08:06:57.630497Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed Bash with valid brace expansion and globbing, and a plausible short option format for wipe.",
+        "semantic_score": 4,
+        "semantic_justification": "It aligns with data destruction by securely overwriting and deleting matching dump files, but depends on wipe being installed, appropriate permissions on /srv/db_dumps, and successful glob matches.",
+        "combined_score": 4.5,
+        "confidence": 0.74,
+        "timestamp": "2025-10-02T01:34:23.217091Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Bash syntax, including valid flags for the wipe utility and proper brace expansion for file extensions.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately uses a secure deletion utility to target and destroy database backups, perfectly aligning with the MITRE ATT&CK Technique T1485.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:40:56.227938Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with valid flag and brace expansion syntax, though brace expansion in glob patterns like `*.{sql,sql.gz}` may not expand as intended in all shells without quoting considerations, but is generally valid in Bash.",
+        "semantic_score": 4,
+        "semantic_justification": "The `wipe` tool is a legitimate Linux secure deletion utility that overwrites files before removal, and targeting database dump files at `/srv/db_dumps/` with both `.sql` and `.sql.gz` extensions aligns well with T1485 data destruction intent, though the `-f` flag (force) is appropriate and the privilege level of 'None' may be insufficient depending on file ownership.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:40:56.405733Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

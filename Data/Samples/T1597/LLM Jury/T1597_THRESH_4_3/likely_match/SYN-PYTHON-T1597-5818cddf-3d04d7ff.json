@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1597",
+  "platform": "Kubernetes",
+  "shell": "Python",
+  "command": "import os, json, logging, sys\nfrom kubernetes import client, config\nfrom kubernetes.stream import stream\n\nlogging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')\nns = os.getenv('KUBE_NAMESPACE', 'default')\npod = os.getenv('KUBE_POD', 'util-python-0')\ncontainer = os.getenv('KUBE_CONTAINER')\ntry:\n    try:\n        config.load_incluster_config()\n    except Exception:\n        config.load_kube_config()\n    v1 = client.CoreV1Api()\n    inner = \"import os, sys, json, logging, requests; logging.basicConfig(level=logging.INFO); query=os.environ.get('SHODAN_QUERY','hostname:example.com'); key=os.environ['SHODAN_API_KEY']; url='https://api.shodan.io/shodan/host/search'; params={'key': key, 'query': query, 'limit': 50};\\ntry:\\n    r=requests.get(url, params=params, timeout=20); r.raise_for_status(); print(json.dumps({'source':'shodan','query':query,'data':r.json()}))\\nexcept Exception as e:\\n    print(json.dumps({'source':'shodan','query':query,'error':str(e)})); sys.exit(1)\"\n    resp = stream(v1.connect_get_namespaced_pod_exec, pod, ns, command=['python3','-c', inner], container=container, stderr=True, stdin=False, stdout=True, tty=False)\n    print(resp)\nexcept Exception as e:\n    logging.error('collection_failed', exc_info=e); sys.exit(1)\n",
+  "explanation": "Queries the closed-source Shodan database for hosts matching a precise query, limiting results to reduce noise. Data is retrieved via a paid API key and returns JSON without conducting any active probing.",
+  "rationale_steps": [
+    "Leverage Shodan’s subscription API to search its curated dataset.",
+    "Scope the query to avoid unnecessary volume and output results as JSON."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1597-5818cddf-3d04d7ff",
+  "source_prompt_hash": "5818cddf",
+  "timestamp_utc": "2025-09-30T06:41:43.112780Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The multi-line Python code is well-formed with balanced quotes, valid imports, proper try/except blocks, and a correctly constructed Kubernetes exec call with a well-quoted inner command string.",
+        "semantic_score": 4,
+        "semantic_justification": "It executes a Python snippet inside a Kubernetes pod to query Shodan’s closed-source API using an API key and returns JSON, matching T1597, but relies on the target pod having python3, requests, and SHODAN_API_KEY set, which may reduce operational reliability.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T12:33:05.688576Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with proper imports, exception handling, and string construction, though the embedded multi-line string using literal newlines ('\\n') inside a single-quoted string passed to a shell command creates minor quoting complexity that could cause edge-case parsing issues.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the closed-source Shodan paid API (a non-public intelligence database) via an API key, executing the query inside a Kubernetes pod using the official kubernetes-client library, and returning structured JSON results without active probing—fully consistent with the technique's description of querying paid/private data sources for targeting intelligence.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:52:59.230234Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is well-structured, uses the Kubernetes client library correctly, handles exceptions, and manages the inner command string with proper escaping.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying Shodan, a closed/paid technical database, using an API key to retrieve intelligence without active network scanning.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:53:00.621462Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "bash -lc 'set -euo pipefail; ts=$(date -u +%FT%TZ); d=$(date -u +%F); dest=/opt/ti/closed/certificates/$d; mkdir -p \"$dest\"; if scp -q -i /etc/ssh/keys/certinsight_ed25519 -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/etc/ssh/known_hosts_certinsight -o IdentitiesOnly=yes client@sftp.cert-insight.net:/clients/acme_corp/certificates/active.json{,.sha256} \"$dest\"/ && (cd \"$dest\" && sha256sum -c active.json.sha256); then printf \"{\\\"timestamp\\\":\\\"%s\\\",\\\"technique\\\":\\\"T1597\\\",\\\"source\\\":\\\"cert-insight\\\",\\\"artifact\\\":\\\"%s/active.json\\\",\\\"status\\\":\\\"verified\\\"}\\n\" \"$ts\" \"$dest\" | tee -a /var/log/ti_fetch.json; else printf \"{\\\"timestamp\\\":\\\"%s\\\",\\\"technique\\\":\\\"T1597\\\",\\\"source\\\":\\\"cert-insight\\\",\\\"status\\\":\\\"error\\\"}\\n\" \"$ts\" >&2; fi'",
+  "explanation": "Retrieves a closed-source TLS certificate inventory feed (JSON) for the target org via SFTP, with checksum validation and structured logging, aligning with closed-source reconnaissance.",
+  "rationale_steps": [
+    "Authenticate with SSH key and verify host key.",
+    "Download active certificate inventory and checksum.",
+    "Verify integrity with sha256sum.",
+    "Log a JSON summary to track collection activity."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1597-7b824e9d-0884e74a",
+  "source_prompt_hash": "7b824e9d",
+  "timestamp_utc": "2025-09-30T06:47:02.517764Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is well-formed with balanced quotes, valid scp/ssh options, proper command separators, and correct use of brace expansion and subshells.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly retrieves a closed-source feed via SSH, verifies integrity, and logs structured TI data consistent with T1597, though writing to /opt and /var/log may require elevated permissions not accounted for.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-02T13:09:34.995854Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper use of &&, semicolons, command substitution, and valid flag formats throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command credibly implements T1597 by retrieving a closed-source certificate intelligence feed via authenticated SFTP with checksum validation and structured JSON logging, though the scenario blurs the line between legitimate threat-intel subscription use and adversarial closed-source reconnaissance, and the labeled technique attribution in the log output is an unusual operational detail.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:55:48.352415Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, correctly handles shell options, employs proper brace expansion for scp, and maintains balanced quoting throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command realistically simulates an automated collection of non-public technical data (certificate inventory) from a private source using secure transfer and verification methods.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:55:52.392632Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "MAC=001122334455; HEX=\"FFFFFFFFFFFF$(yes \"$MAC\" | head -n16 | tr -d '\\n')\"; echo -n \"$HEX\" | xxd -r -p | sudo nc -u -w1 255.255.255.255 9",
+  "explanation": "Crafts and sends a Wake-on-LAN magic packet (6x FF followed by 16 repetitions of the MAC) via nc to UDP/9 broadcast to signal a device to wake. Requires root (sudo) for broadcast. Detection: monitor for UDP/9 broadcasts matching WoL pattern and unusual after-hours device wake events.",
+  "rationale_steps": [
+    "Builds correct WoL payload in hex and converts to binary with xxd.",
+    "Transmits over UDP/9 broadcast using nc.",
+    "Matches the technique’s magic packet format precisely.",
+    "Detect via IDS signatures for WoL magic frames and broadcast anomalies."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-753dbc1f-c4b62cdb",
+  "source_prompt_hash": "753dbc1f",
+  "timestamp_utc": "2025-09-30T05:37:53.725688Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with balanced quoting, valid pipelines, proper command substitutions, and standard flags for xxd and nc.",
+        "semantic_score": 4,
+        "semantic_justification": "It constructs a valid WoL magic packet and broadcasts it via UDP (consistent with T1205 signaling), though success can depend on nc requiring -b for broadcast and sudo/root is not universally required.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T14:59:01.895856Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command structure is mostly valid Bash, but the `yes \"$MAC\" | head -n16 | tr -d '\\n'` approach produces 16 repetitions of the MAC with newlines removed, which is correct in concept, but the escaped backslash in `tr -d '\\n'` within a double-quoted string inside a command substitution may behave unexpectedly depending on shell interpretation, and the hex string construction may not produce exactly the right byte count without delimiter handling.",
+        "semantic_score": 3,
+        "semantic_justification": "The command attempts to craft a Wake-on-LAN magic packet (6x FF + 16x MAC) and send it via UDP broadcast on port 9, which is a legitimate WoL mechanism that could be repurposed as a traffic signal trigger per T1205, but the hex construction using `yes` and `tr` is fragile—`yes \"$MAC\"` outputs the MAC with newlines between repetitions, and `tr -d '\\n'` removes them, but the MAC string lacks proper formatting (no colons/dashes to strip, raw hex), making the resulting payload potentially malformed for actual WoL reception.",
+        "combined_score": 3.0,
+        "confidence": 0.72,
+        "timestamp": "2026-02-19T03:50:08.987386Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed, uses correct bash subshell syntax, handles variable expansion properly, and uses valid pipes and tool flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately constructs a legitimate Wake-on-LAN magic packet (6 bytes of 0xFF followed by 16 iterations of the 6-byte MAC address) and transmits it via UDP broadcast, which perfectly exemplifies the Traffic Signaling technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:50:12.890047Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.167,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

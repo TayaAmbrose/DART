@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "for p in 2345 3456 4567; do nc -z -w1 203.0.113.20 \"$p\"; sleep 0.2; done",
+  "explanation": "Uses netcat in zero-I/O mode to rapidly attempt TCP connects (knocks) to a sequence of ports, a common method to activate knockd rules. Detection: alert on sequential connection attempts to closed ports from a single source within seconds.",
+  "rationale_steps": [
+    "Iterate over the port list and send short-lived TCP connection attempts.",
+    "Remote knockd correlates the sequence and opens a hidden port for the source IP.",
+    "Operator proceeds to connect to the unlocked service.",
+    "Defenders monitor firewall/IDS logs for ordered port hits and subsequent allow rules for the same source."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-4e50b45e-db381c36",
+  "source_prompt_hash": "4e50b45e",
+  "timestamp_utc": "2025-09-30T05:51:10.007150Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed bash for-loop with correct separators, balanced quoting, and valid nc options (-z, -w1) and sleep usage.",
+        "semantic_score": 5,
+        "semantic_justification": "Sequential zero-I/O TCP connects with brief delays implement classic port knocking to signal a remote service, aligning with T1205 traffic signaling.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2025-10-01T12:55:35.010527Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with a valid bash for loop, proper variable quoting, correct nc flags (-z for zero-I/O, -w1 for timeout), and valid semicolons as command separators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements port knocking (T1205) by using netcat in zero-I/O mode to sequentially connect to ports 2345, 3456, 4567 on a target host with brief delays, which is the canonical method to trigger knockd daemon rules and activate firewall rules or payloads on the remote system.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T03:42:06.681765Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Bash loop syntax and uses correct netcat flags with proper command separation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly implements a sequential port knocking pattern intended to trigger a traffic signaling listener like knockd.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:42:07.089082Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "bash",
+  "command": "sudo iptables -A INPUT -p udp --dport 9 -m string --algo bm --hex-string \"|FFFFFFFFFFFF|\" -m recent --name T1205_WOL --set -j LOG --log-prefix \"T1205_WOL_SIG \"",
+  "explanation": "Detects Wake-on-LAN style magic packets (leading 6x 0xFF bytes) to use as a covert activation signal, consistent with T1205 traffic signaling patterns.",
+  "rationale_steps": [
+    "Match application-specific WOL magic packet signature on UDP/9 to identify covert triggers.",
+    "Record source via recent list and log for anomaly detection without permitting access."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-dca276e9-5521fb42",
+  "source_prompt_hash": "dca276e9",
+  "timestamp_utc": "2025-09-30T03:32:21.448422Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid iptables rule with correct flags, balanced quoting for hex-string and log-prefix, and proper use of string, recent, and LOG targets.",
+        "semantic_score": 4,
+        "semantic_justification": "Effectively detects and logs UDP port 9 packets containing the WoL magic 0xFF sequence and tags them via recent, aligning with T1205 traffic signaling, though it only targets port 9 and does not anchor/validate the full WoL pattern.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T16:21:01.218184Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with valid iptables flags and modules, though combining `-m recent --set` with `-j LOG` in a single rule is unusual (recent module typically precedes a separate action rule) and may not behave as expected on all iptables versions.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly targets UDP port 9 (WoL discard port) and matches the 6x 0xFF magic packet prefix using the string module with BM algorithm, logging matches as a detection/signaling trigger consistent with T1205 covert activation patterns, though a complete WoL magic packet detection would also check for the subsequent 16 repetitions of the target MAC address.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:55:38.342998Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows correct iptables syntax, uses valid modules (string, recent, LOG), and properly formats the hex-string and log-prefix.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively identifies the 'magic' header of a Wake-on-LAN packet and uses the 'recent' module to track the signaling event, perfectly mirroring T1205 behavior.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:55:40.628040Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

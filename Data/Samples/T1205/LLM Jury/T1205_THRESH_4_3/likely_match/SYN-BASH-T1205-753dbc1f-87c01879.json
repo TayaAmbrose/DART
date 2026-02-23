@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "sudo bash -c 'nc -lukp 4000 | grep -m1 -x \"MAGIC_OPEN_SSH\" && iptables -I INPUT 1 -p tcp --dport 22 -j ACCEPT'",
+  "explanation": "Listens on UDP/4000 for an exact magic phrase; upon detection, immediately opens SSH by inserting an iptables ACCEPT rule. Requires root (sudo). Detection: monitor for unauthorized listeners on odd ports and sudden iptables rule insertions.",
+  "rationale_steps": [
+    "Uses nc in listen mode to wait for a specific trigger payload.",
+    "Minimal parsing via grep to avoid obfuscation.",
+    "On match, modifies firewall to enable hidden functionality (SSH access).",
+    "Detect via process monitoring for nc listeners and firewall change auditing."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-753dbc1f-87c01879",
+  "source_prompt_hash": "753dbc1f",
+  "timestamp_utc": "2025-09-30T05:37:53.725688Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Properly quoted sudo bash -c string with valid pipes, control operators, and commonly valid nc/iptables flags.",
+        "semantic_score": 4,
+        "semantic_justification": "It listens on UDP/4000 for a magic token and upon match inserts an iptables rule to allow SSH, aligning with T1205 traffic signaling, though exact behavior can vary by nc variant and input newline handling.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T18:14:23.024320Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and valid pipe/logical-AND chaining, but the `nc -lukp` flag combination (mixing `-l`, `-u`, `-k`, `-p`) may not be universally valid across all netcat variants, reducing portability.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling pattern (T1205) by listening for a magic phrase on UDP/4000 and dynamically opening SSH via iptables upon receipt, which is operationally plausible, though the `grep -m1 -x` approach on a UDP stream via nc may have reliability issues in practice since nc's UDP mode doesn't guarantee clean line-buffered output.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T04:05:24.860069Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct syntax for bash -c, piping, netcat flags, and iptables parameters with proper quote balancing.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly implements traffic signaling by listening for a specific UDP payload and using it as a trigger to modify firewall rules.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:05:26.701653Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

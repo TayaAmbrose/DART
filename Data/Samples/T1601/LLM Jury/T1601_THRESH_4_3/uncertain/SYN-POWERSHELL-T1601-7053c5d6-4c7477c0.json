@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "dism /Mount-Wim /WimFile:C:\\Images\\install.wim /Index:1 /MountDir:C:\\Mount\\Install; dism /Image:C:\\Mount\\Install /Cleanup-Image /CheckHealth; dism /Unmount-Wim /MountDir:C:\\Mount\\Install /Discard",
+  "explanation": "Performs an offline component store health check on the mounted system image to assess integrity and detect potential tampering.",
+  "rationale_steps": [
+    "Mount the offline image to a servicing directory.",
+    "Run DISM offline health check to detect corruption or tampering.",
+    "Discard changes to keep verification non-destructive."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-7053c5d6-4c7477c0",
+  "source_prompt_hash": "7053c5d6",
+  "timestamp_utc": "2025-09-30T04:53:44.701470Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Uses valid DISM subcommands and flags with proper PowerShell semicolon separators and no quoting issues.",
+        "semantic_score": 3,
+        "semantic_justification": "It mounts a WIM and runs an offline /CheckHealth as claimed then discards, but it needs administrative privileges and performs detection rather than modifying the image, which is not aligned with T1601’s modification behavior.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T19:22:01.391829Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The commands are well-formed with valid DISM flags and paths, though chaining multiple DISM commands with semicolons in PowerShell is valid but the sequence assumes each step succeeds without error handling.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command correctly uses DISM to mount a WIM image and run CheckHealth for integrity assessment (which aligns with detecting tampering as a defensive action), this is a defensive/forensic operation rather than an adversarial modification of a system image as described in T1601, making it only partially relevant to the technique — it could represent a defender checking for T1601 activity rather than executing it.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:22:51.116199Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The DISM commands are correctly structured with valid flags and proper PowerShell statement separators.",
+        "semantic_score": 3,
+        "semantic_justification": "The command uses the correct tool for interacting with system images, but it performs a read-only health check and discards changes rather than modifying the image, and DISM operations require administrative privileges which are listed as 'None'.",
+        "combined_score": 4.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:22:53.334351Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 3.833,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "technique_id": "T1597",
+  "platform": "Kubernetes",
+  "shell": "Python",
+  "command": "import os, json, logging, sys\nfrom kubernetes import client, config\nfrom kubernetes.stream import stream\n\nlogging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')\nns = os.getenv('KUBE_NAMESPACE', 'default')\npod = os.getenv('KUBE_POD', 'util-python-0')\ncontainer = os.getenv('KUBE_CONTAINER')\ntry:\n    try:\n        config.load_incluster_config()\n    except Exception:\n        config.load_kube_config()\n    v1 = client.CoreV1Api()\n    inner = \"import os, sys, json, logging, requests; logging.basicConfig(level=logging.INFO); domain=os.environ.get('TARGET_DOMAIN','example.com'); url=f'https://api.securityscorecard.io/companies/{domain}'; headers={'Authorization': f'Token {os.environ[\\'SSC_API_KEY\\']}', 'Accept': 'application/json'};\\ntry:\\n    r=requests.get(url, headers=headers, timeout=15); r.raise_for_status(); print(json.dumps({'source':'securityscorecard','domain':domain,'data':r.json()}))\\nexcept Exception as e:\\n    print(json.dumps({'source':'securityscorecard','domain':domain,'error':str(e)})); sys.exit(1)\"\n    resp = stream(v1.connect_get_namespaced_pod_exec, pod, ns, command=['python3','-c', inner], container=container, stderr=True, stdin=False, stdout=True, tty=False)\n    print(resp)\nexcept Exception as e:\n    logging.error('collection_failed', exc_info=e); sys.exit(1)\n",
+  "explanation": "Retrieves company security rating data from SecurityScorecard’s closed-source API for the target domain, using token-based auth and structured JSON output.",
+  "rationale_steps": [
+    "Call the SecurityScorecard company endpoint with a valid token.",
+    "Return only the company’s profile/score data to limit log noise."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1597-5818cddf-d53331bc",
+  "source_prompt_hash": "5818cddf",
+  "timestamp_utc": "2025-09-30T06:41:43.112780Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Python with balanced quoting/escaping, valid Kubernetes stream exec usage, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "Executes in a Kubernetes pod to query SecurityScorecard’s closed-source API with token auth and returns structured results, directly aligning with T1597 closed-source collection.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T13:10:10.583289Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The outer Python script is mostly well-formed, but the inner string contains escaped quotes and embedded newlines that create fragile quoting issues (e.g., backslash-escaped single quotes inside a double-quoted f-string), which would likely cause parsing errors when passed to the Kubernetes exec stream.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1597 by querying SecurityScorecard's closed-source paid API using token-based authentication to gather intelligence on a target domain, and the Kubernetes exec mechanism to run the query inside a pod is operationally plausible, though the inner script's quoting fragility slightly reduces realism.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:55:57.272231Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-structured, correctly handles nested quoting for the execution string, and properly utilizes the Kubernetes client library and stream module.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying a commercial, closed-source security intelligence API (SecurityScorecard) to gather intelligence on a target domain.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:55:59.003185Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

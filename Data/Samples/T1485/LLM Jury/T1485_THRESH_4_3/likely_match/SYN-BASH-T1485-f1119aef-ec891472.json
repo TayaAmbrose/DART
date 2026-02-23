@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "wipe -f /var/backups/myapp/backup-*.tar.gz",
+  "explanation": "Overwrites and deletes targeted application backup archives to prevent forensic recovery.",
+  "rationale_steps": [
+    "Limit scope to known backup files in a specific directory using a strict glob.",
+    "Run wipe with -f to avoid prompts and ensure the operation completes non-interactively.",
+    "wipe writes multiple patterns over the file and removes directory entries, thwarting data recovery."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-f1119aef-ec891472",
+  "source_prompt_hash": "f1119aef",
+  "timestamp_utc": "2025-09-30T08:06:57.630497Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed, parseable Bash command using standard flag syntax and pathname globbing with no quoting or separator issues.",
+        "semantic_score": 4,
+        "semantic_justification": "Uses a secure-wipe utility to overwrite and delete targeted backups consistent with data destruction, but effectiveness depends on tool presence, matching files, and sufficient permissions.",
+        "combined_score": 4.5,
+        "confidence": 0.76,
+        "timestamp": "2025-10-02T00:49:48.532519Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard syntax for the wipe utility with valid flags and path globbing.",
+        "semantic_score": 5,
+        "semantic_justification": "The wipe utility is a specialized tool for secure data destruction, perfectly aligning with the T1485 technique to render backups unrecoverable.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:39:29.692567Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with a valid flag (-f for force), a recognizable tool (wipe), and a properly constructed glob pattern for the target paths.",
+        "semantic_score": 4,
+        "semantic_justification": "The `wipe` tool is a legitimate Linux secure-deletion utility that overwrites file data before deletion, making forensic recovery difficult, and targeting backup archives aligns well with T1485; however, the glob pattern may not expand correctly without shell quoting considerations, and `wipe` is not universally installed by default, slightly reducing operational plausibility.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:39:29.856634Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

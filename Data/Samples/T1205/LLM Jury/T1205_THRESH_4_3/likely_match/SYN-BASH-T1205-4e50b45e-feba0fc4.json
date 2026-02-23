@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "knock -u 198.51.100.25 321 654 987 -d 100",
+  "explanation": "Sends a UDP-based knock sequence likely to bypass stateful TCP monitoring; knockd can be configured to react to UDP patterns. Detection: watch for short-burst UDP probes to uncommon ports and validate against authorized knock sequences.",
+  "rationale_steps": [
+    "Generate UDP packets to ports 321, 654, 987 in order with minimal delay.",
+    "Remote knockd detects the ordered UDP hits and triggers its open-command (e.g., iptables rule insertion).",
+    "The opened service becomes reachable only to the knocking source IP.",
+    "Blue teams can detect via netflow/pcap for repeated UDP hits on closed ports in tight timing windows."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-4e50b45e-feba0fc4",
+  "source_prompt_hash": "4e50b45e",
+  "timestamp_utc": "2025-09-30T05:51:10.007150Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 4,
+        "syntactic_justification": "Shell syntax and flags are valid, but placing -d after the port list may not be parsed by knock which typically expects options before the host/ports.",
+        "semantic_score": 4,
+        "semantic_justification": "The knock client with -u sends a UDP knock sequence to specified ports consistent with Traffic Signaling, though the misplaced -d may prevent the intended 100ms inter-packet delay.",
+        "combined_score": 4.0,
+        "confidence": 0.74,
+        "timestamp": "2025-10-01T15:58:34.331537Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with valid flags: `-u` for UDP mode, three port numbers as positional arguments, and `-d 100` for delay, all consistent with the `knock` client tool's documented syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 (Traffic Signaling) by using the `knock` utility to send a UDP-based port knock sequence to a target host, which can trigger a pre-configured `knockd` daemon to open firewall rules or execute payloads, directly matching the technique's covert signaling behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:54:32.362957Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly uses the standard syntax for the knock client, including the UDP flag, target IP, port sequence, and delay parameter.",
+        "semantic_score": 5,
+        "semantic_justification": "Port knocking is a primary example of T1205 Traffic Signaling, and using UDP packets to a sequence of ports is a realistic implementation for triggering a server-side response.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:54:33.591772Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

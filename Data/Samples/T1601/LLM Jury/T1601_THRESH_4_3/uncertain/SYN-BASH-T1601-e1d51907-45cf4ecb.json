@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "dd if=/dev/sda bs=512 skip=1 count=$(( ( $(stat -c%s baseline/core.img) + 511 ) / 512 )) of=/var/tmp/grub_core.cur && sha256sum /var/tmp/grub_core.cur baseline/core.img && diff -u <(sha256sum /var/tmp/grub_core.cur | awk '{print $1}') <(sha256sum baseline/core.img | awk '{print $1}')",
+  "explanation": "Extracts the GRUB core image region from the MBR gap area using a baseline size and compares checksums to identify bootloader tampering.",
+  "rationale_steps": [
+    "Compute the sector count to read for GRUB core based on the baseline file size.",
+    "Use dd to read that region starting from LBA 1 (after MBR).",
+    "Hash and compare against the baseline; diff the hashes to confirm mismatches."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-e1d51907-45cf4ecb",
+  "source_prompt_hash": "e1d51907",
+  "timestamp_utc": "2025-09-30T04:41:42.466219Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Command is valid Bash with balanced arithmetic and command substitutions, correct dd/sha256sum/diff usage, and proper process substitution.",
+        "semantic_score": 3,
+        "semantic_justification": "Conceptually fits detecting bootloader tampering but requires root to read /dev/sda, assumes a BIOS/MBR layout with core.img starting at LBA 1 (often untrue), and will not work on GPT/UEFI or non-contiguous GRUB embeddings.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-02T19:37:47.486280Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced parentheses, proper process substitution syntax, and valid flag usage, though the nested arithmetic expansion with stat and dd is complex and could fail if baseline/core.img doesn't exist, but syntactically it is parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly reads the MBR gap region from /dev/sda using dd with appropriate block size and skip parameters, computes SHA256 checksums of both the extracted region and a baseline image, and diffs them to detect bootloader tampering — aligning well with T1601 detection methodology, though reading /dev/sda requires root privileges contrary to the 'None' privilege claim, and the diff on sha256sum outputs is redundant given the sha256sum comparison already shows mismatches.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:25:08.109048Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Bash syntax, including valid shell arithmetic for block calculation, proper command chaining, and valid process substitution for the diff comparison.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively achieves the goal of verifying GRUB core integrity, though it incorrectly claims to require no privileges when reading /dev/sda necessitates root access.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:25:10.855244Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

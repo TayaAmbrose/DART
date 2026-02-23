@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "sudo tcpdump -i eth0 -nn 'tcp[tcpflags] & tcp-syn != 0 and (port 10443 or port 10554 or port 10665)' -w /var/log/portknock_attempts.pcap",
+  "explanation": "Sniffs for TCP SYNs to the knock ports to detect signaling activity. Requires root (sudo). Detection: SOC can analyze the pcap for repeated sequences from the same source IP within short windows.",
+  "rationale_steps": [
+    "Uses tcpdump to capture knock attempts on specific ports.",
+    "Records to a pcap for correlation and incident response.",
+    "Facilitates identification of port-knocking patterns typical of T1205.",
+    "Detect via alerting on sequence patterns in captured traffic."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-753dbc1f-d9d340d2",
+  "source_prompt_hash": "753dbc1f",
+  "timestamp_utc": "2025-09-30T05:37:53.725688Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed tcpdump command with valid flags, balanced quoting, and a valid BPF filter expression.",
+        "semantic_score": 4,
+        "semantic_justification": "Effectively captures TCP SYNs to specified knock ports for signaling detection, though it does not restrict to destination ports and may include SYN-ACK or rare source-port matches.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T13:03:11.619381Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced single quotes around the BPF filter expression, valid tcpdump flags (-i, -nn, -w), and correct BPF syntax using tcp[tcpflags] bitmasking with logical operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements detection of port-knocking traffic signaling (T1205) by capturing TCP SYN packets on specific non-standard knock ports, writing to a pcap for forensic analysis, and the explanation correctly identifies the SOC use case of correlating repeated sequences from the same source IP.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T03:43:00.565995Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The tcpdump command and its BPF filter expression are perfectly formed with correct flags and balanced quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a listener for specific TCP SYN packets to identify port knocking sequences, a core component of traffic signaling.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:43:03.920573Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

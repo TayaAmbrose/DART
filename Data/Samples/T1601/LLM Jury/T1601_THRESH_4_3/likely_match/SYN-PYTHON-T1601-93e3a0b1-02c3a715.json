@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Python",
+  "command": "python3 -c 'import os,sys; assert os.geteuid()==0; rc=os.system(\"cd /bootflash && sha256sum -c golden/manifest.sha256\"); sys.exit(0 if rc==0 else 3)'",
+  "explanation": "Invokes sha256sum -c against a manifest file covering multiple images in bootflash to validate integrity in bulk.",
+  "rationale_steps": [
+    "Ensure root privileges to read image files in bootflash.",
+    "Use sha256sum -c to verify each listed image against known-good hashes.",
+    "Return failure if any image fails verification."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1601-93e3a0b1-02c3a715",
+  "source_prompt_hash": "93e3a0b1",
+  "timestamp_utc": "2025-09-30T04:36:55.673131Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Python one-liner with balanced quotes, valid semicolons, and a valid shell subcommand using proper flags.",
+        "semantic_score": 3,
+        "semantic_justification": "The command correctly performs bulk checksum validation relevant to detecting T1601 activity but does not modify system images and contradicts the stated 'Privilege: None' by asserting root.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T16:55:51.041672Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses and quotes, valid imports, correct use of os.geteuid(), os.system(), and sys.exit() with proper semicolon separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements firmware integrity validation against T1601 by checking SHA256 checksums of bootflash images against a golden manifest, which is a legitimate detection/mitigation measure for system image tampering, though the privilege check asserts root but the metadata states 'None' for privilege level, creating a minor inconsistency.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:11:00.338033Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed Python one-liner with correct imports, statement separation, and balanced quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements an integrity check for system images on a network device platform, aligning with the detection/validation aspects of the T1601 technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:11:03.034853Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1585",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "curl -sS -X PATCH https://api.github.com/user -H \"Authorization: token ${GITHUB_TOKEN}\" -H \"Accept: application/vnd.github+json\" -d '{\"name\":\"Evelyn Hart\",\"bio\":\"Open-source enthusiast and tech blogger.\",\"blog\":\"https://evehart.example\",\"company\":\"Freelance\"}'",
+  "explanation": "Populates and refines an existing GitHub account profile to build a believable public persona.",
+  "rationale_steps": [
+    "Use the official GitHub API to update public-facing profile attributes.",
+    "Align the profile details with other persona assets for consistency.",
+    "Rely on JSON request/response for automated validation."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1585-1ebd9c7c-320124c4",
+  "source_prompt_hash": "1ebd9c7c",
+  "timestamp_utc": "2025-09-30T07:18:03.942980Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed curl command with balanced quotes, valid flags, and a properly formatted JSON payload.",
+        "semantic_score": 4,
+        "semantic_justification": "Appropriately updates a GitHub user profile to build a persona, but omits a Content-Type: application/json header and assumes a token with sufficient user scope.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T10:52:49.398382Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct curl flags (-sS, -X, -H, -d), valid JSON payload, and proper environment variable interpolation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately uses the GitHub REST API PATCH endpoint to update profile fields (name, bio, blog, company) on an existing account, which directly aligns with T1585's persona-building behavior of refining accounts to appear legitimate and blend into normal activity.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T00:44:40.188547Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed curl request with valid flags, headers, and a properly escaped JSON payload.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses the GitHub API's PATCH method on the /user endpoint to update profile metadata, directly supporting the goal of establishing a believable persona.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:44:41.840467Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

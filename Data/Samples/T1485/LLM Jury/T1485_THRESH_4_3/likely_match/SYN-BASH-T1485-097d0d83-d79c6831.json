@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1485",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "find /var/mail/archive -xdev -type f \\( -name '*.mbox' -o -name '*.eml' -o -name '*.pst' \\) -exec shred -n 3 -z -u -f {} +",
+  "explanation": "Securely overwrites and removes archived mail files in a designated mail archive directory.",
+  "rationale_steps": [
+    "Filter by known mail archive formats to maintain focus and reduce collateral impact.",
+    "Perform multi-pass overwrites to ensure content irrecoverability.",
+    "Unlink files after shredding to remove filesystem references."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1485-097d0d83-d79c6831",
+  "source_prompt_hash": "097d0d83",
+  "timestamp_utc": "2025-09-30T07:53:07.976516Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed find command with correct grouping, quoting, and -exec ... {} + usage alongside valid shred flags.",
+        "semantic_score": 4,
+        "semantic_justification": "Effectively performs data destruction on targeted mail files via secure overwrite and deletion, but likely needs elevated permissions for /var/mail and shred’s effectiveness depends on filesystem characteristics.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T02:18:28.032543Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct find syntax with escaped parentheses, proper logical operators, and valid shred flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively identifies common email archive formats and utilizes the shred utility to securely destroy them, perfectly aligning with T1485.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:43:39.052494Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper escaping of the grouping operators, valid find flags (-xdev, -type f, -name, -exec), and correct shred flags (-n 3, -z, -u, -f) with proper use of '+' terminator.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 data destruction by using shred (a secure overwrite tool) with 3 passes plus a final zero-overwrite (-n 3 -z), forced access (-f), and file removal (-u) targeting mail archive formats (.mbox, .eml, .pst) in a realistic mail archive path, fully consistent with the technique's description of secure deletion to prevent recovery.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T01:43:40.677183Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

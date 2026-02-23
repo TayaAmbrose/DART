@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Bash",
+  "command": "md5sum /dev/mtdblock0 | diff -u - /etc/firmware/boot_partition.md5 || echo \"ALERT: boot partition hash changed\"",
+  "explanation": "Checks the MD5 of the raw boot partition device against a stored reference to identify unauthorized system image/boot area changes.",
+  "rationale_steps": [
+    "Compute MD5 directly from the boot partition device",
+    "Compare against a previously stored reference MD5",
+    "Alert if differences indicate tampering"
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1601-3f5b9fd2-e2eab768",
+  "source_prompt_hash": "3f5b9fd2",
+  "timestamp_utc": "2025-09-30T04:34:26.844102Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed pipeline with valid flags, proper use of stdin placeholder in diff, and balanced quoting/operators.",
+        "semantic_score": 4,
+        "semantic_justification": "Appropriately detects boot image tampering by comparing a computed MD5 of the boot partition to a stored reference, but typically requires elevated privileges to read /dev/mtdblock0 and assumes the reference file matches md5sum output formatting.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T17:55:51.735991Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with correct piping, diff flags (-u), proper use of || for conditional execution, and balanced quoting throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a boot partition integrity check by hashing /dev/mtdblock0 (a realistic MTD block device on embedded/network devices) and comparing against a stored reference checksum, which is a valid detection mechanism for T1601 firmware tampering, though MD5 is cryptographically weak and the stored reference file could itself be compromised, slightly reducing operational reliability.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:16:05.555534Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly uses pipes, the diff tool with standard input redirection, and logical OR operators with valid shell syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements an integrity check for an MTD partition, although reading from /dev/mtdblock devices typically requires root privileges rather than 'None'.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:16:09.508596Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

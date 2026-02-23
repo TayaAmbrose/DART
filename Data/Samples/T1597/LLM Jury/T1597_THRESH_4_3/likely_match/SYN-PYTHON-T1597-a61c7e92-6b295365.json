@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1597",
+  "platform": "Cloud",
+  "shell": "Python",
+  "command": "import boto3, json, logging, requests\nlogging.basicConfig(level=logging.INFO)\nsecrets = boto3.client('secretsmanager')\ns3 = boto3.client('s3')\nsecret = secrets.get_secret_value(SecretId='greynoise/api')['SecretString']\napi_key = json.loads(secret)['api_key']\nip = '198.51.100.14'  # example IP for testing\nbucket = 'intel-results-bucket-123456'\nkey = f'greynoise/{ip}.json'\nurl = f'https://api.greynoise.io/v2/noise/context/ip/{ip}'\ntry:\n    r = requests.get(url, headers={'key': api_key, 'Accept': 'application/json', 'User-Agent': 'cloud-intel-client/1.0'}, timeout=10)\n    r.raise_for_status()\n    data = r.json()\n    s3.put_object(Bucket=bucket, Key=key, Body=json.dumps({'source': 'greynoise', 'ip': ip, 'result': data}), ContentType='application/json')\n    print(json.dumps({'source': 'greynoise', 'requestUrl': url, 's3Uri': f's3://{bucket}/{key}'}))\nexcept Exception as e:\n    logging.exception('GreyNoise query failed: %s', e)",
+  "explanation": "Queries the paid GreyNoise API for IP context via HTTPS using an API key stored in AWS Secrets Manager, then stores structured results in S3. This leverages a closed-source commercial dataset for reconnaissance.",
+  "rationale_steps": [
+    "Securely retrieve vendor API credentials from AWS Secrets Manager.",
+    "Call a reputable commercial intelligence API (GreyNoise) over TLS with minimal scope.",
+    "Persist structured JSON results to S3 for downstream analysis."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1597-a61c7e92-6b295365",
+  "source_prompt_hash": "a61c7e92",
+  "timestamp_utc": "2025-09-30T06:45:01.363013Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid Python script with balanced syntax, correct imports, f-strings, and exception handling that will parse under Python 3.",
+        "semantic_score": 5,
+        "semantic_justification": "It retrieves a paid GreyNoise API key from AWS Secrets Manager, queries the closed-source API for IP context, and stores results in S3, which aligns directly with T1597’s use of non-public sources for reconnaissance given appropriate credentials and IAM permissions.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2025-10-02T13:49:00.486577Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically well-formed with balanced parentheses, proper string formatting, valid imports, correct boto3/requests API usage, and proper exception handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying a paid commercial closed-source intelligence feed (GreyNoise) using a securely stored API key from AWS Secrets Manager, storing results in S3, which is operationally realistic and directly aligned with the technique of searching closed sources for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:58:56.424783Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-formed, uses correct library syntax for boto3 and requests, and maintains proper logical flow and error handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements T1597 by programmatically querying a paid threat intelligence provider (GreyNoise) and exfiltrating/storing that data in a cloud-native manner.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:58:59.157186Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

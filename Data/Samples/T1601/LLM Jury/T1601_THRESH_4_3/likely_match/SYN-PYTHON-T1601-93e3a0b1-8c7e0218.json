@@ -1,0 +1,57 @@
+{
+  "technique_id": "T1601",
+  "platform": "Network Devices",
+  "shell": "Python",
+  "command": "python3 -c 'import os,sys; assert os.geteuid()==0; rc=os.system(\"diff -q /bootflash/c2960x-universalk9-mz.152-7.E9.bin /bootflash/golden/c2960x-universalk9-mz.152-7.E9.bin\"); print(\"identical\" if rc==0 else \"different\"); sys.exit(0 if rc==0 else 9)'",
+  "explanation": "Runs a quiet diff to quickly determine if the current Catalyst image matches a golden reference.",
+  "rationale_steps": [
+    "Ensure root to read both image files.",
+    "Perform binary diff and report only status.",
+    "Flag mismatch to indicate possible tampering."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-PYTHON-T1601-93e3a0b1-8c7e0218",
+  "source_prompt_hash": "93e3a0b1",
+  "timestamp_utc": "2025-09-30T04:36:55.673131Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is properly quoted and structured with valid semicolons, imports, an assert, a correctly formed os.system diff -q call, and balanced quotes.",
+        "semantic_score": 4,
+        "semantic_justification": "It correctly performs an integrity check against a golden image relevant to detecting T1601 activity, but it contradicts the stated privilege level by asserting root and assumes diff/python availability on the device.",
+        "combined_score": 4.5,
+        "confidence": 0.8,
+        "timestamp": "2025-10-02T18:06:17.140822Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper semicolons, correct string quoting, and valid use of os and sys module calls.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements firmware integrity verification by diffing a running Catalyst image against a golden reference copy, which is a legitimate detection/mitigation action for T1601, though the privilege check asserts root (euid==0) while the metadata claims 'None' privilege, and running diff on large binary firmware images is functional but not the most efficient method compared to checksum comparison.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:16:44.747044Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed Python one-liner with correct imports, valid shell command execution via os.system, and proper use of ternary operators and exit codes.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately compares a production firmware image against a reference copy to detect unauthorized modifications as described in T1601, although using checksums (MD5/SHA) is more common than 'diff' for binary firmware images.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:16:49.364673Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

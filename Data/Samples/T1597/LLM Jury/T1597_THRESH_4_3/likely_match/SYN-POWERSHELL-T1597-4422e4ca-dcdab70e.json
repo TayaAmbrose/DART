@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1597",
+  "platform": "Windows",
+  "shell": "Powershell",
+  "command": "[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; $ts=Get-Date -Format o; try { $headers=@{ 'x-apikey'=$env:VT_API_KEY; 'Accept'='application/json' }; $r=Invoke-WebRequest -Uri 'https://www.virustotal.com/api/v3/domains/contoso.com' -Headers $headers -Method Get -ErrorAction Stop; ($r.Content | ConvertFrom-Json | Select-Object -ExpandProperty data | Select-Object id,@{n='reputation';e={$_.attributes.reputation}},@{n='last_analysis_stats';e={$_.attributes.last_analysis_stats}} | ConvertTo-Json -Depth 6) | Out-File -FilePath \"$env:TEMP\\virustotal_domain_contoso.json\" -Encoding utf8; Add-Content -Path \"$env:TEMP\\recon.log\" -Value \"$ts VirusTotal success contoso.com\" } catch { Add-Content -Path \"$env:TEMP\\recon.log\" -Value \"$ts VirusTotal error: $($_.Exception.Message)\" }",
+  "explanation": "Uses VirusTotal v3 (API key required) to gather reputation and analysis statistics on the target domain, returning a structured subset and logging the operation.",
+  "rationale_steps": [
+    "Access a gated threat intelligence provider via API key.",
+    "Request domain reputation and analysis metadata.",
+    "Serialize only key attributes to JSON to reduce noise.",
+    "Record operational status to a local log."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1597-4422e4ca-dcdab70e",
+  "source_prompt_hash": "4422e4ca",
+  "timestamp_utc": "2025-09-30T06:22:12.312465Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "PowerShell is well-formed with correct try/catch, balanced quotes/parentheses, valid headers, pipelines, and parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "It queries VirusTotal’s v3 API with an API key to obtain domain reputation and analysis stats, saving and logging results, aligning with T1597 use of closed/paid sources.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2025-10-02T12:25:09.038296Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper use of semicolons as separators, valid cmdlet syntax, and correct hashtable and try/catch block construction.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements T1597 by querying VirusTotal's paid/API-gated v3 endpoint (a closed/restricted intelligence source) for domain reputation data, storing structured results and logging the operation, though VirusTotal's free tier also offers API access, making it a borderline rather than purely closed source.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:52:19.640691Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script with correct syntax for headers, API calls, JSON parsing, and error handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by querying a non-public technical database (VirusTotal API) to gather intelligence on a target domain, matching the v3 API structure.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:52:22.897736Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}

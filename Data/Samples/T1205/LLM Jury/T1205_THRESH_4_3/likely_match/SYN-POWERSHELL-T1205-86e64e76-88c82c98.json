@@ -1,0 +1,58 @@
+{
+  "technique_id": "T1205",
+  "platform": "Windows",
+  "shell": "PowerShell",
+  "command": "$target='203.0.113.25'; $seq=@(1111,2222,3333); foreach($p in $seq){ Test-NetConnection -ComputerName $target -Port $p -InformationLevel Quiet | Out-Null; Start-Sleep -Milliseconds 400 }; Test-NetConnection -ComputerName $target -Port 8443 -InformationLevel Detailed",
+  "explanation": "Sends a TCP port-knocking sequence (1111, 2222, 3333) to signal a hidden service to open 8443. Detection: correlate multiple failed connection attempts to closed ports followed by a successful connection to a previously closed port; monitor Windows Firewall/WFP logs (e.g., Event IDs 5157/5156) and NetFlow for short-interval sequential connection attempts.",
+  "rationale_steps": [
+    "Define the target host.",
+    "Send short-spaced TCP connect attempts to a specific sequence of ports to act as the knock.",
+    "Attempt final connection to the hidden service port expected to open upon correct knock.",
+    "Defenders: alert on sequential failed connection attempts to uncommon ports followed by success on a new port; inspect WFP/Firewall and NetFlow logs."
+  ],
+  "obfuscation_level": "none",
+  "id": "SYN-POWERSHELL-T1205-86e64e76-88c82c98",
+  "source_prompt_hash": "86e64e76",
+  "timestamp_utc": "2025-09-30T05:55:46.844640Z",
+  "validation": {
+    "syntax_ok": null,
+    "llm_judgments": [
+      {
+        "model": "gpt-5",
+        "syntactic_score": 5,
+        "syntactic_justification": "Valid PowerShell with balanced quotes and braces, correct foreach loop and separators, and proper parameters for Test-NetConnection and Start-Sleep.",
+        "semantic_score": 5,
+        "semantic_justification": "Implements a realistic port-knocking sequence via TCP connection attempts with timing and then checks 8443, which aligns with T1205 traffic signaling behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2025-10-01T17:14:11.635438Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper array syntax (@()), valid foreach loop, correct cmdlet names and parameters, and proper semicolon separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements TCP port-knocking (T1205) by sequentially connecting to ports 1111, 2222, 3333 with timed intervals to signal a hidden service, then connecting to the target port 8443, which is a textbook implementation of traffic signaling to trigger a firewall rule or daemon to open a covert service port.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T04:00:21.446880Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command follows standard syntax, using valid variables, arrays, loops, and cmdlets with correct parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively implements a port-knocking sequence, which is a textbook example of Traffic Signaling (T1205) to trigger a remote response.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:00:23.474946Z"
+      }
+    ],
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 5.0,
+    "llm_average_score": 5.0,
+    "llm_verdict": "likely_match",
+    "sandbox_trace_id": null,
+    "mitre_match_score": null
+  }
+}
