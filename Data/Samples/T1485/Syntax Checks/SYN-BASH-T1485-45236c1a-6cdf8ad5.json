@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for both 'find' and 'srm', and correct use of the -exec syntax with the terminating '+'.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using 'srm' with multi-pass secure deletion flags (-fm) to irreversibly destroy all files in the specified research directory, making data recovery impossible.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T01:36:11.822968Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct `find -exec` syntax, proper quoting for the path, and valid flags for both `find` and `srm`.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the claimed intent by using `srm`, a tool explicitly designed for multi-pass secure deletion, correctly targeting files within the specified directory, and using appropriate flags for forced, irreversible destruction.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T01:36:16.150496Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed find command with balanced quotes, valid -type/-exec usage, and proper {} + aggregation.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T01:36:29.468774Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and valid find/exec syntax, but using `+` with `-exec srm` may not work as intended since srm may not accept multiple file arguments the way xargs-style `+` implies, making `;` more appropriate here.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses `srm` (macOS secure remove) with `-f` (force) and `-m` (multi-pass DoD-style overwrite) flags to irreversibly destroy files in a specific research directory, aligning well with T1485 data destruction via secure deletion, though `srm` was deprecated in macOS 10.12+ reducing operational plausibility on modern systems.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:41:01.344158Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid find syntax with properly quoted paths, standard flags, and a correctly structured -exec block terminating with the + symbol.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately leverages the srm utility to perform multi-pass secure deletion of files, directly fulfilling the Data Destruction (T1485) technique requirements.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:41:02.157305Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

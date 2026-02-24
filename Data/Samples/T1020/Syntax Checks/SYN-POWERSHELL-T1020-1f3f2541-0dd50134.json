@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T03:51:33.643777Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes, correct command separators, valid flags, and appropriate error redirection.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by extracting sensitive registry hives (SAM and SYSTEM), transferring them via SFTP to an external server, and cleaning up artifacts after successful exfiltration.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T03:51:36.393847Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command is largely well-formed PowerShell, but the WinSCP `put` command incorrectly passes two source files and a destination in a single quoted string with backtick escaping that is syntactically awkward and would likely fail at runtime since WinSCP's `put` command expects one source path per invocation, not two source files concatenated with a destination directory.",
+        "semantic_score": 4,
+        "semantic_justification": "The overall flow correctly implements T1020 automated exfiltration — dumping SAM and SYSTEM hives with reg.exe, transferring them via SFTP using WinSCP with hardcoded credentials, and cleaning up artifacts on success — but the `put` command syntax bundles two source files and a destination incorrectly, reducing operational plausibility slightly.",
+        "combined_score": 3.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:24:30.662076Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 2,
-        "syntactic_justification": "While PowerShell parses the command, the WinSCP `put` and `exit` commands are passed as separate arguments outside the `/command` block, preventing WinSCP from executing them as intended for exfiltration.",
-        "semantic_score": 2,
-        "semantic_justification": "The command fails to achieve its claimed intent because saving HKLM\\SAM and HKLM\\SYSTEM requires elevated privileges (contradicting 'Privilege: None'), and the crucial WinSCP `put` and `exit` commands will not execute due to a syntactic error in argument passing.",
-        "combined_score": 2.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T05:52:41.218209Z"
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed PowerShell sequence using proper call operators, string interpolation, subexpressions, and valid WinSCP command-line arguments.",
+        "semantic_score": 4,
+        "semantic_justification": "The command successfully implements the 'packaging and transfer' logic of T1020 by exporting registry hives and automating an SFTP upload, though it requires Administrative privileges which contradicts the 'None' privilege label.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:24:39.227099Z"
       }
     ],
-    "llm_average_syntactic": 4.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 3.833,
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

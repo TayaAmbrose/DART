@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T16:01:46.499188Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid pipe usage, and correct netcat flags for sending a UDP datagram.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-u for UDP, -w1 for timeout), proper pipe usage, and correct argument ordering for netcat.",
         "semantic_score": 5,
-        "semantic_justification": "The command directly achieves the claimed intent of sending a magic keyword via UDP to signal a trigger, perfectly aligning with the Traffic Signaling (T1205) technique for low-bandwidth command delivery.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T16:01:54.866219Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for netcat (-u for UDP, -w1 for timeout), and correct piping of the 'OPEN' string.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending a specific trigger string ('OPEN') via UDP to a specific endpoint that could activate a hidden service or trigger a response from a compromised system.",
+        "semantic_justification": "The command accurately implements T1205 traffic signaling by sending a fixed magic keyword ('OPEN') via UDP to a specific IP and port, which is a classic knock/trigger pattern used to activate hidden services or signal a listening implant.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:15:14.476418Z"
+        "timestamp": "2026-02-19T03:54:43.729751Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard bash pipes and valid netcat flags for UDP transmission and timeout control without any syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements traffic signaling by sending a specific payload to a target port to act as a trigger, which perfectly aligns with the technique description.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:54:44.753749Z"
       }
     ],
     "llm_average_syntactic": 5.0,

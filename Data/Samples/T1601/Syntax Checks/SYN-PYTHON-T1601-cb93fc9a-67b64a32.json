@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with proper imports, balanced parentheses, correct function calls, and appropriate error handling.",
-        "semantic_score": 4,
-        "semantic_justification": "The script correctly implements a detection mechanism for T1601 by comparing current initramfs/initrd checksums against a baseline, though it assumes the baseline file exists and is properly formatted.",
-        "combined_score": 4.5,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:24:26.979047Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with correct syntax, balanced delimiters, and valid function calls.",
-        "semantic_score": 4,
-        "semantic_justification": "The command accurately implements a hash-based integrity check for initramfs images, directly aligning with detecting T1601 modifications, though the specified baseline file path `/root/baselines/initramfs.sha256` would likely be inaccessible with the claimed 'Privilege: None', creating a realism gap.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T18:24:42.555328Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Python 3 code with valid imports, balanced structures, and parseable expressions.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T18:25:03.010844Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically well-formed with balanced parentheses, proper string formatting, correct use of f-strings, and valid module usage throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements initramfs/initrd integrity verification by computing SHA-256 of the current image and comparing it against a stored baseline, which is a direct and operationally sound detection method for T1601 (Modify System Image) targeting in-storage firmware/boot image tampering on Linux systems.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:18:30.273596Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is perfectly well-formed, using correct syntax for globbing, file handling, SHA-256 hashing, and conditional logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements a detection mechanism for T1601 by calculating the checksum of the boot image and comparing it against a known baseline to identify unauthorized modifications.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:18:38.137647Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

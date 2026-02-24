@@ -29,30 +29,30 @@
         "timestamp": "2025-10-01T01:08:34.812962Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, backticks, parentheses, and braces, with correct PowerShell syntax including variable declarations, pipeline operations, and method calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by identifying a Thunderbolt network adapter as an alternate network medium, binding to it specifically, and using it to exfiltrate data over TCP to an external IP address on a non-standard port.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:08:37.906284Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper escaping of backtick-prefixed variables for WMIC/PowerShell nesting, balanced braces and parentheses, though the complex multi-level quoting and backtick escaping within the WMIC call create context introduces edge-case parsing fragility.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by discovering a Thunderbolt network adapter via WMI, binding a TCP socket to its IP address, and exfiltrating a file to an external IP on a non-standard port, which is operationally plausible as an alternate-medium exfiltration technique, though Thunderbolt networking (IP-over-Thunderbolt) is a niche configuration that may not be present on most targets, slightly reducing realism.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:05:48.579836Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct variable escaping for PowerShell within WMIC, balanced quotes, valid flags, and proper use of PowerShell syntax and .NET methods.",
+        "syntactic_justification": "The command is perfectly well-formed, using correct WMIC process creation syntax and valid PowerShell code with proper escaping of variables for execution within a string.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by programmatically identifying a Thunderbolt network adapter, binding a TCP client to its specific IP address, and exfiltrating data, directly aligning with the T1011 technique of using an alternative network medium.",
+        "semantic_justification": "The command accurately implements MITRE ATT&CK T1011 by specifically identifying a Thunderbolt network adapter and binding the TCP socket to that interface's IP address, ensuring data exfiltration occurs over the alternate medium.",
         "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T06:24:15.025325Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:05:51.697409Z"
       }
     ],
-    "llm_average_syntactic": 4.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.333,
-    "llm_verdict": "likely_match",
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.0,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

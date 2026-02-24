@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T01:31:35.909699Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, parentheses, and braces, correct PowerShell syntax with proper variable declarations, and appropriate escape sequences for nested command execution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements T1011 by identifying a FireWire (IEEE 1394) network adapter, binding to it, and using it to exfiltrate data over TCP to an external IP address on a non-standard port, which aligns perfectly with exfiltration over an alternative network medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:31:42.361778Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper escaping of backtick-prefixed variables for WMIC/PowerShell nesting, balanced braces and parentheses, though the complex multi-level quoting and backtick escaping within the WMIC call create context makes it fragile and potentially unreliable in some shell environments.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by enumerating IEEE 1394 (FireWire) network adapters via WMI, binding a TCP socket to that interface's IP address, and exfiltrating a file over that non-standard network medium to a remote IP on a high port, which is operationally plausible though FireWire IP networking (RFC 2734) is rare in practice and the adapter description filter '*1394*' may not match all FireWire adapters consistently.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:10:56.141683Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes and parentheses, correctly escaped PowerShell variables using backticks within the string literal, and valid cmdlet usage.",
+        "syntactic_justification": "The command is well-formed with balanced parentheses, braces, and quotes, and it uses proper escaping for PowerShell variables within a string.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely identifies a FireWire network adapter, binds an outgoing TCP connection to its specific IP address, and exfiltrates data, directly demonstrating T1011 by utilizing a non-standard network medium for data transfer.",
+        "semantic_justification": "The command accurately implements T1011 by identifying a specific non-standard network interface (FireWire/1394), binding a socket to its IP address, and transmitting data over it.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:32:56.383642Z"
+        "timestamp": "2026-02-18T22:11:02.002487Z"
       }
     ],
-    "llm_average_syntactic": 4.333,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.5,
+    "llm_average_syntactic": 4.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T07:18:38.094550Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for both tar and dd commands, and correct piping syntax.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, valid flags for tar and dd, proper pipe operator, and correct use of variable expansion and special device path.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1052 technique by compressing the user's Documents directory and writing it directly to a USB device, bypassing filesystem controls and avoiding metadata that could be detected.",
+        "semantic_justification": "The command accurately implements T1052 by compressing the Documents directory with tar and writing the raw stream directly to a USB device identified by label using dd with direct/dsync flags, bypassing filesystem metadata and evading detection — fully consistent with physical medium exfiltration.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T07:18:40.581005Z"
+        "timestamp": "2026-02-18T22:32:35.469443Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax for `tar` and `dd` commands, valid flags, and balanced quoting.",
-        "semantic_score": 3,
-        "semantic_justification": "The command correctly uses `tar` and `dd` for packaging and raw device writes, aligning with the exfiltration technique and claimed intent to avoid filesystem metadata; however, writing directly to a raw block device like `/dev/disk/by-label/USBSTICK` typically requires elevated privileges, making the 'Privilege: None' claim operationally implausible.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T07:18:59.617688Z"
+        "syntactic_justification": "The command is syntactically perfect for Bash, with correct flag usage for both tar and dd, properly handled pipes, and valid variable referencing.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively performs raw exfiltration to a physical device as described, though writing directly to a block device node typically requires root privileges which contradicts the 'None' privilege level provided.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:32:39.368195Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

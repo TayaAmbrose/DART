@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T04:11:55.714389Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid flags for ionice, nice, and rsync, proper variable usage, and correct command chaining.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid rsync flags, proper use of ionice/nice prefixes, correct include/exclude filter ordering, and valid shell variable expansions.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1020 (Automated Exfiltration) by using rsync to efficiently transfer only log files to a remote server with low system impact, making it an ideal automated exfiltration mechanism.",
+        "semantic_justification": "The command precisely implements automated exfiltration (T1020) by using low-priority I/O and CPU scheduling to avoid detection, rsync's append-verify and update flags to efficiently transfer only new log data, targeted inclusion of only *.log files from a user data directory, and exfiltration to a remote host using a disguised path (.cache/.lg/) consistent with stealth-oriented automated data transfer.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T05:58:22.293907Z"
+        "timestamp": "2026-02-18T22:26:10.253757Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid commands, options, and arguments with balanced quotes and correct path formats.",
+        "syntactic_justification": "The command uses valid Linux utilities, correct rsync flag syntax, and properly nested include/exclude patterns for Bash.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly achieves its claimed intent of low-impact, automated exfiltration of only log files using `rsync` with append-verify, fully aligning with MITRE ATT&CK T1020.",
+        "semantic_justification": "The command effectively demonstrates automated exfiltration by using low-priority resource scheduling and efficient incremental transfers to a remote target, perfectly matching the technique's intent.",
         "combined_score": 5.0,
         "confidence": 1.0,
-        "timestamp": "2025-10-01T05:58:33.851279Z"
+        "timestamp": "2026-02-18T22:26:10.911580Z"
       }
     ],
     "llm_average_syntactic": 5.0,

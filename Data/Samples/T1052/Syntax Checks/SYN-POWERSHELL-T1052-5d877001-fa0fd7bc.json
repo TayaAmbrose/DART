@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T09:34:57.936713Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced parentheses, correct variable assignment, proper piping, and valid robocopy parameters.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses and quotes, valid robocopy flags, proper semicolon separator, and correct variable interpolation syntax.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by automatically detecting a removable drive and copying financial data to it with options that preserve attributes and timestamps while minimizing visibility through quiet operation flags.",
+        "semantic_justification": "The command precisely implements T1052 by dynamically detecting a removable drive, using robocopy with timestamp/attribute preservation flags (/COPY:DAT, /DCOPY:T) to blend in, suppressing output logs (/NFL /NDL /NP) to reduce detection, and mirroring financial data to the removable medium with resilience flags (/Z /R:1 /W:1).",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:35:00.794444Z"
+        "timestamp": "2026-02-18T22:40:05.321944Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses and quotes, proper command separation, and valid robocopy flags.",
+        "syntactic_justification": "The PowerShell variable assignment and the subsequent robocopy command use correct syntax, valid flags, and proper quoting.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of exfiltrating financial data to a removable drive while preserving metadata for stealth, directly aligning with T1052.",
+        "semantic_justification": "The command effectively identifies a removable drive and uses a standard Windows utility with stealth-oriented flags to copy sensitive data, perfectly matching the T1052 technique.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T09:35:14.312844Z"
+        "timestamp": "2026-02-18T22:40:06.240846Z"
       }
     ],
     "llm_average_syntactic": 5.0,

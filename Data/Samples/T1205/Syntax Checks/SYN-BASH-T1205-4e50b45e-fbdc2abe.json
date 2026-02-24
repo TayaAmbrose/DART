@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T14:25:13.200262Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct usage of sudo and python3 -c, properly balanced quotes, and valid Python/Scapy syntax for sniffing and processing packets.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and brackets, valid Python inline syntax, and proper use of semicolons and list comprehension.",
         "semantic_score": 5,
-        "semantic_justification": "The command accurately implements the claimed intent of passively sniffing for UDP beacons on a specific port and extracting raw payloads, which is a highly plausible and effective method for detecting the T1205 Traffic Signaling technique, particularly beaconing with embedded data.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T14:25:26.948710Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper Python syntax within the quoted code, and correct use of sudo for elevated privileges.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements traffic signaling detection by using Scapy to passively monitor UDP port 4000 for potential command and control beacons, extracting and displaying the payload content of captured packets.",
+        "semantic_justification": "The command accurately implements passive UDP beacon detection on port 4000 using Scapy's sniff with a BPF filter, extracting raw payloads from captured packets, which directly aligns with T1205 traffic signaling detection via promiscuous socket capture.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:10:49.061220Z"
+        "timestamp": "2026-02-19T03:48:20.853419Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Scapy syntax and balanced shell quoting for executing a Python one-liner.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively implements a traffic signaling listener by capturing UDP packets and extracting raw data to detect trigger payloads.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:48:22.284089Z"
       }
     ],
     "llm_average_syntactic": 5.0,

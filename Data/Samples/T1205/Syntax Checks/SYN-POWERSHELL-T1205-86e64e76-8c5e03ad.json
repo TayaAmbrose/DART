@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T14:06:26.865012Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, correct variable assignments, valid cmdlet calls, and proper use of command separators.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper array syntax, valid semicolon separators, correct cmdlet usage, and no syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly implements a time-derived TCP port knocking sequence to signal or trigger an action, directly aligning with the T1205 Traffic Signaling technique, where a pattern in seemingly legitimate network traffic conveys hidden intent.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T14:06:39.980111Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, braces, and quotes, proper command separators, valid variable assignments, and correct method calls with appropriate parameters.",
-        "semantic_score": 5,
-        "semantic_justification": "The command implements Traffic Signaling (T1205) by creating a time-based port knocking sequence derived from the day of year that changes daily, probes three calculated ports in sequence with precise timing, and then attempts a connection to the actual service port (9001) after the knock sequence is complete.",
+        "semantic_justification": "The command accurately implements a time-derived port knocking sequence (T1205) where daily-rotating port numbers derived from DayOfYear create a changing knock pattern across three ports before connecting to port 9001, fully consistent with traffic signaling to trigger a listening service.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:09:54.347331Z"
+        "timestamp": "2026-02-19T03:47:02.515969Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell code is perfectly formed, uses correct cmdlet parameters, and maintains balanced parentheses and braces throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command logically generates a dynamic port-knocking sequence using time-based math and executes network probes as described to signal a remote listener.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:47:04.295925Z"
       }
     ],
     "llm_average_syntactic": 5.0,

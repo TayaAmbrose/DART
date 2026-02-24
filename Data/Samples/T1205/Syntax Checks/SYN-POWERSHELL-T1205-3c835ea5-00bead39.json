@@ -27,28 +27,28 @@
         "timestamp": "2025-10-01T15:24:38.473678Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for variables, strings, object creation, method calls, and command separation, including proper escaping for newlines in the string literal.",
-        "semantic_score": 3,
-        "semantic_justification": "While the crafted SSDP message is semantically aligned with Traffic Signaling (T1205), the initial `netsh advfirewall` command will fail due to requiring administrative privileges, contradicting the stated 'Privilege: None', which significantly impacts the command's operational feasibility and its ability to fully achieve the claimed intent of allowing outbound traffic.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T15:25:04.194928Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with valid semicolon separators, balanced quotes, and correct method calls, though the backtick-r-backtick-n sequences (`r`n) inside single-quoted strings won't be interpreted as CRLF in PowerShell (single quotes suppress escape processing), which is a functional but not strictly syntactic issue.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by embedding a magic UUID in the SSDP ST header of a multicast UDP packet to serve as a covert trigger, uses netsh to pre-authorize the outbound firewall rule, and leverages a legitimate-looking SSDP M-SEARCH format to blend with normal UPnP discovery traffic — all consistent with the described technique.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:52:05.189881Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolon separators, correct PowerShell syntax for creating objects, and proper string formatting including escape sequences.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a firewall rule and sending a specially crafted SSDP discovery packet with a covert UUID (deadbeef) that could be monitored by an attacker as a signaling mechanism.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:13:31.982700Z"
+        "syntactic_justification": "The command is perfectly well-formed PowerShell, correctly using the call operator, semi-colon separators, and proper .NET class instantiation/method calls.",
+        "semantic_score": 4,
+        "semantic_justification": "While the logic for traffic signaling via SSDP is sound, the use of single quotes in PowerShell prevents the expansion of the backtick escape sequences (`r`n), resulting in a packet with literal backticks instead of actual carriage returns, and the netsh command requires administrative privileges.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:52:16.375258Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
     "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,

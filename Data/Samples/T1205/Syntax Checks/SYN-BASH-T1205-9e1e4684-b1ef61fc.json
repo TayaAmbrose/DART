@@ -28,30 +28,30 @@
         "timestamp": "2025-10-01T17:13:29.422531Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct quoting for the ProxyCommand option and the nested bash command, valid flags for ssh and nc, and proper use of ProxyCommand placeholders.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of emitting a TCP knock sequence as a 'traffic signal' to potentially trigger a port opening, directly aligning with T1205's 'timing- or sequence-based triggers' and 'protocol mimicry' aspects for controlled access.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T17:13:43.352091Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid flag usage, though the mixing of double and single quotes in the ProxyCommand string (particularly `\"$p\"` inside single quotes) means `$p` would not expand as intended in the loop, reducing syntactic correctness slightly.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking sequence via netcat before establishing an SSH connection through ProxyCommand, which aligns well with T1205 traffic signaling (using ordered TCP connection attempts as a trigger), though the variable expansion bug with `$p` inside single quotes would cause the knock sequence to fail at runtime, slightly reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T03:59:25.126280Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags for both SSH and netcat, and correct nesting of commands within the ProxyCommand option.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using a port-knocking sequence (61001-61003) as a signal before establishing the actual SSH connection, which aligns with the technique of embedding signals within legitimate-looking network traffic.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:19:11.919063Z"
+        "syntactic_justification": "The command is a perfectly well-formed Bash command with balanced quotes and valid SSH options, even though the nested quoting is complex.",
+        "semantic_score": 3,
+        "semantic_justification": "The command fails its intended purpose because the '$p' variable is expanded by the local shell rather than the subshell, meaning the loop iterates without correctly passing port numbers to netcat.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:00:17.691064Z"
       }
     ],
-    "llm_average_syntactic": 4.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 4.5,
-    "llm_verdict": "likely_match",
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 3.833,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

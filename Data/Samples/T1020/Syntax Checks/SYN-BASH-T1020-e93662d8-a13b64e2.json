@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T03:46:08.466325Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid SCP syntax, properly formatted flags, balanced quotes, and correct redirection operators.",
+        "syntactic_justification": "The command is perfectly well-formed with valid scp flags, properly quoted paths, balanced options, and correct syntax for all arguments including -o key=value pairs.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the Automated Exfiltration technique by using SCP to transfer web content to an external server with bandwidth throttling (-l 300), compression (-C), quiet mode (-q), and redirection to hide output, making it operationally plausible for stealthy data exfiltration.",
+        "semantic_justification": "The command precisely achieves automated exfiltration (T1020) by recursively transferring the web root to an external attacker-controlled host using scp with compression (-C), bandwidth throttling (-l 300) to evade detection, a specific identity key (-i), suppressed host key checking for non-interactive operation, and output redirection to /dev/null for stealth.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T03:46:11.587282Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:23:57.786015Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax, correct flags, arguments, and proper shell redirection.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command's design perfectly aligns with automated exfiltration and its options support stealth and non-interactivity, the stated 'Privilege: None' contradicts the use of '-i /root/.ssh/id_rsa', making it operationally implausible for an unprivileged user.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T05:50:15.793637Z"
+        "syntactic_justification": "The command is perfectly formed with valid scp flags, correct SSH option syntax, and standard Bash redirection.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements the technical components of T1020, including bandwidth throttling (-l), compression (-C), and non-interactive execution (StrictHostKeyChecking=no) for exfiltration.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:24:03.582617Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

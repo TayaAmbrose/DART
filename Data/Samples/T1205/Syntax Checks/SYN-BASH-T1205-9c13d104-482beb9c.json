@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T18:24:12.160276Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using standard Bash loop syntax, valid `ping` and `sleep` flags, proper quoting for variables, and correct command separators.",
+        "syntactic_justification": "The command is perfectly well-formed with a valid bash for loop, properly quoted variable, correct ping flags (-c1 -s), valid semicolons as separators, and balanced structure throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1205 by using a sequenced series of ICMP echo requests with specific, unusual payload sizes and timing to signal a remote listener, exactly as described in the technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T18:24:25.088110Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper loop syntax, variable usage, command separators, valid ping flags, and proper redirection.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending ICMP packets with specific payload sizes (13, 37, 73) in sequence to a target IP, creating a covert knock pattern that could signal a listening system.",
+        "semantic_justification": "The command accurately implements a port-knocking/traffic signaling technique using sequenced ICMP packets with specific payload sizes (13, 37, 73 bytes) to signal a remote listener, which is a realistic and operationally plausible implementation of T1205 using ICMP field values as covert signals.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:27:54.853176Z"
+        "timestamp": "2026-02-19T04:05:50.256247Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash loop syntax, valid ping flags, and correct redirection with no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively demonstrates traffic signaling by using varying ICMP payload sizes as a sequence-based trigger, which is a classic implementation of T1205.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:05:51.397349Z"
       }
     ],
     "llm_average_syntactic": 5.0,

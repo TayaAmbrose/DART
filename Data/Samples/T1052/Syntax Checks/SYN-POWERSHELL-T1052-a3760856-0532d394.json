@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T08:33:39.806925Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, balanced quotes/parentheses, correct cmdlet usage, proper piping, error handling, and valid output redirection.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper semicolon separators, valid cmdlet syntax, correct backtick escaping for the drive letter variable, and no syntax errors throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by identifying a removable drive, creating a hidden system-like directory, copying browser history data to it, hiding the directory with system attributes, and logging the operation - all core elements of exfiltration over physical medium.",
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive, copying Edge browser history to a disguised 'System Volume Information' folder on that drive, applying hidden and system attributes via attrib to evade casual inspection, renaming the file to 'syscache.db' for obfuscation, and logging the operation — all consistent with covert physical exfiltration tradecraft.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T08:33:42.659070Z"
+        "timestamp": "2026-02-18T22:36:37.551463Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid command separators, correct parameter usage for PowerShell cmdlets, and proper invocation of the external `attrib` command.",
+        "syntactic_justification": "The command is a series of valid PowerShell statements using proper variable assignment, sub-expressions, and standard cmdlets with correct flags and balanced quotes.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves its stated intent by dynamically locating a removable drive, copying a sensitive browser history file to a hidden system-like directory on it, renaming the file for obfuscation, and logging the action, all aligning with the T1052 technique and operational realism for a standard user.",
+        "semantic_justification": "The command effectively identifies a removable drive, creates a hidden system-style directory to mask its presence, and copies sensitive browser data (Edge History) to that drive under an innocuous filename, perfectly aligning with T1052.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T08:33:57.775484Z"
+        "timestamp": "2026-02-18T22:36:43.311205Z"
       }
     ],
     "llm_average_syntactic": 5.0,

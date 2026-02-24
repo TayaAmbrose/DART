@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T16:56:46.737463Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct `iptables` syntax, valid flags, balanced quoting, and proper command separation.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolons as separators, valid iptables flags, and correct bash -c quoting throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command correctly implements the described three-port knocking sequence using the `iptables` `recent` module to temporarily allow SSH connections for 60 seconds after a successful sequence, aligning perfectly with the Traffic Signaling technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T16:57:05.727571Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper bash syntax, balanced quotes, valid iptables flags, and correct command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command implements a port knocking sequence (7000→8000→9000) that perfectly aligns with the Traffic Signaling technique by using network traffic patterns as a covert authentication mechanism to temporarily allow SSH access.",
+        "semantic_justification": "The command accurately implements a classic port-knocking sequence using iptables 'recent' module to track sequential SYNs to ports 7000→8000→9000 within time windows, then temporarily allowing SSH on port 22 for 60 seconds — a textbook Traffic Signaling (T1205) implementation where specific packet sequences act as covert triggers.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:18:04.269076Z"
+        "timestamp": "2026-02-19T03:58:01.449104Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct bash syntax with a wrapped sudo call, balanced quoting, and valid iptables module flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a stateful port-knocking sequence using the iptables 'recent' module to signal the opening of an SSH port, perfectly aligning with T1205.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:58:04.740722Z"
       }
     ],
     "llm_average_syntactic": 5.0,

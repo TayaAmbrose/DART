@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T07:02:53.647475Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced parentheses, correct variable assignment, piping, and proper use of cmdlets with their parameters.",
+        "syntactic_justification": "The command is well-formed PowerShell with balanced parentheses, proper semicolon separators, valid cmdlet syntax, and correct parameter usage throughout all three pipeline stages.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by automatically identifying a removable drive, creating a deceptive system-like folder, and using BITS transfer (which operates in the background with low priority) to exfiltrate data to the physical medium.",
+        "semantic_justification": "The command accurately implements T1052 by detecting a removable drive, creating a deceptive 'System32' directory to blend in, and using BITS with low priority to quietly transfer files to the USB device while minimizing detection through both naming obfuscation and throttled transfer speed.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T07:02:56.529738Z"
+        "timestamp": "2026-02-18T22:31:36.864962Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct Powershell syntax, balanced parentheses, valid cmdlets, and proper parameter formatting.",
+        "syntactic_justification": "The command uses standard PowerShell cmdlets, correct piping, and valid variable expansion with no syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command directly facilitates exfiltration to a removable physical medium by identifying a USB drive, creating an obfuscated system-sounding folder, and using BITS for quiet, resilient file transfer, perfectly aligning with T1052.",
+        "semantic_justification": "The command effectively identifies a removable drive, creates a deceptive directory, and uses a legitimate background transfer service to move data, matching the technique's intent.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T07:03:05.793902Z"
+        "timestamp": "2026-02-18T22:31:42.539186Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper syntax, balanced quotes/parentheses, correct exception handling, and appropriate variable usage.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying Farsight DNSDB, a paid intelligence service, using an API key to access non-public DNS information about a target domain.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:58:12.344011Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is a perfectly well-formed, single-line Python script with correct syntax for imports, variable assignments, conditional logic, function calls, dictionary literals, string formatting, and error handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying Farsight DNSDB, which is a subscription-based 'closed source' for intelligence gathering, using an API key, directly matching the technique's description of querying paid feeds or private databases.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:58:19.793138Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Python with balanced quotes and a valid try/except block; statements and headers are correctly constructed.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.86,
         "timestamp": "2025-10-02T12:58:39.624526Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with proper imports, exception handling, and string formatting, but the multi-line format with inline `if` statements and mixed indentation may cause issues when executed as a single command string rather than a script file.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying Farsight DNSDB, a real subscription-based passive DNS intelligence service, using proper API key authentication via the X-API-Key header to retrieve RRset records for a target domain, which is a textbook example of querying closed/paid intelligence sources for reconnaissance.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:54:55.032352Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python command is well-formed, correctly uses semicolons for line-level statement separation, maintains proper indentation for the try/except blocks, and follows valid block structure.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a query against a known closed-source intelligence provider (Farsight DNSDB) using appropriate API keys and headers, though it may fail at runtime because DNSDB returns newline-delimited JSON which json.loads() cannot parse as a single string.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:55:14.615004Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T09:22:55.936615Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax for the hdiutil command, proper flag formats, and correct parameter structure for creating a disk image on macOS.",
+        "syntactic_justification": "The command is perfectly well-formed with valid hdiutil flags (-srcdevice, -format, UDZO), proper path syntax, and no quoting or structural issues.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 (Exfiltration Over Physical Medium) as it creates a compressed disk image of an internal partition directly onto an external volume (/Volumes/USB/) for physical exfiltration.",
+        "semantic_justification": "The command accurately uses macOS hdiutil to create a compressed (UDZO format) block-level disk image of an internal partition directly onto an external USB volume, which precisely matches the T1052 technique of staging data on a physical medium for offline removal, with the hidden filename (dot-prefixed) adding realistic evasion behavior.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:22:59.144324Z"
+        "timestamp": "2026-02-18T22:39:10.303197Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid commands, flags, arguments, and no syntax errors or unbalanced constructs.",
+        "syntactic_justification": "The command follows the correct hdiutil syntax for creating a compressed disk image from a raw device source with valid flags and paths.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the stated intent of imaging a raw partition into a compressed DMG on an external drive, aligning directly with T1052 Exfiltration Over Physical Medium by staging data for physical removal; the `sudo` prefix correctly addresses the necessary privilege for accessing a raw device.",
+        "semantic_justification": "The command accurately implements the technique by using a native macOS tool to create a block-level backup of a partition directly to a physical medium for exfiltration.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T09:23:07.251472Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:39:11.968072Z"
       }
     ],
     "llm_average_syntactic": 5.0,

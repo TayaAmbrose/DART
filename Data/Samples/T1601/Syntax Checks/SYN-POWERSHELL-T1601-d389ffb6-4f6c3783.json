@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignment, pipeline usage, balanced quotes/braces, correct method calls, and appropriate error handling.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively implements a file integrity check against a baseline manifest which aligns with detecting T1601 (Modify System Image), but it's running in PowerShell which is unusual for network device firmware validation rather than using platform-specific tools.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T17:42:12.015808Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Powershell command is perfectly well-formed with correct syntax, balanced elements, valid cmdlet usage, and proper operator/method calls.",
-        "semantic_score": 4,
-        "semantic_justification": "The command accurately implements a hash validation mechanism to detect unauthorized modifications, directly aligning with T1601 detection; however, the 'Privilege: None' claim is a minor realism gap, as accessing typical 'critical image components' on a system often requires elevated read permissions, potentially impacting operational plausibility.",
-        "combined_score": 4.5,
-        "confidence": 1,
-        "timestamp": "2025-10-02T17:42:32.067973Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell command is well-formed with balanced quotes/braces, valid operators, and proper statement separators.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T17:42:42.097310Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, parentheses, and quotes, proper use of semicolons as separators, valid cmdlet names and parameters, and correct string splitting and comparison logic.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements SHA256 hash validation against a baseline manifest to detect unauthorized image modifications (aligned with T1601 detection), though it represents a defensive/detection measure rather than the adversarial technique itself, and the assumption that PowerShell runs natively on network devices reduces operational plausibility slightly.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:14:48.610882Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is well-structured, uses correct syntax for loops, string splitting, and variable assignment, and correctly handles the pipeline.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a file integrity check to detect image modification, though PowerShell is an uncommon shell for traditional network devices unless they are Windows-based controllers or VNFs.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:14:52.222513Z"
       }
     ],
     "llm_average_syntactic": 5.0,

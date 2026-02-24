@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T16:48:27.681902Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid `nc` flags, correct use of command separators, and proper redirection from `/dev/null`.",
+        "syntactic_justification": "The command is perfectly well-formed with valid `nc` flags (-w1 for timeout, -u for UDP), proper semicolon separators, balanced syntax, and correct use of </dev/null to send empty UDP packets.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of sending a UDP port-knock sequence for traffic signaling, utilizing `nc` effectively for this well-established technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T16:48:37.051932Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (semicolons), valid flags for netcat (-w1 and -u), and correct input redirection (</dev/null).",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending UDP packets to three specific ports in sequence, creating a port-knocking pattern that could signal a listening system to enable a hidden service.",
+        "semantic_justification": "The command accurately implements a UDP port-knock sequence by sending empty datagrams to three sequential ports on the target host, which is a classic traffic signaling technique (T1205) used to trigger a listening daemon to open a service, fully consistent with the described covert signaling behavior.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:17:35.787204Z"
+        "timestamp": "2026-02-19T03:57:20.914389Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command string uses valid Bash syntax, correctly chains commands with semicolons, and uses standard nc flags and input redirection.",
+        "semantic_score": 5,
+        "semantic_justification": "The sequence of UDP packets to specific ports perfectly implements a port-knocking trigger as described in the Traffic Signaling technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:57:22.038958Z"
       }
     ],
     "llm_average_syntactic": 5.0,

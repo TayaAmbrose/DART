@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T09:09:51.281664Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes, parentheses, and braces, correct variable assignments, proper piping, and valid robocopy parameters.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, proper semicolon separators, valid backtick escaping in the path string, and correct robocopy flag syntax throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by automatically identifying a removable drive, creating a directory on it, and exfiltrating Windows Recent Items data using robocopy with minimal output to avoid detection.",
+        "semantic_justification": "The command accurately implements T1052 by dynamically identifying a removable drive, creating a staging directory on it, and using robocopy to silently mirror the Recent Items directory (which contains LNK files revealing recently accessed documents) to the physical medium, with operational logging — fully consistent with data staging and exfiltration over a physical medium.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:09:54.161872Z"
+        "timestamp": "2026-02-18T22:38:21.582246Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, valid PowerShell cmdlet usage, proper `robocopy` syntax and flags, and correct command separators.",
+        "syntactic_justification": "The command uses valid PowerShell syntax, correct variable expansion, and proper flag usage for both cmdlets and the external robocopy tool.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the intent of exfiltrating data (recent items, which are valuable for reconnaissance) onto a removable physical medium using a robust tool (`robocopy`) with stealthy flags and directing logs to the exfiltration medium, aligning directly with T1052 under 'None' privilege.",
+        "semantic_justification": "The command effectively identifies a removable drive and uses a robust system tool to exfiltrate specific user metadata, aligning perfectly with the technique description.",
         "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T09:10:08.354380Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:38:25.990936Z"
       }
     ],
     "llm_average_syntactic": 5.0,

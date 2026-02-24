@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes/parentheses/braces, appropriate semicolons as command separators, and correct parameter usage for all the Azure and REST API calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1585 technique by obtaining an access token, creating a Microsoft 365 group, adding a specific user to that group, and then verifying the creation - all steps that establish a persistent account within the Microsoft environment.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T08:36:39.341797Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct command separators, valid PowerShell parameters, and proper syntax for interacting with the Microsoft Graph API.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 by establishing a new Microsoft 365 group (an identity-related resource) and embedding an existing user into it, which directly supports the goal of blending into normal activity within plausible team structures.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T08:36:50.973068Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quotes/braces and parentheses with proper semicolon separators and valid Invoke-RestMethod usage for headers, body, and content type.",
@@ -45,6 +25,26 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T08:37:18.819447Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, braces, and quotes, proper semicolon separators, valid hashtable and ConvertTo-Json usage, and correct string concatenation throughout all three API calls.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 by obtaining a Graph API token via Az module, creating a Microsoft 365 Unified group (embedding the persona in a plausible organizational structure), adding a specific user as a member via the $ref endpoint, and verifying the result — all operationally feasible steps that blend the adversary identity into legitimate team structures.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:35:50.304651Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly formed with correct PowerShell syntax, balanced delimiters, and proper use of semicolons and variable assignments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately utilizes the Microsoft Graph API to create a group and add a member, which directly aligns with the intent of establishing plausible structures for persistence or blending in.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:35:52.782991Z"
       }
     ],
     "llm_average_syntactic": 5.0,

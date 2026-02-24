@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T07:47:09.541472Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, conditional logic, balanced parentheses/braces, and correct cmdlet usage with appropriate parameters.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by identifying a USB device, preparing it if needed, and exfiltrating data (snapshot.zip) to a hidden-like directory (.cache) on the removable media.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T07:47:12.625531Z"
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper semicolon separators, correct variable assignments, valid cmdlet names and parameters, and properly quoted strings throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements T1052 by detecting a USB drive, initializing/formatting it if needed, and extracting a staged archive (snapshot.zip) to a dot-prefixed hidden-like directory on the removable media, which aligns well with staging and transferring data to physical media; the minor gap is that 'None' privilege is understated since disk initialization typically requires elevated privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T22:34:35.716224Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced syntax, valid cmdlets, parameters, and logical flow.",
-        "semantic_score": 3,
-        "semantic_justification": "The command partially achieves its claimed intent and aligns with the technique, but the crucial disk initialization and formatting steps require administrative privileges, directly contradicting the stated 'Privilege: None' and making the command operationally plausible only if the USB is already formatted.",
-        "combined_score": 4.0,
+        "syntactic_justification": "The PowerShell command is perfectly structured with correct piping, variable assignment, and conditional logic.",
+        "semantic_score": 4,
+        "semantic_justification": "While the command effectively automates USB preparation and data transfer for exfiltration, it requires administrative privileges to initialize and format disks, which contradicts the 'None' privilege level provided.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T07:47:31.894860Z"
+        "timestamp": "2026-02-18T22:34:38.696112Z"
       }
     ],
     "llm_average_syntactic": 4.667,

@@ -18,16 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, appropriate error handling with set -euo pipefail, and correct variable usage throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully aligns with T1597 (Search Closed Sources) by securely retrieving non-public contact data from a paid/private source (peopledata.pro) via SFTP with proper authentication, integrity verification, and logging.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T14:05:41.270176Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command is well-formed with balanced quoting, valid bash options, correct scp flags, and proper if/then structure.",
@@ -38,14 +28,24 @@
         "timestamp": "2025-10-02T14:06:34.219202Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, proper command chaining, valid flag formats, and correct variable expansions and redirections.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper use of &&, semicolons, command substitution, and valid scp/sha256sum flags throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly executes the claimed intent of pulling closed-source organizational data via SFTP from a dedicated 'peopledata.pro' service, which perfectly aligns with the intelligence gathering described in T1597.",
+        "semantic_justification": "The command accurately implements T1597 by using SFTP with a dedicated key to pull a closed-source organizational contacts dataset from a paid people-data provider, verifying integrity via SHA256, and logging the acquisition with technique attribution — all operationally plausible and consistent with querying private/paid databases for targeting intelligence.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T20:48:08.090659Z"
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:59:47.481139Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed bash script with correct variable assignments, brace expansion for scp, valid flag usage, and properly escaped JSON strings.",
+        "semantic_score": 5,
+        "semantic_justification": "The command realistically demonstrates the automated acquisition of private data from a technical provider using secure credentials, which aligns perfectly with T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:59:50.250423Z"
       }
     ],
     "llm_average_syntactic": 5.0,

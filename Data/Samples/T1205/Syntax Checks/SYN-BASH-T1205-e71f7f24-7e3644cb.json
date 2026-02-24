@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T14:20:31.342546Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid bash constructs, proper command separators, and all flags and arguments are correctly structured for their respective tools.",
-        "semantic_score": 5,
-        "semantic_justification": "The command accurately implements traffic signaling by using a specific ICMP packet (TTL=42) as a trigger to establish a GRE tunnel and a static route, creating the described 'hidden path' in alignment with T1205.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T14:20:44.899155Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and valid separators, though the tcpdump filter string uses a non-standard quoted argument position (the filter expression should not be preceded by -l which is for line buffering, and the filter should not be in quotes after -l) — specifically '-l \"icmp[icmptype]=icmp-echo and ip[8]==42\"' conflates the -l flag with the filter expression, which would cause tcpdump to interpret the filter incorrectly.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1205 traffic signaling by using a magic ICMP echo packet with TTL=42 (ip[8]==42) as a trigger, then establishing a covert GRE TAP tunnel and injecting a hidden route via vtysh, which is operationally plausible for network device compromise, though the tcpdump flag ordering issue slightly reduces operational reliability.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:47:56.996112Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators (&&), valid flags for tcpdump and other utilities, and correct syntax for all the networking operations.",
+        "syntactic_justification": "The command uses correctly nested quotes, valid tcpdump filter syntax for TTL/ICMP type, and standard iproute2/vtysh syntax with appropriate logical operators.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by listening for a specific ICMP packet with TTL=42 as a trigger, then establishing a covert GRE tunnel and routing configuration that creates a hidden network path exactly as described in the technique.",
+        "semantic_justification": "The command accurately implements the Traffic Signaling technique by using a specific ICMP packet as a trigger to dynamically establish a GRE tunnel and update routing tables, matching the operational intent perfectly.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:10:33.126231Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:48:01.190694Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

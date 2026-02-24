@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T18:28:25.181549Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, correct command separators, and valid iptables flags and syntax.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of && separators, valid Docker flags (--rm, --net=host, --cap-add), and correctly structured iptables rules with appropriate module flags and arguments.",
         "semantic_score": 5,
-        "semantic_justification": "The command accurately implements the described port-knocking-like signaling using an mDNS-port-specific string to trigger temporary network access, perfectly aligning with T1205 Traffic Signaling.",
+        "semantic_justification": "The command accurately implements a port-knocking variant of T1205 Traffic Signaling: it uses an mDNS packet containing '_knock._udp' on UDP/5353 as the covert signal, logs it, tracks the source IP with iptables 'recent' module, and conditionally opens TCP/5900 (VNC) for 60 seconds to that IP — a textbook traffic-signaling-triggered access mechanism.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T18:28:43.503086Z"
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T04:05:55.552139Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Docker syntax, balanced quotes, valid iptables flags, and correct command chaining.",
+        "syntactic_justification": "The command is perfectly well-formed, using valid Docker flags, correct shell concatenation, and accurate iptables syntax with nested quoting.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a covert knock sequence where a specific mDNS packet containing '_knock._udp' triggers temporary access to VNC (port 5900) for 60 seconds.",
+        "semantic_justification": "The command accurately implements a port-knocking mechanism (Traffic Signaling) by using the iptables 'string' and 'recent' modules to trigger firewall exceptions based on a specific mDNS payload, which is operationally plausible for the technique described.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:28:44.487425Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:05:59.163976Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -18,16 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed PowerShell with balanced quotes, braces, and parentheses, proper command separators, valid parameter names, and correct pipeline usage.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1568 Dynamic Resolution technique by generating algorithm-based domain names using a date-based seed, attempting DNS resolution, creating a firewall rule for C2 traffic, and establishing an HTTPS beacon to the successfully resolved domain.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T05:47:27.479309Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell scriptblock is well-formed with balanced quotes/braces, valid cmdlets/parameters, and proper pipelines/format operators.",
@@ -38,19 +28,29 @@
         "timestamp": "2025-10-02T05:48:02.449986Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "All PowerShell cmdlets, syntax elements, string formatting, array definitions, and control flow are perfectly well-formed and correctly structured.",
-        "semantic_score": 4,
-        "semantic_justification": "The command accurately implements DGA-based domain generation, dynamic DNS resolution via an external server, and subsequent HTTPS beaconing, which aligns perfectly with T1568, but the `netsh` firewall rule would fail under the claimed 'None' privilege.",
-        "combined_score": 4.5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, parentheses, and quotes, proper use of semicolons as statement separators, valid cmdlet syntax throughout, and correct string formatting operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 by generating DGA-style candidate domains seeded with date and hostname length, resolving them via an external DNS server to evade local monitoring, opening a firewall rule for outbound C2 traffic on port 8443, and beaconing to the first resolved domain with a realistic browser User-Agent header — all operationally coherent and aligned with dynamic resolution C2 tradecraft.",
+        "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T05:58:58.861565Z"
+        "timestamp": "2026-02-19T00:20:47.383041Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script block with balanced braces, valid use of the format operator (-f), and correct piping logic.",
+        "semantic_score": 3,
+        "semantic_justification": "The command accurately implements the logic of T1568 (DGA/Dynamic Resolution), but has two significant semantic flaws: first, the 'netsh' command requires local administrator privileges which contradicts the 'Privilege: None' metadata; second, 'Resolve-DnsName' returns an object, and stringifying that object directly in the URI/Headers without selecting the '.Name' property may result in an invalid URL/Host header.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:20:58.678889Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

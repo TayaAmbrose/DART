@@ -19,26 +19,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct syntax for bash, iptables, dig, and curl commands.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Dynamic Resolution technique by using a deterministic algorithm (date+sha1) to generate domain names, resolving them through a specific DNS resolver, and establishing communication on random high ports - exactly matching the T1568 technique description.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:34:12.069731Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, and valid flag formats for all included utilities (bash, iptables, date, sha1sum, cut, dig, shuf, curl, id).",
-        "semantic_score": 3,
-        "semantic_justification": "The command accurately implements DGA domain generation, dynamic resolution, and beaconing, but the critical `iptables` commands, intended to force DNS and open firewall ports, require root privileges and will fail under the stated 'Privilege: None', severely impacting operational feasibility.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T07:34:22.511352Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The bash one-liner is well-formed with balanced quoting/braces, valid separators, and plausible flags for iptables, dig, shuf, and curl.",
@@ -47,10 +27,30 @@
         "combined_score": 4.5,
         "confidence": 0.78,
         "timestamp": "2025-10-02T07:35:16.270711Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid separators, but the DGA construction uses `%j%n` where `%n` is a newline specifier in `date` (not a valid format on most systems) and the pipe to `sha1sum` with a newline in the format string introduces a subtle but potentially impactful edge case.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by constructing DGA-style domains from date-seeded hashes, restricting DNS to a pinned resolver via iptables, resolving candidates until one responds, dynamically selecting a random high port, and beaconing with user context — closely matching dynamic resolution C2 behavior.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:29:03.711706Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed Bash one-liner with balanced quotes, correct subshell usage, proper loop structure, and valid command chaining.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a DGA-like mechanism, DNS lockdown, and beaconing, but it would fail under the stated 'Privilege: None' constraint as iptables requires root access.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:29:07.826183Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
     "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,

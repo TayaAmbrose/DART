@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper variable assignments, balanced quotes, valid array syntax, correct arithmetic operations, and proper command chaining using semicolons.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by creating a domain generation algorithm based on hostname and date, rotating through domains by hour, selecting ports by minute, and establishing a connection that would beacon to the dynamically generated endpoint.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T06:33:09.955757Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced syntax, valid command substitutions, array manipulations, and correct flag usage for all utilities.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements a sophisticated dynamic resolution mechanism aligned with T1568 by algorithmically generating a subdomain, rotating base domains hourly, and selecting ports minute-by-minute for a C2 beacon.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T06:33:20.522901Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command uses valid Bash syntax with balanced quotes/expansions, proper arrays/indexing, correct command separators, and valid curl flags.",
@@ -46,11 +26,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T06:33:37.258632Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper array syntax, valid arithmetic expansions, correct command separators, and valid curl flags throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by combining hostname and day-of-year as a DGA seed (md5sum-based subdomain), rotating across multiple DDNS provider zones by hour, selecting ports from a predefined set by minute, and beaconing via curl with a node identifier — all hallmarks of dynamic resolution C2.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:23:32.084133Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed Bash with balanced quotes and correct array syntax, but it contains a known pitfall: the 'date +%H' and 'date +%M' commands return zero-padded strings (e.g., '08') which Bash's arithmetic expansion interprets as invalid octal numbers, causing the command to fail during certain hours and minutes.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly demonstrates T1568 by programmatically generating a subdomain (DGA), rotating through top-level domains/providers based on time, and varying the destination port, all of which are hallmark behaviors of dynamic resolution.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:23:44.230651Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

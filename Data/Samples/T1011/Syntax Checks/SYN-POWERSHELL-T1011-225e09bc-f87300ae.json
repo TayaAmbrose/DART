@@ -28,28 +28,28 @@
         "timestamp": "2025-10-01T00:50:53.957856Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax including balanced quotes, correct pipe operators, error handling with -ErrorAction parameter, and proper command chaining with semicolons.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1011 by establishing a cellular connection outside the monitored network, retrieving the cellular interface's IP address, and using iperf3 to exfiltrate data through that interface to a remote server on a non-standard port.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:50:57.208896Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The PowerShell pipeline and semicolon-separated commands are well-formed with balanced quotes and valid flag usage, though piping netsh output to Out-Null via '|' in a mixed cmd/PowerShell context could cause minor parsing issues depending on execution environment.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by establishing a mobile broadband connection via netsh mbn, binding iperf3 to the cellular interface IP for data transfer over a non-primary network medium, though iperf3 is a bandwidth testing tool rather than a typical exfiltration tool and requires a listening server at 100.72.55.9:53433, making it operationally plausible but slightly unconventional for real-world exfiltration.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:02:53.624691Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct PowerShell syntax, balanced quotes, valid parameters for all cmdlets, and proper command separation.",
-        "semantic_score": 3,
-        "semantic_justification": "The command's logic correctly targets T1011 by attempting to establish a cellular connection and explicitly binding iperf3 traffic to that interface; however, the stated 'Privilege: None' for `netsh mbn connect` makes the critical first step operationally implausible, preventing the full claimed intent from being achieved under standard Windows configurations.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T06:18:39.908504Z"
+        "syntactic_justification": "The command uses proper PowerShell syntax, including correct variable assignment, property access, and semicolon separators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1011 by establishing a cellular connection and forcing traffic through that specific interface using the iperf3 bind flag.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:02:55.877199Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
     "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,

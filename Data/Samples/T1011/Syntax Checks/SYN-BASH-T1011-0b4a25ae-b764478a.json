@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T00:09:57.906715Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), balanced quotes, valid flags, and a properly constructed pipeline for data compression, encoding, and transmission.",
+        "syntactic_justification": "All commands are well-formed with balanced quotes, valid flags, proper use of &&, |, and pipe chaining; the IPv6 UDP netcat invocation with interface-scoped address and timeout flag is syntactically correct.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by disconnecting from the current WiFi (airport -z), setting a specific channel (153), connecting to an alternate network (fw-ops-153), and exfiltrating compressed data over IPv6 UDP to a specific address on a high port, all of which constitutes exfiltration over an alternative network medium.",
+        "semantic_justification": "The command accurately implements T1011 by disassociating from the current network, switching to a specific 5 GHz channel, joining an alternate SSID, then exfiltrating compressed photo data over IPv6 UDP via netcat to a high port on a link-local address, all of which is operationally plausible on macOS and consistent with exfiltration over an alternate wireless medium.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:10:04.163716Z"
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T21:54:42.018319Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "All commands are perfectly well-formed, using valid flags, correct separators, and balanced quoting appropriate for the macOS Bash environment.",
-        "semantic_score": 4,
-        "semantic_justification": "The command logically implements T1011 by switching to an alternate wireless network and exfiltrating data via IPv6 UDP link-local, though the stated 'Privilege: None' contradicts its explicit reliance on 'sudo'.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T00:10:29.617836Z"
+        "syntactic_justification": "The command uses correct syntax for macOS-specific utilities, proper piping, and valid flags for tar, base64, and nc.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1011 by programmatically switching the Wi-Fi interface to a specific channel and SSID to exfiltrate data via a localized IPv6 link-local address.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:54:45.812284Z"
       }
     ],
     "llm_average_syntactic": 4.667,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

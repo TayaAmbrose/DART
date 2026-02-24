@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), valid flags (-f), and correct syntax for all operations including file copying, sync, and md5sum generation.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by replacing a legitimate firmware image with a trojanized version and updating the checksum file to evade detection mechanisms that verify firmware integrity.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T19:30:24.741300Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid commands, flags, separators, and redirection, adhering to standard Bash syntax.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command's actions (copying a trojan image and updating its checksum) are semantically aligned with T1601, the stated 'Privilege: None' makes its execution operationally implausible, as modifying system image files and system configuration files typically requires elevated privileges.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T19:30:41.392573Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash one-liner using valid commands, flags, && chaining, and redirection with no quoting or parsing issues.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.7,
         "timestamp": "2025-10-02T19:30:49.650920Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid use of `&&` chaining, proper flags (`-f`), correct `md5sum` redirection syntax, and no quoting or parsing issues.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1601 by replacing the active firmware image with a trojanized version, flushing writes with `sync`, and immediately overwriting the checksum file to defeat integrity verification — a realistic and operationally coherent attack sequence on network devices.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:24:19.044301Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash syntax, standard flags, and correct logical operators to sequence the operations.",
+        "semantic_score": 5,
+        "semantic_justification": "The sequence correctly overwrites a system image, ensures disk persistence with sync, and attempts to bypass integrity checks by updating a checksum file, perfectly matching T1601.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:24:21.500461Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

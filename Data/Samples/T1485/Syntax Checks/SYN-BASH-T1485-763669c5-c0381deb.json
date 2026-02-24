@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Docker syntax, volume mounting, balanced quotes, valid flags for both 'find' and 'shred', and appropriate command chaining with pipes and semicolons.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Data Destruction technique by using 'shred' with multiple passes (-n 3) to securely overwrite files, zeroing them (-z), and removing them (-u) from a Docker volume, making data recovery extremely difficult.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T00:40:25.378949Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, and correct command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively uses `docker run` to mount a volume and then employs `find`, `xargs`, and `shred` with appropriate flags to irreversibly overwrite and delete all files, aligning perfectly with the described T1485 Data Destruction technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T00:40:32.977443Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed docker run with balanced quoting, valid find/xargs/shred options, and proper command separation.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T00:40:56.627552Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct Docker flags (-v, --rm), valid bash -lc invocation, properly escaped find/xargs/shred pipeline with -print0/-0 null-delimiter pairing, and valid shred flags (-n 3 -z -u).",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 Data Destruction by mounting a Docker volume into a disposable container and using shred with multiple overwrite passes (-n 3), zero-fill finalization (-z), and file deletion (-u) on every regular file, followed by sync to flush writes, making recovery effectively impossible.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:39:04.513096Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses perfectly formed Docker and Bash syntax with correct piping, quoting, and flags for all involved utilities.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements secure data destruction on a specific Docker volume using standard Linux tools that align perfectly with the T1485 technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:39:06.448171Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T01:32:24.199390Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 4,
-        "syntactic_justification": "Without seeing the actual command, I can only evaluate based on the description which suggests a well-formed Python socket implementation with proper socket options, though minor formatting issues might exist.",
-        "semantic_score": 5,
-        "semantic_justification": "The described command perfectly aligns with T1011 by using SO_DONTROUTE to force traffic over an alternate network path/interface and sending base64-encoded data to an uncommon high port, effectively implementing exfiltration over a different network medium.",
-        "combined_score": 4.5,
-        "confidence": 0.7,
-        "timestamp": "2025-10-01T01:32:28.894727Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command is described as withheld/non-actionable, so full syntactic evaluation is impossible, but the description implies a plausible Python socket script structure that would be syntactically valid if implemented as described.",
+        "semantic_score": 3,
+        "semantic_justification": "SO_DONTROUTE forces local-subnet delivery and does not truly implement T1011's concept of exfiltrating over a different network medium (e.g., cellular, Bluetooth, Wi-Fi vs. primary channel); it restricts routing rather than redirecting traffic to an alternate physical medium, making the alignment with T1011 partial at best.",
+        "combined_score": 3.0,
+        "confidence": 0.6,
+        "timestamp": "2026-02-18T22:11:07.353424Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The description outlines standard Python socket operations for setting socket options, binding, connecting, and sending data, all of which are syntactically correct and well-formed within the Python language.",
-        "semantic_score": 4,
-        "semantic_justification": "The combination of setting `SO_DONTROUTE` and explicitly binding to a non-default local IP address can effectively force traffic out a specific alternative network interface, aligning well with the technique's goal of exfiltrating data over a different network medium to bypass monitoring on the primary channel.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T06:33:11.433737Z"
+        "syntactic_justification": "The described sequence of Python socket operations (socket creation, setsockopt for SO_DONTROUTE, bind, and connect) follows standard, valid Python syntax and library usage.",
+        "semantic_score": 5,
+        "semantic_justification": "Binding to a specific local interface address and using SO_DONTROUTE is a primary method for forcing traffic through an alternate network medium, perfectly aligning with MITRE ATT&CK T1011.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:11:11.078488Z"
       }
     ],
-    "llm_average_syntactic": 3.333,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 3.833,
+    "llm_average_syntactic": 3.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 3.5,
     "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

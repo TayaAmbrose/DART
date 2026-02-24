@@ -27,29 +27,29 @@
         "timestamp": "2025-09-30T23:42:14.339606Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for netsh commands, using correct semicolon separators between commands, and valid parameters for each netsh operation.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1011 technique by creating an IPv6-over-IPv4 tunnel that establishes an alternate network path that could be used for exfiltration outside of normal monitored channels.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T23:42:18.521692Z"
+        "syntactic_justification": "All three netsh commands are well-formed with correct subcommands, proper argument ordering, valid IPv4/IPv6 addresses, and semicolons as valid PowerShell command separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The commands correctly create an IPv6-over-IPv4 tunnel interface, assign an IPv6 address, and add a routing prefix through it, which is a plausible alternate network medium for exfiltration (T1011), though the privilege level is understated as administrator rights are required for netsh interface modifications, and the technique more precisely maps to tunneling/protocol encapsulation rather than a truly different physical medium.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T21:50:02.832203Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The netsh commands are perfectly well-formed with valid parameters, balanced syntax, and correct command separators.",
-        "semantic_score": 4,
-        "semantic_justification": "The command correctly uses netsh to establish an IPv6-over-IPv4 tunnel, assign an address, and add a route, aligning with the intent for an alternate exfiltration path, but the stated 'Privilege: None' is incorrect as these actions require administrator privileges.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-09-30T23:42:32.276130Z"
+        "syntactic_justification": "The command uses valid netsh syntax and standard PowerShell command separators with no formatting errors.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command successfully creates a tunnel, netsh requires administrative privileges (contradicting the 'None' label) and the technique is more representative of Protocol Tunneling (T1572) than a different physical network medium (T1011).",
+        "combined_score": 4.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:50:05.423457Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 4.0,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

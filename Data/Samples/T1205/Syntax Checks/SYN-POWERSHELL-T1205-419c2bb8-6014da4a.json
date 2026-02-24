@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T14:57:59.196729Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, braces, valid cmdlet usage, correct parameters, and proper PowerShell syntax throughout.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command's logic aligns with Traffic Signaling (T1205) by using network events to trigger actions, it requires administrative privileges to modify firewall rules, directly contradicting the stated 'None' privilege level.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T14:58:17.563718Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces and proper pipeline usage, though the double-escaped backslashes (\\\\) in the regex and path strings suggest the command was serialized/escaped for display rather than direct execution, which could cause minor parsing issues in some contexts.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a port-knocking/traffic signaling mechanism (T1205) by monitoring Windows Firewall logs for Teredo UDP/3544 packets and dynamically creating temporary inbound firewall rules to allow RDP (TCP/3389) from the signaling source IP for 10 minutes, which is a realistic and operationally coherent implementation of the described technique.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:49:53.978479Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper PowerShell syntax for Invoke-Command, proper pipeline operations, and correct parameter usage throughout.",
+        "syntactic_justification": "The command follows correct PowerShell syntax, including proper nesting of script blocks, regex escaping, and cmdlet usage.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by monitoring firewall logs for specific UDP packets on port 3544 (Teredo), treating them as signals to dynamically create temporary firewall rules that allow RDP access from the source IP for 10 minutes.",
+        "semantic_justification": "The command effectively implements host-based traffic signaling by monitoring firewall logs for a specific trigger (Teredo/3544) to dynamically and temporarily open an RDP port for the signaling source.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:12:24.898608Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:50:01.614070Z"
       }
     ],
-    "llm_average_syntactic": 4.667,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.0,
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

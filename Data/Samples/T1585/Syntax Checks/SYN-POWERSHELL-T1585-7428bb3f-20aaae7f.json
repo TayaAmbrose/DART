@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignment, piping, method calls, balanced quotes and braces, and correct parameter usage for both ConvertTo-Json and Invoke-RestMethod cmdlets.",
-        "semantic_score": 4,
-        "semantic_justification": "The command aligns with T1585 (Establish Accounts) by updating a user profile to enhance credibility of an established account, though it's using a demo API (reqres.in) rather than a real service which slightly reduces operational realism.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T11:05:43.753465Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed, uses correct cmdlet syntax, balanced quotes, and valid parameter assignments.",
-        "semantic_score": 4,
-        "semantic_justification": "The command semantically aligns with T1585 by demonstrating how an adversary might 'abuse accounts' to 'blend into normal activity' through 'changes to identity configurations' by updating an existing profile's details for credibility.",
-        "combined_score": 4.5,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:05:55.085132Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid PowerShell with balanced quotes, correct hashtable-to-JSON assignment, proper command separators, and appropriate Invoke-RestMethod and pipeline usage.",
@@ -44,6 +24,26 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T11:06:09.139722Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, proper pipeline operators, valid Invoke-RestMethod flags, and correct ConvertTo-Json usage throughout.",
+        "semantic_score": 3,
+        "semantic_justification": "The command updates a profile on reqres.in (a public mock API used for testing, not a real social platform), so while it demonstrates the mechanics of persona refinement relevant to T1585 account establishment, it lacks operational realism since no actual account or identity infrastructure is being manipulated.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:45:35.786249Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly formed, using correct semicolon separators, hash table syntax, and standard cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates the use of a REST API to update profile information, which aligns with the technique of refining established accounts for credibility.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:45:37.631639Z"
       }
     ],
     "llm_average_syntactic": 5.0,

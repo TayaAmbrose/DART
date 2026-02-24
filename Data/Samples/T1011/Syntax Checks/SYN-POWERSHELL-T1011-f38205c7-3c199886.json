@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T01:24:52.304671Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, proper variable assignments, and valid syntax for file operations and Test-Connection cmdlet usage.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively implements T1011 by exfiltrating data over ICMPv6 (a different network medium than typical C2) by encoding file bytes into TTL values of ping packets, creating a covert channel that would bypass standard network monitoring.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:24:55.706978Z"
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper variable assignments, valid foreach loop syntax, correct bitwise operators (-shr, -band), and valid Test-Connection parameters including -IPv6 and -TimeToLive flags.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a covert channel by encoding file bytes as nibble pairs in ICMPv6 TTL values (70+hi and 100+lo ranges), which aligns with T1011's alternate network medium concept, though the receiver would need a custom sniffer to decode TTL values and the fd00::/8 address is a unique local address (not routable externally), slightly limiting real-world exfiltration plausibility.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:09:23.259307Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses correct PowerShell syntax for variable assignment, loops, .NET calls, cmdlet parameters, and bitwise operators without any errors or inconsistencies.",
+        "syntactic_justification": "The command uses valid PowerShell syntax, correct bitwise operators (-shr, -band), and properly formatted .NET method calls and cmdlet parameters.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves its claimed intent by encoding file data into ICMPv6 TTL values using `Test-Connection` to a Unique Local Unicast address, which effectively serves as an 'other network medium' for exfiltration aligned with T1011.",
+        "semantic_justification": "The command successfully implements the described logic of encoding file data into ICMPv6 TTL values for covert exfiltration, using two packets per byte to transmit high and low nibbles.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:30:41.244043Z"
+        "timestamp": "2026-02-18T22:09:28.661205Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

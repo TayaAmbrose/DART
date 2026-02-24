@@ -16,26 +16,6 @@
     "syntax_ok": false,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and braces, proper exception handling, and valid AWS boto3 API calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements the T1585 technique by creating a user account with specific tags, setting initial credentials, attaching a policy, and then removing console login to make it appear as a legitimate service account.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T10:20:06.425890Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed, with balanced quotes, parentheses, and braces, and uses valid syntax for boto3 calls and Python statements.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 by creating a new user, granting initial access, and then removing console login to make it appear as a routine API-only service identity, thus blending into normal activity.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T10:20:12.761831Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 2,
         "syntactic_justification": "Quotes and braces are balanced, but the first try/except places 'except' on the same line after semicolons, which is invalid Python and will cause a SyntaxError.",
@@ -44,12 +24,32 @@
         "combined_score": 3.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T10:20:43.201575Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with balanced parentheses, proper try/except blocks, and valid boto3 API calls, though embedding complex multi-line Python logic in a single -c string with mixed quoting and inline comments creates minor readability and potential shell-escaping fragility.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1585 by creating an IAM user with plausible metadata tags, attaching a least-privilege policy to avoid detection, and then removing the console login profile to convert the account into an API-only service persona that blends with legitimate automation identities—all operationally coherent and realistic.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:43:01.468532Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 2,
+        "syntactic_justification": "The Python command contains multiple syntax errors because compound statements like 'try/except' cannot be used on the same line as other statements separated by semicolons, and the 'except' block cannot reside on the same line as the 'try' suite.",
+        "semantic_score": 5,
+        "semantic_justification": "The logic perfectly implements T1585 by creating a new account (IAM user), assigning realistic metadata (tags) and permissions (S3 access), and then stripping the login profile to make it appear as an API-only service account to evade detection.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:43:15.568301Z"
       }
     ],
-    "llm_average_syntactic": 4.0,
+    "llm_average_syntactic": 2.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.333,
-    "llm_verdict": "likely_match",
+    "llm_average_score": 3.667,
+    "llm_verdict": "likely_mismatch",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": "Python syntax check failed (py_compile). Command '['C:\\\\Users\\\\flacman\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\\\python.exe', '-m', 'py_compile', 'C:\\\\Users\\\\flacman\\\\AppData\\\\Local\\\\Temp\\\\tmpqocebv5_.py']' returned non-zero exit status 1."

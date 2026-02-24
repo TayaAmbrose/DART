@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T10:17:14.098240Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, pipeline operations, error handling, balanced parentheses/braces, and correct cmdlet usage throughout.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper string concatenation, valid cmdlet usage, correct pipeline operators, and no syntax errors throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by identifying a removable drive, creating a hidden directory, searching for cryptographic key files, and exfiltrating them with obfuscated extensions to avoid detection.",
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable USB drive, creating a hidden 'drivers' folder to blend in, then recursively searching user profile locations for cryptographic key material (*.key, *.pem, *.pfx, *.ppk) and copying them with a .bak extension to evade detection — fully consistent with staging and obfuscating data for physical medium exfiltration.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T10:17:16.939520Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:41:36.877215Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for variable assignment, cmdlet execution, piping, and script blocks, with all parameters and operators correctly applied.",
+        "syntactic_justification": "The PowerShell syntax is perfectly formed with correct command chaining, variable assignments, and pipeline usage.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by identifying a removable drive, creating a hidden folder, and copying specified key material from user profiles to the drive with disguised '.bak' extensions, aligning directly with T1052's physical exfiltration and evasion tactics.",
+        "semantic_justification": "The command accurately implements the exfiltration technique by identifying a removable drive, staging files with deceptive extensions, and hiding the destination directory.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T10:17:32.602627Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:41:40.345697Z"
       }
     ],
     "llm_average_syntactic": 5.0,

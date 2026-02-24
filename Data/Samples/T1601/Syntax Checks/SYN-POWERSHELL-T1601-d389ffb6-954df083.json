@@ -18,16 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, method calls, balanced parentheses, appropriate semicolons, and correct string formatting.",
-        "semantic_score": 4,
-        "semantic_justification": "The command correctly implements a defensive measure against T1601 by calculating and logging a system image hash for integrity verification, though it's monitoring rather than directly preventing the technique and assumes write access to the audit directory.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T18:21:54.381528Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced quotes, valid cmdlets/parameters, and proper statement separators.",
@@ -38,14 +28,24 @@
         "timestamp": "2025-10-02T18:22:18.804444Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid PowerShell cmdlets, variable assignments, string interpolation, and command separators with no syntax errors.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper semicolons as separators, valid cmdlet usage, and correct parameter syntax throughout.",
         "semantic_score": 3,
-        "semantic_justification": "While the command correctly calculates a file hash for integrity comparison, a strong detection signal for T1601, the stated 'Privilege: None' makes the 'Add-Content' operation into a 'restricted directory' operationally implausible, preventing the full achievement of the claimed intent to 'record' the hash.",
+        "semantic_justification": "While the command correctly implements integrity monitoring (hashing a system image and logging it), this is a defensive/detection action rather than an adversarial T1601 technique — it monitors for tampering rather than performing it — and the use of Windows PowerShell paths on a 'Network Devices' platform is operationally implausible since network device firmware is typically managed via CLI or proprietary OS, not PowerShell on Windows.",
         "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T18:22:32.431390Z"
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:18:07.129069Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, correct variable assignments, and proper cmdlet usage with string interpolation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately performs the integrity logging described, though using PowerShell on the 'Network Devices' platform is uncommon compared to Linux-based or proprietary shells.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:18:11.092421Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T06:49:42.340221Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid PowerShell syntax, and appropriate variable assignments and method calls.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper string interpolation, valid semicolon separators, and correct use of .NET class methods and cmdlets throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1052 technique by identifying a removable drive, base64-encoding a sensitive file (payroll.xlsx), copying it to the USB drive with an innocuous name (q1_report.txt), and cleaning up traces - all core behaviors of exfiltration over physical medium.",
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive via WMI, reading a sensitive HR spreadsheet, Base64-encoding it to obfuscate content, renaming it with an innocuous name (q1_report.txt) under a benign-looking folder (Reports), copying it to the USB drive, and cleaning up the temp file — fully aligning with staging, obfuscation, and physical medium exfiltration behaviors described in the technique.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T06:49:45.869606Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:30:48.166892Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell cmdlets, .NET method calls, variable assignments, and statement separators with balanced syntax.",
+        "syntactic_justification": "The command uses valid PowerShell syntax, correctly handles object properties, and properly balances parentheses and quotes.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves its stated intent by base64-encoding a file, staging it, and then copying it to a newly created innocuous folder on a removable drive, fully aligning with the T1052 technique for exfiltration over physical medium.",
+        "semantic_justification": "The command accurately identifies a removable drive, performs data obfuscation via Base64 encoding, and transfers the staged file to the physical medium while renaming it to evade detection.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:49:59.450168Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:30:50.313396Z"
       }
     ],
     "llm_average_syntactic": 5.0,

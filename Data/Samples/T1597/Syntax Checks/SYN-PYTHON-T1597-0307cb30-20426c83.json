@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced quotes, parentheses, and braces, proper exception handling, and valid Python syntax throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries Shodan, a paid closed-source intelligence platform, using an API key to gather information about a target domain's internet-exposed systems.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:44:24.716720Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and valid Python syntax throughout, making it executable without errors.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying the Shodan API, a commercial/keyed intelligence source, to gather data on a target domain, which is a common adversary technique for reconnaissance and targeting.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:44:30.609282Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The Python one-liner is well-formed with balanced quotes, valid indentation across try/except and if blocks, and correct use of semicolons and arguments.",
@@ -45,11 +25,31 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T12:44:52.183609Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python one-liner embedded in a shell command is mostly well-formed with balanced quotes and parentheses, though the multi-line formatting within single quotes and the try/except block indentation may cause issues depending on how the shell interprets the newlines in the -c argument.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying Shodan's paid API (a closed/subscription-based intelligence source) using an API key to search for hosts matching a target domain, which is a textbook example of searching closed sources for reconnaissance targeting.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:53:37.209067Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python command is a valid multi-line string executed via 'python3 -c', utilizing correct imports, proper indentation for block structures (try/except, if/else), and valid method calls.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately leverages the Shodan API with a required API key to query technical data (hostname filter), which aligns perfectly with T1597's focus on querying paid or commercial technical databases for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:53:51.916180Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

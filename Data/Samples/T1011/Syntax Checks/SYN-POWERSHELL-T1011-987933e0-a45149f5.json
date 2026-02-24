@@ -29,30 +29,30 @@
         "timestamp": "2025-10-01T00:47:52.293362Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, backticks, parentheses, and braces, with correct PowerShell syntax throughout including proper variable declarations, pipeline operations, and method calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1011 technique by identifying a Wi-Fi Direct adapter, binding to it specifically, and using it to exfiltrate data over TCP to an external IP on a non-standard port, creating a separate network medium from the primary network.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:47:58.073587Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper escaping of backtick-prefixed variables for WMIC/PowerShell nesting, balanced braces and parentheses, though the complex multi-level quoting and backtick escaping within the WMIC call create edge cases that could fail in certain shell environments.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by identifying a Wi-Fi Direct virtual adapter via WMI, binding a TCP socket to its IP address, and exfiltrating a binary file to an external IP on an uncommon high port, which is operationally plausible as a separate network medium exfiltration path, though Wi-Fi Direct adapter availability and the assumption that it has a routable IP to an external internet address is a realistic gap.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:02:18.252288Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct nesting of quotes and backticks for PowerShell variables within the WMIC string, ensuring proper parsing and execution.",
+        "syntactic_justification": "The command is well-formed for execution from a PowerShell environment, utilizing proper backtick escaping for variables, balanced delimiters, and valid WMI and .NET syntax.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves its claimed intent by locating a Wi-Fi Direct adapter, binding a TCP client to its IP, and attempting to exfiltrate data over that specific network medium, aligning perfectly with T1011.",
+        "semantic_justification": "The command perfectly implements the T1011 technique by identifying a specific non-standard network interface (Wi-Fi Direct) and using .NET socket binding to force exfiltration traffic over that medium.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:17:41.396112Z"
+        "timestamp": "2026-02-18T22:02:26.546688Z"
       }
     ],
-    "llm_average_syntactic": 4.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.167,
-    "llm_verdict": "likely_match",
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 3.833,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

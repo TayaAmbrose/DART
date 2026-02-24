@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T04:45:56.112477Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 1,
-        "syntactic_justification": "The command is a placeholder description rather than an actual executable command, containing only a high-level explanation of what the scheduled task would do.",
-        "semantic_score": 4,
-        "semantic_justification": "The described process accurately represents automated exfiltration via scheduled tasks using SMB shares for data transfer, though without an actual command implementation, some operational details remain unspecified.",
-        "combined_score": 2.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T04:45:58.967524Z"
+        "syntactic_justification": "The command is a natural language description/placeholder rather than actual executable code, containing no real syntax, flags, or parseable constructs.",
+        "semantic_score": 3,
+        "semantic_justification": "The described workflow (scheduled task + net use SMB mapping + archive + copy + unmap) is operationally coherent and aligns well with T1020 automated exfiltration via SMB, but it remains a conceptual outline rather than a concrete implementation, reducing plausibility assessment.",
+        "combined_score": 2.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:27:40.367961Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 1,
-        "syntactic_justification": "The provided text is a natural language description of a multi-step task, not a syntactically correct or runnable command.",
-        "semantic_score": 5,
-        "semantic_justification": "The outlined scheduled job, which maps an SMB share, archives data, copies it to the share, and unmaps, perfectly describes an automated exfiltration process.",
-        "combined_score": 3.0,
+        "syntactic_justification": "The provided command is a natural language description and a placeholder rather than a functional, executable shell command.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic of using a scheduled task for SMB-based exfiltration aligns perfectly with T1020, though the 'None' privilege level is unrealistic for creating tasks and accessing logs.",
+        "combined_score": 2.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:09:01.562629Z"
+        "timestamp": "2026-02-18T22:27:44.817605Z"
       }
     ],
     "llm_average_syntactic": 1.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 2.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 2.333,
     "llm_verdict": "likely_mismatch",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes, valid DISM parameters, correct semicolon separators, and proper PowerShell cmdlet usage for Add-Content, Get-FileHash, and Compare-Object.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by mounting two Windows images, modifying one by adding an entry to block Windows Update in the hosts file, and then comparing file hashes to verify the modification was made.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T17:29:50.755235Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "All commands, cmdlets, parameters, and command separators are correctly formed and used according to PowerShell and DISM syntax, with no parsing errors or unbalancing issues.",
-        "semantic_score": 2,
-        "semantic_justification": "While the command's choice of tools (DISM, Add-Content) and the specific operation (modifying the hosts file within a mounted WIM) are conceptually aligned with T1601, the stated 'Privilege: None' renders the core actions of mounting the image and modifying its contents operationally infeasible, failing to achieve the claimed intent.",
-        "combined_score": 3.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T17:30:14.838897Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Commands are properly separated by semicolons, DISM flags are valid, quotes and parentheses are balanced, and PowerShell cmdlet usage is correct.",
@@ -45,10 +25,30 @@
         "combined_score": 4.5,
         "confidence": 0.85,
         "timestamp": "2025-10-02T17:30:44.453984Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with valid DISM flags, proper semicolon separators, and balanced parentheses, though chaining DISM commands with semicolons in PowerShell works but mixing cmd-style tools with PS cmdlets in a single line can cause minor execution context issues.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly mounts two WIM images offline using DISM, modifies the hosts file in the modified image (a realistic firmware/image tampering action aligned with T1601), and then computes and compares SHA256 hashes to verify the modification was applied, which is operationally plausible and consistent with the technique; the only minor gap is that the privilege level is listed as 'None' when DISM mount operations typically require administrator privileges.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:13:52.705184Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, proper DISM flag formatting, and correct command separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively modifies a mounted image's configuration as described, though it lacks the necessary administrative privileges and a commit step to save the changes back to the WIM file.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:13:57.359038Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
     "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,

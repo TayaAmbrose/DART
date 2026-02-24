@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes/braces, correct variable assignments, proper API call structure, and valid parameter formatting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 (Establish Accounts) by obtaining a Microsoft Graph API token and using it to create a new user account with a predefined password that doesn't require changing, enabling persistent access to the Azure/Microsoft 365 environment.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T10:50:44.982191Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flag formats, and no syntax errors.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely uses the Microsoft Graph API to create a new user with an email-based local identity, directly fulfilling the claimed intent of establishing a B2C-style account and aligning perfectly with the T1585 technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T10:50:53.198191Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid command separators, and correctly structured headers and JSON body.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T10:51:16.790467Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The PowerShell command is largely well-formed with proper variable assignment, REST method invocation, and header construction, though the single-quoted JSON body string containing double quotes may cause minor parsing issues in some PowerShell environments and the $token assignment using $() subexpression syntax is valid but the outer variable assignment format ($token=$(...)) lacks a space which is acceptable in PowerShell.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 by obtaining a Microsoft Graph API bearer token via Azure CLI and then using the Graph API's user creation endpoint to establish a B2C-style local account with an email-based identity and password profile, which directly corresponds to creating accounts for persistent access independent of federated identity providers.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:44:17.540038Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell subexpression syntax, correct string assignment, properly formatted hash tables for headers, and standard cmdlet usage with balanced delimiters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the creation of a user via the Microsoft Graph API, matching the specified intent of establishing a B2C-style account for persistence or persona management.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:44:21.822807Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

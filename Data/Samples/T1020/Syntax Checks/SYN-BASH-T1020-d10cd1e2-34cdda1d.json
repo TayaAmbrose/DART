@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T04:17:12.405612Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, escape sequences, redirection, and background execution syntax.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper escaping of wildcards, valid nohup/backgrounding syntax, correct bash -c quoting, and valid rsync flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by creating a persistent background process that runs every 15 minutes (900 seconds) to synchronize local files to a remote server using rsync with appropriate flags for quiet, compressed transfer.",
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration by using a persistent background loop with 15-minute intervals to continuously mirror a working directory to a remote host via rsync over SSH, with compression, quiet mode, deletion sync, and cache/temp file exclusions — all operationally realistic and aligned with the technique description.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T06:00:18.746168Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:26:37.703883Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, proper command separators, and correct escaping for the rsync exclude patterns.",
+        "syntactic_justification": "The command is perfectly well-formed, using correct shell syntax for loops, backgrounding, redirection, and rsync flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of periodic automated exfiltration using rsync to mirror a directory to a remote host, which aligns precisely with T1020.",
+        "semantic_justification": "The command precisely implements automated exfiltration by using a loop to periodically mirror a directory to a remote host via a common file transfer tool (rsync).",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:00:27.552465Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:26:41.965074Z"
       }
     ],
     "llm_average_syntactic": 5.0,

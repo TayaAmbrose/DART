@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T07:03:37.153996Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes/parentheses/braces, appropriate variable assignments, error handling with ErrorAction parameter, and correct use of cmdlets and their parameters.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper string concatenation, valid cmdlet usage, correct semicolon separators, and no syntax errors throughout the multi-statement pipeline.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by identifying a removable drive, creating a hidden directory disguised as system thumbnails cache, and exfiltrating sensitive Chrome browser databases containing credentials, cookies, and browsing history to the physical medium.",
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable USB drive, creating a hidden directory named '.thumbs' to blend with system thumbnail caches, and copying Chrome credential/session databases (Login Data, Cookies, History) to the USB for physical exfiltration — fully consistent with the technique's staging, obfuscation, and physical medium transfer behaviors.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T07:03:40.438784Z"
+        "timestamp": "2026-02-18T22:31:46.498489Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses correct PowerShell syntax, balanced parentheses and quotes, valid cmdlets with appropriate flags, and proper command separators.",
+        "syntactic_justification": "The PowerShell syntax is correct, with proper variable usage, cmdlets, and error handling.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by identifying a removable drive, creating a hidden directory named '.thumbs' (for blending), and then copying specific high-value browser databases to it, directly mapping to T1052 for exfiltration over a physical medium with evasion.",
+        "semantic_justification": "The command effectively identifies a removable drive, creates a hidden staging directory, and copies sensitive browser data, directly fulfilling the T1052 technique.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T07:03:51.476954Z"
+        "timestamp": "2026-02-18T22:31:49.856812Z"
       }
     ],
     "llm_average_syntactic": 5.0,

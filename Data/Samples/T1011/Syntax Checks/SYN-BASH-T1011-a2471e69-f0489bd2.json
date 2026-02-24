@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T00:52:05.924109Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, balanced quoting, valid flags, and correct command separators for both the background tcpdump process and the piped gzip/netcat commands.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1011 by exfiltrating compressed data over a cellular interface (wwan0) using UDP on port 56107, with tcpdump monitoring that specific traffic flow, demonstrating exfiltration over an alternative network medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:52:26.357340Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with valid use of nohup, backgrounding, pipes, and nc flags, but 'nc -u -s 10.64.23.5 10.64.23.9 56107' uses '-s' for source address binding which is valid in some nc implementations (e.g., ncat/netcat-openbsd) but not universal, making it slightly platform-dependent rather than syntactically broken.",
+        "semantic_score": 3,
+        "semantic_justification": "The gzip-to-nc exfiltration over wwan0 (cellular) aligns well with T1011, but the tcpdump component writes to /dev/null making it useless as monitoring (it captures nothing meaningful), and the claimed 'tcpdump monitoring only that flow' is misleading since the output is discarded — this reduces operational plausibility and coherence of the explanation.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:03:08.997047Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax for Bash, correct command separators, and proper flag formats for `nohup`, `tcpdump`, `gzip`, and `nc`.",
-        "semantic_score": 2,
-        "semantic_justification": "The command largely fails to achieve its claimed intent under 'Privilege: None' because `tcpdump` and `nc -s` typically require elevated privileges to function, and the `tcpdump` monitoring component is semantically useless due to output redirection to `/dev/null`.",
-        "combined_score": 3.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T06:19:31.371111Z"
+        "syntactic_justification": "The command uses valid bash syntax, including backgrounding, piping, and standard flags for tcpdump, gzip, and nc.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates exfiltration over a cellular interface (wwan0) by binding netcat to a specific source IP, although tcpdump usually requires elevated privileges which contradicts the 'Privilege: None' metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:03:12.977460Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

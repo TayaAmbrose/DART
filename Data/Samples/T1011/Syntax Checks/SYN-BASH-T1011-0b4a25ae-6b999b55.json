@@ -28,24 +28,24 @@
         "timestamp": "2025-09-30T22:57:51.137414Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), balanced quotes, valid flags for all tools (airport, networksetup, gzip, base64, nc), and correct pipeline construction.",
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, valid use of &&, pipe operators, and correct flag syntax for all tools (airport -z, networksetup, gzip -c, base64, nc -6u with -w timeout).",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1011 by disconnecting from current WiFi, connecting to a specific access point, compressing and encoding data, and exfiltrating it over IPv6 UDP on an alternate network medium (WiFi) using netcat on an uncommon port.",
+        "semantic_justification": "The command accurately implements T1011 by disassociating from the current Wi-Fi network, connecting to a covert SSID, then compressing and base64-encoding a file before exfiltrating it over IPv6 UDP via netcat on an uncommon port, fully consistent with exfiltration over an alternate wireless medium.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T22:58:11.694037Z"
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T22:02:30.434641Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced quotes, valid command separators, and appropriate flags for each utility.",
+        "syntactic_justification": "The command uses valid macOS-specific paths, correct logical operators, and properly formatted tool arguments, including the necessary interface suffix for the IPv6 link-local address.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely executes the claimed intent of switching to a covert Wi-Fi network and exfiltrating data via IPv6 UDP, fully aligning with the T1011 technique for exfiltration over an alternate network medium.",
+        "semantic_justification": "The command accurately demonstrates T1011 by disconnecting from the current network, joining a specific wireless SSID, and exfiltrating data via a different network path than the primary one.",
         "combined_score": 5.0,
         "confidence": 1.0,
-        "timestamp": "2025-09-30T22:58:32.963636Z"
+        "timestamp": "2026-02-18T22:02:33.285112Z"
       }
     ],
     "llm_average_syntactic": 5.0,

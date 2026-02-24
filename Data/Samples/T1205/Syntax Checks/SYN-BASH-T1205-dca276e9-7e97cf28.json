@@ -26,29 +26,29 @@
         "timestamp": "2025-10-01T19:12:25.983532Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid iptables syntax, proper flag formats, and balanced quoting throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command implements a sophisticated port-knocking mechanism using ICMP packets of specific size (96 bytes) as the final step in a multi-stage traffic signaling sequence, perfectly aligning with the T1205 technique of using protocol fields and timing patterns for covert signaling.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:36:38.025030Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with valid iptables flags and balanced quoting, but chaining two `-m recent` modules with different `--name` values and mixing `--rcheck` and `--set` in a single rule is syntactically unusual and may behave unexpectedly depending on the iptables version, though it is technically parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling final stage by matching a specific-length ICMP echo-request within a 15-second window of a prior knock (T1205_K2) and recording the source in a new recent list (T1205_K3) with logging, which aligns well with T1205 covert multi-packet activation sequences, though the LOG target only logs rather than triggering a payload or opening access, making it a detection/monitoring stub rather than a fully operational knock trigger.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T04:09:59.193021Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid flags, arguments, and module usage, adhering to iptables syntax.",
+        "syntactic_justification": "The command uses valid iptables syntax and correctly implements flags for the match extensions (length, icmp, and recent) and the LOG target.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely implements a sequential traffic signaling 'knock' using ICMP type, packet length, and timing-based checks with the 'recent' module, perfectly aligning with the T1205 technique description and claimed intent.",
+        "semantic_justification": "The command accurately implements a stage of a port-knocking sequence by checking for specific packet attributes (ICMP type and size) and stateful timing requirements using the iptables 'recent' module.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T03:36:55.936508Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:09:59.474376Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

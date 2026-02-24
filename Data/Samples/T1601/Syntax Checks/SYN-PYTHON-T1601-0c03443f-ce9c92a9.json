@@ -17,16 +17,6 @@
     "syntax_ok": false,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with proper indentation, balanced quotes, valid function calls, and correct syntax throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements T1601 by mounting a system image, modifying a critical startup script (rc.local), comparing it to a golden image, and calculating a new hash - all core elements of firmware/system image modification.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:38:46.195206Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The here-document and Python code are well-formed with balanced quoting, valid Python syntax, and correct mount/umount invocations.",
@@ -37,19 +27,29 @@
         "timestamp": "2025-10-02T18:39:12.102293Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with correct syntax, balanced structures, and valid Python constructs; the heredoc syntax for execution is also correct.",
-        "semantic_score": 2,
-        "semantic_justification": "While the command's internal logic for modifying a system image (mounting, patching rc.local, hashing) perfectly aligns with T1601, it explicitly requires root privileges; thus, under the stated 'Privilege: None' context, the command will immediately exit and fail to achieve its claimed intent.",
-        "combined_score": 3.5,
+        "syntactic_justification": "The Python heredoc is well-formed with balanced quotes, proper imports, valid subprocess calls, and correct Python syntax throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The script precisely implements T1601 by mounting a patched system image read-write, injecting a persistent hook into rc.local (a classic init persistence mechanism), comparing against a golden image to confirm the modification, and computing the SHA256 of the altered image — all operationally realistic steps for firmware/system image tampering.",
+        "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T18:39:15.166600Z"
+        "timestamp": "2026-02-19T01:19:21.980706Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is perfectly formed, uses correct libraries and syntax, and is properly wrapped in a shell heredoc.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates the modification of an offline system image by mounting it, injecting a persistence hook into a boot script, and verifying the change.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:19:24.848112Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

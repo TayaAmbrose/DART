@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and braces, proper imports, valid method calls to boto3 APIs, and correct string formatting throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 (Establish Accounts) by creating a new user in AWS IAM Identity Center with realistic attributes and adding them to a marketing group, which enables persistent access and blends into normal activity.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T09:25:33.278005Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed Python syntax, with balanced quotes, parentheses, and braces, and valid function calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly creates an AWS IAM Identity Center user and adds them to a group using appropriate boto3 methods, perfectly aligning with the 'Establish Accounts' technique and the claimed intent.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T09:25:35.178992Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command is well-formed Python within balanced double quotes, uses valid semicolons, and has balanced parentheses/braces with correct string quoting.",
@@ -44,6 +24,26 @@
         "combined_score": 4.5,
         "confidence": 0.7,
         "timestamp": "2025-10-02T09:26:17.212411Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, braces, and quotes, proper semicolons as statement separators, and valid boto3 API call structures throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1585 by programmatically creating a realistic SSO persona in AWS IAM Identity Center with believable attributes (name, work email, username) and immediately adding the account to a group to establish plausible access patterns, which is operationally accurate and directly aligned with the technique of establishing accounts for persistent or follow-on access.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:38:35.176843Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly valid Python one-liner using standard libraries and balanced syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly uses the Boto3 identitystore client to create a user and assign them to a group, aligning with the Establish Accounts technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:38:39.410466Z"
       }
     ],
     "llm_average_syntactic": 5.0,

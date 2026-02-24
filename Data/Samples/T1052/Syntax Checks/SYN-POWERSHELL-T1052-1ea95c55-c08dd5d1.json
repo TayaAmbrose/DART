@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T08:12:59.328647Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes/parentheses, correct variable assignments, proper method calls, and appropriate command separators.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper string interpolation, valid cmdlet names and parameters, correct semicolon separators, and no syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by automatically identifying a removable drive, compressing user media files, encoding them to evade detection, copying to the USB with a misleading filename, and cleaning up evidence - all core behaviors of exfiltration over physical medium.",
+        "semantic_justification": "The command fully implements T1052 by detecting a removable USB drive, staging and compressing Pictures/Videos directories, base64-encoding the archive to obfuscate content, copying it to the USB disguised as a DLL file to evade content filters, and cleaning up artifacts — all operationally plausible without elevated privileges on Windows.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T08:13:02.330726Z"
+        "timestamp": "2026-02-18T22:35:27.840109Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax, balanced elements, and valid command parameters.",
+        "syntactic_justification": "The command uses valid PowerShell syntax, correctly handles variables, utilizes proper .NET class calls, and employs correct pipe and semicolon separators.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052, realistically staging, encoding, and exfiltrating user media to a USB drive with a decoy filename, as described by the technique.",
+        "semantic_justification": "The command accurately implements the staging, compression, obfuscation (Base64), and transfer to a removable drive as described in the MITRE T1052 technique.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T08:13:12.818469Z"
+        "timestamp": "2026-02-18T22:35:31.604504Z"
       }
     ],
     "llm_average_syntactic": 4.667,

@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T00:59:56.842058Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command chaining (&&), correct redirection (>/dev/null 2>&1, <), balanced quotes, valid command flags, and proper command substitution using $() syntax.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command chaining via &&, valid process substitution with $(), correct awk and cut pipelines, and valid nc flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by first checking if a secondary wireless interface (wlan2) exists, then using netcat to exfiltrate data from a local log file over this secondary network interface to a specific IP and uncommon port (49321).",
+        "semantic_justification": "The command correctly checks for the wlan2 interface, extracts its IP address to bind as the source, and uses netcat to exfiltrate a log file over a secondary wireless interface to a high uncommon port, precisely matching T1011's exfiltration over an alternate network medium.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T01:00:02.479923Z"
+        "timestamp": "2026-02-18T22:04:29.163916Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax for all commands, flags, redirection, command substitution, and logical operators.",
+        "syntactic_justification": "The command is a well-formed Bash one-liner using correct syntax for command substitution, redirections, and logical operators.",
         "semantic_score": 5,
-        "semantic_justification": "The command robustly identifies and utilizes a specific wireless interface's IP as the source for netcat to exfiltrate a file, directly achieving T1011's objective of exfiltration over a separate network medium.",
+        "semantic_justification": "The command effectively ensures the use of a specific wireless interface (wlan2) for data exfiltration by binding the netcat source address to that interface's IP, aligning perfectly with T1011.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:21:43.680164Z"
+        "timestamp": "2026-02-18T22:04:32.643745Z"
       }
     ],
     "llm_average_syntactic": 5.0,

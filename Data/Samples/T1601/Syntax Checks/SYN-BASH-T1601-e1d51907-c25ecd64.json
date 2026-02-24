@@ -17,16 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper use of command separators (&&), balanced parentheses in the process substitution, valid flags for all tools (dd, md5sum, diff, hexdump), and correct redirection.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the defensive aspect of T1601 by capturing the MBR and performing both checksum and byte-by-byte comparison against a baseline to detect firmware/bootloader tampering, which is a key mitigation for this technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T19:58:31.547872Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid Bash command sequence with correct dd, md5sum, hexdump, and diff usage and balanced process substitutions.",
@@ -37,19 +27,29 @@
         "timestamp": "2025-10-02T19:59:01.231738Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid Bash constructs like process substitution and command separators, with all utility arguments correctly formatted.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses for process substitution, proper use of &&, valid flags for dd/md5sum/diff/hexdump, and correct Bash syntax throughout.",
         "semantic_score": 4,
-        "semantic_justification": "The command provides an excellent method for MBR integrity verification; however, the `dd` command to read `/dev/sda` explicitly requires root privileges, which contradicts the stated `Privilege: None`, making the initial capture operationally unfeasible.",
+        "semantic_justification": "The command correctly captures the 512-byte MBR, performs checksum comparison, and does a hex diff against a baseline to verify boot sector integrity, which is a valid detection/mitigation approach for T1601; however, reading /dev/sda typically requires root privileges (contradicting the 'None' privilege claim), and the technique itself is defensive/detection-oriented rather than an adversarial modification action.",
         "combined_score": 4.5,
         "confidence": 0.9,
-        "timestamp": "2025-10-02T19:59:05.998973Z"
+        "timestamp": "2026-02-19T01:26:22.074640Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using valid Bash syntax, correct tool flags, and proper process substitution for the diff operation.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic for comparing the MBR is sound, the command will fail with 'Permission denied' because reading /dev/sda requires root privileges, which contradicts the 'None' privilege requirement.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:26:27.950720Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

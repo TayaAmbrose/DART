@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T03:25:04.718728Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid rsync and SSH options, correct path specifications, and appropriate command structure.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid rsync flags (-azq), properly escaped SSH options, and correct use of --rsync-path to chain commands on the remote host.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by using rsync to quietly transfer files over SSH with automation-friendly options (BatchMode=yes, StrictHostKeyChecking=no), creating hidden directories (.cache/.upd) to conceal the exfiltrated data, and establishing a reliable transfer mechanism.",
+        "semantic_justification": "The command accurately implements T1020 automated exfiltration by quietly (-q) and recursively transferring ~/Pictures/ over SSH to a hidden directory (~/.cache/.upd/) on a remote host, using BatchMode and StrictHostKeyChecking=no for non-interactive automation, and leveraging --rsync-path to covertly pre-create the destination directory.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T03:25:07.760791Z"
+        "timestamp": "2026-02-18T22:23:07.804444Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for rsync and ssh, and correctly structured remote commands via --rsync-path.",
+        "syntactic_justification": "The command is perfectly formed with valid rsync flags, correct quoting for the SSH remote shell, and a valid command string for the --rsync-path option.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of automated exfiltration (T1020) by using rsync over SSH with stealthy options like quiet mode, disabled host key checking for automation, and creating a hidden directory on the remote host for concealment.",
+        "semantic_justification": "The command effectively implements automated exfiltration by using SSH options that bypass interactive prompts and prepending directory creation to ensure a smooth, unattended transfer to a hidden path.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T05:43:27.746082Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:23:09.785157Z"
       }
     ],
     "llm_average_syntactic": 5.0,

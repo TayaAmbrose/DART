@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T14:21:22.215694Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct flag usage, balanced parentheses, and proper BPF filter syntax.",
-        "semantic_score": 5,
-        "semantic_justification": "The command accurately uses tcpdump to sniff for a port-knock sequence, which is a direct method of 'Traffic Signaling' (T1205) for coordination or activation.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T14:21:33.196956Z"
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses and quotes, valid tcpdump flags (-i, -nn, -w), and a syntactically correct BPF filter expression.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses tcpdump to capture traffic matching a port-knock sequence (ports 7000, 8000, 9000) destined for a specific host, which aligns well with T1205 traffic signaling/port knocking monitoring, though it captures the knock sequence rather than executing it, making it more of a detection/validation tool than an attack tool itself.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:48:05.799172Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, balanced quotes, valid tcpdump flags, and a correctly formatted BPF filter expression.",
+        "syntactic_justification": "The command uses perfectly valid tcpdump syntax and correctly formatted Berkeley Packet Filter (BPF) expressions with balanced parentheses and quotes.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the Traffic Signaling technique by capturing network traffic that matches a specific port-knock sequence (ports 7000, 8000, 9000) directed at a specific host, which could be used to validate or analyze a signaling mechanism.",
+        "semantic_justification": "The command accurately implements the intent of monitoring specific network traffic patterns (port knocking) which is a core component of the Traffic Signaling technique.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:10:36.940291Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:48:06.311006Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid flags (-rfm), proper quoting around the path, and correct syntax for the srm secure deletion utility.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using srm (secure remove) with flags for recursive (-r), force (-f), and DoD-compliant overwriting (-m) to permanently destroy a photo library, making recovery impossible.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T02:03:51.085706Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with a recognized utility, valid flags, and proper quoting for the file path.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using a secure deletion tool (`srm`) with appropriate flags to irrecoverably destroy data within a user's directory, which is plausible without elevated privileges.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T02:03:56.000962Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed command with valid srm flags (-r -f -m) and a properly quoted path.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.78,
         "timestamp": "2025-10-02T02:04:23.942989Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-r for recursive, -f for force, -m for medium overwrite passes), and a properly quoted path containing spaces.",
+        "semantic_score": 5,
+        "semantic_justification": "srm (secure remove) is a macOS/Unix secure deletion tool that overwrites file data before unlinking, making recovery forensically difficult; using it recursively on a .photoslibrary package (a directory bundle) is operationally accurate for irreversibly destroying a user's photo library as described in the explanation.",
+        "combined_score": 5.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:42:52.652401Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Bash syntax with properly quoted paths and valid combined flags for the srm utility.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately uses the srm tool with appropriate recursive and secure-wipe flags to target a specific macOS data directory, perfectly aligning with T1485.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:42:54.291734Z"
       }
     ],
     "llm_average_syntactic": 5.0,

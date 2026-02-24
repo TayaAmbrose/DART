@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid flag formats, and appropriate escape sequences.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively implements a defensive measure against T1568 by comparing DNS resolution from multiple providers to detect anomalies, though it's more of a detection mechanism than a direct implementation of the technique itself.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T07:12:59.278044Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct PowerShell syntax, balanced elements, and valid cmdlet usage throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command flawlessly implements the claimed defensive cross-validation by comparing external DoH resolver responses for locally cached domains, directly detecting resolution discrepancies relevant to T1568's manipulation aspects.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T07:13:13.887191Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid pipelines, parameters, and correct use of Invoke-WebRequest, JSON conversion, and conditionals.",
@@ -46,11 +26,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T07:13:47.754092Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced parentheses, braces, and quotes, though the final Invoke-WebRequest URL string lacks a comma separator between the -Body parameter and the URI positional argument, which could cause a parsing error in strict contexts.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the claimed defensive intent by pulling a random cached DNS name, querying it via two independent DoH resolvers (Cloudflare and Google), comparing the returned A records, and POSTing discrepancies to a SIEM endpoint — directly targeting detection of DNS manipulation characteristic of T1568 fast-flux or DNS hijacking.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:27:27.228880Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command uses correct syntax, proper pipe sequences, balanced delimiters, and valid cmdlet parameters for Invoke-WebRequest and JSON conversion.",
+        "semantic_score": 4,
+        "semantic_justification": "The command logically implements a defensive check for DNS inconsistencies as described, though it may produce false positives for global CDNs where different resolvers return different geographically-optimized IP addresses.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:27:31.858625Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

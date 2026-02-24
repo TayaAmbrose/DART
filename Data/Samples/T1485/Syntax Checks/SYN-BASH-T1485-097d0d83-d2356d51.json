@@ -17,16 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, balanced parentheses, valid flags for both 'find' and 'shred' commands, and correct use of the -exec action with proper termination.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using 'shred' to securely and irreversibly destroy MySQL backup files older than 3 days with multiple overwrites (-n 3), zero-filling (-z), and removing the files (-u) in a targeted manner.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T00:57:31.538609Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Uses valid find syntax with escaped parentheses, properly quoted globs, correct -exec {} + form, and valid shred flags.",
@@ -37,14 +27,24 @@
         "timestamp": "2025-10-02T00:57:48.075895Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, all flags are valid, parentheses are correctly escaped, and the `find -exec ... +` syntax is correctly used.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper escaping of special characters, valid find flags (-xdev, -type, -mtime, -exec), and correct shred options (-n 3 -z -u -f) with proper use of '+' terminator for batch execution.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1485 Data Destruction, utilizing `find` to target specific backup files and `shred` with appropriate flags for irreversible deletion, directly matching the claimed intent and technique description.",
+        "semantic_justification": "The command precisely targets MySQL backup files (*.sql, *.sql.gz, *.dump) older than 3 days within a confined filesystem boundary (-xdev), and uses shred with 3 overwrite passes (-n 3), final zero-overwrite (-z), and file removal (-u) to irreversibly destroy them, fully aligning with T1485 data destruction of backup systems.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T00:57:49.643651Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T01:39:45.668440Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard find and shred syntax with correctly balanced parentheses and valid flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively targets common database backup extensions and uses a secure deletion utility to ensure the data is unrecoverable, directly fulfilling the T1485 technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:39:48.644075Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T03:47:25.823996Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, balanced quoting, valid flags, appropriate command separators (&&), and correct escape sequences.",
+        "syntactic_justification": "The command is perfectly well-formed with proper variable expansion, balanced quoting, valid flag formats for both tar and scp, correct use of && chaining and output redirection, and no syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by collecting sensitive files (systemd service configurations and SSL private keys), compressing them with a timestamp, securely transferring them via SCP to a remote server, and cleaning up traces afterward.",
+        "semantic_justification": "The command fully aligns with T1020 automated exfiltration: it timestamps and archives high-value targets (systemd service units and private SSL keys), silently transfers the archive to an external attacker-controlled host via SCP with host-key checking disabled to avoid prompts, and cleans up the local artifact — all consistent with automated, stealthy credential and service intelligence exfiltration.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T03:47:28.900290Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:24:15.360358Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced elements, valid flags for all commands (tar, scp, rm), and proper use of command separators and redirection.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command's structure and choice of tools are perfectly aligned with automated exfiltration (T1020), the stated 'Privilege: None' contradicts the ability to read the specified sensitive directories and use the root's SSH key, making the claimed aggregation and exfiltration of specific content highly implausible and likely to fail.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T05:50:51.549229Z"
+        "syntactic_justification": "The command is a well-structured Bash one-liner using valid syntax, variable substitution, and logical operators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command perfectly executes the exfiltration workflow (package, transfer, cleanup), though it realistically requires root privileges to access the specified SSL private keys and SSH identity file.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:24:19.659273Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

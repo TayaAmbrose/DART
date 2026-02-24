@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid kubectl syntax, correct flag formats, and proper JSON escaping in the curl payload.",
-        "semantic_score": 5,
-        "semantic_justification": "The command aligns perfectly with T1585 (Establish Accounts) as it attempts to authenticate to a social media API using stored credentials, which could be used by an adversary to maintain access to an established account.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T09:58:53.200243Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid kubectl and curl syntax, balances all quotes, and correctly escapes internal JSON characters.",
-        "semantic_score": 5,
-        "semantic_justification": "The command performs a login to obtain an access token, which, in an adversarial context, perfectly aligns with 'abuse accounts to gain persistent access [via token] and enable follow-on actions' as described by T1585 Establish Accounts.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T09:59:04.674132Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command is well-formed with valid kubectl flags, balanced quoting, and correctly escaped JSON in the curl payload.",
@@ -44,11 +24,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T09:59:22.867227Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes (including properly escaped inner JSON quotes), valid kubectl flags (--rm, -i, --restart=Never), correct namespace specification, and a valid shell invocation chain.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements automated credential-based login to obtain an access token for a social media persona account, which aligns with T1585 account maintenance/abuse, though the use of a Kubernetes ephemeral pod as the execution environment adds operational complexity that slightly reduces realism for a simple login action, and the placeholder domain reduces full plausibility.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:40:55.417692Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct kubectl syntax, proper flag usage, and correctly escaped JSON within the curl command.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates automated interaction with an account service to obtain credentials, which supports the persona management aspect of T1585, though it is technically a login rather than a creation event.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:40:58.803304Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

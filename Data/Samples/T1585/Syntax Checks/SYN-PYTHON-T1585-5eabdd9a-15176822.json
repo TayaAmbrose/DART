@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and braces, proper imports, valid method calls, and correct JSON formatting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1585 technique by creating a new AWS account with a benign-sounding name that could be used as a persistent persona, using the appropriate boto3 API calls with all required parameters.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T08:48:03.373616Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses correct Python and boto3 syntax, has balanced quotes/parentheses, and valid arguments.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly uses `boto3.client('organizations').create_account` to establish a new AWS member account, precisely aligning with the T1585 technique description of creating accounts, though it requires significant AWS IAM privileges (e.g., `organizations:CreateAccount`) in the management account, contrary to the 'Privilege: None' statement.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T08:48:12.185568Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed python3 -c one-liner with balanced quoting, valid boto3 call, and proper statement separators and JSON printing.",
@@ -44,6 +24,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T08:48:26.071826Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper string quoting, valid boto3 API calls, and correct JSON serialization syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 by using AWS Organizations' create_account API to establish a new member account with a deceptively benign name and email, creating an independent persona environment with billing access—precisely matching the technique's account establishment behavior in cloud environments.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:36:34.113675Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed Python one-liner with correct boto3 syntax, balanced quoting, and valid parameter usage.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately uses the AWS SDK to programmatically create a member account within an organization, directly implementing the T1585 technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:36:36.782389Z"
       }
     ],
     "llm_average_syntactic": 5.0,

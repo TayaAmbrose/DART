@@ -16,26 +16,6 @@
     "syntax_ok": false,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and braces, proper exception handling, and valid boto3 API calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1585 technique by creating an AWS IAM group (or using existing), attaching a policy, and adding a user to establish persistent access with plausible operational context.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T09:33:31.152869Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with correct syntax, balanced quotes, and valid method calls within the single command line string, ensuring it would execute without parsing errors.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 by creating an AWS IAM group, assigning a policy, and adding a user to that group, directly establishing or modifying account access consistent with an adversary's goals of persistence and blending in.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T09:33:39.181002Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 2,
         "syntactic_justification": "Balanced quoting and valid boto3 calls, but Python try/except cannot be written on a single line so this will raise a SyntaxError.",
@@ -44,12 +24,32 @@
         "combined_score": 3.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T09:34:05.476857Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python one-liner is mostly well-formed with balanced parentheses and valid boto3 API calls, but the bare `except` clause after a `try` block inside a `-c` string may cause issues with Python's inline syntax parsing due to the colon placement and lack of proper indentation handling in some shell environments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 by creating an IAM group with a plausible contractor name, attaching ReadOnlyAccess policy, and adding a persona user to establish believable role-based cloud access, which directly aligns with the technique's account establishment and privilege configuration behaviors.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:39:05.286719Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed Python one-liner using the boto3 library with correct syntax, balanced quotes, and proper exception handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively achieves the intent of establishing an IAM group, attaching a standard AWS policy, and adding a user to that group, which aligns with the T1585 technique of establishing accounts or modifying them to blend in.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:39:10.269028Z"
       }
     ],
-    "llm_average_syntactic": 4.0,
+    "llm_average_syntactic": 3.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.333,
-    "llm_verdict": "likely_match",
+    "llm_average_score": 4.167,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": "Python syntax check failed (py_compile). Command '['C:\\\\Users\\\\flacman\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\\\python.exe', '-m', 'py_compile', 'C:\\\\Users\\\\flacman\\\\AppData\\\\Local\\\\Temp\\\\tmpxmhbvdf7.py']' returned non-zero exit status 1."

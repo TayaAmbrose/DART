@@ -26,30 +26,30 @@
         "timestamp": "2025-10-01T00:02:21.309072Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper PowerShell syntax for variable assignment, conversion operations, and command execution with appropriate flags for nping.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by exfiltrating data over ICMP/IPv6 (an alternative network medium), using Base64 encoding to obscure the content, and leveraging nping to transmit the data in a way that bypasses standard network monitoring.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:02:26.633101Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The PowerShell syntax is well-formed with balanced brackets and proper semicolon separation, though passing a PowerShell variable ($b) directly to an external executable (nping.exe) via --data-string requires proper quoting or expansion handling that may cause issues in practice.",
+        "semantic_score": 3,
+        "semantic_justification": "While the concept of encoding file contents and sending over ICMP/IPv6 aligns with T1011 (alternative network medium exfiltration), nping's --data-string has a length limit that would truncate most real files, and ICMP is not truly a 'different network medium' in the T1011 sense (which refers to cellular/Wi-Fi/Bluetooth), making this more accurately T1048 (Exfiltration Over Alternative Protocol) than T1011.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:53:34.160051Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell variable assignment and the `nping.exe` command are both correctly formed with valid syntax and arguments, and PowerShell will correctly expand the variable for `nping`.",
+        "syntactic_justification": "The command is perfectly well-formed for PowerShell, correctly using a semicolon to separate the variable assignment and the execution of the external nping tool with valid flags.",
         "semantic_score": 2,
-        "semantic_justification": "The command fundamentally fails to exfiltrate file content as claimed because `nping.exe` typically requires elevated privileges on Windows for custom ICMP, and `-c 1` limits transmission to a single, small packet, making full file exfiltration impossible.",
+        "semantic_justification": "The command fundamentally describes Exfiltration Over Non-Standard Protocol (T1048) rather than Other Network Medium (T1011), and nping requires administrative privileges to send raw ICMP packets on Windows, contradicting the 'None' privilege requirement.",
         "combined_score": 3.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T00:02:50.391078Z"
+        "timestamp": "2026-02-18T21:53:37.317458Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.167,
-    "llm_verdict": "likely_match",
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 2.667,
+    "llm_average_score": 3.667,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

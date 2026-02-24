@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T13:11:02.861524Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid iptables syntax, correct flag formats, and appropriate command separators.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid iptables flags, proper semicolon separators, and correct use of the recent module options throughout all four rules.",
         "semantic_score": 5,
-        "semantic_justification": "The command implements a port-knocking sequence using iptables that perfectly aligns with the Traffic Signaling technique by requiring a specific sequence of connection attempts to ports 10001, 11002, and 12003 within time windows before allowing SSH access.",
+        "semantic_justification": "The command accurately implements a classic 3-step TCP port-knocking sequence using iptables recent module (K1→K2→K3 state tracking with time windows) to conditionally allow SSH, which is a textbook Traffic Signaling technique where specific port sequences act as covert triggers to open access.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T13:11:05.705598Z"
+        "timestamp": "2026-02-19T03:43:44.986046Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct bash `-lc` syntax to execute multiple `iptables` commands separated by semicolons, with all flags and module arguments correctly applied.",
-        "semantic_score": 4,
-        "semantic_justification": "The `iptables` logic correctly implements a 3-step TCP port-knocking mechanism, which is an excellent example of a timing- and sequence-based trigger under the T1205 Traffic Signaling technique; however, the command cannot achieve its claimed intent under the specified 'Privilege: None' as `iptables` requires root privileges to modify firewall rules.",
-        "combined_score": 4.5,
+        "syntactic_justification": "The command uses valid bash syntax and correct iptables module flags with proper quoting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a multi-stage port-knocking sequence using the iptables recent module, perfectly aligning with the Traffic Signaling technique.",
+        "combined_score": 5.0,
         "confidence": 1.0,
-        "timestamp": "2025-10-01T13:11:37.341521Z"
+        "timestamp": "2026-02-19T03:43:49.182867Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T04:22:06.812873Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignment, cmdlet usage, parameter flags, balanced quotes, and a properly formatted hashtable for headers.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper hashtable syntax for headers, valid PowerShell parameter flags, and correct semicolon separators.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1020 (Automated Exfiltration) as it silently exfiltrates the hosts file via HTTPS POST to an external server with error suppression, user-agent spoofing, and progress preference silencing to avoid detection.",
+        "semantic_justification": "The command accurately implements automated exfiltration (T1020) by silently POSTing the hosts file via HTTPS to an external endpoint using Invoke-WebRequest, with stealth features like suppressed progress output, a spoofed User-Agent, and silent error handling — all operationally plausible and aligned with the technique.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T04:22:09.886485Z"
+        "timestamp": "2026-02-18T22:27:06.373406Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct Powershell syntax, balanced quotes, valid parameters, and proper variable assignment.",
+        "syntactic_justification": "The command follows correct PowerShell syntax, uses valid cmdlet parameters, handles progress variables correctly, and ensures balanced quotes/braces.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly achieves the claimed intent of silently exfiltrating the hosts file via HTTPS POST, directly aligning with the T1020 Automated Exfiltration technique using appropriate tools and parameters.",
+        "semantic_justification": "The command accurately implements exfiltration by reading a sensitive configuration file and POSTing it to a remote URI while suppressing UI output, which aligns perfectly with scriptable, automated exfiltration (T1020).",
         "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T06:03:05.018059Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:27:12.290181Z"
       }
     ],
     "llm_average_syntactic": 5.0,

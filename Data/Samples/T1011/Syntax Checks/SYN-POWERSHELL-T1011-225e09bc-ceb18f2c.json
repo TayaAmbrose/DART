@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T00:18:38.569592Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax including balanced quotes, correct pipe operators, semicolons for command separation, proper error handling with ErrorAction parameters, and valid conditional logic structure.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1011 by creating a hosted Wi-Fi network as an alternate communication medium, configuring the network adapter with an IP address, and using iperf3 to exfiltrate data over this secondary network channel.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:18:42.428249Z"
+        "syntactic_justification": "The command is well-formed PowerShell with balanced quotes, proper semicolons as separators, valid netsh flags, correct Get-NetAdapter and New-NetIPAddress cmdlet syntax, and properly structured Start-Process arguments.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by creating a hosted Wi-Fi AP as an alternate network medium and using iperf3 to exfiltrate data over it, though iperf3 is a bandwidth testing tool rather than a true data exfiltration tool, and the privilege claim of 'None' is inaccurate since hosted network creation and IP address assignment typically require administrator privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T21:57:07.578591Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced syntax, proper command separators, and valid flag formats for all PowerShell cmdlets and `netsh` commands.",
-        "semantic_score": 1,
-        "semantic_justification": "The command cannot achieve its claimed intent of spawning a hosted Wi-Fi network and exfiltrating data, as key components like `netsh wlan set hostednetwork` and `New-NetIPAddress` require Administrator privileges, directly contradicting the stated 'Privilege: None'.",
-        "combined_score": 3.0,
+        "syntactic_justification": "The command uses proper PowerShell syntax, including semicolon-separated statements, correct variable assignment, if-blocks, and valid cmdlet parameters.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements T1011 by creating an ad-hoc Wi-Fi network and binding traffic to it, though it requires Administrator privileges which contradicts the provided 'None' metadata.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T00:19:09.340057Z"
+        "timestamp": "2026-02-18T21:57:10.654278Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 4.0,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

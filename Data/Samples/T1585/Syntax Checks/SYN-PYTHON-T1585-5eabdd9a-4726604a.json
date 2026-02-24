@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and braces, proper imports, valid AWS boto3 API calls, and correct JSON structure for output.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 (Establish Accounts) by creating a new AWS IAM user with realistic metadata, setting up console access, applying a limited permission policy, generating API credentials, and documenting the creation - all essential elements for establishing a persistent account in cloud infrastructure.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T09:17:44.890954Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed Python code executed via `python3 -c`, with balanced quotes, parentheses, and braces, and valid statement separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by creating a new IAM user with realistic tags, a temporary console password requiring reset, a low-privilege policy, and API keys, directly aligning with MITRE ATT&CK T1585 for establishing a believable persona.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T09:17:48.766930Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 4,
         "syntactic_justification": "The Python one-liner is well-formed with balanced quoting and valid boto3 calls, though the '!' inside the double-quoted -c string may trigger shell history expansion in some shells.",
@@ -44,6 +24,26 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T09:18:17.620961Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, braces, and quotes, proper semicolon separators, and valid boto3 API call syntax throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1585 by creating a believable IAM persona with realistic department tags, console login with forced password reset, ViewOnlyAccess policy for low-privilege blending, and programmatic API keys — all consistent with establishing a cloud account for persistent access or follow-on operations.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:37:59.986645Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly formed, with correct Boto3 method calls, valid syntax, and properly balanced quotes and brackets.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the Establish Accounts technique by creating a believable persona with metadata (tags), console access, and API credentials.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:38:03.977607Z"
       }
     ],
     "llm_average_syntactic": 4.667,

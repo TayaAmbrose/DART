@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The AWS CLI command is perfectly well-formed with proper service name, user specification, output format, and all required parameters for creating a service-specific credential.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1585 technique by creating a service credential for a specific user that could be used for persistent access to AWS CodeCommit services, which aligns perfectly with establishing accounts for follow-on actions.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T10:50:12.814340Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid AWS CLI syntax with correct flags and values.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly creates a service-specific credential, which is a form of API key creation explicitly listed as a typical behavior under MITRE ATT&CK T1585 'Establish Accounts' for persistent access and blending in.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T10:50:37.221060Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The AWS CLI command is well-formed with valid parameters (--user-name, --service-name codecommit.amazonaws.com, --output json) and requires no special quoting in PowerShell.",
@@ -45,6 +25,26 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T10:50:41.590868Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid AWS CLI syntax, correct flag names (--user-name, --service-name, --output), balanced quoting, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command directly aligns with T1585 by creating a service-specific credential (API key equivalent) for an IAM user targeting CodeCommit, which establishes persistent access credentials that blend into normal developer workflows — a textbook example of credential/account establishment for follow-on access.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:44:10.429742Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows the standard AWS CLI syntax for IAM, with correct flags and service-specific naming conventions.",
+        "semantic_score": 5,
+        "semantic_justification": "Creating service-specific credentials allows an adversary to establish persistent access to code repositories, directly aligning with the Establish Accounts technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:44:12.422678Z"
       }
     ],
     "llm_average_syntactic": 5.0,

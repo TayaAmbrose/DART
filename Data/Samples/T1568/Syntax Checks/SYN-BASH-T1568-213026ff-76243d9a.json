@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid flag formats, correct command separators, and appropriate escape sequences throughout the complex bash command chain.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1568 Dynamic Resolution technique by using DNS SRV records to discover endpoints, selecting random IPs from DNS responses, and establishing command and control through a disguised HTTP POST that transmits host and user information.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T06:13:35.954370Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command substitutions, and proper sequencing of operations.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1568 by dynamically resolving network endpoints (host and port) at runtime via DNS SRV and A records, then using them for data exfiltration typical of C2 beaconing.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T06:13:46.902519Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The command is well-formed with balanced quoting (properly escaped for bash -c), valid substitutions, and correct flags for dig, sort, head, awk, sed, shuf, base64, printf, and nc.",
@@ -46,11 +26,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T06:14:34.301331Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper quoting, semicolons, and pipe chains, though the arithmetic expansion `${#body}` for Content-Length and the nested quoting around `$domain` in the dig SRV query may cause edge-case failures in some bash environments.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 dynamic resolution by using DNS SRV records to discover service endpoints at runtime, randomly selecting an IP via `shuf` to emulate fast-flux behavior, and exfiltrating base64-encoded host/user data over a raw netcat HTTP POST to blend in as legitimate sync traffic.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:21:56.562073Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed bash one-liner with balanced quotes, valid command separators, and correct tool flags.",
+        "semantic_score": 2,
+        "semantic_justification": "The logic for dynamic resolution via SRV records is excellent, but the command fails operationally because the double-quoted bash -c wrapper causes the parent shell to prematurely expand all internal variables and awk positional parameters ($3, $4) before execution.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:22:26.007362Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

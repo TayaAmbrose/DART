@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T03:22:31.152330Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid Docker and bash syntax, and correct flag formats throughout.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper escaping, valid Docker flags, correct volume mount syntax, and a syntactically valid bash loop with proper semicolons and command separators.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by creating a detached Docker container that periodically archives /home directory contents and exfiltrates them via SCP to a remote server using a mounted SSH key, with proper timestamps and cleanup.",
+        "semantic_justification": "The command fully implements T1020 automated exfiltration by running a detached Docker container that periodically (every 3600 seconds) archives /home via tar, transfers the archive to an external attacker-controlled host via SCP using a mounted private key with host key checking disabled for stealth, then cleans up the local archive — precisely matching the technique's batching, scheduling, and automated transfer behaviors.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T03:22:34.067070Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:22:59.374700Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command separators, and proper use of command substitutions and variable assignments.",
+        "syntactic_justification": "The command is syntactically perfect, with correct Docker flags, balanced quoting, and a functional Bash loop.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves automated, scheduled archival and compressed exfiltration of sensitive data from /home to an external attacker-controlled server via SCP over an SSH channel, accurately aligning with all aspects of MITRE ATT&CK T1020 Automated Exfiltration.",
+        "semantic_justification": "The command perfectly implements automated exfiltration by packaging data, using existing credentials, and scheduling transfers via a persistent loop.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T05:42:48.933883Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:23:03.782931Z"
       }
     ],
     "llm_average_syntactic": 5.0,

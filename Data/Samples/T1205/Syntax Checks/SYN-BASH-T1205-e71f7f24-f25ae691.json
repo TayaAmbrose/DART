@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T18:56:43.537576Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for netcat (-u, -w1) and vtysh (-c), correct command separators (&&), and follows proper bash syntax throughout.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid `&&` chaining, correct `nc` flags (`-u` for UDP, `-w1` for timeout), proper input redirection from `/dev/null`, and valid `vtysh` syntax for adding a static route.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using a UDP port-knocking sequence (sending empty packets to three specific ports) as a signal to a remote system before executing a privileged routing command that would leverage the newly opened access path.",
+        "semantic_justification": "The command accurately implements a UDP port-knocking sequence (sending empty UDP datagrams to sequential high ports 12345→23456→34567) as a traffic signal to a remote controller, then uses `vtysh` (a legitimate network device routing shell) to install a static route leveraging the newly signaled path, which is a realistic and operationally plausible implementation of T1205 traffic signaling combined with route manipulation on network devices.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:31:28.132303Z"
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T04:08:19.145405Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for 'nc' and 'vtysh', and correct command separators.",
+        "syntactic_justification": "The command is perfectly well-formed, using correct bash syntax, balanced quotes, valid netcat flags, and appropriate command chaining with '&&'.",
         "semantic_score": 5,
-        "semantic_justification": "The command correctly executes a UDP port-knocking sequence for signaling and, by using 'sudo', appropriately elevates privileges to add a static route via 'vtysh', fully achieving the claimed intent and aligning with T1205.",
+        "semantic_justification": "The command effectively demonstrates a port-knocking sequence (a form of traffic signaling) using sequential UDP packets, followed by a configuration change on a network device shell, which aligns perfectly with the described technique.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T03:31:54.070428Z"
+        "timestamp": "2026-02-19T04:08:23.346925Z"
       }
     ],
     "llm_average_syntactic": 5.0,

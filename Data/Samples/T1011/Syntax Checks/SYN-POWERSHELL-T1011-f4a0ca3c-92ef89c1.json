@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T00:53:16.696898Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid PowerShell syntax, and appropriate use of variables and pipeline operations.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, parentheses, and braces, proper use of semicolons as statement separators, valid pipeline operators, and correct cmdlet syntax throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1011 technique by establishing a Bluetooth PAN connection to a specific MAC address, configuring a static IP on the Bluetooth interface, and exfiltrating base64-encoded file data over HTTP to a remote endpoint on a separate network medium.",
+        "semantic_justification": "The command precisely implements T1011 by connecting to a Bluetooth device via MAC address, configuring a Bluetooth PAN network adapter with a static IP, reading and base64-encoding a sensitive file, then exfiltrating it via HTTP PUT over the isolated Bluetooth subnet to a listener on a non-standard port — fully aligning with exfiltration over an alternative network medium.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:53:22.222567Z"
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:03:17.205712Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Powershell command is perfectly well-formed, using correct syntax for cmdlet execution, variable assignment, .NET calls, native command execution, and parameter passing.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by programmatically connecting to a Bluetooth NAP, configuring a dedicated IP address on the resulting PAN interface, and then exfiltrating data via HTTP PUT over this isolated Bluetooth network to a specific IP within that subnet, directly aligning with T1011.",
-        "combined_score": 5.0,
+        "syntactic_justification": "The PowerShell command is well-formed with correct variable assignments, piping, .NET method calls, and proper command separation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command logic perfectly implements T1011, though 'netsh' requires administrative privileges which contradicts the provided metadata.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:19:45.030086Z"
+        "timestamp": "2026-02-18T22:03:20.044308Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

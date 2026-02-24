@@ -19,26 +19,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper flag formats, valid curl options, and correct output redirection syntax.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying WhoisXML API, a paid/closed source for domain information, with proper authentication, output formatting, and logging consistent with reconnaissance activities.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:20:16.470750Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid flags, balanced quoting, correct variable expansion for a Bash shell, and proper redirection.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying a specified paid API for domain WHOIS information, which directly constitutes searching a closed source for intelligence.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:20:24.415951Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command is well-formed with balanced quoting, valid curl flags, correct use of -o and -w, and proper redirection.",
@@ -47,6 +27,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T11:20:38.699442Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid curl flags (-fsS, --retry, --connect-timeout, --max-time, --compressed, -H, -o, -w), proper shell variable expansion, and correct output redirection with append operator.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying WhoisXML API (a paid/closed-source WHOIS intelligence service) using an API key for domain registration data, which directly aligns with adversaries querying paid technical databases to gather targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:47:18.369501Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses perfectly formed curl syntax with properly balanced quotes, valid flags, and correct shell redirection.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates querying a paid technical database (WhoisXML API) to gather registration intelligence, which is a direct implementation of T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:47:19.583576Z"
       }
     ],
     "llm_average_syntactic": 5.0,

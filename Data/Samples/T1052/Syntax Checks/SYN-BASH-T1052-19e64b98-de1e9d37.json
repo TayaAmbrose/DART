@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T09:25:55.932497Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for hdiutil, correct command separators (&&), and appropriate piping of the password to both create and attach operations.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, correct use of && and pipe operators, valid hdiutil flags (-encryption, -stdinpass, -fs, -volname, -size, -nobrowse, -mountpoint), and proper command chaining throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by creating an encrypted container on a USB drive with a hidden mount point, copying sensitive financial data to it, and detaching it for physical exfiltration.",
+        "semantic_justification": "The command precisely implements T1052 by creating an AES-256 encrypted DMG on an external USB volume with a deceptive system-update name (.sys_upd), mounting it stealthily with -nobrowse to avoid Finder visibility, copying sensitive Finance documents into it, then detaching to produce a self-contained encrypted container ready for physical removal — all operationally plausible on macOS with standard user privileges.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:25:58.968043Z"
+        "timestamp": "2026-02-18T22:39:16.497357Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid macOS utilities and flags, includes proper quoting, and correctly chains commands with pipes and logical AND operators.",
+        "syntactic_justification": "The command is perfectly formed with correct use of pipes, logical AND operators, balanced quotes, and valid macOS hdiutil flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by creating a hidden, encrypted DMG on a USB, stealthily mounting it, copying sensitive files, and then detaching it, directly aligning with T1052 for exfiltration over a physical medium.",
+        "semantic_justification": "The command accurately demonstrates staging, encryption, and stealthy mounting (using -nobrowse and hidden filenames) on a physical medium as described in MITRE ATT&CK T1052.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T09:26:15.530662Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:39:20.060238Z"
       }
     ],
     "llm_average_syntactic": 5.0,

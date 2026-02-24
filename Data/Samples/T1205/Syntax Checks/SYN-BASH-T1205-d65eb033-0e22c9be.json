@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T18:08:39.665536Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct Python syntax for the inline script, proper shell chaining using `&&`, and valid `networksetup` command usage including correct quoting.",
-        "semantic_score": 3,
-        "semantic_justification": "The first part of the command correctly generates and sends a Wake-on-LAN magic packet, which aligns well with Traffic Signaling (T1205) by triggering an action; however, the second part (`networksetup`) requires root privileges on macOS, contradicting the stated 'Privilege: None' and thus failing to achieve its claimed intent of enabling proxy auto-discovery.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python one-liner has balanced quotes and parentheses, valid socket API calls, and proper bash chaining with &&, though the string repetition syntax `\"FF\"*6` inside an f-string-like context within binascii.unhexlify is actually incorrect Python — it should be `b'FF'*6` or `'FF'*6` passed to unhexlify, but the overall structure is mostly parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly constructs a Wake-on-LAN magic packet (6 bytes of 0xFF followed by 16 repetitions of the target MAC) and broadcasts it over UDP port 9, which is a legitimate WOL mechanism that could be used as a traffic signal to wake a dormant pivot host; the subsequent `networksetup -setproxyautodiscovery` command on macOS is a plausible follow-on action, though the connection between WOL signaling and proxy auto-discovery as a T1205 technique is somewhat indirect.",
         "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T18:09:02.822720Z"
+        "confidence": 0.78,
+        "timestamp": "2026-02-19T04:04:41.136918Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators (&&), valid Python syntax within the single quotes, and correct flag formats for both the Python one-liner and the networksetup command.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a Wake-on-LAN magic packet as a trigger signal sent via UDP broadcast, followed by enabling proxy auto-discovery which could facilitate subsequent C2 communications - both parts are operationally plausible and technically accurate.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:25:12.077942Z"
+        "syntactic_justification": "The Python code is correctly formatted and the shell command uses valid logic and proper separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately generates a valid Wake-on-LAN packet and attempts to change proxy settings, although networksetup commands typically require root privileges on macOS.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:04:45.574899Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

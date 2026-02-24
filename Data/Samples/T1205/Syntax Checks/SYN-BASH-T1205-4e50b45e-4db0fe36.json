@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T13:10:07.021055Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid ping syntax, using the -c flag to limit to 1 packet, -p flag to specify the payload pattern in hexadecimal, and a valid IP address target.",
+        "syntactic_justification": "The command is perfectly well-formed with valid flags (-c 1 for count, -p for pattern), a properly formatted 8-character hex string, and a valid IP address.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by embedding the 'OPEN' signal (in hex) within an ICMP packet that could serve as a trigger for a backdoor listening for this specific pattern.",
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by embedding a magic byte sequence ('OPEN' = 0x4f50454e) in the ICMP payload to trigger a backdoor, which is a classic and operationally plausible use of ICMP-based covert signaling.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T13:10:10.192125Z"
+        "timestamp": "2026-02-19T03:43:40.376704Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using standard Linux ping flags and arguments correctly.",
+        "syntactic_justification": "The command uses standard ping syntax with valid flags for count and hex patterns.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of using ICMP payload for traffic signaling, directly aligning with the T1205 technique description of embedding signals within network traffic as a trigger.",
+        "semantic_justification": "The use of the -p flag to embed a specific hex pattern (OPEN) in an ICMP packet is a classic and effective method of traffic signaling.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T13:10:16.013712Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:43:41.396044Z"
       }
     ],
     "llm_average_syntactic": 5.0,

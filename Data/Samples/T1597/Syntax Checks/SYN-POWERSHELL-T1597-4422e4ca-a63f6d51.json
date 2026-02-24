@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with properly balanced quotes, parentheses, and braces, correct use of semicolons as statement separators, valid parameter names, and proper error handling with try-catch.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1597 technique by querying GreyNoise (a closed threat intelligence source) using API token authentication, processing the response data, and logging the activity - all consistent with searching closed sources for threat intelligence.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:55:31.635078Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for variable assignments, hash tables, cmdlets, pipelines, and error handling, with no discernible errors.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by querying GreyNoise, an account-gated (closed) source requiring token authentication, to gather intelligence on an IP address, directly aligning with the T1597 technique's description.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:55:38.275730Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid cmdlets, proper separators, and a correct try/catch structure.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T11:55:54.892041Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper use of try/catch, valid cmdlet syntax, and correct string interpolation throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying GreyNoise (a paid/account-gated closed-source threat intelligence API) using token-based authentication, retrieving IP intelligence data, saving structured JSON output, and logging activity — all operationally plausible and aligned with the technique's description of querying non-public/subscriber intelligence sources.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:49:55.971237Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax throughout, including proper .NET class calls, variable assignments, try/catch blocks, and correct piping for JSON manipulation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly implements a query to a third-party intelligence provider (GreyNoise) using authentication, aligning perfectly with the intent of searching closed sources for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:49:59.589410Z"
       }
     ],
     "llm_average_syntactic": 5.0,

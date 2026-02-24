@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T01:02:15.930620Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax for importing modules, creating a socket, setting timeout, connecting, reading a file, and sending data.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements T1011 by using AF_VSOCK (a non-TCP/IP socket) to exfiltrate user bookmark data to another endpoint (CID 3) over a different network medium than standard networking.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:02:21.114483Z"
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper semicolons as statement separators, and valid socket API calls.",
+        "semantic_score": 4,
+        "semantic_justification": "AF_VSOCK is a legitimate non-IP communication medium (hypervisor/VM channel) that aligns well with T1011's concept of exfiltrating over an alternative network medium, and the command correctly reads and sends the GTK bookmarks file; however, AF_VSOCK is typically used for VM-to-host communication rather than traditional network exfiltration, making it a somewhat niche but valid implementation of the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:04:54.998728Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed, with balanced quotes, valid Python syntax, and proper use of semicolons as statement separators within the string passed to `python3 -c`.",
+        "syntactic_justification": "The Python command is perfectly formed with balanced quotes, correct semicolon usage, and valid socket API calls for the AF_VSOCK family.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by using AF_VSOCK for data exfiltration, which represents a 'different network medium' from the perspective of a virtual machine's traditional IP network stack, bypassing standard network monitoring.",
+        "semantic_justification": "The command successfully utilizes the AF_VSOCK address family to exfiltrate data from a VM to a host/enclave, bypassing traditional IP-based monitoring which aligns perfectly with T1011.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:22:38.563148Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:04:55.968470Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T18:06:18.513536Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct quoting, valid flags, and proper command chaining using `&&` and `sh -c`.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of && separators, valid iptables flags, and correct Docker run syntax throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command effectively implements Traffic Signaling (T1205) by using an embedded string in legitimate-looking SNMP traffic (UDP/161) to dynamically open a C2 port, aligning perfectly with the technique's description and operational plausibility.",
+        "semantic_justification": "The command accurately implements a port-knocking/traffic signaling mechanism (T1205) by using iptables string matching to detect a covert signal embedded in SNMP UDP/161 traffic, logging it, tracking the source with the 'recent' module, and conditionally opening TCP/7443 within a 60-second window — a textbook implementation of traffic-based signaling to trigger access.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T18:06:34.383862Z"
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T04:04:24.167224Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Docker syntax, balanced quotes, valid iptables flags, and correct command chaining.",
+        "syntactic_justification": "The command is perfectly structured with balanced quotes, valid Docker flags, and correct iptables module syntax.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a covert knock sequence where SNMP packets containing a specific string trigger temporary access to port 7443, aligning with T1205's description of embedding signals within legitimate-looking traffic.",
+        "semantic_justification": "The command accurately implements a traffic-signaling mechanism (port knocking via payload detection) using the iptables recent and string modules as described.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:25:04.707938Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:04:27.822731Z"
       }
     ],
     "llm_average_syntactic": 5.0,

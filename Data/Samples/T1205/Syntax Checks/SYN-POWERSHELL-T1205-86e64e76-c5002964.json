@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T13:19:24.318950Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes, correct variable assignments, appropriate method calls, and proper pipeline operations.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper semicolons as separators, valid array construction, and correct .NET socket API usage throughout.",
         "semantic_score": 4,
-        "semantic_justification": "The command correctly implements a Wake-on-LAN packet which could be used for traffic signaling, but it's more aligned with legitimate network administration than a covert C2 channel, though it could potentially be misused as a trigger mechanism.",
+        "semantic_justification": "The command correctly constructs a standard Wake-on-LAN magic packet (6x 0xFF followed by 16 repetitions of the target MAC) and broadcasts it over UDP port 9, which is a legitimate WOL implementation; however, its relevance to T1205 Traffic Signaling is marginal since WOL is a benign protocol use case rather than a covert signaling mechanism, though it could theoretically be repurposed as a trigger signal in an adversarial context.",
         "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T13:19:27.804326Z"
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:44:10.706869Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for cmdlets, object instantiation, variable assignments, and array manipulations.",
+        "syntactic_justification": "The command uses valid PowerShell syntax, including proper variable assignment, loop structures, .NET object instantiation, and correct method calls.",
         "semantic_score": 5,
-        "semantic_justification": "The command correctly constructs and sends a standard Wake-on-LAN magic packet via UDP broadcast, which operationally aligns with using legitimate-looking network traffic as a signal within the T1205 technique.",
+        "semantic_justification": "The command accurately constructs a standard Wake-on-LAN magic packet and broadcasts it via UDP port 9, which is a textbook example of traffic signaling to trigger a system state change.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T13:19:47.673395Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:44:13.071519Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T16:27:21.522844Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct command separators, valid `hping3` flags and arguments, and proper `ssh` syntax.",
+        "syntactic_justification": "The command is perfectly well-formed with valid hping3 flags (-c, -S, -A, -F, -p), proper use of && chaining, sleep intervals, and a final ssh invocation with no syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely executes a TCP port knock sequence using specific flags and timing, which perfectly aligns with 'Traffic Signaling' for a 'port-unlock workflow', using appropriate tools and arguments.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T16:27:35.372681Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), valid flags for hping3 and ssh, and correct syntax throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using a port knocking sequence with specific TCP flags (SYN, ACK, FIN) to signal a remote system before establishing an SSH connection, which is a realistic implementation of T1205.",
+        "semantic_justification": "The command accurately implements a port-knocking traffic signaling sequence using hping3 to send TCP packets with specific flag combinations (SYN, ACK, FIN) to sequential high ports, which is a classic T1205 pattern for triggering a firewall rule to temporarily open SSH access before connecting.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:16:39.217650Z"
+        "timestamp": "2026-02-19T03:56:30.019956Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid bash syntax, correctly chains commands with logical operators, and uses proper hping3 and ssh flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly implements a classic port knocking sequence using hping3 to send packets with specific TCP flags to predefined ports to trigger a firewall opening for SSH.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:56:30.759291Z"
       }
     ],
     "llm_average_syntactic": 5.0,

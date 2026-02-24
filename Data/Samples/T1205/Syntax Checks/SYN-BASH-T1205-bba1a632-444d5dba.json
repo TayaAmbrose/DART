@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T18:50:16.796583Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct command separators, valid flag formats, and proper command substitutions.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes, valid separators, and correct brace expansions, though the hex construction logic has a subtle flaw: `printf ff%.0s {1..6}` outputs 'ff' six times but without separators, and the MAC repetition loop uses `echo -n $mac` inside a subshell without concatenation, meaning the hex variable won't correctly accumulate all 16 MAC repetitions as a single string—it would only capture the last echo output due to the for loop not appending.",
         "semantic_score": 4,
-        "semantic_justification": "The command correctly constructs and sends a Wake-on-LAN magic packet with a SecureOn password, directly aligning with the Traffic Signaling technique, though setting `ethtool sopass` on the sending interface is semantically ambiguous in the context of generating an outgoing packet for a remote device.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T18:50:41.393746Z"
+        "semantic_justification": "The command correctly implements the WoL SecureOn magic packet concept—setting a sopass via ethtool and constructing a packet with 6x FF bytes, 16 MAC repetitions, and a 6-byte password appended—then transmitting it via UDP to port 9, which is operationally plausible for T1205 traffic signaling, though the hex construction loop has a logic issue that would prevent correct packet assembly in practice.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2026-02-19T04:07:38.410676Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags for all tools used (ethtool, tr, printf, echo, xxd, nc), and correct variable references.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements the Traffic Signaling technique by configuring Wake-on-LAN with a SecureOn password and sending a specially crafted magic packet that contains hidden signaling data, which aligns perfectly with T1205's description of embedding signals within legitimate-looking network traffic.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:30:57.170750Z"
+        "syntactic_justification": "The command is perfectly structured with balanced quotes, correct variable expansion, valid bash loops, and proper pipe chaining for the intended tools.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements the Wake-on-LAN Magic Packet structure including the SecureOn password; however, configuring ethtool and sending the packet via nc on the same host is slightly operationally redundant if signaling a remote target.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:07:42.033086Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

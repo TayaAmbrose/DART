@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T08:48:57.733117Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper piping, balanced quotes, valid flags for all tools (tar, base64, dd), and correct command separators.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with proper piping, quoting, and flag usage, though the `bs=1m` flag uses macOS/BSD `dd` syntax which is valid on macOS but the base64 output piped directly to `dd` without binary handling could cause minor issues in practice.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by compressing home documents, encoding them as base64, and hiding them as a JPEG file on what appears to be a camera storage device, making it an excellent example of exfiltration over physical medium with obfuscation.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T08:49:00.793814Z"
+        "semantic_justification": "The command accurately implements T1052 by archiving Documents with tar, encoding as base64 to obfuscate content, writing to a JPEG-named file in a realistic camera DCIM folder structure on an external volume using dd, and ensuring data is flushed with sync — all consistent with staging and disguising data for physical medium exfiltration.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T22:37:17.367188Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct command usage, valid flags, proper quoting for paths, and correct pipe and logical AND operators.",
+        "syntactic_justification": "The command uses perfectly valid Bash syntax, properly balanced quotes, and standard flags for tar, base64, and dd on macOS.",
         "semantic_score": 5,
-        "semantic_justification": "The command achieves the claimed intent by compressing and encoding data, then writing it to a camouflaged file on a simulated external physical medium, perfectly aligning with T1052's description of packaging, obfuscation, labeling, and use of removable storage.",
+        "semantic_justification": "The command accurately implements the technique by staging, compressing, obfuscating with base64, and writing data to a realistic physical medium path using a deceptive filename.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T08:49:11.705208Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:37:17.614079Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T03:32:05.154296Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid rsync and SSH options, correct flag formats, and proper variable usage.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid rsync flags (-azq, --update, --bwlimit, --exclude), properly escaped SSH options within single quotes, and correct source/destination path syntax.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration using rsync with bandwidth limiting, compression, incremental transfers, exclusion patterns, and SSH tunneling on port 443 to disguise the traffic, while storing data in a hidden directory structure.",
+        "semantic_justification": "The command fully aligns with T1020 automated exfiltration: it uses rsync's incremental/update logic for automated repeated transfers, tunnels over SSH on port 443 to blend with HTTPS traffic, suppresses output for stealth (-q), uses bandwidth limiting to avoid detection, stores data in a hidden cache directory (.cache/.rs/) on the remote host, disables host key checking to avoid interactive prompts enabling automation, and uses a specific SSH key for unattended authentication.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T03:32:08.048983Z"
+        "timestamp": "2026-02-18T22:23:14.843541Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid flags, balanced quoting, and proper use of environment variables that will be expanded by the local shell.",
+        "syntactic_justification": "The command uses perfectly formed rsync and ssh syntax with balanced quoting and valid environment variable references.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of quiet, incremental, and compressed exfiltration of user documents to a remote server, fully aligning with the characteristics and operational behaviors described in T1020 Automated Exfiltration.",
+        "semantic_justification": "The command effectively demonstrates automated exfiltration by using non-interactive SSH flags, bandwidth limiting, and port 443 for evasion, all within an incremental sync process.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T05:46:16.023169Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:23:15.364565Z"
       }
     ],
     "llm_average_syntactic": 5.0,

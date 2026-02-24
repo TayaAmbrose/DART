@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper AWS CLI syntax, correct flag formats, and appropriate command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1585 technique by attaching a policy to an existing user account (granting S3 read-only access) and then verifying the attachment, which aligns with the 'adding accounts to privileged groups' aspect of the technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T08:56:21.650590Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct AWS CLI syntax, valid flags, and a proper command separator for sequential execution.",
-        "semantic_score": 3,
-        "semantic_justification": "The command modifies an existing account's permissions, which aligns with 'changes to identity/privilege configurations' mentioned in T1585 detection, but it does not 'establish' or create an account, which is the primary focus of the technique name and its typical behaviors.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T08:56:37.220213Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Two valid AWS CLI commands with correct flags and a valid policy ARN are properly separated by a PowerShell semicolon.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T08:56:50.823965Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "Both AWS CLI commands are perfectly well-formed with valid flags, properly formatted ARN, correct semicolon separator, and valid --output flag.",
+        "semantic_score": 4,
+        "semantic_justification": "The commands correctly attach a managed S3 read-only policy to a specific IAM user and verify the attachment, which aligns with T1585 account establishment/privilege configuration, though the read-only scope is low-risk and the verification step adds operational realism; minor gap is that this modifies an existing account rather than creating one, making it more T1098 (Account Manipulation) than T1585.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:37:08.337947Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid AWS CLI syntax and the standard PowerShell command separator.",
+        "semantic_score": 5,
+        "semantic_justification": "The command successfully modifies account permissions to enable follow-on actions, directly supporting the objective of establishing or abusing cloud accounts.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:37:11.450968Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

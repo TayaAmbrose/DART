@@ -19,26 +19,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper curl syntax, balanced quotes, valid flags, and correct JSON formatting in the write-out parameter.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying Farsight DNSDB, a paid/subscription-based intelligence source, using an API key to gather non-public DNS intelligence about a target domain.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:00:14.426545Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct arguments, and proper redirection.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly queries Farsight DNSDB, a known subscription-based, closed-source intelligence service, perfectly aligning with T1597's 'Search Closed Sources' objective.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:00:19.399681Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed curl command with balanced quotes, valid flags and headers, correctly quoted URL, and proper use of -o with -w output redirection.",
@@ -47,6 +27,26 @@
         "combined_score": 5.0,
         "confidence": 0.95,
         "timestamp": "2025-10-02T12:00:55.775945Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid curl flags (-fsS, --retry, --connect-timeout, --max-time, --compressed), properly escaped JSON in -w format string, and correct output redirection with append operator.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying Farsight DNSDB (a legitimate paid/subscription passive DNS service) using an API key for RRset reconnaissance on a target domain, with proper JSON output, result limiting, and operational logging consistent with closed-source intelligence gathering.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:50:32.353101Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with correct curl flags, properly balanced quotes, valid shell variable usage, and standard redirection syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately queries the Farsight DNSDB API, which is a prime example of a closed/paid data source used for passive reconnaissance as described in T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:50:33.606384Z"
       }
     ],
     "llm_average_syntactic": 5.0,

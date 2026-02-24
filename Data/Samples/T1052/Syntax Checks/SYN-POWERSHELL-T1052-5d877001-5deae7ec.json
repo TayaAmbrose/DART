@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T09:41:13.949538Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes and parentheses, appropriate variable assignments, proper piping, and correct cmdlet usage throughout.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, proper semicolon separators, valid cmdlet names and parameters, and correct pipeline usage throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by creating a VHDX container, copying sensitive data into it, and then transferring that container to a removable USB drive for physical exfiltration.",
+        "semantic_justification": "The command precisely implements T1052 by creating a VHDX container, mounting and formatting it, copying target files into it, dismounting it, then transferring the disguised container (renamed to 'drvs.vhdx' to blend in) to a removable USB drive — fully consistent with staging, packaging, obfuscation, and physical medium exfiltration behaviors described in the technique.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:41:16.728167Z"
+        "timestamp": "2026-02-18T22:40:31.125839Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct PowerShell syntax, balanced elements, valid cmdlet usage, and proper parameter formatting.",
-        "semantic_score": 2,
-        "semantic_justification": "The command cannot achieve its claimed intent under the specified 'Privilege: None' as creating, mounting, formatting, and dismounting VHDX files all require administrative privileges.",
-        "combined_score": 3.5,
+        "syntactic_justification": "The command is a well-constructed PowerShell one-liner with correctly balanced quotes, proper pipe usage, and valid cmdlet parameters.",
+        "semantic_score": 3,
+        "semantic_justification": "The sequence fails because a newly created VHD must be initialized and partitioned before a volume can be formatted or assigned a letter; additionally, these operations require administrative privileges which contradicts the provided metadata.",
+        "combined_score": 4.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T09:41:29.639087Z"
+        "timestamp": "2026-02-18T22:40:36.860237Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 4.0,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

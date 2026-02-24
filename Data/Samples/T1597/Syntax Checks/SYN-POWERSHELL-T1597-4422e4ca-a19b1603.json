@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with properly balanced quotes, parentheses, and braces, correct variable assignments, proper error handling with try/catch, and valid cmdlet usage throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying the Dehashed breach database API with proper authentication, extracting specific sensitive data fields from the response, saving the results to a file, and logging the activity.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:41:15.256659Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed, uses correct syntax for variables, cmdlets, error handling, and string manipulation, with no discernible syntax errors.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying Dehashed, a subscription-based breach database (a 'closed source'), for specific domain intelligence and extracting high-value fields, which is a core behavior for adversary targeting and intelligence gathering.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:41:25.890737Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The PowerShell command is well-formed with balanced quotes/braces, valid type/property references, proper try/catch, and correct pipelines and headers.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T13:41:40.125792Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper semicolon separators, valid cmdlet syntax, and correct try/catch structure throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1597 by authenticating to the Dehashed paid breach database API using Basic auth with environment-variable credentials, querying for leaked records tied to a specific victim domain, extracting high-value fields (email, username, password, IP), and logging results — fully consistent with querying closed/subscription data sources for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T00:58:19.689996Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed, using valid syntax for setting TLS protocols, handling environment variables, performing API requests, and managing JSON data with proper error handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the T1597 technique by using valid API parameters and authentication methods to query Dehashed, a prominent closed-source breach database, for target intelligence.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:58:22.365250Z"
       }
     ],
     "llm_average_syntactic": 5.0,

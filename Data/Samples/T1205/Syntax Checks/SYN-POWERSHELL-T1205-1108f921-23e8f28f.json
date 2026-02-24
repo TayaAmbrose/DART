@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T13:49:09.529404Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper PowerShell syntax for variable assignment, string conversion, array manipulation, and command execution.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, proper string handling, valid Base64 decoding pipeline, correct array splitting, integer casting, and proper loop/sleep syntax.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending a sequence of TCP connection attempts to specific ports (7000, 8000, 9000) that could serve as a covert knock sequence to trigger a hidden service on the target system.",
+        "semantic_justification": "The command accurately implements a port-knocking sequence (T1205) by decoding a Base64-encoded port list and sequentially probing ports 7000, 8000, 9000 via TCP SYN using Test-NetConnection with timed intervals, which is a realistic and operationally plausible method to trigger a knock daemon on a remote host.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T13:49:12.828241Z"
+        "timestamp": "2026-02-19T03:46:17.286782Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced syntax, proper cmdlet usage, valid parameters, and correct PowerShell constructs.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with correct variable assignments, balanced braces, valid .NET class calls, and proper cmdlet usage.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely executes a port-knocking sequence via TCP SYN probes, which is a classic example of traffic signaling (T1205) to trigger an action on a remote system, fully aligning with the technique's description.",
+        "semantic_justification": "The command effectively implements a port-knocking sequence by decoding a base64 string and iterating through ports using Test-NetConnection, accurately representing the T1205 technique.",
         "combined_score": 5.0,
         "confidence": 1.0,
-        "timestamp": "2025-10-01T13:49:21.050931Z"
+        "timestamp": "2026-02-19T03:46:17.477855Z"
       }
     ],
     "llm_average_syntactic": 5.0,

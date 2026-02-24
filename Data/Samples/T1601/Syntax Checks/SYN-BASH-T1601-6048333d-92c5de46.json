@@ -17,16 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), valid flags, balanced quoting, and correct syntax for all the utilities being used (unsquashfs, cp, install, diff, mksquashfs).",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by extracting a device's filesystem image, inserting a potentially malicious binary, comparing the changes, and repacking it into a modified image that could be flashed back to the device.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:32:27.896639Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Commands are properly chained with &&, use valid flags for unsquashfs/cp/install/diff/mksquashfs, and contain no quoting or formatting errors.",
@@ -37,14 +27,24 @@
         "timestamp": "2025-10-02T18:33:00.139789Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct utilities, flags, arguments, pathing, and command separators, showing no syntax errors or impossible constructs.",
+        "syntactic_justification": "The command chain is perfectly well-formed with proper use of &&, valid flags for unsquashfs (-d), cp (-a), install (-m 0755), diff (-ruN), and mksquashfs (-noappend), with no quoting or parsing issues.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the claimed intent and the T1601 technique, using appropriate tools and a logical sequence to unpack, modify, and repack a SquashFS root filesystem, assuming the specified privilege level allows initial file access.",
+        "semantic_justification": "The command precisely implements T1601 firmware tampering: it unpacks a SquashFS rootfs from bootflash, copies it to a working directory, injects a payload binary into a system path (usr/sbin), diffs the trees to verify changes, and repacks the modified rootfs — a fully realistic and operationally coherent firmware modification workflow on network devices.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:19:16.145029Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command string uses standard Bash syntax, correctly formatted flags, and logical operators to chain well-known Linux utilities.",
+        "semantic_score": 5,
+        "semantic_justification": "The sequence of commands accurately reflects the lifecycle of firmware tampering: extraction, modification, verification, and repacking of a filesystem image.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T18:33:08.038179Z"
+        "timestamp": "2026-02-19T01:19:18.293211Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -27,30 +27,30 @@
         "timestamp": "2025-10-01T21:32:28.274523Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for mshta.exe, correctly formatted javascript protocol handler, and properly balanced parentheses and quotes.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1216 (System Script Proxy Execution) as it uses mshta.exe, a trusted Windows binary, to proxy the execution of a remote scriptlet file (.sct) from an external server.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:57:24.181351Z"
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses and quotes, valid mshta.exe invocation, and a properly structured JavaScript GetObject call with a valid URL.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command is operationally valid and mshta.exe is indeed a trusted Windows binary used for proxy execution of remote scriptlets, it maps more precisely to T1218.005 (Signed Binary Proxy Execution: Mshta) rather than T1216 (System Script Proxy Execution), which specifically covers signed system scripts like PubPrn.vbs or SyncAppvPublishingServer.vbs invoked via cscript/wscript.",
+        "combined_score": 4.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:05:00.771881Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes and parentheses, using valid mshta and JScript syntax to call GetObject with a remote scriptlet URI.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements the T1216 technique by using mshta.exe, a trusted Windows binary, to proxy the retrieval and execution of a remote scriptlet, fitting the description of abusing a system script proxy.",
-        "combined_score": 5.0,
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 3,
+        "syntactic_justification": "In PowerShell, the internal double quotes would be stripped by the shell's parser before reaching the binary, resulting in a JavaScript syntax error within mshta.exe unless the argument is properly escaped or wrapped in single quotes.",
+        "semantic_score": 2,
+        "semantic_justification": "The command identifies a Signed Binary Proxy Execution (T1218.005) rather than a System Script Proxy Execution (T1216), which specifically involves abusing legitimate scripts like PubPrn.vbs or SyncAppvPublishingServer.vbs.",
+        "combined_score": 2.5,
         "confidence": 1,
-        "timestamp": "2025-10-02T03:57:28.463307Z"
+        "timestamp": "2026-02-19T00:05:23.277984Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
-    "llm_verdict": "likely_match",
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 2.333,
+    "llm_average_score": 3.333,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

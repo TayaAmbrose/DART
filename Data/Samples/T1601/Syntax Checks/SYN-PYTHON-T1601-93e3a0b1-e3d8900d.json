@@ -17,26 +17,6 @@
     "syntax_ok": false,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and braces, proper imports, valid syntax for list comprehension, and correct error handling with appropriate exit codes.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements a firmware image integrity verification mechanism that checks both SHA-256 hash and file size against trusted metadata, which directly addresses the defensive aspect of T1601 by detecting unauthorized firmware modifications.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T19:24:43.383186Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with balanced quotes, parentheses, and valid Python syntax, executable via `python3 -c`.",
-        "semantic_score": 1,
-        "semantic_justification": "The command performs an integrity check, which is a defensive measure to detect T1601 (Modify System Image), not an action to modify an image itself, and it contains a privilege assertion (root) that contradicts the stated 'Privilege: None'.",
-        "combined_score": 3.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T19:24:52.773965Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Python one-liner with balanced quotes, valid constructs, and proper statement separators.",
@@ -45,12 +25,32 @@
         "combined_score": 3.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T19:25:07.910673Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper semicolons, valid imports, and correct string quoting throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements firmware integrity verification (a T1601 mitigation/detection action) by computing SHA-256 and checking file size against a metadata file, which is operationally plausible for network device image validation, though the metadata file itself is not cryptographically signed/verified in the code, slightly reducing robustness claims.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:23:20.475653Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python command is perfectly well-formed, using correct syntax for one-liners, balanced delimiters, and valid standard library imports.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the integrity verification logic described, using chunked reading to handle large firmware images efficiently and correctly comparing both hash and file size against metadata.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:23:27.742603Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 2.667,
-    "llm_average_score": 3.833,
-    "llm_verdict": "uncertain",
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
+    "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": "mypy issues:\nC:\\Users\\flacman\\AppData\\Local\\Temp\\tmpq1kjdoon.py:1: error: Module has no attribute \"geteuid\"; maybe \"getpid\"?  [attr-defined]\nC:\\Users\\flacman\\AppData\\Local\\Temp\\tmpq1kjdoon.py:1: error: \"update\" of \"HASH\" does not return a value (it only ever returns None)  [func-returns-value]\nFound 2 errors in 1 file (checked 1 source file)"

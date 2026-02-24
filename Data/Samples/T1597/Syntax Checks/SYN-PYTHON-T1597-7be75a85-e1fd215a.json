@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper syntax, balanced quotes, correct function calls, exception handling, and appropriate use of libraries.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying the private VirusTotal API with proper authentication, error handling, and domain intelligence gathering capabilities.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:10:13.288581Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed, with correct syntax for imports, variable assignments, conditional statements, URL construction, API requests, and error handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by programmatically accessing the VirusTotal API using an API key to gather domain intelligence, which constitutes querying a 'closed source' for targeting information.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:10:25.896352Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Python with balanced parentheses, correct use of semicolons and indentation for try/except, and valid urllib and JSON usage.",
@@ -45,11 +25,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T13:10:42.574461Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with proper imports, conditional logic, try/except blocks, and string formatting, but the multi-line format with inline if-statements mixed with semicolons may cause issues when run as a single command-line string rather than a script file.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates T1597 by querying the VirusTotal v3 API (a paid/closed-source threat intelligence platform) for domain intelligence using an API key, which directly aligns with adversarial use of closed/paid data sources for reconnaissance targeting.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:56:03.599492Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly valid Python 3 script using standard libraries, correct semicolon usage for single-line statements, and proper indentation for the try-except block.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements MITRE ATT&CK T1597 by querying VirusTotal, a primary example of a closed-source technical database, using an API key to gather domain intelligence.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:56:10.542627Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

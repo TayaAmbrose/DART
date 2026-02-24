@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes, correct semicolon separators, valid DISM parameters, and proper string formatting for the winpeshl.ini content.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by mounting Windows PE images, modifying the winpeshl.ini to execute a hidden PowerShell script at boot, and comparing the modified image with a baseline to verify changes.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T16:56:20.128864Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid parameters for DISM and PowerShell cmdlets, and correct command separators.",
-        "semantic_score": 2,
-        "semantic_justification": "While the tools and operations are conceptually aligned with modifying a WIM image for T1601, the explicit claim of 'Privilege: None' renders the critical DISM mount commands inoperable, preventing the command from achieving its stated intent.",
-        "combined_score": 3.5,
-        "confidence": 1,
-        "timestamp": "2025-10-02T16:56:48.541851Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Commands are properly separated by semicolons, quoting/escaping is balanced (including `n), DISM flags are valid, and PowerShell variable/control flow usage is syntactically correct.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T16:57:21.193418Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command chain is largely well-formed with valid DISM flags, proper PowerShell cmdlets, and correct separators, though the backtick newline escape in Set-Content's -Value string (`n) is valid in PowerShell but the mixed cmd/PowerShell context across the semicolon-chained commands assumes a single PowerShell session running DISM as external commands, which is syntactically acceptable but slightly fragile.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by mounting a WinPE boot image (boot.wim index 2), injecting a hidden PowerShell payload via winpeshl.ini modification to alter boot-time execution, and then performing a baseline comparison with Compare-Object to detect or verify the change — all operationally plausible and directly aligned with modifying a system boot image to introduce persistence or backdoor behavior.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:11:15.773092Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax, proper DISM flags, and correctly formatted cmdlet arguments.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately performs a system image modification via DISM, though it requires administrative privileges which contradicts the provided metadata.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:11:16.404294Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.167,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

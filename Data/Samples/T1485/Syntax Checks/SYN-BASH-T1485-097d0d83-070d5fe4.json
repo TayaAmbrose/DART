@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid shred syntax, using proper flags (-n 5 -z -u -f) and a valid file path.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by securely overwriting a sensitive file 5 times (-n 5), zeroing it out (-z), removing it after overwriting (-u), and forcing the operation (-f).",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T00:57:52.639465Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command uses valid `shred` syntax, correctly specified flags (`-n 5`, `-z`, `-u`, `-f`), and a properly formatted file path, making it perfectly well-formed and parseable.",
-        "semantic_score": 5,
-        "semantic_justification": "The `shred` command with the given flags precisely matches the claimed intent of securely overwriting a file multiple times and then deleting it, directly aligning with the Data Destruction (T1485) technique, particularly the use of secure deletion tools like `shred`.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T00:58:00.253122Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed shred command with valid flags (-n, -z, -u, -f) and a proper file path.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T00:58:19.323768Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid flags (-n 5, -z, -u, -f) and a properly specified file path, fully parseable by bash.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 using shred to overwrite the target file five times (-n 5), append a final zero-pass (-z), unlink/delete the file after shredding (-u), and force write permissions if needed (-f), making the sensitive .env file unrecoverable — fully aligned with secure deletion data destruction.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T01:39:52.633257Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "the command uses valid shred flags and a standard file path structure without any syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The shred command with the specified flags accurately and effectively performs secure data destruction on a sensitive file as described.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:39:53.048296Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T12:56:54.641706Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper loop syntax, balanced quotes, valid flags for nc, correct variable usage, and proper command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements the Traffic Signaling technique by sending UDP packets with embedded signals ('KNOCK' plus port number) to specific ports in sequence, which could be used to trigger a listening backdoor.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T12:56:58.420263Z"
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid bash for-loop syntax, correct use of printf, nc flags (-u for UDP, -w1 for timeout), and proper semicolons and sleep between iterations.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a UDP-based port knocking/signaling sequence aligned with T1205, sending tagged payloads across sequential ports to signal a listening backdoor, though using a broadcast address (192.0.2.255) is somewhat unrealistic since 192.0.2.0/24 is TEST-NET documentation space and broadcast-based C2 signaling is uncommon in practice compared to unicast targeting.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T03:42:11.704545Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using standard Bash loop syntax, command substitution, correctly quoted strings, and valid Netcat flags for UDP communication.",
+        "syntactic_justification": "The command uses perfectly valid Bash loop syntax, correct variable expansion, and standard netcat flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of broadcasting a timed UDP knock sequence with distinct payloads across specified ports, aligning directly with T1205 (Traffic Signaling) for sequence-based triggers and beaconing to a backdoor.",
+        "semantic_justification": "The command accurately implements a port-knocking signaling sequence using UDP packets with specific payloads and timing, directly aligning with the Traffic Signaling technique.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T12:57:15.569173Z"
+        "timestamp": "2026-02-19T03:42:12.862139Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

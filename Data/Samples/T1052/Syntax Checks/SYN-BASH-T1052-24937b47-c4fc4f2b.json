@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T10:12:16.851553Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for all tools (tar, base64, dd), correct command separators (pipes and &&), and proper path references.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for tar/base64/dd, proper pipe chaining with &&, and correct use of shell variables and path quoting.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 (Exfiltration Over Physical Medium) by compressing Chrome browser data, encoding it to avoid binary transfer issues, and writing it to a hidden-looking location on a removable volume with a deceptive filename.",
+        "semantic_justification": "The command precisely implements T1052 by archiving and compressing the Chrome profile (staging sensitive browsing data), base64-encoding it for obfuscation, writing it to a hidden cache-named file on a removable volume (/Volumes/UNTITLED) via dd, and using sync to ensure physical write completion before transport — all operationally plausible on macOS without elevated privileges.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T10:12:20.327858Z"
+        "timestamp": "2026-02-18T22:41:26.116411Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, valid flags for all utilities, and correct use of pipes and logical operators.",
+        "syntactic_justification": "The command uses valid Bash syntax, correctly balances quotes for paths with spaces, and uses standard Unix pipes and flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by correctly identifying the Chrome profile, packaging/encoding it, and writing to a plausible stealthy location on a removable drive, fully aligning with T1052.",
+        "semantic_justification": "The command effectively packages sensitive browser data, applies obfuscation via base64, and writes it to a plausible mount point for a removable drive on macOS.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T10:12:30.875532Z"
+        "timestamp": "2026-02-18T22:41:26.943523Z"
       }
     ],
     "llm_average_syntactic": 5.0,

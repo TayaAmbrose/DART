@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T07:04:55.380416Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and appropriate escape sequences throughout the complex pipeline.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of bash -c with single-quoted heredoc, correct awk quoting with escaped inner quotes, valid pipe chains, and proper command separators throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1052 technique by automatically detecting a USB device, mounting it, compressing sensitive data from /var/lib into a hidden file (.cache.tgz), syncing to ensure data is written, and unmounting the device.",
+        "semantic_justification": "The command precisely implements T1052 by auto-detecting a USB device via lsblk transport type, mounting it, compressing /var/lib (a high-value directory containing application/service data) with gzip -9 into a hidden dotfile (.cache.tgz) on the USB, syncing to ensure write completion, and cleanly unmounting — fully consistent with physical medium exfiltration.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T07:04:58.225744Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:31:54.593358Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 2,
-        "syntactic_justification": "The `awk` command's quoting is incorrect; it will receive `\"$2==\\\"usb\\\"{print $1\\\"1\\\"}\"` as a single string literal within the `bash -c` context, which `awk` cannot parse as a valid script.",
-        "semantic_score": 3,
-        "semantic_justification": "The overall flow aligns with the exfiltration technique (tar, gzip, mount, hidden file, sync, umount), but the `awk` logic for identifying the USB partition is flawed, as appending '1' to an already identified partition (e.g., `/dev/sdb1` becomes `/dev/sdb11`) would cause the `mount` command to fail due to a non-existent device.",
-        "combined_score": 2.5,
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with correctly nested quotes, balanced parentheses, and proper use of pipes and logical operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by identifying a USB device, mounting it, archiving and compressing sensitive data (/var/lib), and hiding the file using a dot-prefix (.cache.tgz) before unmounting the device.",
+        "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T07:05:21.513701Z"
+        "timestamp": "2026-02-18T22:31:58.411628Z"
       }
     ],
-    "llm_average_syntactic": 4.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 3.833,
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

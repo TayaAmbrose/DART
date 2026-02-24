@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T15:08:11.360403Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct Python and shell syntax, and proper use of f-strings for embedding variables.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using a specific UDP payload on a non-standard port to trigger temporary network access for SNMP, utilizing appropriate tools and logic.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T15:08:31.833543Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command has complex nested quoting with escaped double quotes inside an f-string inside a shell string, which is fragile and likely to break in practice due to quote escaping conflicts between Python's f-string and the outer bash shell, but the overall structure is parseable as intended.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a traffic signaling / port-knocking pattern using scapy to sniff for a magic UDP packet and then dynamically modifies network ACLs to temporarily permit SNMP access from the sender, which aligns well with T1205 (using embedded signals in network traffic to trigger actions), though 'ciscoconf' is a non-standard/fictional tool reducing operational realism.",
+        "combined_score": 3.5,
+        "confidence": 0.8,
+        "timestamp": "2026-02-19T03:51:12.889599Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid Python syntax, and correct use of shell constructs including background processes.",
+        "syntactic_justification": "The command is perfectly well-formed, using correct Scapy syntax, proper Python f-string formatting, and double-escaped quotes to ensure the configuration strings are passed correctly to the shell through the os.system call.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements Traffic Signaling by sniffing for a specific magic packet pattern (MAGIC:SNMP-OPEN) on UDP port 62201 and temporarily modifying access controls in response, creating a time-limited covert signaling channel.",
+        "semantic_justification": "The command accurately implements MITRE ATT&CK T1205 (Traffic Signaling) by sniffing for a specific 'magic' UDP payload to trigger a dynamic firewall configuration change on a network device, including a timed cleanup mechanism.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:12:53.035224Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:51:32.240411Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

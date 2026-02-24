@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T02:35:17.432391Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, variable assignment, command chaining, parameter passing to WinSCP.com, and error redirection.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell invoking WinSCP.com with properly quoted arguments, though the inline string interpolation using backtick-escaped quotes inside a parenthesized string passed to an external process is an unusual construct that may cause quoting issues in practice.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by using WinSCP to transfer financial data to an SFTP server with proper authentication, file filtering, and local file deletion after transfer, aligning perfectly with the T1020 technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T02:35:20.241291Z"
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration: it uses WinSCP to SFTP-transfer an entire directory tree to an external server, excludes temp/backup files via filemask, deletes local copies after transfer (-delete), suppresses prompts for unattended operation, and suppresses output to avoid detection — all hallmarks of automated exfiltration following collection.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T22:20:18.436983Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Powershell command is perfectly well-formed, with correct variable assignment, call operator usage, WinSCP command-line switches, and properly quoted script commands, including the correct handling of variable expansion within the `put` command string.",
+        "syntactic_justification": "The command uses valid PowerShell syntax, including the call operator for paths with spaces, correct variable expansion using backticks to escape quotes within the string, and proper WinSCP command-line arguments.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of automated exfiltration using WinSCP for SFTP, targeting specific sensitive data, excluding irrelevant files, removing local copies, and running non-interactively and stealthily, fully aligning with T1020.",
+        "semantic_justification": "The command perfectly implements automated exfiltration by using a scriptable SFTP client to transfer a specific directory, applying file filters, suppressing interactive prompts, and cleaning up local files after transfer.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T02:35:37.803447Z"
+        "timestamp": "2026-02-18T22:20:21.669462Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Azure CLI syntax, balanced quotes, valid flags, and correct parameter formatting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1585 technique by creating a new Azure AD user account with a specified username, password, and configuration that disables forced password change, enabling persistent access to the Azure environment.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T10:03:16.131143Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct Azure CLI syntax, valid flags, balanced quotes for arguments, and proper structure.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly creates an Azure AD user account, perfectly aligning with the T1585 'Establish Accounts' technique by creating an online persona within an attacker-controlled tenant, and is operationally plausible.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T10:03:22.866313Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash command with balanced quoting and valid Azure CLI flags, including a recognized global --output option.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.86,
         "timestamp": "2025-10-02T10:03:45.467246Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid Azure CLI flags, and correct syntax for 'az ad user create'.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately creates an Azure AD user account with a realistic display name, UPN, password, and mail nickname, directly aligning with T1585's account establishment technique for creating an online persona in an attacker-controlled tenant.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:41:15.051722Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows the standard Azure CLI syntax with correctly formatted flags, balanced quotes, and valid argument types.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the creation of a cloud account as described in T1585, specifically using the --force-change-password-next-login false flag to ensure immediate persistent access.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:41:18.993597Z"
       }
     ],
     "llm_average_syntactic": 5.0,

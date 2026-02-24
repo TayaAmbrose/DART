@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T15:03:53.218048Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 1,
-        "syntactic_justification": "The command itself was withheld, making direct evaluation of its syntax impossible; it cannot be run as-is.",
-        "semantic_score": 3,
-        "semantic_justification": "While the use of IPv6 Hop-by-Hop headers for traffic signaling perfectly aligns with T1205 and Scapy is an appropriate tool, the claimed 'Privilege: None' is semantically incorrect as toggling IP forwarding or modifying firewall rules fundamentally requires elevated privileges.",
-        "combined_score": 2.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T15:04:18.793289Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 2,
+        "syntactic_justification": "The command was withheld and replaced with a high-level description, so no actual syntax can be evaluated; only a conceptual placeholder exists.",
+        "semantic_score": 4,
+        "semantic_justification": "The described concept is operationally plausible and well-aligned with T1205 — using IPv6 Hop-by-Hop extension headers as a covert signal to trigger sysctl-based IP forwarding changes via Scapy is a realistic and technically coherent implementation of traffic signaling, though the lack of actual code prevents full verification of implementation details.",
+        "combined_score": 3.0,
+        "confidence": 0.55,
+        "timestamp": "2026-02-19T03:50:43.091531Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 4,
-        "syntactic_justification": "The command appears to be a well-structured Python script using scapy to monitor IPv6 traffic for Hop-by-Hop headers, though without seeing the actual code I cannot verify complete syntactic correctness.",
-        "semantic_score": 5,
-        "semantic_justification": "The described approach perfectly aligns with T1205 Traffic Signaling by using IPv6 Hop-by-Hop extension headers as a covert signaling mechanism to trigger system changes (IP forwarding), which is a sophisticated implementation of the technique.",
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The described logic (using scapy's sniff with lfilter for specific IPv6 extension headers and prn for execution) follows standard Python and Scapy syntax for network automation.",
+        "semantic_score": 4,
+        "semantic_justification": "The command perfectly implements the Traffic Signaling technique (T1205) using IPv6 Hop-by-Hop headers as a covert trigger, though the action requires root privileges which are not reflected in the metadata.",
         "combined_score": 4.5,
-        "confidence": 0.8,
-        "timestamp": "2025-10-02T03:12:42.052766Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:50:53.013811Z"
       }
     ],
-    "llm_average_syntactic": 2.0,
+    "llm_average_syntactic": 2.667,
     "llm_average_semantic": 3.667,
-    "llm_average_score": 2.833,
+    "llm_average_score": 3.167,
     "llm_verdict": "likely_mismatch",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

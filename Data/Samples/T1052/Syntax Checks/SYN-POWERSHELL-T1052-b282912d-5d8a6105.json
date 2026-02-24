@@ -28,28 +28,28 @@
         "timestamp": "2025-10-01T06:56:50.779423Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, cmdlet usage, balanced parentheses/braces, appropriate piping, and correct method calls.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced parentheses and valid cmdlet usage, though the array index `[0]` on the chained Get-Volume pipeline and the string interpolation `\"$($dl):\\\"` are slightly fragile constructs that could fail in edge cases.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by identifying a removable drive, mounting a VHDX file on it, base64-encoding log data from the system, writing it to the mounted image, and then dismounting the image to hide the exfiltration.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T06:56:53.906596Z"
+        "semantic_justification": "The command accurately implements T1052 by detecting a removable USB drive, mounting a VHDX container on it (providing obfuscation via a nested virtual disk), base64-encoding a sensitive log file and writing it inside the mounted VHDX, then dismounting it — fully consistent with staging, obfuscation, and physical medium exfiltration as described in the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T22:31:12.841499Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command uses correct PowerShell syntax, balanced quotes and parentheses, valid flags, and proper command separators, making it perfectly well-formed.",
-        "semantic_score": 3,
-        "semantic_justification": "While the overall approach aligns with T1052 by using a VHDX and base64 encoding, the command fails to create the VHDX file ('cache.vhdx') before attempting to mount it, and `Mount-DiskImage`/`Dismount-DiskImage` cmdlets typically require elevated privileges, contradicting the stated 'Privilege: None'.",
-        "combined_score": 4.0,
+        "syntactic_justification": "The command is perfectly formed PowerShell, using correct cmdlet names, pipe sequences, variable assignments, and .NET method calls without any syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements the logic to identify a USB drive, mount a container (VHDX), and exfiltrate encoded data; however, Mount-DiskImage typically requires administrative privileges, which contradicts the 'Privilege: None' metadata.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:57:08.821065Z"
+        "timestamp": "2026-02-18T22:31:19.642516Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
     "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,

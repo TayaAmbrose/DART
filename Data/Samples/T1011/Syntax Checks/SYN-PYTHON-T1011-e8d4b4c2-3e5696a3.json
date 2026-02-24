@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T00:07:24.499855Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax for imports, socket creation, connection, file reading, and data transmission.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by establishing a socket connection to an external IP over an uncommon high port (52689) to exfiltrate data from a hidden file in a shared directory, implementing a custom length-prefixed protocol distinct from typical C2 channels.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:07:29.564403Z"
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper string quoting, valid module imports, and correct use of semicolons as statement separators.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command does exfiltrate data over a raw TCP socket to an uncommon high port, it does not actually demonstrate exfiltration over a *different network medium* (e.g., cellular, Bluetooth, Wi-Fi adapter) as T1011 specifies — it uses the same IP network stack as a standard C2 channel, making it more accurately T1041 (Exfiltration Over C2 Channel) or T1048 (Exfiltration Over Alternative Protocol) rather than a true T1011 implementation.",
+        "combined_score": 4.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T21:54:11.420282Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced quotes, parentheses, and valid Python syntax for execution via `python3 -c`, including proper statement separators and argument formatting.",
-        "semantic_score": 1,
-        "semantic_justification": "The command performs standard TCP exfiltration over the host's primary network interface, which does not constitute \"exfiltration over other network medium\" (e.g., cellular, Wi-Fi, Bluetooth) as described by MITRE ATT&CK T1011, despite the explanation's claim of an 'alternate application-layer medium'.",
-        "combined_score": 3.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:07:40.443628Z"
+        "syntactic_justification": "The Python one-liner is perfectly well-formed, using correct syntax for imports, socket creation, binary file reading, and struct packing for a length-prefixed network payload.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command successfully exfiltrates data, it does not specify a different network interface or medium (like Bluetooth or Cellular) as required by T1011, making it a better match for T1048 (Exfiltration Over Alternative Protocol).",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:54:28.431084Z"
       }
     ],
     "llm_average_syntactic": 5.0,

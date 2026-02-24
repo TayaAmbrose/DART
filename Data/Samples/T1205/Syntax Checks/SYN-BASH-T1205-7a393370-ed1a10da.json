@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T16:16:31.584660Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct bash loop syntax, valid hping3 flags, proper command separators, and correctly nested quotes for the ciscoconf argument.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly demonstrates Traffic Signaling (T1205) by sending a TCP SYN port knock sequence as a signal, followed by an action (ACL modification via 'ciscoconf') which the explanation links as a consequence of that signaling to enable SSH access, aligning with 'coordinate actions' or 'trigger payloads'.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T16:17:06.741279Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The bash -c string is well-formed with balanced quotes, valid for-loop syntax, and proper semicolons, though 'ciscoconf' is a non-standard/fictional tool whose argument quoting and subcommand syntax cannot be fully validated.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knock sequence using hping3 SYN packets across three ports to signal a peer, then applies an ACL to permit SSH access from that peer — accurately representing T1205 traffic signaling to trigger a firewall rule change, though 'ciscoconf' is a fictional CLI wrapper that reduces operational realism.",
+        "combined_score": 4.0,
+        "confidence": 0.78,
+        "timestamp": "2026-02-19T03:55:12.504061Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flag formats for hping3, and correct bash loop syntax.",
-        "semantic_score": 5,
-        "semantic_justification": "The command implements port knocking (a form of Traffic Signaling) by sending TCP SYN packets to specific ports in sequence, followed by modifying a Cisco ACL to permit SSH access only after the correct knock sequence is received, which aligns perfectly with the T1205 technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:16:04.234181Z"
+        "syntactic_justification": "The command is syntactically correct Bash, utilizing a valid loop, proper command substitution, correct quoting, and appropriate command separators.",
+        "semantic_score": 3,
+        "semantic_justification": "While the signaling (hping3 loop) aligns with T1205, 'ciscoconf' is not a standard system utility, and the logic of sending a knock sequence to a target then immediately opening a local ACL for that same target is slightly atypical for port knocking implementations.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:55:21.146431Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

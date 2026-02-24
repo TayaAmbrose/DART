@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced quotes, parentheses, and braces, proper imports, exception handling, and correct syntax for HTTP requests and JSON processing.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries WhoisXML API, a paid/closed source intelligence service, to gather domain registration information that could be used for targeting.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:20:07.253818Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced quotes, proper statement separators, and valid Python syntax for execution via `python3 -c`.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying a paid WhoisXML API for domain intelligence, directly representing an adversary obtaining information from a 'closed source' (paid feed) for targeting.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:20:16.184974Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The python3 -c snippet is well-formed with balanced quotes, valid imports, proper newlines/indentation for try/except/if blocks, and parseable statements.",
@@ -45,12 +25,32 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T12:20:33.431939Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python one-liner is mostly well-formed with balanced parentheses and valid constructs, though the multi-line formatting within the -c string (with bare newlines) may cause shell parsing issues depending on how it's executed.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying a paid closed-source WHOIS API (WhoisXML API) using an API key to retrieve domain registration intelligence, which is a textbook example of searching closed/paid data sources for targeting information.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:52:01.189504Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 2,
+        "syntactic_justification": "Python's grammar does not allow compound statements like 'try...except' or 'if...else' to be chained on a single line with semicolons, nor can an 'else' block exist on the same line as the 'if' block.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly demonstrates the technique by querying a well-known paid WHOIS technical database (WhoisXML API) to gather intelligence on a target domain.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:52:15.428725Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 3.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
-    "llm_verdict": "likely_match",
+    "llm_average_score": 4.333,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

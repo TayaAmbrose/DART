@@ -17,26 +17,6 @@
     "syntax_ok": false,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax for list comprehensions, function calls, and string operations.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively implements a kernel module integrity verification system that creates deterministic hashes of all modules and compares against a baseline, which directly addresses the T1601 technique by detecting unauthorized modifications to system components.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T17:42:44.870824Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid Python syntax within the `python3 -c` execution, with balanced quotes and correct function calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements integrity checking of kernel modules by generating a deterministic aggregate hash, directly aligning with the detection of 'image integrity failures' for T1601 'Modify System Image'.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T17:43:04.190804Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The python3 -c one-liner has balanced quotes and parentheses, valid Python constructs, and proper separators, making it parseable and runnable.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.86,
         "timestamp": "2025-10-02T17:43:17.900930Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses and valid syntax, though the list comprehension used purely for side effects (appending/updating) is unconventional and could raise linting warnings, but it is parseable and executable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a deterministic aggregate SHA-256 hash of all kernel modules under /lib/modules/<release> and compares it against a stored baseline, which is a realistic integrity-checking approach aligned with T1601 detection (identifying tampered kernel modules), though it reads the baseline file without error handling and assumes a specific baseline format.",
+        "combined_score": 4.0,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:14:56.512905Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python command is perfectly well-formed, using correct semicolons for statement separation, balanced parentheses/brackets, and valid list comprehensions for one-liner logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a deterministic integrity check of kernel modules by sorting paths and aggregating individual file hashes into a master hash, which aligns with T1601's detection strategies.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:15:02.661173Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

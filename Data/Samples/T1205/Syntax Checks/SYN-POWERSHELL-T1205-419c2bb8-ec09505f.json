@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T13:01:57.996971Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, using proper PowerShell syntax throughout including proper pipeline operations, parameter passing, and error handling.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced braces, valid PowerShell cmdlets, and proper piping, though the double-escaped backslashes (\\\\) and regex patterns (\\b, \\d, etc.) suggest the command was serialized through an extra escaping layer that may cause regex matching issues at runtime.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by monitoring firewall logs for LLMNR queries (UDP port 5355) as a signal to temporarily open SMB access (TCP port 445) only to the specific IP that sent the query, with automatic cleanup after 5 minutes.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T13:02:01.279673Z"
+        "semantic_justification": "The command precisely implements T1205 Traffic Signaling by monitoring Windows Firewall logs for UDP/5355 (LLMNR) packets as a covert trigger signal, then dynamically creating temporary inbound firewall rules to allow SMB (TCP/445) access from the signaling source IP for 300 seconds before auto-removal, which is a realistic and operationally coherent port-knocking/traffic-signaling C2 mechanism.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:42:50.305109Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced syntax, valid PowerShell cmdlets and parameters, and proper use of regex and script blocks.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by using LLMNR (UDP/5355) queries as a network signal to dynamically create temporary SMB (TCP/445) firewall rules for the source IP, directly aligning with T1205 Traffic Signaling, although it requires Administrator privileges to execute, despite the prompt stating 'None'.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T13:02:36.898035Z"
+        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax, balanced braces, valid regex patterns, and proper cmdlet pipelines.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly implements the T1205 technique by monitoring logs for a specific signal (LLMNR) to trigger a firewall change; however, it requires local Administrator privileges which contradicts the 'None' privilege level provided in the prompt.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:42:56.757525Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

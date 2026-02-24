@@ -19,16 +19,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper variable assignments, correct arithmetic expansions, valid command substitutions, and appropriate use of command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by creating a deterministic but time-varying domain generation algorithm that combines hostname and time data to create rotating subdomains and ports, then attempts to beacon to the calculated endpoint.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T05:41:54.731717Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 4,
         "syntactic_justification": "Well-formed with balanced quoting and valid flags, but the arithmetic use of $(date -u +%m) risks octal parsing (08/09) inside $((...)), which can fail at runtime.",
@@ -39,19 +29,29 @@
         "timestamp": "2025-10-02T05:42:43.549216Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, correct command substitutions, proper arithmetic expansions, valid array declarations, and appropriate command separators.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid bash constructs, but the nested array indexing `${base_domains[$(($(date -u +%m) % ${#base_domains[@]}))]}` and the hex conversion pipeline `$(echo $sub | tr -dc '0-9a-f' | cut -c1-3)` may have edge-case issues (e.g., if the hex slice is empty, arithmetic will fail), and the `16#` prefix for hex arithmetic is valid in bash but could fail on ESXi's limited shell environment.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly demonstrates T1568 by algorithmically generating a rotating subdomain and port based on hostname and time, then attempting to beacon to this dynamically resolved endpoint via HTTPS, which is operationally plausible for C2.",
-        "combined_score": 5.0,
+        "semantic_justification": "The command accurately implements T1568 DGA behavior by algorithmically generating a rotating subdomain from a hash of hostname and time (ISO week + hour), selecting a base domain dynamically, computing a port from the subdomain's hex value, and beaconing via HTTPS curl — all hallmarks of dynamic resolution for C2.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:20:19.349229Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed Bash; however, the use of '$(date -u +%m)' in shell arithmetic will trigger an octal literal error in August (08) and September (09).",
+        "semantic_score": 4,
+        "semantic_justification": "The command brilliantly implements T1568 (Dynamic Resolution) through a time-based DGA and port rotation, though it is operationally flawed due to the aforementioned octal arithmetic bug.",
+        "combined_score": 4.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T05:57:15.537163Z"
+        "timestamp": "2026-02-19T00:20:34.470831Z"
       }
     ],
-    "llm_average_syntactic": 4.667,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.667,
+    "llm_average_syntactic": 4.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

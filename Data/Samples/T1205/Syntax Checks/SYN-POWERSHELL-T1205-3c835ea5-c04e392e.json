@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T13:43:02.036837Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, balanced quotes/parentheses/braces, appropriate semicolons as command separators, and correct method calls with no syntax errors.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper variable assignments, correct .NET class instantiation, valid string comparisons, and proper semicolon separators throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by listening for a specific magic packet pattern on UDP port 49000 and only enabling RDP access through the firewall after receiving this covert signal, demonstrating a realistic implementation of T1205.",
+        "semantic_justification": "The command precisely implements a port-knocking/magic-packet traffic signaling mechanism (T1205) by listening on UDP port 49000 for a specific 6-byte magic sequence (CA-FE-BA-BE-00-01), then triggering a firewall rule to open RDP access — a classic covert trigger-based C2 activation pattern that is operationally realistic and correctly uses BitConverter for byte comparison and netsh for firewall modification.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T13:43:05.281989Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T03:45:53.266286Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed, with correct variable assignments, loop structure, method calls, conditional logic, external command execution, and proper use of separators.",
+        "syntactic_justification": "The command uses valid PowerShell syntax, correctly instantiates .NET objects, handles the reference parameter for the socket, and contains no structural errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly achieves its claimed intent of using a 'magic packet' for traffic signaling (T1205) to covertly open an RDP firewall rule, which is operationally plausible and aligns with the technique description.",
+        "semantic_justification": "The script perfectly implements a port-knocking/traffic signaling mechanism by listening for a specific UDP byte sequence to trigger a firewall modification, which matches the T1205 technique description.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T13:43:18.728192Z"
+        "timestamp": "2026-02-19T03:45:54.715516Z"
       }
     ],
     "llm_average_syntactic": 5.0,

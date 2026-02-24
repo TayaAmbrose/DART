@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced quotes, parentheses, and braces, proper exception handling, and valid Python syntax throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements T1597 (Search Closed Sources) by authenticating to and querying the paid RiskIQ PassiveTotal service for WHOIS data about a target domain, which is a classic example of leveraging closed intelligence sources for reconnaissance.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:03:29.241041Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python one-liner is perfectly well-formed, uses standard library functions, and is runnable with proper environment variables set, including correct use of newlines for code structure within the `-c` argument.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely queries a paid, closed-source intelligence platform (RiskIQ) for domain-related data, directly aligning with the 'Search Closed Sources' technique (T1597) for intelligence gathering and operational feasibility.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T13:03:35.523119Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quotes and parentheses with valid Python try/except and if/else blocks make it runnable via python3 -c.",
@@ -45,11 +25,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T13:04:04.764208Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python one-liner is mostly well-formed with balanced parentheses and proper string handling, though the multi-line formatting within the -c argument (with actual newlines) would cause shell parsing issues unless properly escaped or quoted as a heredoc.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying RiskIQ PassiveTotal, a real paid closed-source threat intelligence platform, using proper Basic authentication with API credentials from environment variables to retrieve historical WHOIS data for a target domain, which is a textbook example of searching closed sources for targeting intelligence.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:55:36.783265Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly formed with correct imports, balanced quotes, and proper use of semicolons to separate statements.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a query to the RiskIQ PassiveTotal API, a premium closed-source data provider, consistent with the T1597 technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:55:37.967156Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

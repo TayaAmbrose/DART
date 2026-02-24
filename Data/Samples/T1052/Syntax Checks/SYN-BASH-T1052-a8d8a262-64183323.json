@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T08:28:16.079124Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and appropriate error redirection.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of bash -c with single-quoted heredoc-style string, valid command separators (&&), correct pipe chaining, and proper variable substitution.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1052 by identifying a USB device, mounting it, collecting sensitive configuration files, compressing and encoding them to avoid detection, storing them with a hidden filename (.cfg.dat), and properly unmounting the device.",
+        "semantic_justification": "The command precisely implements T1052 by auto-detecting a USB device via /dev/disk/by-id, mounting it, collecting /etc/*.conf files, archiving and compressing them with tar+gzip, base64-encoding the output to obscure content, writing to a discreetly named hidden file (.cfg.dat), syncing, and unmounting — fully consistent with physical medium exfiltration with obfuscation and staging behaviors.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T08:28:18.746098Z"
+        "timestamp": "2026-02-18T22:36:16.551272Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags for each utility, and correct command substitution.",
+        "syntactic_justification": "The command is perfectly formed with correct use of nested shells, variable assignment, piping, and command chaining via logical operators.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by finding, archiving, compressing, encoding, and discreetly writing configuration files to a USB drive, directly aligning with the T1052 technique and its described behaviors.",
+        "semantic_justification": "The command accurately implements the exfiltration technique by identifying a physical medium, mounting it, and packaging/obfuscating sensitive data before writing it to the device.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T08:28:30.564411Z"
+        "timestamp": "2026-02-18T22:36:20.093366Z"
       }
     ],
     "llm_average_syntactic": 5.0,

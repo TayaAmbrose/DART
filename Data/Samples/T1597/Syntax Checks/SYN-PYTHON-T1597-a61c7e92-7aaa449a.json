@@ -17,16 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, error handling, balanced parentheses/braces, and correct function calls to the boto3 AWS SDK.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements T1597 by querying AWS Data Exchange for entitled (paid/subscription) threat intelligence datasets, filtering for relevant security data sources that could be used for reconnaissance.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:58:32.391087Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The Python snippet is well-formed with balanced syntax, valid boto3 paginator usage, and proper JSON output handling.",
@@ -37,19 +27,29 @@
         "timestamp": "2025-10-02T13:59:13.592119Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed, uses standard library and Boto3 functions correctly, and exhibits no syntax errors or logical parsing issues.",
+        "syntactic_justification": "The Python script is syntactically well-formed with balanced parentheses, proper imports, valid boto3 API calls, correct exception handling, and proper string formatting throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The script correctly uses AWS Data Exchange's list_data_sets API with Origin='ENTITLED' to enumerate subscribed commercial intelligence datasets (WHOIS, DNS, breach, threat intel), which aligns well with T1597's concept of querying paid/closed data sources, though it only enumerates existing entitlements rather than actively purchasing or querying the data itself.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:59:33.346101Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-structured, uses valid boto3 methods, handles pagination correctly, and includes proper error handling and JSON serialization.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by enumerating entitled AWS Data Exchange datasets, which represent access to closed, subscription-restricted intelligence sources, directly aligning with T1597's 'Search Closed Sources' objective for reconnaissance.",
+        "semantic_justification": "The command accurately leverages AWS Data Exchange APIs to identify commercial intelligence datasets an account is entitled to, directly mapping to the collection of non-public intelligence described in T1597.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T16:44:28.560140Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:59:35.018236Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

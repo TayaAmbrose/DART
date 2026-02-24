@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T13:56:54.647896Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct Bash syntax for loops, valid Netcat flags, and proper usage of the macOS networksetup command.",
-        "semantic_score": 3,
-        "semantic_justification": "While the port-knocking and proxy configuration parts are semantically correct for the technique, the networksetup commands require administrative privileges on macOS, which contradicts the stated 'Privilege: None', making the latter half of the command operationally infeasible as described.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T13:57:16.320171Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, balanced quotes, valid flags for both nc and networksetup commands, and correct command separators.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct use of a for loop, proper semicolons and && separators, valid nc flags (-w1 -z), and correct networksetup subcommand syntax for macOS.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using a port-knocking sequence (a form of traffic signaling) to trigger a hidden service, followed by configuring a local SOCKS proxy to route traffic through the now-accessible covert channel.",
+        "semantic_justification": "The command accurately implements T1205 port-knocking by sending sequential SYN probes to ports 10501, 10503, 10507 with timing delays to signal a hidden service, then configures a SOCKS proxy via networksetup to route subsequent traffic through a local tunnel — a realistic and operationally coherent implementation of traffic signaling combined with C2 channel establishment on macOS.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:09:29.411777Z"
+        "timestamp": "2026-02-19T03:46:52.481310Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard Bash loop syntax and uses valid flags for both netcat and the macOS networksetup utility.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a port-knocking sequence followed by proxy configuration, though executing networksetup to modify system settings typically requires administrative privileges on macOS.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:46:52.785809Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

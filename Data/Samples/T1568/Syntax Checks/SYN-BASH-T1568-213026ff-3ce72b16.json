@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid flag formats, correct command separators, and appropriate escape sequences throughout the bash script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements the Dynamic Resolution technique by resolving a domain, using fallback IPs if resolution fails, and establishing communication with a plausible HTTP request that mimics legitimate traffic patterns while maintaining command and control capability.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T04:58:34.861272Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, correctly using `bash -c` with proper escaping for variables, balanced quotes, and valid command syntax throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly demonstrates dynamic resolution via DNS lookup with a randomized IP selection and a robust fallback to hardcoded IPs, followed by a realistic C2 beaconing attempt masked as legitimate web traffic, fully aligning with T1568 and the provided explanation.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T04:58:44.762385Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The one-liner has balanced quoting, valid command substitutions and control structures, and uses appropriate flags for dig/shuf/nc, so it should parse and execute.",
@@ -46,11 +26,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T04:59:21.829205Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper variable expansions, correct use of command substitution, valid semicolons and logical flow, and appropriate escaping of special characters within the printf format string.",
+        "semantic_score": 4,
+        "semantic_justification": "The command plausibly implements T1568 dynamic resolution by using DNS lookup with random IP selection (shuf -n1) and hardcoded fallback IPs, then crafting a disguised HTTP beacon mimicking a WordPress CSS asset request with a timestamp-based check parameter — however, the fallback IPs are RFC 5737 documentation/reserved ranges (203.0.113.0/24, 198.51.100.0/24, 192.0.2.0/24) which would never be reachable in practice, slightly reducing operational realism.",
+        "combined_score": 4.5,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:16:19.867681Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with correct use of semicolons, pipes, and escaped internal quotes for the bash -c subshell.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic perfectly mirrors T1568 (runtime resolution and fallback), the use of double quotes for the outer bash -c command causes the parent shell to attempt variable expansion before execution, which would break the logic unless the variables were already defined in the caller's environment.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:16:44.350800Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

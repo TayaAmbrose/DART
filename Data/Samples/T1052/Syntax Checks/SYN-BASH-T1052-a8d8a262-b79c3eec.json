@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T07:41:39.920209Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, variable assignment, command substitution, redirection, and logical operators.",
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, escaped inner quotes for awk, valid use of bash -c with a heredoc-style single-quoted block, correct command separators (&&), and valid flags throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by detecting a USB device, mounting it, compressing system logs, writing them to the physical medium, and cleaning up afterward.",
+        "semantic_justification": "The command perfectly implements T1052 by dynamically detecting a USB device via lsblk transport type, mounting it, compressing and staging /var/log (a high-value log directory) into a gzip archive on the physical medium, syncing to ensure write completion, and cleanly unmounting — all consistent with physical medium exfiltration behavior.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T07:41:42.215565Z"
+        "timestamp": "2026-02-18T22:33:43.063907Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, and proper command separators, handling nested string escaping for the `awk` script correctly within the `bash -c` context.",
-        "semantic_score": 5,
-        "semantic_justification": "The command accurately identifies a physical USB medium, stages system logs by compressing them, writes the archive to the USB, and unmounts it, directly fulfilling the T1052 technique with operational plausibility.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T07:42:08.991166Z"
+        "syntactic_justification": "The command is a perfectly well-formed Bash one-liner with balanced quotes, proper command chaining with && and semicolons, and valid tool flags.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic perfectly matches the T1052 technique, the command contains a quoting error: the awk variables ($1, $2) inside the double quotes will be expanded by the shell as empty strings, causing the device discovery to fail and the mount command to receive an empty argument.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:34:05.039752Z"
       }
     ],
     "llm_average_syntactic": 4.333,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.0,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

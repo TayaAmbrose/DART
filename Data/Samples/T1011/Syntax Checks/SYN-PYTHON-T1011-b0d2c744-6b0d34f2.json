@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T01:15:14.893130Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 4,
-        "syntactic_justification": "The command appears to be well-formed Python code for socket binding and data transmission, though without seeing the actual code I cannot verify complete syntactic correctness.",
-        "semantic_score": 5,
-        "semantic_justification": "Using IPv6 with a non-default interface binding to transmit base64-encoded data over a high port aligns perfectly with T1011 (Exfiltration Over Other Network Medium) as it leverages an alternative network path that might evade standard monitoring.",
-        "combined_score": 4.5,
-        "confidence": 0.8,
-        "timestamp": "2025-10-01T01:15:17.991898Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is withheld and described only in natural language, so no actual syntax can be evaluated — it is a description of intent rather than a runnable command.",
+        "semantic_score": 2,
+        "semantic_justification": "Using IPv6 link-local or unique-local addresses on a different interface is a plausible alternative network path, but T1011 specifically refers to physically distinct network mediums (cellular, Wi-Fi, Bluetooth) rather than simply a different IP address family or interface on the same medium, making the mapping to T1011 weak.",
+        "combined_score": 1.5,
+        "confidence": 0.6,
+        "timestamp": "2026-02-18T22:07:39.840762Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 0,
-        "syntactic_justification": "The command itself was explicitly withheld, preventing any evaluation of its syntax.",
-        "semantic_score": 5,
-        "semantic_justification": "The command's description of binding to a non-default interface with IPv6 to a unique-local target for exfiltration perfectly aligns with T1011's concept of using an alternative network path or medium to evade primary network monitoring.",
-        "combined_score": 2.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T06:27:36.386077Z"
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The described Python socket operations, including IPv6 addressing with scope indices and base64 encoding, follow standard and valid syntax for the platform.",
+        "semantic_score": 4,
+        "semantic_justification": "Binding to a specific interface index (scope-id) to route data via an alternative IPv6 path aligns with the intent of using an alternative network medium, though T1011 often implies physically distinct hardware.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:07:45.137024Z"
       }
     ],
-    "llm_average_syntactic": 1.667,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 2.833,
+    "llm_average_syntactic": 2.333,
+    "llm_average_semantic": 2.667,
+    "llm_average_score": 2.5,
     "llm_verdict": "likely_mismatch",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

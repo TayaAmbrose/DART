@@ -18,16 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, balanced parentheses/braces, correct cmdlet usage, proper comparison operators, and valid conditional structure.",
-        "semantic_score": 4,
-        "semantic_justification": "The command correctly implements a detection mechanism for T1601 by comparing file hashes to identify system image tampering, though it's a detection control rather than the actual technique implementation and assumes PowerShell availability on network devices which may not always be realistic.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T19:53:02.140146Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell one-liner with balanced quotes/parentheses, valid cmdlets, and correct operators.",
@@ -38,14 +28,24 @@
         "timestamp": "2025-10-02T19:53:27.050861Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Powershell command is perfectly well-formed with balanced quotes, parentheses, braces, and proper command separators, adhering to Powershell syntax rules.",
-        "semantic_score": 4,
-        "semantic_justification": "The command perfectly implements a hash-based integrity check, which is a key detection mechanism for T1601, but the specified 'Network Devices' platform conflicts with the Windows-specific Powershell paths, reducing general operational plausibility.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T19:53:28.117949Z"
+        "syntactic_justification": "The PowerShell script is perfectly well-formed with balanced parentheses, proper string assignments, correct if/else syntax, and valid use of Get-FileHash cmdlet with proper property access.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command correctly implements SHA256 hash comparison for image integrity verification (a valid detection/mitigation technique for T1601), it represents a defensive monitoring action rather than the adversarial technique itself, and running PowerShell on network devices (routers/switches) is not operationally realistic since such devices typically use proprietary CLIs rather than PowerShell environments.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T01:26:05.849895Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script with correct variable assignments, valid cmdlet usage, proper comparison operators, and balanced delimiters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the detection logic for T1601 by performing a SHA256 integrity check against a known baseline, which is a standard method for identifying unauthorized system image modifications.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:26:10.864104Z"
       }
     ],
     "llm_average_syntactic": 5.0,

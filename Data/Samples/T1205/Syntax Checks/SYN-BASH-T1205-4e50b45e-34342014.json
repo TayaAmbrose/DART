@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T12:44:43.063083Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper loop syntax, balanced quotes, valid redirection to /dev/udp, and correct use of command separators.",
+        "syntactic_justification": "The command is perfectly well-formed with a valid Bash for loop, proper semicolons, balanced quoting, correct /dev/udp syntax, and valid sleep argument.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending timed UDP packets to specific ports (10101, 20202, 30303) that could serve as a knock sequence to trigger actions on a listening server.",
+        "semantic_justification": "The command accurately implements a port-knocking traffic signaling technique (T1205) by sending timed UDP packets to a sequence of ports using Bash's built-in /dev/udp pseudo-device, which a remote listener could interpret as a trigger sequence to open firewall rules or activate a payload.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T12:44:45.817656Z"
+        "timestamp": "2026-02-19T03:40:50.941033Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, utilizing standard Bash `for` loop syntax, correct command separators, and the valid `/dev/udp` pseudo-device for network redirection.",
+        "syntactic_justification": "The command follows standard Bash loop syntax and correctly utilizes the pseudo-device redirection syntax for UDP.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely implements a timed UDP knock sequence, which directly aligns with T1205 Traffic Signaling's description of using timing patterns and sequence-based triggers to coordinate actions or trigger payloads.",
+        "semantic_justification": "The command effectively implements a port-knocking sequence using built-in shell features to signal a remote listener, perfectly matching the T1205 technique.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T12:44:55.984745Z"
+        "timestamp": "2026-02-19T03:40:51.929035Z"
       }
     ],
     "llm_average_syntactic": 5.0,

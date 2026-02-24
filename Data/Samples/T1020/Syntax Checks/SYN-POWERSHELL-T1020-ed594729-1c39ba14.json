@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T04:16:17.331307Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignment, method calls, balanced quotes, valid parameter names, and correct use of hashtables for headers.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1020 Automated Exfiltration technique by using Invoke-WebRequest to exfiltrate the Windows SECURITY hive file over HTTPS with browser-like headers to avoid detection.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T06:00:01.079012Z"
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper hashtable syntax for headers, valid semicolon separators, correct Invoke-WebRequest flags, and no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements automated exfiltration (T1020) by uploading the SECURITY registry hive via HTTPS PUT with TLS 1.2 enforcement and browser-mimicking headers, though accessing C:\\Windows\\System32\\config\\SECURITY typically requires SYSTEM-level privileges rather than 'None', reducing operational plausibility slightly.",
+        "combined_score": 4.5,
+        "confidence": 0.92,
+        "timestamp": "2026-02-18T22:26:31.512796Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax, balanced quotes and braces, and valid parameters for Invoke-WebRequest.",
-        "semantic_score": 2,
-        "semantic_justification": "The command cannot achieve its claimed intent of uploading the SECURITY hive because a non-privileged user (as specified by 'Privilege: None') cannot read this highly protected system file, making the exfiltration attempt operationally unfeasible.",
-        "combined_score": 3.5,
+        "syntactic_justification": "The command follows correct PowerShell syntax, uses valid cmdlets, correctly handles hash tables for headers, and properly manages .NET class properties.",
+        "semantic_score": 3,
+        "semantic_justification": "While the exfiltration logic is sound, the command would fail because the SECURITY hive is locked by the System process and cannot be read directly via standard file I/O, nor can it be accessed with the specified 'None' privilege level.",
+        "combined_score": 4.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:00:15.799254Z"
+        "timestamp": "2026-02-18T22:26:34.110729Z"
       }
     ],
     "llm_average_syntactic": 5.0,

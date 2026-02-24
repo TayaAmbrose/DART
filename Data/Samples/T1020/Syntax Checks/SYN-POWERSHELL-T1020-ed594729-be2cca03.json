@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T02:50:42.353063Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, cmdlet usage, parameter passing, balanced quotes/parentheses/braces, and appropriate semicolons separating each command.",
+        "syntactic_justification": "The command is perfectly well-formed PowerShell with balanced quotes, proper semicolon separators, valid cmdlet names and parameters, correct hashtable syntax for headers, and proper string interpolation throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by compressing the Windows Prefetch directory (collection), using a timestamped filename, exfiltrating via HTTPS POST (transfer method) with custom headers for obfuscation, and cleaning up the evidence afterward.",
+        "semantic_justification": "The command fully implements T1020 automated exfiltration by compressing the Prefetch directory into a timestamped zip, POSTing it via HTTPS to an external collector with realistic headers including a custom User-Agent and host identifier, then cleaning up the artifact — matching batching, compression, transfer, and anti-forensic cleanup behaviors described in the technique.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T02:50:45.473811Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:21:07.497312Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct variable assignments, cmdlet usage, parameter formatting, balanced quotes, and proper command separators.",
+        "syntactic_justification": "The PowerShell command is perfectly formed with correct variable assignments, cmdlet usage, and hashtable syntax for headers.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of zipping the Prefetch directory and exfiltrating it via HTTPS POST, aligning precisely with the T1020 Automated Exfiltration technique using appropriate tools and a realistic operational flow for a user with 'None' privilege.",
+        "semantic_justification": "The command accurately implements automated exfiltration by packaging a sensitive directory into a zip and transmitting it to a remote endpoint via HTTP POST.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T05:33:48.901554Z"
+        "timestamp": "2026-02-18T22:21:11.653817Z"
       }
     ],
     "llm_average_syntactic": 5.0,

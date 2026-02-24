@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T00:49:48.550161Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid PowerShell syntax, and appropriate use of variables and methods.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1011 by establishing a Bluetooth PAN connection, configuring the interface with a static IP, reading the Security event log, encoding it as base64, and exfiltrating it via UDP over the Bluetooth medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:49:55.579922Z"
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper quoting, valid semicolon separators, correct .NET method calls, and no syntax errors throughout the pipeline.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by connecting via Bluetooth PAN using BluetoothCL.exe, assigning a static IP to the Bluetooth network adapter, reading and base64-encoding the Security event log, then exfiltrating via UDP over the Bluetooth interface; minor realism gaps include that BluetoothCL.exe is not a widely known standard tool and reading Security.evtx typically requires elevated privileges despite 'None' being listed.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:02:44.635868Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell script is perfectly well-formed with correct syntax for cmdlet usage, external executable calls, variable handling, and .NET class instantiation.",
-        "semantic_score": 2,
-        "semantic_justification": "While the overall concept aligns with T1011, the critical `netsh interface ip set address` command requires administrator privileges, contradicting the stated 'Privilege: None,' which prevents the command from fully achieving its claimed intent of establishing and using the Bluetooth interface for IP-based exfiltration.",
-        "combined_score": 3.5,
+        "syntactic_justification": "The command is perfectly formatted PowerShell with correct use of pipes, variables, semicolons, and balanced quoting.",
+        "semantic_score": 3,
+        "semantic_justification": "While the logic perfectly aligns with T1011, the command would likely fail in practice because base64-encoding a full Security.evtx file will exceed the 64KB size limit for a single UDP packet, and the 'netsh' and file-read operations require Administrator privileges not specified in the metadata.",
+        "combined_score": 4.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:18:16.422842Z"
+        "timestamp": "2026-02-18T22:02:48.814956Z"
       }
     ],
     "llm_average_syntactic": 5.0,

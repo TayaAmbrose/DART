@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, variable declarations, conditional logic, file handling, error handling, and string manipulation with no syntax errors.",
-        "semantic_score": 5,
-        "semantic_justification": "The script directly addresses T1601 (Modify System Image) by implementing a detection mechanism that checks GRUB bootloader integrity through SHA-256 hash comparison against a known baseline, which would effectively identify bootloader tampering.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T19:23:45.425909Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with no syntax errors, balanced constructs, and valid function calls and imports.",
-        "semantic_score": 4,
-        "semantic_justification": "The command correctly implements integrity checking for GRUB core images, directly addressing T1601 detection, but the baseline file path `/root/baselines/grub_core.sha256` contradicts the stated 'Privilege: None' making it operationally implausible without elevated privileges.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T19:24:01.376568Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid Python 3 code with correct imports, balanced parentheses, and proper control flow and function calls.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T19:24:10.442936Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically well-formed with balanced parentheses, proper imports, valid string formatting, and correct use of iterators, context managers, and standard library functions.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements GRUB core image integrity verification by computing a SHA-256 hash of the current bootloader image and comparing it against a stored baseline using unified diff output, which is a direct detection mechanism for T1601 bootloader/firmware tampering.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:23:12.185472Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly well-formed, using correct imports, context managers for file I/O, and valid iterator patterns for hashing large files.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements a bootloader integrity check by hashing the GRUB core image and comparing it against a stored baseline, which is a primary method for detecting the T1601 technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:23:16.989360Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

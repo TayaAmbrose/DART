@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T18:46:03.899756Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, parentheses, and braces, correct PowerShell syntax for WMI method invocation, and proper escape sequences for nested quotes.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with properly nested quotes using doubled single-quotes for PowerShell string escaping within the WMI ArgumentList, though the complexity of nested quoting layers (cmd shell → WMI → PowerShell → string literals) creates edge cases where the doubled single-quotes inside the outer single-quoted ArgumentList string may not parse correctly in all execution contexts.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a covert channel that listens for specific syslog messages (containing 'ALLOW-RDP') on UDP port 514 and only enables RDP access when the signal is received from a specific source.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:30:08.854812Z"
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by creating a UDP/514 syslog listener that waits for a specific token ('ALLOW-RDP') embedded in legitimate-looking syslog traffic to trigger enabling an RDP firewall rule scoped to the sender's IP, which is a textbook covert signaling mechanism for port knocking/traffic-triggered payload activation.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T04:06:56.790009Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correctly balanced quotes, parentheses, and valid PowerShell and WMI syntax for process creation and script execution.",
-        "semantic_score": 1,
-        "semantic_justification": "The command cannot achieve its claimed intent of creating/modifying firewall rules or binding to UDP port 514 with the stated 'Privilege: None', as these actions require administrative privileges.",
-        "combined_score": 3.0,
+        "syntactic_justification": "The command is perfectly well-formed, using correct nested quoting (double-single quotes) to pass a complex PowerShell script block through the WMI Win32_Process Create method.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements Traffic Signaling (T1205) by listening for a specific UDP trigger to modify firewall state; however, it requires administrative privileges to execute firewall commands and would fail if port 514 is already in use by a system syslog service.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-02T03:30:27.360808Z"
+        "timestamp": "2026-02-19T04:07:01.523444Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.167,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

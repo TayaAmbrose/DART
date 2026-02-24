@@ -29,30 +29,30 @@
         "timestamp": "2025-09-30T23:41:30.659142Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, backticks, parentheses, and braces, with correct PowerShell syntax including proper variable declarations, pipeline operations, and method calls.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper escaping of backtick-prefixed variables for WMIC/PowerShell nesting, balanced braces and parentheses, though the complex multi-level quoting and backtick escaping within the WMIC call create edge cases that could fail in certain shell environments.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1011 by identifying a Bluetooth network adapter, binding to it specifically, and using it to exfiltrate a file over TCP to an external server on an uncommon port, completely separate from the primary network medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T23:41:35.078096Z"
+        "semantic_justification": "The command accurately implements T1011 by using WMIC to spawn a hidden PowerShell process that specifically queries for a Bluetooth PAN network adapter, binds a TCP socket to its IP address, and transmits a file to an external host over an uncommon port, correctly leveraging an alternate network medium distinct from the primary LAN channel.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:49:54.335443Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct WMIC syntax, properly escaped PowerShell variables using backticks, balanced quotes, and valid cmdlet/method calls.",
+        "syntactic_justification": "The command uses proper WMIC syntax and correctly escapes PowerShell variables using backticks for execution within a PowerShell environment.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely executes the described intent by identifying a Bluetooth network adapter, binding an outgoing TCP connection to its specific IP address, and exfiltrating a file, directly aligning with T1011 'Exfiltration Over Other Network Medium' using Bluetooth.",
+        "semantic_justification": "The command accurately implements exfiltration by specifically binding a TCP client to a Bluetooth interface to route traffic away from the primary network gateway.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-09-30T23:41:53.922239Z"
+        "timestamp": "2026-02-18T21:49:58.324739Z"
       }
     ],
-    "llm_average_syntactic": 4.0,
+    "llm_average_syntactic": 3.667,
     "llm_average_semantic": 4.333,
-    "llm_average_score": 4.167,
-    "llm_verdict": "likely_match",
+    "llm_average_score": 4.0,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

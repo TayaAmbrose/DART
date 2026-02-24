@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T17:24:18.317859Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with no syntax errors, valid flags, balanced quotes, and correct command separators for a bash shell.",
-        "semantic_score": 2,
-        "semantic_justification": "While the command's logic for T1205 Traffic Signaling is sound, the crucial `iptables` components require root privileges, directly contradicting the stated 'Privilege: None' and preventing the claimed conditional access from being established.",
-        "combined_score": 3.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T17:24:51.716006Z"
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, valid iptables flags and modules (recent, string, algo bm), correct semicolons as separators, and a valid backgrounded nc listener.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling mechanism using iptables string matching on MQTT ClientId to unlock a secondary port for 60 seconds, which aligns well with T1205, though the 'None' privilege claim is incorrect since iptables manipulation requires root, and nc listening on a privileged-adjacent port without authentication provides only minimal C2 functionality.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T04:00:39.160906Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for iptables rules, string matching, command chaining with semicolons, and background process execution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by monitoring MQTT traffic for a specific ClientId token that serves as a covert signal, then temporarily allowing access to a secondary port where netcat is listening.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:20:51.570620Z"
+        "syntactic_justification": "The command sequence uses correct iptables module syntax, valid shell separators, and standard netcat flags with proper redirection and backgrounding.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic for application-aware port knocking via the iptables 'recent' and 'string' modules is sound, though the 'Privilege: None' claim is incorrect as iptables and listening on ports require root.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:00:55.033724Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

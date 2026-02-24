@@ -17,26 +17,6 @@
     "syntax_ok": false,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with proper imports, error handling, balanced quotes/parentheses, and correct syntax for file operations, subprocess calls, and output formatting.",
-        "semantic_score": 4,
-        "semantic_justification": "The script correctly implements a system image verification mechanism by comparing the boot partition with a reference image, but it only detects modifications rather than implementing the actual T1601 technique of modifying system images.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T19:04:09.978508Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with correct syntax, balanced constructs, valid module usage, and the shell wrapper for execution is also correct.",
-        "semantic_score": 1,
-        "semantic_justification": "The command performs an integrity check to detect image modifications, but it does not itself perform the T1601 technique of modifying a system image; rather, it's a detection or verification mechanism.",
-        "combined_score": 3.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T19:04:37.417736Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The heredoc is correctly quoted and the Python code is valid with proper dd arguments and subprocess usage.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T19:05:09.908902Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python heredoc is well-formed with balanced quotes, proper imports, correct subprocess calls, and valid hashlib/filecmp usage with no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly reads the live boot partition via dd, compares it to the stored image file, and computes an MD5 checksum — all consistent with T1601 detection/verification of firmware integrity — though MD5 is cryptographically weak for integrity validation and the explanation frames this as verifying a 'modified image' rather than detecting unauthorized modification, slightly inverting the defensive framing.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:21:36.639492Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses a correctly formatted Python heredoc and valid Python 3 syntax, including proper library imports and subprocess handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The script effectively demonstrates a verification step for T1601 by comparing a block device's boot partition against a system image to ensure modifications are persistent, using realistic paths and tools for network devices.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:21:40.528614Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 4.0,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

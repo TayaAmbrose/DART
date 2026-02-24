@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T16:09:39.173944Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, correct Python syntax for Scapy and f-strings, and proper shell command separators and backgrounding.",
-        "semantic_score": 5,
-        "semantic_justification": "The command flawlessly implements the described intent of using a specific network signal (SYN+FIN to TCP/42424) to trigger a time-limited ACL modification, which directly aligns with T1205 Traffic Signaling by using protocol fields and unusual port for command and control.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T16:09:54.147823Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and parentheses, though the nested quoting with escaped inner quotes in the f-string shell invocation is complex and could fail in some shell environments depending on quote handling.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling pattern using a SYN+FIN magic packet (flags 0x03) on a non-standard port to trigger a temporary ACL change via ciscoconf, which is a plausible T1205 implementation, though 'ciscoconf' is a fictional/non-standard tool and the SYN+FIN combination is technically invalid per TCP spec, slightly reducing operational realism.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:54:57.096654Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid Python syntax, and correct use of shell constructs including background processes.",
+        "syntactic_justification": "The command is perfectly well-formed, using correct Python syntax, proper escaping for nested shell commands, and valid Scapy function calls.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using a specific packet pattern (SYN+FIN to port 42424) as a covert signal to temporarily modify network access controls, creating a time-limited backdoor that's difficult to detect.",
+        "semantic_justification": "The command accurately implements Traffic Signaling (T1205) by listening for a specific TCP flag combination (SYN+FIN) to trigger a temporary security policy change on a network device.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:15:38.948981Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:55:01.153251Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

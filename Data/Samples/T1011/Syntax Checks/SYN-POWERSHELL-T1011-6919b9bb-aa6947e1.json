@@ -26,24 +26,24 @@
         "timestamp": "2025-09-30T23:56:49.384370Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes/parentheses/braces, appropriate variable assignments, string formatting, and correct use of cmdlets and external tools.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper string formatting using -f operator, valid semicolon separators, and correct ncat.exe flag usage (-6, --send-only).",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1011 by identifying the Wi-Fi adapter, constructing a link-local IPv6 address specific to that interface, base64-encoding sensitive data, and exfiltrating it over the wireless medium using ncat with appropriate parameters.",
+        "semantic_justification": "The command correctly implements T1011 by retrieving the Wi-Fi adapter's interface index, constructing a link-local IPv6 address scoped to that interface, Base64-encoding a file from a realistic path, and piping it over the Wi-Fi medium via ncat to a non-standard port, fully aligning with exfiltration over an alternate network medium.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T23:56:54.242256Z"
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T21:52:56.170828Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct Powershell cmdlet syntax, .NET method calls, string formatting, variable assignments, and `ncat.exe` flags.",
+        "syntactic_justification": "The command uses proper PowerShell syntax, correct variable assignment, string formatting for the IPv6 scope ID, and valid pipe operators.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by identifying a Wi-Fi interface, constructing a link-local IPv6 address with its scope ID, Base64-encoding a file, and exfiltrating it via `ncat.exe` exclusively over that interface, directly aligning with T1011's concept of using an 'other network medium' distinct from primary routed channels.",
+        "semantic_justification": "The command accurately implements exfiltration over a specific network medium (Wi-Fi) by resolving the interface index and using it to route traffic over a link-local IPv6 address via ncat.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-09-30T23:57:08.475391Z"
+        "timestamp": "2026-02-18T21:52:57.704990Z"
       }
     ],
     "llm_average_syntactic": 5.0,

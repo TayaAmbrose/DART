@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T13:00:43.450317Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for tcpdump and ssh, correct command chaining with &&, and appropriate redirection.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct BPF filter syntax for tcpdump including byte-offset expressions, valid flags (-ln, -i, -c), proper && chaining, and correct ssh reverse tunnel syntax (-N -R).",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using a specific ICMP packet pattern (with magic values 0xBEEF/0x1234) as a covert trigger to establish a reverse SSH tunnel for command and control.",
+        "semantic_justification": "The command precisely implements T1205 traffic signaling: it waits for a covert ICMP trigger packet with specific magic identifier (0xBEEF) and sequence (0x1234) values using tcpdump's BPF byte-offset filtering, then upon receipt establishes a reverse SSH tunnel to a C2 server, which is an operationally realistic and technically accurate implementation of using traffic signals to trigger C2 actions.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T13:00:46.904447Z"
+        "timestamp": "2026-02-19T03:42:43.418682Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command separators, and no impossible constructs.",
+        "syntactic_justification": "The command uses standard Linux utilities and shell operators with correct syntax and well-formed BPF filters for tcpdump.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves its claimed intent by using a specific ICMP packet as a trigger to establish a reverse SSH C2 tunnel, which is a classic and operationally plausible example of Traffic Signaling (T1205).",
+        "semantic_justification": "The command accurately implements traffic signaling by using tcpdump as a trigger for a reverse SSH tunnel based on specific packet headers.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T13:01:04.330951Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:42:44.770830Z"
       }
     ],
     "llm_average_syntactic": 5.0,

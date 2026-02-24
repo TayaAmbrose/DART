@@ -28,30 +28,30 @@
         "timestamp": "2025-09-30T23:45:54.483898Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and brackets, proper semicolons, valid syntax for list comprehension, and correct function calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by reading data from a hidden file and exfiltrating it over UDP in small chunks with timing delays to an external IP address on an uncommon high port, simulating an alternate network medium for data exfiltration.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T23:45:58.385717Z"
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper list comprehension syntax, correct socket API usage, and valid string quoting throughout.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command correctly implements UDP-based data exfiltration with pacing to a remote host, it uses standard UDP over the same IP network rather than a genuinely different network medium (cellular, Wi-Fi, Bluetooth) as T1011 specifies, making it more accurately T1048 (Exfiltration Over Alternative Protocol) than T1011; the explanation's claim that UDP on a high port constitutes an 'alternate network medium' is a mischaracterization of the technique.",
+        "combined_score": 4.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T21:50:52.206244Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and brackets, proper statement separators, and a valid use of the `python3 -c` flag.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of exfiltrating data via paced UDP bursts on a high, uncommon port, which plausibly simulates an 'alternate low-profile datagram medium' as described for T1011.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-09-30T23:46:23.228382Z"
+        "syntactic_justification": "The command is a perfectly valid Python one-liner with correctly handled imports, socket operations, and file I/O.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command successfully exfiltrates data, it uses an alternative protocol (UDP) on the default interface rather than a different physical or logical network medium like cellular or Bluetooth as required by T1011.",
+        "combined_score": 4.0,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:51:07.899267Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
-    "llm_verdict": "likely_match",
+    "llm_average_semantic": 2.667,
+    "llm_average_score": 3.833,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": "mypy issues:\nC:\\Users\\flacman\\AppData\\Local\\Temp\\tmpdm6kcwwj.py:1: error: \"sleep\" does not return a value (it only ever returns None)  [func-returns-value]\nFound 1 error in 1 file (checked 1 source file)"

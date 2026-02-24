@@ -27,30 +27,30 @@
         "timestamp": "2025-10-01T21:38:23.878020Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper JavaScript syntax within the rundll32 invocation, and correct use of ActiveX objects and methods.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1216 by using rundll32.exe with mshtml as a trusted system component to proxy the execution of malicious code, downloading an HTA file and executing it with mshta.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:59:00.597217Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid JavaScript embedded in the rundll32 invocation, though the escaped backslash prefix `\"\\..\\mshtml` and mixed quoting within the JavaScript string could cause parsing issues in some shell contexts.",
+        "semantic_score": 3,
+        "semantic_justification": "While the rundll32+MSHTML JavaScript trick is a real LOLBin technique (closer to T1218.011 than T1216), the command plausibly downloads and executes an HTA via native tooling, but it is misattributed to T1216 (signed script proxy execution via VBS scripts like PubPrn.vbs) rather than the more accurate T1218.011 (Signed Binary Proxy Execution: Rundll32), reducing semantic alignment with the stated technique.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:05:34.393838Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct `rundll32` argument formatting, balanced quotes, proper JavaScript syntax, and valid ActiveX object instantiations and method calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command flawlessly executes the described T1216 technique by using `rundll32` as an MSHTML script proxy to download, save, and execute an HTA with native tooling, fully aligning with the explanation and operational plausibility.",
-        "combined_score": 5.0,
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 2,
+        "syntactic_justification": "In PowerShell, the unquoted semicolons act as command separators, and the unescaped double quotes will be improperly parsed, causing the shell to terminate the rundll32 command prematurely and attempt to execute the JavaScript 'var' statements as PowerShell commands.",
+        "semantic_score": 4,
+        "semantic_justification": "The command logic is a well-known 'Squiblytwo' style execution bypass that effectively downloads and executes a payload; however, it is more accurately categorized under MITRE ATT&CK T1218.011 (Rundll32) rather than T1216 (System Script Proxy Execution), which typically involves signed script files like .vbs or .js.",
+        "combined_score": 3.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T03:59:09.862969Z"
+        "timestamp": "2026-02-19T00:06:16.220481Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
-    "llm_verdict": "likely_match",
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 3.667,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

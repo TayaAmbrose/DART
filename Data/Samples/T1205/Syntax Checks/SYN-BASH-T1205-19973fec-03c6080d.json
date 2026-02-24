@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T15:44:32.858061Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "All commands are perfectly well-formed with valid syntax, correct flags, balanced quoting, and proper command separators, making them parseable and runnable.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command conceptually demonstrates T1205 Traffic Signaling by using SIP and `iptables` for signaling, its operational feasibility is negated by the `iptables` commands requiring root privileges, which contradicts the stated 'Privilege: None' condition.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command chain is well-formed with proper semicolons, balanced quotes, and valid iptables/nc flags, though the privilege annotation of 'None' is inconsistent since iptables requires root, which is a metadata issue rather than a syntax error.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling mechanism using SIP REGISTER as a covert signal on UDP/5060 to unlock TCP/5080 via iptables recent module, which aligns well with T1205, though the 60-second window in --rcheck applies to the recent module's time tracking rather than the nc listener duration, and nc without -k on some implementations may not persist as implied.",
         "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T15:46:01.513940Z"
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:53:32.560962Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for iptables rules, string matching, command chaining with semicolons, and background process execution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using a crafted SIP REGISTER message as a signal to trigger a temporary firewall rule change, creating a covert communication channel that's hidden within legitimate-looking protocol traffic.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:14:23.671425Z"
+        "syntactic_justification": "The command sequence is well-formed, using correct iptables module syntax and standard shell redirection/backgrounding.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly implements traffic signaling using port knocking with a SIP payload, though it requires root privileges which contradicts the provided metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:53:35.079483Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

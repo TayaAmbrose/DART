@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is well-formed with properly balanced parentheses, quotes, and correct syntax for imports, function definitions, exception handling, and subprocess calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by creating a DGA algorithm based on current date, attempting DNS resolution of generated domains, establishing a covert network path via Docker bridge and iptables rules, and initiating C2 communication over HTTPS to the resolved endpoint.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T06:33:41.128745Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with correct syntax, balanced quotes, valid function calls, and proper control flow.",
-        "semantic_score": 3,
-        "semantic_justification": "While the DGA generation and resolution components are semantically aligned with T1568, the critical 'iptables' rule modification and 'docker network create' calls require elevated privileges (root/docker group) which directly contradicts the stated 'Privilege: None', making key parts of the claimed intent operationally implausible.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T06:33:53.775406Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The python3 -c string is well-formed with balanced quotes, valid Python syntax, and correct argument formatting.",
@@ -46,12 +26,32 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T06:34:19.024799Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command is largely well-formed Python embedded in a shell one-liner, but the multiline structure with newlines inside the -c string would cause syntax errors as written without proper line continuation or semicolons replacing all newlines, making it likely to fail parsing in a literal shell invocation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 dynamic resolution via a date-seeded SHA1-based DGA, resolves generated subdomains via raw DNS queries using scapy, creates a Docker bridge network to blend traffic, selects a random high port, adds an iptables egress rule, and beacons to the resolved C2 endpoint with a spoofed User-Agent — all highly consistent with the described technique and explanation.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:23:49.994883Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 2,
+        "syntactic_justification": "The command contains nested control structures (try/except, for-loops, and if-statements) which are syntactically invalid in Python when formatted as a single-line string using semicolons.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly demonstrates DGA-based dynamic resolution and C2 preparation, although it incorrectly identifies the required privilege level as 'None' despite using root-only tools like Scapy and iptables.",
+        "combined_score": 3.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:24:07.532975Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
-    "llm_verdict": "likely_match",
+    "llm_average_syntactic": 3.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 3.667,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

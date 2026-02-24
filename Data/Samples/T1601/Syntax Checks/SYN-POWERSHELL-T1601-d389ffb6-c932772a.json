@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, balanced quotes/parentheses/braces, correct method calls, and appropriate conditional logic structure.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements a firmware integrity verification mechanism that directly counters the T1601 technique by validating system image checksums against vendor-provided values before deployment.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:01:48.326151Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed, with correct syntax for variable assignments, cmdlet calls, method chaining, and conditional logic.",
-        "semantic_score": 1,
-        "semantic_justification": "The command performs an integrity check (hash verification) which is a defensive measure against T1601, rather than an instance of the adversarial technique itself, which involves modifying a system image.",
-        "combined_score": 3.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T18:02:22.209416Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid PowerShell with balanced quotes/braces, correct cmdlets, and proper statement separators.",
@@ -46,11 +26,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T18:02:23.040136Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is perfectly well-formed with balanced quotes, parentheses, and braces, proper use of semicolons as statement separators, and valid cmdlet syntax throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a pre-deployment integrity check by comparing a staged firmware image's SHA256 hash against a vendor-provided checksum, which directly supports T1601 mitigations (integrity validation before activation), though running PowerShell on network devices is atypical and the vendor hash file itself could be tampered with if stored locally alongside the image.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:16:36.087983Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed PowerShell script with correct variable assignments, cmdlet usage, method chaining, and conditional logic.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements the logic for an integrity check as described; however, the use of PowerShell and Windows file paths is atypical for most 'Network Devices' which usually utilize specialized CLIs or Linux-based environments.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:16:40.863966Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.167,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

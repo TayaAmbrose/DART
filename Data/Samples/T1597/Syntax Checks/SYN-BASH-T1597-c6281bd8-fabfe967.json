@@ -19,26 +19,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper curl syntax, balanced quotes, valid flags, appropriate headers, and correct JSON formatting for the data payload.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying ZoomInfo's commercial API for company intelligence, using proper authentication, formatting the request appropriately, and logging the results for reconnaissance purposes.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:31:25.755415Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid flags, balanced quotes, proper JSON syntax for both data and write-out format, and correct redirection.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively uses `curl` to interact with ZoomInfo's commercial API, directly fulfilling the intent of searching closed sources (T1597) for intelligence, and includes realistic parameters and robust logging mechanisms.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:31:35.575524Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command is well-formed with balanced quoting, valid curl flags, correct JSON payload quoting, and proper output/write-out redirection.",
@@ -47,6 +27,26 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T12:31:48.685125Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes and braces, valid curl flags (-fsS, --retry, --connect-timeout, --max-time, --compressed, -X, -H, -o, -w), proper JSON payload, and correct output redirection with append operator.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying ZoomInfo's commercial API (a paid closed-source intelligence platform) using a bearer token for authentication, performing company reconnaissance with geographic filtering, and logging results to a file named to reflect the technique, which is operationally consistent with adversaries using paid data feeds for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:52:39.701674Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed curl request with balanced quotes, valid flags, and correct shell redirection syntax.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately leverages a known commercial intelligence API (ZoomInfo) to query non-public organizational data, aligning perfectly with T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:52:54.228585Z"
       }
     ],
     "llm_average_syntactic": 5.0,

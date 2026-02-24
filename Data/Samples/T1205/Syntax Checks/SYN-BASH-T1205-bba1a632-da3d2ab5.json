@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T15:46:26.598163Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid Python and Scapy syntax, and correct argument formatting.",
-        "semantic_score": 4,
-        "semantic_justification": "The command perfectly achieves the stated intent of sending a custom UDP packet with a specific IP ID and payload, directly implementing the T1205 Traffic Signaling technique; however, sending raw packets with Scapy typically requires root privileges, making the 'Privilege: None' claim unrealistic for most standard environments.",
-        "combined_score": 4.5,
-        "confidence": 1,
-        "timestamp": "2025-10-01T15:46:44.717531Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed Python code using Scapy with balanced quotes, parentheses, and proper syntax for creating and sending a network packet.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper Python inline syntax, correct Scapy layer stacking using the `/` operator, and valid flag usage.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending a UDP packet with a specific IP ID (4242) and payload ('KNOCK') that could serve as a covert signal to trigger functionality on a listening system.",
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by crafting a UDP packet with a distinctive fixed IP ID (4242) and magic payload 'KNOCK' to a high port, which serves as a covert trigger signal that a listener can detect to enable functionality, fully consistent with port-knock and traffic signaling techniques.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:14:26.491411Z"
+        "timestamp": "2026-02-19T03:53:38.499930Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed Python one-liner using Scapy, with correct quoting, balanced parentheses, and valid library imports.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements traffic signaling by crafting a custom IP/UDP packet with a specific ID field and payload, serving as a textbook trigger for port knocking or C2 activation.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:53:40.758071Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

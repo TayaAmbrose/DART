@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T00:11:29.567537Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, proper variable declarations, valid cmdlet usage, and correct pipeline operations.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively implements T1011 by exfiltrating text data over ICMPv6 (an alternative network medium) through manipulating ping packet sizes to encode the content of a text file, making detection more difficult than standard network traffic.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:11:34.330374Z"
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper string quoting, valid cmdlet syntax, correct pipeline operators, and proper foreach loop structure throughout.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command does encode data via ICMPv6 ping buffer sizes (a plausible covert channel technique), T1011 specifically refers to exfiltration over a *different network medium* (cellular, Bluetooth, Wi-Fi vs. primary C2 channel), whereas this command uses standard ICMPv6 over the same IP network stack, making it more accurately T1048 (Exfiltration Over Alternative Protocol) or T1001 (Data Obfuscation); additionally, the IPv6 address fd00::/8 is a unique local address requiring the attacker to be on the same local network segment, limiting operational realism.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:54:50.961877Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for variable assignments, loops, method calls, and command parameter usage.",
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell one-liner with correct variable assignments, loop structures, piping, and type casting.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by using `Test-Connection` to send ICMPv6 packets with carefully manipulated buffer sizes to exfiltrate text, consistent with T1011.",
+        "semantic_justification": "The command logically achieves the exfiltration intent by encoding character data into the BufferSize property of ICMPv6 packets, which is a functional implementation of the described technique.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T00:11:45.748750Z"
+        "timestamp": "2026-02-18T21:55:01.846729Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

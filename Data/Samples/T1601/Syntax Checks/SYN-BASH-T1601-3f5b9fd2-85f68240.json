@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper process substitution, piping, conditional execution, and balanced quotes/parentheses.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly addresses T1601 by comparing MD5 hashes of the active system image against a backup to detect unauthorized firmware modifications, which is a valid detection method for this technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T17:57:50.066478Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid Bash constructs like process substitution and logical operators, with no apparent syntax errors.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command's logic of comparing MD5 hashes is perfectly aligned with detecting image alterations, the stated 'Privilege: None' contradicts the necessary read permissions for sensitive system image files, making its operational execution for the claimed intent largely unfeasible.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T17:58:11.005166Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash using process substitution, balanced quotes, valid flags, and proper pipelines.",
@@ -45,10 +25,30 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T17:58:14.956282Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The process substitution syntax `<(...)` is valid in bash, parentheses and pipes are balanced, and the `||` operator is correctly used, though process substitution with `diff` comparing single-line outputs is functional but slightly unconventional compared to simply comparing variables.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements integrity verification by comparing MD5 hashes of the active firmware image against a backup, which is a valid detection method for T1601 (Modify System Image), though MD5 is cryptographically weak and the approach assumes an uncompromised backup exists on the same device.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:16:27.402225Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly utilizes Bash process substitution, standard piping, and logical OR operators to compare the outputs of two hash calculations.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately fulfills the intent of detecting image tampering by comparing the checksum of the active firmware against a backup, which aligns with the detection strategies for T1601.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:16:31.482151Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
     "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,

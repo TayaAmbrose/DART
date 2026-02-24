@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, balanced parentheses/braces, correct function calls, appropriate error handling, and follows Python syntax conventions.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by retrieving breach data from SpyCloud (a paid intelligence source), using proper authentication, storing results securely, and implementing appropriate error handling.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:52:41.695910Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed, with correct imports, variable assignments, function calls, f-string usage, and a properly structured try-except block.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely executes the described action of querying a 'paid breach intelligence provider' (SpyCloud) for 'breach exposure data,' directly aligning with the 'Search Closed Sources' technique (T1597) by acquiring non-public information from a paid feed and storing it.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T11:52:49.543018Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The Python snippet is well-formed with correct imports, balanced delimiters, valid try/except usage, and proper function calls and parameters.",
@@ -45,6 +25,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T11:53:01.635424Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically well-formed with balanced parentheses, proper imports, correct string formatting, valid exception handling, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying SpyCloud, a real paid breach intelligence provider, using authenticated API access with credentials retrieved from AWS Secrets Manager, and storing the closed-source reconnaissance results to S3, which is fully consistent with the technique's description of querying paid/private databases for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:49:36.170136Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly well-formed with correct imports, proper indentation in the try-except blocks, and valid use of the boto3 and requests libraries.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements the technique by programmatically querying a known closed-source breach intelligence provider (SpyCloud) using credentials retrieved from a secure vault and storing the results in cloud storage.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:49:40.694390Z"
       }
     ],
     "llm_average_syntactic": 5.0,

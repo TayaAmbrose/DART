@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T07:42:52.774883Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for hdiutil, correct command separators (&&), and appropriate piping of the password to both create and attach operations.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, correct use of && and pipe operators, valid hdiutil flags (-type, -size, -fs, -encryption, -stdinpass, -volname, -nobrowse, -mountpoint), and proper command chaining throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by creating an encrypted container on a USB drive with a hidden mount point, copying sensitive data to it, and properly detaching it for physical exfiltration.",
+        "semantic_justification": "The command precisely implements T1052 on macOS by creating an AES-256 encrypted sparsebundle on a USB volume, stealthily mounting it with -nobrowse (hides from Finder), copying target data with preserved permissions, and detaching cleanly — all operationally plausible and consistent with the described exfiltration-over-physical-medium technique.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T07:42:55.848986Z"
+        "timestamp": "2026-02-18T22:34:09.585422Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct command separators, balanced quotes, valid flags, and proper path formats.",
+        "syntactic_justification": "The command uses perfectly valid macOS shell syntax, including proper piping of the password to hdiutil, correct flags for disk image creation/attachment, and standard use of logical operators.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by creating a hidden, encrypted sparse bundle on a USB drive, stealthily mounting it, copying data, and detaching, which aligns excellently with T1052's exfiltration via physical medium, including aspects of data staging, packaging, and evasion.",
+        "semantic_justification": "The command accurately implements the exfiltration technique by creating an encrypted, hidden container on removable media, mounting it stealthily using the -nobrowse flag, and copying data before unmounting.",
         "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T07:43:08.261030Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:34:14.600480Z"
       }
     ],
     "llm_average_syntactic": 5.0,

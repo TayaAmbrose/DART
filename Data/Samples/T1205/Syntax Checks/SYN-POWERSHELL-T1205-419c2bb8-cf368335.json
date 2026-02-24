@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T17:32:33.923880Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "All PowerShell cmdlets, `netsh` commands, parameters, and flow control structures are perfectly well-formed and parseable with balanced syntax.",
-        "semantic_score": 1,
-        "semantic_justification": "The command fundamentally fails to achieve its claimed intent as almost all critical operations (firewall logging, adding port proxies, and firewall rules) require administrative privileges, which directly contradicts the stated 'Privilege: None'.",
-        "combined_score": 3.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T17:33:05.736421Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced braces and proper pipeline usage, though the double-escaped backslashes (\\b, \\d, \\s) in the regex string suggest the command was serialized/escaped for display rather than direct execution, which could cause regex matching issues at runtime.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1205 Traffic Signaling by monitoring firewall logs for mDNS (UDP/5353) traffic as a covert trigger, then dynamically creating a port proxy to 10.0.0.5:443 and a scoped firewall rule allowing only the signaling source IP to reach port 8443, with a self-cleaning 10-minute TTL — a highly realistic and operationally coherent implementation of traffic-signal-triggered covert C2 channel establishment.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T04:01:43.792283Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper PowerShell syntax throughout, and correct use of cmdlets, parameters, and pipeline operations.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by monitoring mDNS traffic (UDP/5353) as a trigger to dynamically establish a covert communication channel (port proxy) that's temporary (self-destructs after 600 seconds) and restricted to the specific IP that sent the signal.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:22:25.838517Z"
+        "syntactic_justification": "The command is a well-formed PowerShell script block using valid cmdlets, proper piping, balanced braces, and correct parameter usage for Invoke-Command and netsh.",
+        "semantic_score": 4,
+        "semantic_justification": "The logic perfectly implements the Traffic Signaling technique by monitoring firewall logs for a specific trigger (mDNS) to dynamically open a port; however, the regex uses double-escaped backslashes (e.g., \\\\b, \\\\s, \\\\d) inside a single-quoted string, which in PowerShell results in matching literal backslashes rather than the intended regex meta-characters, likely causing the trigger to fail in practice.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:02:00.570882Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 4.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

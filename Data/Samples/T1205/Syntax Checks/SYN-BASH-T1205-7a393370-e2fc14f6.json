@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T17:54:21.023011Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, correct command separators, proper escape sequences for nested quotes within the Python string, and valid syntax for both Python and the embedded shell command.",
-        "semantic_score": 5,
-        "semantic_justification": "The command accurately implements Traffic Signaling (T1205) by using specific protocol fields (gratuitous ARP from a specific MAC) as a trigger to execute a pre-defined action (bringing up a network interface for a set duration), aligning perfectly with the technique's description and the command's explanation.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T17:54:40.616348Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced parentheses and quotes, though the nested escaping of inner double quotes within the -c string (using backslash-escaped quotes inside a single-quoted Python string passed to bash) is technically unnecessary and slightly inconsistent, but the overall structure is parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1205 traffic signaling by using scapy to sniff for a gratuitous ARP (psrc==pdst) from a specific MAC address as a covert trigger to execute a network device configuration action via ciscoconf, which is operationally plausible, though 'ciscoconf' is a non-standard/fictional tool and the platform context (running Python/scapy on a network device) is somewhat unrealistic for typical Cisco IOS environments.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T04:03:14.988484Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid Python syntax, and correct use of shell constructs including background processing.",
+        "syntactic_justification": "The command is perfectly well-formed, correctly using nested quoting for a bash-python-shell sequence and properly implementing Scapy's sniff parameters and logic.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using a specific ARP packet pattern (gratuitous ARP with specific MAC) as a covert signal to trigger a network interface state change, with appropriate privilege requirements and time-limited response.",
+        "semantic_justification": "The command perfectly illustrates MITRE ATT&CK T1205 by using a specific gratuitous ARP packet (hardware source and IP source/destination match) as a 'magic' trigger to modify device configuration via a subshell.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:24:08.307488Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:03:22.489494Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

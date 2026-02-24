@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T13:07:00.895774Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed Python code with balanced quotes, parentheses, and proper syntax for socket operations, string manipulation, and binary data handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements the Traffic Signaling technique by creating and sending a Wake-on-LAN magic packet to a broadcast address, which serves as a covert signal to activate a specific system identified by the MAC address.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T13:07:03.647786Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed Python embedded in a bash one-liner with balanced quotes and parentheses, though the string repetition syntax `\"FF\"*6` inside a shell-quoted string would need to be valid Python (it is), and the overall quoting is consistent; minor concern is that `\"FF\"*6` produces the string 'FFFFFF' not bytes, so `binascii.unhexlify` would need exactly that, which works correctly.",
+        "semantic_score": 3,
+        "semantic_justification": "The command correctly constructs a Wake-on-LAN magic packet (6xFF bytes followed by 16 repetitions of the MAC address) and broadcasts it over UDP port 9, which is a legitimate WoL mechanism, but its classification under T1205 Traffic Signaling is a stretch — WoL is a standard network management protocol rather than a covert signaling or C2 technique, and the operational framing of 'enabling remote access paths' is plausible but indirect, reducing semantic alignment with the adversarial traffic signaling technique.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:43:10.541926Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command within the single quotes is perfectly well-formed with correct syntax, balanced delimiters, and valid function calls, and the shell wrapper is also correct.",
+        "syntactic_justification": "The command is a perfectly formed Python one-liner executed via sudo, with correct quote nesting, semicolon usage, and valid socket programming logic.",
         "semantic_score": 5,
-        "semantic_justification": "The command semantically aligns perfectly with T1205 by using a standard Wake-on-LAN packet as a 'signal' to 'trigger' the activation of a host for subsequent adversarial 'remote access paths', a direct application of the technique.",
+        "semantic_justification": "The command correctly constructs a standard Wake-on-LAN magic packet and broadcasts it, which aligns with the Traffic Signaling technique of using specific network triggers to coordinate host availability.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T13:07:12.374256Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:43:12.318506Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

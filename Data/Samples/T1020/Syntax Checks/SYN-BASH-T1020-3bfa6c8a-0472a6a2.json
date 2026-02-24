@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T04:30:52.261708Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid Docker and curl flags, and correct shell syntax throughout.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolons, valid Docker flags, correct variable expansions, and properly escaped shell constructs passed to `sh -c`.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by creating a persistent Docker container that regularly compresses sensitive /etc files and exfiltrates them via HTTPS to a remote server on a scheduled basis (every 12 hours).",
+        "semantic_justification": "The command fully implements T1020 automated exfiltration: it mounts /etc read-only, uses a loop with 12-hour sleep intervals to repeatedly compress and stream the directory via HTTPS PUT to an external IP, leverages host networking for direct connectivity, suppresses output with `-s`, and uses `-k` to bypass certificate validation — all operationally plausible and tightly aligned with the technique.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T04:30:54.998626Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:27:22.752388Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command separators, and proper syntax for Docker, Bash loops, tar, and curl.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves automated exfiltration by silently compressing the /etc directory and repeatedly sending it via HTTPS PUT to an external IP, leveraging host networking and containerization as described by T1020.",
-        "combined_score": 5.0,
+        "syntactic_justification": "The command is perfectly formed with correct Docker flags, shell looping syntax, and valid pipe/redirection for the curl exfiltration.",
+        "semantic_score": 4,
+        "semantic_justification": "While the command perfectly demonstrates automated exfiltration via a container, the default non-root user in the curlimages/curl image will be unable to read the most sensitive files in the mounted /etc directory (like /etc/shadow).",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:05:23.340306Z"
+        "timestamp": "2026-02-18T22:27:28.199223Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

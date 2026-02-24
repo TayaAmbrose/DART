@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T00:37:07.547824Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax for imports, socket creation, connection, file reading, and data transmission.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1011 by exfiltrating the user's git configuration file over Bluetooth RFCOMM (an alternative network medium) in small chunks with timing delays to avoid detection.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:37:15.046919Z"
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper list comprehension syntax, correct use of semicolons as statement separators, and valid string quoting throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by using Python's Bluetooth RFCOMM socket to exfiltrate ~/.gitconfig over a non-IP medium in chunked transfers, though the list comprehension misuses `or` for side effects (relying on send returning a falsy value to trigger sleep) which is a minor semantic quirk, and Bluetooth RFCOMM support in Python's standard socket module requires BlueZ and may not be universally available on all Linux systems without additional setup.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:00:23.100807Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and valid Python syntax, ensuring it is parseable and runnable.",
+        "syntactic_justification": "The command is a perfectly formed Python one-liner with correct imports, balanced brackets, and valid socket constants for the Linux platform.",
         "semantic_score": 5,
-        "semantic_justification": "The command correctly uses Python's socket module for Bluetooth RFCOMM communication, reads the specified user configuration file, and streams its content in chunks to a remote Bluetooth address, directly matching the claimed T1011 technique and explanation.",
+        "semantic_justification": "The command effectively implements exfiltration over Bluetooth RFCOMM, targeting a sensitive configuration file, which aligns perfectly with the requirements and intent of T1011.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:14:50.908194Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:00:32.306556Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

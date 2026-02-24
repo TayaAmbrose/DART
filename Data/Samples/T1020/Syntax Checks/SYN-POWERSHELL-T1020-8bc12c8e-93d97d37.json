@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T03:17:39.439571Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, correct PowerShell syntax, valid PSExec parameters, and proper command separators.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, braces, and parentheses; PSExec flags are valid, and the PowerShell script block uses correct syntax including proper semicolons, pipeline operators, and string concatenation.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by using PSExec to launch a hidden PowerShell process that runs as SYSTEM, continuously scans for CSV files, exfiltrates them via HTTPS POST requests, marks processed files, and repeats on a 15-minute schedule.",
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration: PSExec remotely deploys a hidden SYSTEM-level PowerShell process on WS-23 that continuously polls Desktop directories for CSV files, POSTs them to an external HTTPS endpoint, and renames successfully sent files to prevent re-exfiltration, with a 15-minute sleep interval providing scheduling/batching behavior.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T03:17:42.470778Z"
+        "timestamp": "2026-02-18T22:22:50.416355Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, and valid flags for all commands involved, ensuring parseability and execution.",
+        "syntactic_justification": "The command is well-formed, uses balanced quoting (single quotes inside double quotes), correct PowerShell cmdlets, and valid PSExec flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1020 by establishing a persistent, hidden, automated process to discover specific files, exfiltrate them via HTTP POST to an external IP, and mark them to prevent re-exfiltration, all using realistic adversary techniques.",
+        "semantic_justification": "The command perfectly demonstrates T1020 by using a backgrounded system process to implement a persistent loop that identifies, exfiltrates via HTTP POST, and marks data for completion, which is a textbook example of automated exfiltration.",
         "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T05:40:59.242090Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:22:55.284890Z"
       }
     ],
     "llm_average_syntactic": 4.333,

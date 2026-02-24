@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid flag formats, correct command separators, and appropriate escape sequences throughout the complex bash script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1568 Dynamic Resolution technique by using a time-based domain generation algorithm with SHA256, fallback domains, encrypted beaconing with user data, and mimics legitimate HTTP traffic with proper headers.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T05:21:21.416213Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, correct command substitutions, variable expansions, valid utility flags, and proper command chaining, ensuring it is parseable and runnable within a bash shell.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by implementing a time-based DGA with dynamic resolution and fallback mechanisms, followed by AES-encrypted, base64-encoded HTTP beaconing via netcat, which aligns perfectly with T1568 (Dynamic Resolution) and realistic adversary C2 communication techniques.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T05:21:39.650770Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The bash one-liner has balanced quoting, valid substitutions, proper loops/conditionals, and correct command/flag usage throughout.",
@@ -46,11 +26,31 @@
         "combined_score": 5.0,
         "confidence": 0.94,
         "timestamp": "2025-10-02T05:22:08.339170Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper quoting, balanced braces, and valid flag usage, though the nested variable expansion and mixed quoting in the printf/openssl pipeline introduces edge cases that could fail in some bash environments (e.g., the `$USER` expansion inside a single-quoted pass argument passed via double quotes).",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 by using a time-seeded SHA256-based DGA to generate a domain at runtime, resolves it with getent as a fallback mechanism, and sends an AES-256-CBC encrypted, base64-encoded beacon via HTTP POST over netcat, fully matching the described technique of dynamic resolution with C2 beaconing.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:18:34.990606Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with correctly escaped variables, balanced quotes for a bash -c context, and valid tool flags for openssl, netcat, and date.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a time-based DGA, attempts runtime resolution with fallback logic, and simulates an encrypted C2 beacon, aligning perfectly with T1568.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:18:39.811943Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

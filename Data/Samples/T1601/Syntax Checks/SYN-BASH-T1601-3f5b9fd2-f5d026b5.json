@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), valid flags (-f), and correct syntax for both the cp and md5sum commands.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by replacing a legitimate boot image with a trojanized version and then updating the checksum manifest to hide the modification, making detection more difficult.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T20:07:21.595140Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid commands, flags, paths, and operators with correct syntax.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command uses appropriate tools and logic to attempt modifying a system image and manifest consistent with T1601, the stated 'Privilege: None' makes it operationally implausible to write to protected system directories like /bootflash/ and /etc/firmware/, preventing it from achieving its claimed intent.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T20:07:40.674321Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The command is well-formed with valid flags, proper use of && and redirection, and no quoting or balancing issues.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T20:08:00.905569Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid use of `cp -f`, `&&` chaining, `md5sum` with glob expansion, and output redirection, all syntactically correct for bash.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1601 by copying a trojanized image to boot storage (`/bootflash/`) and then regenerating the checksum manifest to cover the tampering, directly matching the technique's description of modifying system images and defeating integrity validation.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T01:26:54.383583Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax, valid flags, and correct command chaining with logical AND.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately reflects the technique by replacing a boot image and updating a checksum manifest file to bypass integrity checks on a Linux-based network device.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:26:57.124199Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

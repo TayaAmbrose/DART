@@ -18,26 +18,6 @@
     "syntax_ok": false,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct syntax for the Python heredoc, variable assignments, and command chaining.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1568 Dynamic Resolution technique by using a deterministic DGA algorithm based on date to generate domains daily, resolving via external DNS, and establishing a connection to the generated domain on a non-standard port with proper error handling.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:14:36.467988Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct bash and python syntax, balanced quoting, and valid flag formats throughout without any parsing errors.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively implements DGA, dynamic resolution via external DNS, and a sophisticated C2 beacon using IP pinning, but the `iptables` command will fail due to the specified 'Privilege: None,' creating a minor realism gap in operational success.",
-        "combined_score": 4.5,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:14:58.610784Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The command uses a well-formed here-document within command substitution, balanced quoting/parentheses, valid flags for dig/iptables/curl, and proper separators.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T07:15:01.104387Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced heredoc quoting, proper variable assignments, valid semicolons as separators, correct flag usage for dig/curl/iptables, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 DGA behavior: a daily-rotating MD5-based domain generation using a seed+date, DNS resolution via an external resolver (Quad9) with random IP selection for fast-flux simulation, iptables egress allowance, and a TLS check-in on a non-standard port with IP pinning via --resolve, all operationally coherent.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:27:36.192046Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct Bash variable assignments, subshells, heredocs for Python, and standard utility flags for dig and curl.",
+        "semantic_score": 4,
+        "semantic_justification": "The command perfectly implements a daily-rotating DGA and host pinning for C2, though the iptables command will fail without the root privileges that the metadata specifies are absent.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:27:40.512750Z"
       }
     ],
     "llm_average_syntactic": 5.0,

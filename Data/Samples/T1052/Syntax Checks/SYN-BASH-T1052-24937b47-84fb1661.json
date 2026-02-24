@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T10:26:42.800761Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, balanced quotes, valid flags, and correct command separators (&&, |) for both dd and tar commands.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by creating a hidden file (.kextcache) on an external volume that appears to be a system file, then hiding compressed user documents within it using dd and tar, making it an effective data exfiltration technique via physical medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T10:26:46.175854Z"
+        "syntactic_justification": "The command is well-formed with balanced quotes, valid flags for dd and tar, proper use of && and pipe operators, and correct macOS-style path conventions.",
+        "semantic_score": 4,
+        "semantic_justification": "The approach correctly stages data onto a removable volume (/Volumes/UNTITLED) using a hidden dot-file disguised as a system cache (.kextcache), with sparse file pre-allocation and compressed tar piped through dd with conv=notrunc to embed content — operationally plausible for T1052, though count=0 in the first dd creates a zero-length sparse file rather than a 200MB pre-allocated container, which is a minor semantic gap but doesn't break the overall flow since seek=200 still sets the file size.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:42:13.322229Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct command separators, and valid flags for all utilities.",
+        "syntactic_justification": "The command uses valid POSIX/macOS syntax for dd, tar, and logical operators with balanced quotes and correct flag usage.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly executes the described intent, creating a sparse file and embedding a compressed archive into it without truncation, which aligns perfectly with the T1052 technique for disguising exfiltrated data.",
+        "semantic_justification": "The command effectively creates a sparse file to disguise the size and then overwrites it with compressed data, aligning perfectly with the exfiltration and obfuscation goals of T1052.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T10:26:57.029043Z"
+        "timestamp": "2026-02-18T22:42:15.747583Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

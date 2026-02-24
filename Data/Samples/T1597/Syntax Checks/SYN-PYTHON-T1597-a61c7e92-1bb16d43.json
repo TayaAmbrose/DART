@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, variable definitions, error handling, balanced parentheses/braces, and follows standard Python syntax conventions.",
-        "semantic_score": 5,
-        "semantic_justification": "The code directly implements the T1597 technique by querying WhoisXML API (a closed source requiring paid access), securely retrieving API credentials from AWS Secrets Manager, validating input, handling errors appropriately, and storing intelligence results in S3 for later use.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:54:25.985745Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with no syntax errors, balanced structures, or invalid constructs; it is ready to run.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by programmatically querying a 'closed-source subscription service' (WhoisXML) for intelligence (WHOIS records) using stored credentials, and then storing the collected data, which directly matches the technique's description.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:54:34.326786Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid Python 3 code with balanced structures, correct imports, proper f-strings, and no syntax errors.",
@@ -45,6 +25,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T11:54:45.236094Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically well-formed with balanced parentheses, proper imports, valid string formatting, correct exception handling, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying WhoisXML, a paid closed-source subscription service, using securely stored API credentials from AWS Secrets Manager, and persisting the intelligence results to S3 — fully consistent with adversarial use of closed data sources for domain reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:49:50.762802Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly well-formed, uses correct library syntax for boto3 and requests, and includes proper error handling and regex validation.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately demonstrates the technique by programmatically querying a commercial technical database (WhoisXML) using a secret API key and storing the intelligence in a cloud-native manner.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:49:52.271127Z"
       }
     ],
     "llm_average_syntactic": 5.0,

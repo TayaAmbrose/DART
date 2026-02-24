@@ -18,16 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid flag formats, and appropriate error handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1568 Dynamic Resolution technique by algorithmically generating domain names based on date, retrieving alternate C2 domains via TXT records, using DNS-over-HTTPS for resolution, and establishing command and control through a dynamically determined endpoint.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T05:45:30.845180Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The PowerShell one-liner is well-formed with balanced quotes and braces, valid cmdlets/parameters, and proper pipelines/separators.",
@@ -38,14 +28,24 @@
         "timestamp": "2025-10-02T05:45:57.657416Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed PowerShell, with balanced quotes, parentheses, proper command separators, and valid cmdlet parameters.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, parentheses, and quotes, proper semicolon separators, valid cmdlet syntax, and correct string formatting operators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by generating a date-seeded domain, extracting alternate C2 endpoints from TXT records, resolving via Google DoH (evading DNS monitoring), adding a firewall rule for port 5353, and beaconing to the resolved IP with a spoofed Host header — all operationally coherent and realistic.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:20:38.276448Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is perfectly formed with balanced braces, correct use of format strings, and valid pipeline logic.",
         "semantic_score": 4,
-        "semantic_justification": "The command extensively uses dynamic resolution (date-based DGA, TXT records for alternates, DoH resolution) to establish C2, aligning perfectly with T1568, but the `netsh` command to add a firewall rule requires elevated privileges, contradicting the stated 'Privilege: None'.",
+        "semantic_justification": "The logic effectively demonstrates DGA and dynamic resolution via TXT records and DoH, but the firewall modification (netsh) requires administrative privileges not specified in the metadata.",
         "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-02T05:58:20.481206Z"
+        "timestamp": "2026-02-19T00:20:43.126222Z"
       }
     ],
     "llm_average_syntactic": 5.0,

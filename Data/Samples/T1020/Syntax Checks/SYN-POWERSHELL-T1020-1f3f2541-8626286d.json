@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T04:20:01.948434Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with properly balanced quotes, parentheses, and braces, correct object instantiation syntax, proper method calls, and appropriate error redirection.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, braces, and quotes, proper semicolon separators, valid .NET object instantiation syntax, and correct property assignment patterns throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by loading the WinSCP .NET assembly, establishing an SFTP connection with credentials, and transferring CSV files to a remote server with resume capability and error suppression, aligning perfectly with the T1020 technique.",
+        "semantic_justification": "The command precisely implements automated exfiltration (T1020) by programmatically loading the WinSCP .NET assembly, establishing an SFTP session with hardcoded credentials and host key fingerprint, and transferring all CSV files from C:\\ProgramData\\ to a remote server with resume support and suppressed output — fully consistent with the described technique.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T04:20:06.009838Z"
+        "timestamp": "2026-02-18T22:27:00.877878Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for .NET reflection, object creation, property assignment, method calls, and output redirection.",
+        "syntactic_justification": "The PowerShell code is perfectly formed, uses correct .NET assembly loading syntax, balances all delimiters, and correctly maps WinSCP .NET API properties and methods.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of programmatically exfiltrating CSV files over SFTP using the WinSCP .NET assembly, directly aligning with the T1020 Automated Exfiltration technique.",
+        "semantic_justification": "The command realistically implements automated exfiltration by leveraging a legitimate library to transfer data via SFTP with features like resume support and suppression of output, aligning perfectly with T1020.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:02:18.682623Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:27:02.687231Z"
       }
     ],
     "llm_average_syntactic": 5.0,

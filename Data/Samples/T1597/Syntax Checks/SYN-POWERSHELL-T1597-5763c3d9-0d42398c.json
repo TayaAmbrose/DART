@@ -18,16 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper error handling with try/catch, and correct use of PowerShell syntax for variable assignment, conditional checks, and API calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries SecurityScorecard, a paid closed-source threat intelligence service, using proper API authentication to gather security information about a target organization.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T14:17:25.618810Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced braces, valid parameters, correct hashtable syntax, and proper try/catch structure.",
@@ -38,14 +28,24 @@
         "timestamp": "2025-10-02T14:17:47.013500Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, parentheses, braces, and valid PowerShell syntax throughout.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, proper try/catch structure, correct string interpolation, valid Invoke-RestMethod flags, and proper semicolon separators throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by interacting with a real-world, closed-source security rating API (SecurityScorecard) using token-based authentication, directly aligning with the T1597 technique.",
+        "semantic_justification": "The command accurately implements T1597 by querying SecurityScorecard, a legitimate paid/subscription closed-source threat intelligence platform, using token-based authentication to retrieve security ratings for a target domain, which directly aligns with adversaries querying paid technical databases for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:00:06.724373Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is perfectly well-formed, using correct try-catch blocks, variable assignments, and standard Invoke-RestMethod parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately targets the SecurityScorecard API, a legitimate closed-source security intelligence provider, using realistic authentication and endpoint conventions consistent with MITRE T1597.",
         "combined_score": 5.0,
         "confidence": 1.0,
-        "timestamp": "2025-10-02T20:52:00.962037Z"
+        "timestamp": "2026-02-19T01:00:09.069409Z"
       }
     ],
     "llm_average_syntactic": 5.0,

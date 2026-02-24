@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T17:34:32.365288Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid Bash syntax for I/O redirection to /dev/udp, proper command separators, and correct flag usage for echo, sleep, and ssh.",
+        "syntactic_justification": "The command is perfectly well-formed with proper semicolons as separators, balanced quoting with echo -n, valid /dev/udp pseudo-device paths, and correct ssh flag syntax.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly executes the described port knocking sequence using /dev/udp for traffic signaling, which directly aligns with T1205's concept of timing/sequence-based triggers to enable a subsequent SSH connection.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T17:34:42.269981Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (semicolons), valid syntax for UDP communication via /dev/udp, correct sleep commands, and a properly formatted SSH command.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending three sequential UDP 'knocks' to specific ports as signals before initiating an SSH connection, exactly matching the described port knocking implementation of T1205.",
+        "semantic_justification": "The command accurately implements port knocking via T1205 Traffic Signaling by sending sequenced UDP payloads (K1, K2, K3) to distinct ports using Bash's /dev/udp pseudo-device, then initiating an SSH connection on a non-standard port, which is a realistic and operationally plausible implementation of the technique.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:22:36.259524Z"
+        "timestamp": "2026-02-19T04:02:12.141880Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses standard Bash syntax, valid command separators, and correct pseudo-device redirection for sending UDP packets.",
+        "semantic_score": 5,
+        "semantic_justification": "The sequence accurately implements a port-knocking mechanism (Traffic Signaling) to trigger a remote response before establishing an SSH connection.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:02:12.446030Z"
       }
     ],
     "llm_average_syntactic": 5.0,

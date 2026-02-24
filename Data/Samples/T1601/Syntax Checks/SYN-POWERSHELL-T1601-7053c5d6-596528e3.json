@@ -18,16 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators, balanced quotes, valid flags for DISM and PowerShell cmdlets, and correct path specifications.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements T1601 by mounting a Windows boot image, modifying it to include malicious code in the startup sequence, committing changes, and then verifying the modification through hash comparison and binary diff.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:13:32.882185Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Commands are correctly separated by semicolons with valid DISM and PowerShell parameter syntax and balanced quoting for the embedded start command.",
@@ -38,19 +28,29 @@
         "timestamp": "2025-10-02T18:13:55.747432Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct command syntax for DISM, PowerShell cmdlets, and native Windows commands, along with proper command separators and balanced quoting.",
-        "semantic_score": 3,
-        "semantic_justification": "While the sequence of commands is semantically appropriate for mounting, modifying, committing changes to a WIM, and verifying integrity shifts for T1601, the stated 'Privilege: None' makes the core modification steps (dism mount/unmount commit, and writing to the mounted image) operationally infeasible, preventing the command from achieving its claimed intent of patching the image.",
-        "combined_score": 4.0,
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command chain is well-formed with valid DISM flags, proper PowerShell cmdlet syntax, and correct semicolon separators, though the path 'X:\\Windows\\System\\32\\malicious.exe' contains a typo ('System\\32' instead of 'System32') that would cause the payload reference to be incorrect.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by mounting a WIM boot image, injecting a malicious executable launch into startnet.cmd (which executes during Windows PE boot), committing the modified image, and then performing integrity verification via SHA256 hashing and binary diff to confirm the tampered image differs from the clean baseline.",
+        "combined_score": 4.5,
         "confidence": 0.9,
-        "timestamp": "2025-10-02T18:13:59.662370Z"
+        "timestamp": "2026-02-19T01:17:13.038316Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command sequence uses valid PowerShell separators, standard DISM flags, and correctly formatted cmdlets.",
+        "semantic_score": 5,
+        "semantic_justification": "The logic of mounting a WIM, injecting a startup script command, and committing changes perfectly demonstrates the technique of modifying a system image.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:17:16.217953Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

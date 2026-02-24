@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper PowerShell syntax for string formatting, error handling, and conditional execution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Dynamic Resolution technique by generating a random domain name, resolving SRV records to dynamically discover C2 endpoints and ports, creating a firewall rule for the discovered port, and establishing HTTPS communication with the resolved target.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:46:14.853543Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct PowerShell syntax, balanced quotes, parentheses, and braces, and valid parameters for all cmdlets and external commands.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively implements dynamic resolution for C2 via SRV records and attempts beaconing, but the `netsh` firewall rule modification requires elevated privileges, contradicting the stated 'Privilege: None' for full operational success.",
-        "combined_score": 4.5,
-        "confidence": 1,
-        "timestamp": "2025-10-02T07:46:34.051649Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell scriptblock is well-formed with balanced delimiters, valid cmdlets/parameters, correctly evaluated expressions, and properly separated statements.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T07:47:12.398553Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced braces, parentheses, and quotes, valid cmdlet usage, proper string formatting operators, and correct pipeline/semicolon separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by algorithmically generating a domain with a random suffix (DGA-like), querying SRV DNS records to dynamically discover both the C2 target hostname and port, programmatically opening a firewall rule for the discovered port, and then staging an HTTPS payload using the resolved endpoint with a spoofed Host header — all operationally coherent and realistic.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:30:28.578624Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell script block using valid cmdlets, operators, and parameter syntax with correctly balanced braces and parentheses.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively implements dynamic resolution via DNS SRV records and DGA-like naming, though the 'netsh' command requires administrative privileges which contradicts the 'None' privilege metadata.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:30:31.620411Z"
       }
     ],
     "llm_average_syntactic": 5.0,

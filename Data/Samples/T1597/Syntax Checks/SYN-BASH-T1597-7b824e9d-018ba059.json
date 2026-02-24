@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, appropriate error handling with set -euo pipefail, and clean variable usage throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by securely retrieving a paid vulnerability intelligence feed via SFTP, implementing proper authentication, verification, and logging mechanisms that would be used in a legitimate threat intelligence collection operation.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:26:17.459734Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct command separators, valid flags, and proper use of brace expansion and subshells.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the acquisition of a paywalled, tailored vulnerability advisory feed from a secure, closed source via SFTP, precisely aligning with T1597's description of searching closed sources for intelligence.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:26:31.802254Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The command is well-formed with balanced quoting and braces, valid scp options, correct use of conditionals and subshells, and properly escaped printf strings within double quotes.",
@@ -46,11 +26,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T11:28:03.008454Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, proper use of &&, semicolons, command substitution, and valid flag formats throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately models T1597 by retrieving a paywalled vulnerability advisory feed via authenticated SFTP with checksum verification and structured logging, though it represents the defender/analyst side of consuming closed-source intelligence rather than the adversarial acquisition behavior the technique describes, creating a slight realism gap in framing.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:47:50.219366Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed Bash script using standard flags, correct quoting, and proper control structures for downloading and verifying files.",
+        "semantic_score": 5,
+        "semantic_justification": "The command realistically demonstrates the collection of intelligence from a closed, authenticated source (vulnerability feed) which aligns perfectly with the T1597 technique description.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:47:54.034288Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

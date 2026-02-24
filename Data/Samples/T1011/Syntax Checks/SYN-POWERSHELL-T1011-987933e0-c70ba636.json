@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T01:10:17.428562Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, parentheses, and braces, correct PowerShell syntax with appropriate backtick escaping, and valid WMIC process call create syntax.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by identifying a 6to4 IPv6 interface (an alternate network medium), binding to it, and exfiltrating a file over IPv6 to a remote server using a high port, bypassing potential monitoring on primary network channels.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:10:24.041753Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command uses backtick escaping for PowerShell variables within a WMIC call create string, which is a valid but fragile approach; the nested quoting and escaping is complex and may fail in certain shell contexts, but the overall structure is parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1011 by discovering a 6to4 IPv6 transition adapter, binding to its IPv6 address, and exfiltrating a file over a raw TCP connection on a high port to an IPv6 destination, which aligns well with exfiltration over an alternate network medium, though 6to4 adapters are rarely active on modern Windows systems reducing operational realism.",
+        "combined_score": 3.5,
+        "confidence": 0.8,
+        "timestamp": "2026-02-18T22:06:03.315548Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, featuring correctly balanced quotes and parentheses, valid PowerShell syntax, and proper backtick escaping for dollar signs to ensure correct parsing when executed via WMIC.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements the claimed intent by programmatically identifying and binding to a 6to4 IPv6 network adapter, then exfiltrating a file over this specific IPv6 transition mechanism, perfectly aligning with the T1011 technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T06:25:02.863751Z"
+        "syntactic_justification": "The command is perfectly formed for execution from a PowerShell host, using backticks to escape variable sigils intended for the child PowerShell process, and maintains balanced quoting throughout the WMIC call.",
+        "semantic_score": 4,
+        "semantic_justification": "The command logically achieves exfiltration by identifying a specific logical interface (6to4) and binding a TCP client to it; however, 6to4 is an IPv6-over-IPv4 tunneling protocol and is technically more aligned with T1048 (Alternative Protocol) than T1011 (Other Network Medium), which typically implies separate physical hardware like Bluetooth or Cellular.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:06:13.444121Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.0,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T13:35:56.693335Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Docker syntax, balanced quotes, valid iptables flags, and correct command chaining.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of && separators, valid iptables flags, and correct Docker run syntax throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using a SIP header as a covert signal to temporarily allow traffic on another port, creating a hidden trigger mechanism exactly as described in T1205.",
+        "semantic_justification": "The command accurately implements T1205 port-knocking/traffic signaling by using a custom SIP header 'X-Open-Media: yes' on UDP/5060 as a covert signal that, when detected via iptables string matching, marks the source IP and subsequently allows RTP-range traffic on UDP/10000 for 40 seconds — a realistic and operationally plausible implementation of traffic-based signaling to trigger conditional access.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T13:35:59.454613Z"
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T03:45:38.526474Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct Docker syntax, balanced quoting, valid iptables flags, and proper command sequencing using '&&'.",
+        "syntactic_justification": "The command is perfectly well-formed, using correct Docker flags, shell syntax, and iptables module parameters with balanced quoting and valid logic flow.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely implements Traffic Signaling (T1205) by using a custom SIP header on UDP/5060 as a signal to temporarily open UDP/10000 for the signaling source, demonstrating a highly plausible and realistic scenario for covert communication or triggered actions within legitimate-looking network traffic.",
+        "semantic_justification": "The command accurately implements Traffic Signaling (T1205) by using a specific string match in a SIP packet to trigger the iptables 'recent' module, which subsequently opens another port for the signaling IP, effectively creating a knock-based covert trigger.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T13:36:20.470729Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:45:41.488627Z"
       }
     ],
     "llm_average_syntactic": 5.0,

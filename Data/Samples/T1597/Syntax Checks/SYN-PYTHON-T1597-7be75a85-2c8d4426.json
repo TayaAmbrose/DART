@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper syntax, balanced quotes, correct exception handling, and appropriate use of libraries and functions.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries Shodan, a commercial closed-source intelligence platform, using an API key to gather domain intelligence that could be used for targeting.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:50:40.970974Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed, with correct syntax for imports, variable assignments, conditionals, URL construction, dictionary literals, try-except blocks, and standard library function calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying the commercial Shodan API (a 'paid feed' or 'private database') using an API key to collect domain-related intelligence for targeting.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:50:48.552275Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The Python snippet is well-formed with balanced parentheses, correct try/except structure, valid semicolon-separated statements, and proper imports and arguments.",
@@ -45,12 +25,32 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T13:51:03.511138Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with proper imports, exception handling, and string formatting, but the inline if-statement after a semicolon on the same line is not valid Python syntax (multi-line if blocks cannot follow a semicolon in this way), which would cause a SyntaxError when run as a single command string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the commercial Shodan API (a paid/closed data source) using an API key to retrieve DNS and subdomain intelligence about a target domain, which is a textbook example of searching closed sources for targeting information.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:59:03.425849Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 2,
+        "syntactic_justification": "Python does not support 'try/except' blocks or control flow statements (if) followed by other statements on the same line using semicolons, leading to a SyntaxError.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly identifies and utilizes the Shodan API—a primary example of a closed technical data source—to query domain intelligence as described in T1597.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:59:10.628448Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 3.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
-    "llm_verdict": "likely_match",
+    "llm_average_score": 4.333,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

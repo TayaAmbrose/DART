@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T17:55:20.632858Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, uses proper PowerShell syntax for object creation, method calls, conditional logic, and external process execution.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced braces, parentheses, and quotes, proper semicolons as statement separators, and valid .NET class instantiation and method calls throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1205 Traffic Signaling technique by listening for a specific base64-encoded UDP signal to trigger a system configuration change (port proxy), demonstrating a clear operational use case for command and control signaling.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T17:55:42.704937Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper PowerShell syntax for creating objects, handling variables, and executing conditional logic.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by listening for a specific UDP packet containing a base64-encoded command that, when received and decoded to match 'OPENPROXY:443->3389', triggers the creation of a port proxy to expose RDP over port 443.",
+        "semantic_justification": "The command precisely implements T1205 traffic signaling: it listens on a UDP port for a base64-encoded magic packet, decodes and validates the signal string 'OPENPROXY:443->3389', and upon match executes a hidden elevated netsh portproxy command to tunnel RDP (3389) through port 443, fully aligning with the technique's trigger-based payload activation and covert channel use.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:24:11.313204Z"
+        "timestamp": "2026-02-19T04:03:26.587039Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with correct PowerShell syntax, balanced braces, proper object instantiation, and valid method calls for the .NET classes used.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a traffic signaling trigger by listening for a specific UDP packet, decoding it, and conditionally executing a netsh command to establish a port proxy, perfectly matching the T1205 technique description.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:03:30.941050Z"
       }
     ],
     "llm_average_syntactic": 5.0,

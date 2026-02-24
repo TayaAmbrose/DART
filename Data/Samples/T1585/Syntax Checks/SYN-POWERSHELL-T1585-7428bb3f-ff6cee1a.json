@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced braces, correct variable assignment, proper piping, and valid parameter usage for both ConvertTo-Json and Invoke-RestMethod cmdlets.",
-        "semantic_score": 4,
-        "semantic_justification": "The command aligns well with T1585 (Establish Accounts) by creating a seemingly legitimate user profile via an API, though it uses a demo API (reqres.in) rather than an actual service where accounts would have operational value to an adversary.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T11:04:01.862296Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses correct PowerShell syntax for hashtables, cmdlet parameters, and piping, with no discernible errors.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely demonstrates the creation of an account record with legitimate persona data via an API call, directly aligning with T1585's objective of establishing accounts to blend into normal activity.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:04:08.969617Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid PowerShell assignment and pipelines with balanced quotes/braces and appropriate parameters.",
@@ -44,11 +24,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T11:04:20.530119Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced braces, proper hashtable construction, correct pipeline usage, valid Invoke-RestMethod flags, and proper ConvertTo-Json calls at both ends.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command does POST persona profile data to an API endpoint and aligns conceptually with T1585 account establishment, it targets reqres.in (a public mock/test API that doesn't actually create real accounts), which significantly reduces operational plausibility for a real adversarial account creation scenario.",
+        "combined_score": 4.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:45:13.329409Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell syntax is perfectly formed, using correct hashtable notation, cmdlets, and pipe sequences.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately demonstrates the mechanism of using an API to create a user profile with a persona, though it uses a public test API (reqres.in) rather than a real target environment.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:45:15.905398Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

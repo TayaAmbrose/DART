@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes, valid flags, correct command separators, and proper registry path references.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements the T1601 technique by mounting two Windows images, modifying the system registry of one to add a backdoor service, and comparing it with a clean baseline to validate the modification.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T20:03:13.897231Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct syntax for DISM, `reg` commands, and PowerShell cmdlets, with proper quoting, command separators, and pipeline usage.",
-        "semantic_score": 1,
-        "semantic_justification": "The command cannot achieve its stated intent of modifying a system image and registering a service as both DISM image mounting and `reg load` operations fundamentally require Administrator privileges, directly contradicting the claimed 'Privilege: None' and rendering it inoperable.",
-        "combined_score": 3.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T20:03:38.512279Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell one-liner with balanced quotes, valid DISM/reg/cmdlet syntax, proper semicolon separators, and correct registry provider paths.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.84,
         "timestamp": "2025-10-02T20:05:07.010886Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with valid DISM flags, registry operations, and pipeline usage, though mixing semicolons as separators between DISM CLI commands and PowerShell cmdlets in a single session may cause parsing issues depending on execution context.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by mounting a clean and modified WIM image offline, injecting a fake service ('TelemetryHelper') into the modified image's SYSTEM hive to mimic a legitimate telemetry service, and then performing a differential comparison against the clean baseline to validate the injected persistence mechanism—fully consistent with offline firmware/image tampering and backdoor insertion.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:26:32.265498Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command sequence is well-formed, using correct DISM flags, proper registry provider paths in PowerShell, and valid command separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements the technique by mounting WIM files and injecting a service into an offline registry hive, though it lacks the necessary 'dism /Unmount-Image /Commit' step to persist changes and incorrectly lists 'None' for required privileges.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:26:41.656677Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.167,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

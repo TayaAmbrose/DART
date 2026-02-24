@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper syntax, balanced quotes/braces, correct error handling with try/catch, and appropriate variable declarations and method calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying the Have I Been Pwned API (a closed source requiring an API key) to gather breach intelligence about a specific email address, storing the results, and logging the outcome.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:39:13.856260Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct PowerShell syntax, balanced elements, valid cmdlet usage, and proper variable expansions.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves its claimed intent by querying a key-gated, 'closed' API (HIBP) for target intelligence, directly aligning with the 'Search Closed Sources' technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:39:22.207334Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced braces/quotes, valid hashtable and cmdlet usage, and proper separators.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T11:39:35.483972Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced brackets, braces, and quotes, proper try/catch structure, valid cmdlet syntax, and correct use of semicolons and pipeline operators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1597 by authenticating to the key-gated HIBP v3 API (a closed, subscription-based breach intelligence source) to query a specific target email, then storing structured JSON results and logging outcomes — fully consistent with querying paid/private databases for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T00:48:52.662236Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows correct PowerShell syntax, uses valid object types, properly handles headers in a hash table, and maintains balanced quotes and braces throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a query to a paid/closed data source (HIBP API v3) using the required authentication headers and parameters, aligning perfectly with the intent of T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:48:55.506033Z"
       }
     ],
     "llm_average_syntactic": 5.0,

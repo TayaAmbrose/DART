@@ -28,30 +28,30 @@
         "timestamp": "2025-10-01T01:26:35.774114Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed Python code with balanced quotes, parentheses, and proper syntax for socket operations, file reading, and string handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by implementing a basic SMTP exfiltration channel on a non-standard port (2526) to transmit the contents of a hidden file (/Users/Shared/.z) to an external server, providing an alternate exfiltration medium separate from the primary C2 channel.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:26:40.344782Z"
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper string delimiters, valid socket API calls, and correct command separators throughout.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command does exfiltrate data via a raw TCP socket using SMTP-like commands, it connects over a standard TCP/IP network rather than a genuinely different network medium (cellular, Wi-Fi, Bluetooth) as T1011 specifies, making it more accurately T1048 (Exfiltration Over Alternative Protocol) than T1011; additionally, port 2526 is non-standard but the transport is still the same IP network.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:09:42.406297Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with balanced quotes and parentheses, valid syntax for socket operations, lambda function, and file I/O, designed for single-line execution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements an SMTP-like exfiltration channel over raw sockets to a non-standard port, directly aligning with the technique's intent of using an alternate method to bypass primary C2 monitoring.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:31:16.469412Z"
+        "syntactic_justification": "The Python one-liner is perfectly formed with balanced quotes, correct semicolon separators, and valid use of the socket and lambda functions.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command successfully performs exfiltration via the SMTP protocol, it does not actually demonstrate the use of a 'different network medium' (like cellular or Bluetooth) as defined by T1011; it is instead an implementation of T1048 (Exfiltration Over Alternative Protocol).",
+        "combined_score": 4.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:09:49.928865Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
-    "llm_verdict": "likely_match",
+    "llm_average_semantic": 2.667,
+    "llm_average_score": 3.833,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct syntax for crontab manipulation.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 (Establish Accounts) by setting up automated maintenance of a GitHub account persona through a cron job that periodically updates profile information to maintain credibility and persistence.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T09:30:43.784432Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, proper command separators, valid flag formats, and correct shell syntax for cron job installation and execution.",
-        "semantic_score": 2,
-        "semantic_justification": "While the command correctly installs a cron job to modify a GitHub profile, this action of updating an existing account's details does not align with the 'Establish Accounts' (T1585) technique, which focuses on creating or initially abusing accounts for access or persistence.",
-        "combined_score": 3.5,
-        "confidence": 1,
-        "timestamp": "2025-10-02T09:31:03.567397Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quoting and parentheses with a valid crontab pipeline, flags, and redirections make the command well-formed.",
@@ -45,11 +25,31 @@
         "combined_score": 3.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T09:32:26.462156Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper crontab pattern, pipe structure, and curl flags, but the nested double-quote escaping within the -d JSON payload (using backslash-escaped quotes inside a single-quoted string passed to crontab) may cause issues depending on shell interpretation layers.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 persona maintenance by scheduling a monthly cron job that reads a stored GitHub token and uses the GitHub REST API PATCH endpoint to update profile details (name, bio), directly supporting the goal of keeping a fabricated account active and credible.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:38:56.337553Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly uses the standard pattern for appending a cron job, with proper quoting and escaping for the nested JSON payload and shell variables.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively automates profile updates to maintain a persona as per T1585, though the use of /etc/ and /var/log/ paths typically requires root privileges, which conflicts with the 'None' privilege label.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:39:01.108239Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 4.0,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

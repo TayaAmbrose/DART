@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T07:09:16.668888Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and appropriate error redirection.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper use of bash -c with single-quoted compound command, valid pipe chains, correct use of &&, proper variable expansion, and valid flags throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1052 by automatically finding a USB device, mounting it, compressing user documents, splitting them into hidden chunks on the USB drive, and properly unmounting it.",
+        "semantic_justification": "The command precisely implements T1052 by auto-detecting a USB device via /dev/disk/by-id, mounting it, archiving and compressing all users' Documents directories, splitting into 100MB chunks with a hidden dot-prefixed filename to avoid casual detection, syncing, and unmounting — fully consistent with physical medium exfiltration including staging, compression, chunking, and obfuscation behaviors.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T07:09:19.334125Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:32:10.288952Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command separators, and proper syntax for command substitution and redirection.",
+        "syntactic_justification": "The command is perfectly formed with correct variable substitution, balanced quoting, proper piping, and valid flags for all involved utilities.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely aligns with T1052 by identifying a physical medium (USB), staging data (compressing and splitting user documents), and exfiltrating it onto the mounted device before unmounting, directly matching the technique's description.",
+        "semantic_justification": "The command accurately implements the technique by identifying a physical USB device, mounting it, and performing data staging via compression, splitting, and obfuscation (hidden filenames) before cleanup.",
         "combined_score": 5.0,
         "confidence": 1.0,
-        "timestamp": "2025-10-01T07:09:32.385487Z"
+        "timestamp": "2026-02-18T22:32:11.736655Z"
       }
     ],
     "llm_average_syntactic": 5.0,

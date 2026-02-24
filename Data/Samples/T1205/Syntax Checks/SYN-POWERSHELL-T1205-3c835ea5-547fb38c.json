@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T19:30:52.833448Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with properly balanced parentheses, brackets, and braces, correct semicolon separators, and valid syntax for all operations including TLS configuration, TCP listener setup, stream handling, and conditional execution.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced brackets, proper semicolon separators, valid .NET type references, and correct string comparisons throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by establishing a covert listener that waits for a specific trigger phrase ('OPEN-SESAME') before executing the payload that creates a port forwarding rule to expose RDP through a less suspicious port (8443).",
+        "semantic_justification": "The command precisely implements a port-knock/traffic-signaling mechanism (T1205) by listening on TCP 10443 for a magic string 'OPEN-SESAME' and conditionally activating a portproxy rule to expose RDP (3389) on port 8443, which is a textbook example of traffic signaling used to trigger a covert access channel.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:41:11.197588Z"
+        "timestamp": "2026-02-19T04:11:04.529180Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed PowerShell, using correct object instantiation, method calls, variable assignments, conditional logic, and the `netsh` external command with valid flags.",
+        "syntactic_justification": "The command is a perfectly valid PowerShell script using .NET classes and standard syntax for logic and command execution.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1205 by implementing a specific string ('OPEN-SESAME') as a signal over a network connection to trigger a predefined action (exposing RDP via portproxy on an HTTPS-looking port), demonstrating a clear trigger mechanism for adversary actions.",
+        "semantic_justification": "The command accurately implements traffic signaling by listening for a specific magic string to trigger a configuration change (opening a port proxy for RDP).",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T03:41:22.933647Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:11:07.146089Z"
       }
     ],
     "llm_average_syntactic": 5.0,

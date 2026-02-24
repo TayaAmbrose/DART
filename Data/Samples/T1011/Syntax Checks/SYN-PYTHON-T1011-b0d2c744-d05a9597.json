@@ -29,30 +29,30 @@
         "timestamp": "2025-10-01T00:20:42.420564Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is described as a well-formed Python script that would correctly open an IPv6 socket and transmit base64-encoded data to a specific port.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by using an alternate network medium (IPv6 link-local) instead of the primary network channel to exfiltrate encoded data over a non-standard port.",
-        "combined_score": 5.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T00:20:49.674851Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is explicitly withheld and described only conceptually, so no actual syntax can be evaluated — it is a description of intent rather than a runnable command.",
+        "semantic_score": 3,
+        "semantic_justification": "The described concept (IPv6 link-local socket transmitting base64-encoded data to a non-standard port) is plausible as an alternate-medium exfiltration technique, but IPv6 link-local is a layer-3 protocol on the same physical interface rather than a truly different network medium (e.g., Bluetooth, cellular, Wi-Fi), making it only a partial match for T1011's core premise.",
+        "combined_score": 2.0,
+        "confidence": 0.6,
+        "timestamp": "2026-02-18T21:57:21.655941Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The description outlines operations (IPv6 TCP socket, link-local scope, base64 encoding, non-standard port, Python script on Windows) that are all perfectly well-formed and implementable within a syntactically correct Python script.",
-        "semantic_score": 5,
-        "semantic_justification": "The described command perfectly aligns with T1011 by explicitly using an 'alternate network medium' (IPv6 link-local connection) to exfiltrate data, bypassing a likely primary IPv4 channel, which is the core concept of the technique.",
-        "combined_score": 5.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T00:21:02.775917Z"
+        "syntactic_justification": "The described Python implementation correctly identifies the necessary components—AF_INET6, scope IDs for link-local addresses, and base64 encoding—which are syntactically valid in Python's socket library.",
+        "semantic_score": 4,
+        "semantic_justification": "The command is operationally sound for data exfiltration; however, IPv6 link-local is more accurately categorized as an alternate protocol (T1048) rather than an alternate physical medium (T1011).",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:57:39.875290Z"
       }
     ],
-    "llm_average_syntactic": 3.667,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 3.833,
-    "llm_verdict": "uncertain",
+    "llm_average_syntactic": 2.333,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 2.667,
+    "llm_verdict": "likely_mismatch",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": "Python syntax check failed (py_compile). Command '['C:\\\\Users\\\\flacman\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\\\python.exe', '-m', 'py_compile', 'C:\\\\Users\\\\flacman\\\\AppData\\\\Local\\\\Temp\\\\tmp5lhwiztp.py']' returned non-zero exit status 1."

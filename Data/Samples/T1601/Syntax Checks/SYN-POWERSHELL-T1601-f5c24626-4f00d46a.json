@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes, valid DISM parameters, correct command separators, and proper piping to Out-Null.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by mounting both clean and modified Windows images, injecting a persistence mechanism via SetupComplete.cmd, and using Compare-Object to verify the modification against a clean baseline.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T18:42:48.898690Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 2,
-        "syntactic_justification": "The `Get-ChildItem` cmdlet in the comparison portion uses the incorrect parameter `-Name` instead of `-Path` to specify the directory, which will cause a parsing error and prevent execution of that part of the command.",
-        "semantic_score": 2,
-        "semantic_justification": "While the core operations of mounting a system image and adding a `SetupComplete.cmd` for persistence are highly relevant to T1601, the stated 'Privilege: None' contradicts the administrative rights required for `dism /Mount-Image` and modifying files within a mounted system image, rendering the command operationally infeasible as described.",
-        "combined_score": 2.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T18:43:08.714741Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell one-liner with valid DISM flags, balanced quotes/parentheses, and correct separators.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T18:43:25.905425Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "All commands are well-formed with balanced quotes, valid DISM flags, proper PowerShell cmdlet syntax, and correct semicolon separators throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly mounts clean and modified WIM images, injects a SetupComplete.cmd persistence script into the offline image (a realistic T1601 technique for modifying a Windows image), and uses Compare-Object to diff the two mounts for verification; the minor gap is that 'None' privilege is unrealistic since DISM image mounting typically requires administrator rights.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:19:46.539606Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses well-formed DISM syntax and standard PowerShell cmdlets with correct separators, flags, and balanced parentheses.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1601 by using DISM to mount a Windows image and injecting a SetupComplete.cmd file for offline persistence, followed by a verification step.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:19:52.985216Z"
       }
     ],
-    "llm_average_syntactic": 4.0,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 3.667,
+    "llm_average_syntactic": 5.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

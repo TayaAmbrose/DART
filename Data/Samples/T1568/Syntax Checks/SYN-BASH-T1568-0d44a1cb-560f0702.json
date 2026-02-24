@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct syntax for variable assignments, command substitutions, and arithmetic operations.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by generating a deterministic domain based on host UUID and current date, rotating through ports based on seconds, and attempting to connect to a C2 server using the dynamically generated endpoint.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T05:40:12.961443Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, correct command substitutions, arithmetic expansions, array manipulations, and valid flags for all utilities.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by demonstrating a deterministic DGA using host UUID and weekly rotation, combined with dynamic port rotation, directly embodying T1568 Dynamic Resolution for C2 beaconing.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T05:40:28.308273Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash with balanced quoting, valid substitutions, arithmetic and array usage, and correct curl flags and separators.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T05:40:49.685410Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper semicolons, valid array syntax, correct arithmetic expansion, and valid curl flags throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 by combining a host-unique identifier (ESXi UUID) with a time-based seed (ISO week) to deterministically generate a DGA-style subdomain via SHA1, then rotates among multiple ports using seconds-based modulo arithmetic before beaconing to the C2 endpoint, fully exemplifying dynamic resolution for C2 evasion.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:20:10.490141Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed bash script using standard variable assignment, command substitution, arrays, and arithmetic expansion.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a deterministic domain generation algorithm and port rotation strategy to establish communication with a dynamic endpoint, perfectly matching T1568.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:20:13.693687Z"
       }
     ],
     "llm_average_syntactic": 5.0,

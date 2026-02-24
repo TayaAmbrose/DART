@@ -18,16 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper syntax, balanced quotes/braces, appropriate error handling, and correct use of PowerShell cmdlets and methods.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by using Clearbit's paid API service to gather non-public company information about a domain, with proper error handling, logging, and secure storage of results.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:53:33.820427Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced delimiters, valid parameters, proper separators, and no obvious parsing errors.",
@@ -38,14 +28,24 @@
         "timestamp": "2025-10-02T11:53:45.951867Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper syntax for variables, cmdlets, parameters, and flow control (try-catch, if-else).",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, braces, and parentheses, proper semicolons as separators, valid cmdlet syntax, and correct string interpolation throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying a known paid, closed-source intelligence API (Clearbit) to gather organization details for a domain, matching the technique's goal of acquiring non-public information for targeting.",
+        "semantic_justification": "The command accurately implements T1597 by querying Clearbit's paid closed-source company lookup API using a bearer token (API key), targeting a specific domain to gather organizational intelligence, and persisting results to disk — fully consistent with adversarial use of paid/closed data sources for reconnaissance.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:53:46.844709Z"
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:49:44.605181Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed PowerShell script using correct syntax for variable assignments, try-catch blocks, API headers, and web requests.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately simulates an adversary querying a paid commercial data source (Clearbit) to gather organizational intelligence, which aligns perfectly with T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:49:47.355168Z"
       }
     ],
     "llm_average_syntactic": 5.0,

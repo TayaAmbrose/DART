@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes, valid parameter names, and correct use of nested commands.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by downloading SDelete (a legitimate secure deletion tool) and using it with appropriate parameters to securely wipe financial data with 3 passes on a production VM.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T02:43:35.670463Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct cmdlet usage, proper parameter assignments, balanced quoting, valid command separators, and accurate flag formats for all embedded commands.",
-        "semantic_score": 3,
-        "semantic_justification": "While the chosen tool (SDelete) and its arguments are perfectly aligned with secure data destruction (T1485), the command's operational feasibility is severely compromised by the stated 'Privilege: None' context, as SDelete typically requires administrative privileges to securely wipe a system-level directory like 'C:\\Data\\Finance'.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T02:43:55.951306Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell cmdlet and inner script are well-formed with balanced quoting, valid parameters, and proper separators.",
@@ -44,11 +24,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T02:44:19.638665Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed and parseable with proper PowerShell syntax, though the unquoted `$env:TEMP` inside a double-quoted string within the outer `-ScriptString` parameter could cause variable expansion issues depending on how the string is passed, and the path argument to sdelete.exe uses single quotes which sdelete may not handle correctly on the command line.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1485 Data Destruction by using Azure's Invoke-AzVMRunCommand to remotely execute a script that downloads SDelete (a legitimate secure-wipe tool), then uses it with `-s` (recursive), `-p 3` (3-pass overwrite), and `-q` (quiet) flags to securely and irrecoverably destroy all files in C:\\Data\\Finance, perfectly matching the technique description's mention of secure deletion tools like sdelete.",
+        "combined_score": 4.5,
+        "confidence": null,
+        "timestamp": "2026-02-19T01:44:50.722161Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Azure PowerShell syntax, proper quoting for the script string, and valid PowerShell command separators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command realistically implements data destruction by leveraging a legitimate administrative tool (RunCommand) to deploy and execute a secure wipe utility (SDelete) on a sensitive target directory.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:44:52.692107Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

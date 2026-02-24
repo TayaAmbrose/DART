@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T03:40:59.497218Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper process substitution, balanced quotes, valid rsync flags, and correct path references.",
+        "syntactic_justification": "The command is well-formed with valid bash process substitution `<(...)`, properly balanced parentheses, correct rsync flags (-azq), and valid argument ordering with source and destination paths.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1020 (Automated Exfiltration) by using rsync to automatically identify, package, and transfer recently modified documents to an external server in a stealthy manner.",
+        "semantic_justification": "The command accurately demonstrates T1020 automated exfiltration by using `find` to dynamically select recently modified (<1 day), small (<10MB) documents and quietly transferring them via rsync to an external host in a hidden `.cache/.recent/` directory, with compression and archive mode enabling stealthy, selective automated exfiltration.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T03:41:02.030614Z"
+        "timestamp": "2026-02-18T22:23:42.387558Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, utilizing valid Bash constructs like process substitution and standard rsync options with correct syntax.",
+        "syntactic_justification": "The command uses valid Bash process substitution, correct find syntax, and well-formed rsync flags with balanced path arguments.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of automated, selective exfiltration by dynamically identifying recent and small files, compressing them, and transferring them via rsync to an external server.",
+        "semantic_justification": "The command effectively demonstrates automated data selection and exfiltration by dynamically generating a list of recent files and transferring them quietly to a remote host.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T05:49:03.117840Z"
+        "timestamp": "2026-02-18T22:23:43.925944Z"
       }
     ],
     "llm_average_syntactic": 5.0,

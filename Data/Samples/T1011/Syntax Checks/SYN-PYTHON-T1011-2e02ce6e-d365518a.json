@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T00:46:05.590924Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax for socket programming in Python.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by establishing a Bluetooth L2CAP connection to exfiltrate system information over a non-IP medium, bypassing traditional network monitoring.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:46:08.998363Z"
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper string concatenation, correct method chaining, and valid escape sequences throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses Python's Bluetooth socket API with AF_BLUETOOTH, SOCK_SEQPACKET, and BTPROTO_L2CAP to send host identification data over Bluetooth L2CAP, aligning well with T1011 exfiltration over an alternative network medium, though real-world success requires the target device to be paired/discoverable and the PSM 0x1003 to be listening, which reduces operational plausibility slightly.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:02:11.086994Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct Python syntax for socket operations, balanced quotes, and valid arguments for creating and interacting with a Bluetooth L2CAP socket.",
+        "syntactic_justification": "The command is a perfectly well-formed Python one-liner with correctly balanced parentheses, valid socket constants, and proper string encoding.",
         "semantic_score": 5,
-        "semantic_justification": "The command accurately implements exfiltration of host identification over Bluetooth L2CAP, directly matching the T1011 technique's description of using an 'other network medium' to bypass IP-centric monitoring.",
+        "semantic_justification": "The command accurately utilizes Python's native Bluetooth socket support on Linux to exfiltrate system information to a remote MAC address, perfectly aligning with T1011.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:17:22.763858Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:02:12.455767Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

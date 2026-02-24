@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T02:49:26.416102Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 1,
-        "syntactic_justification": "The command is a non-executable placeholder/description rather than actual code, containing only a high-level description of the intended functionality without any parseable syntax.",
+        "syntactic_justification": "The command is explicitly marked as a non-executable placeholder and contains no actual code — only a natural language description of intended behavior — making it a fragment that cannot be parsed or run.",
         "semantic_score": 4,
-        "semantic_justification": "The described functionality aligns well with the T1020 Automated Exfiltration technique by implementing timed/scheduled data collection, compression, and exfiltration via SMB, though without seeing the actual implementation code, some operational details remain unverified.",
+        "semantic_justification": "The described behavior accurately captures T1020 automated exfiltration mechanics: timed looping, 'net use' to map a remote SMB share, compression of newly found files, copy to UNC path, and unmapping — all operationally plausible and well-aligned with the technique, though the lack of actual implementation details (retry logic, specific compression tool, scheduling mechanism) leaves minor realism gaps.",
         "combined_score": 2.5,
-        "confidence": 0.8,
-        "timestamp": "2025-10-01T02:49:29.694046Z"
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:20:52.506450Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 1,
-        "syntactic_justification": "The provided input is a natural language description of a process, explicitly marked as a non-executable placeholder, and therefore not a syntactically correct or parseable PowerShell command string.",
+        "syntactic_justification": "The command is a natural language description and a placeholder rather than functional, executable PowerShell code.",
         "semantic_score": 5,
-        "semantic_justification": "The described logic perfectly aligns with MITRE ATT&CK T1020 (Automated Exfiltration), detailing a periodic, automated process to compress files and transfer them to a remote SMB share.",
+        "semantic_justification": "The described logic—periodically mapping a drive, compressing files, and exfiltrating via SMB—is a perfect conceptual match for the Automated Exfiltration technique.",
         "combined_score": 3.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T02:49:51.954218Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:20:57.142974Z"
       }
     ],
     "llm_average_syntactic": 1.0,

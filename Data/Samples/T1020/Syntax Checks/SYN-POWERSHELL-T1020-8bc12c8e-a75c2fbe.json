@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T04:13:12.074392Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct PowerShell syntax including error handling and redirection.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and braces, valid PowerShell constructs, and proper flag usage, though the nested quoting between psexec's -Command string and the inner cmd.exe /c single-quoted argument could cause parsing issues in some execution contexts.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by establishing persistence, continuously monitoring for PDF files, exfiltrating them to an external SMB share, and tracking transferred files to avoid duplicates - all core elements of T1020.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T05:58:36.618454Z"
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration by using PsExec for privileged execution, mounting a remote SMB share with credentials, continuously polling a targeted directory for PDFs, copying them to the external share, and tracking transferred files to avoid duplicates — all consistent with realistic adversarial automation behavior.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T22:26:15.170778Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags for psexec and PowerShell, and correct cmdlet usage within the script block.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, correct PowerShell syntax for loops and pipes, and valid PsExec flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of automated exfiltration by persistently mounting an SMB share, continuously searching for and copying targeted files, and moving them after successful transfer to prevent re-exfiltration, all in a stealthy manner.",
+        "semantic_justification": "The command perfectly implements automated exfiltration by using a persistent loop to scan for specific file types, authenticating to a remote share, and transferring data at regular intervals.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T05:58:51.554329Z"
+        "timestamp": "2026-02-18T22:26:21.113408Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

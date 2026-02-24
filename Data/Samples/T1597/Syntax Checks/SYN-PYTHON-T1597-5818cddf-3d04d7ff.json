@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed Python code with proper imports, exception handling, balanced quotes/parentheses/braces, and correct string formatting for the inner Python script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries the paid Shodan database API using an API key to collect intelligence on specific hosts without active scanning.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:32:22.523905Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script, including the nested script executed within the Kubernetes pod, is perfectly well-formed with correct syntax, balanced delimiters, and valid function calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly queries the Shodan API, a well-known closed-source technical database, using an API key to collect host intelligence, which directly aligns with the T1597 'Search Closed Sources' technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:32:31.519224Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The multi-line Python code is well-formed with balanced quotes, valid imports, proper try/except blocks, and a correctly constructed Kubernetes exec call with a well-quoted inner command string.",
@@ -44,11 +24,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T12:33:05.688576Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with proper imports, exception handling, and string construction, though the embedded multi-line string using literal newlines ('\\n') inside a single-quoted string passed to a shell command creates minor quoting complexity that could cause edge-case parsing issues.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying the closed-source Shodan paid API (a non-public intelligence database) via an API key, executing the query inside a Kubernetes pod using the official kubernetes-client library, and returning structured JSON results without active probing—fully consistent with the technique's description of querying paid/private data sources for targeting intelligence.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:52:59.230234Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is well-structured, uses the Kubernetes client library correctly, handles exceptions, and manages the inner command string with proper escaping.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying Shodan, a closed/paid technical database, using an API key to retrieve intelligence without active network scanning.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:53:00.621462Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

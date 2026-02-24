@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T17:28:52.230406Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "All commands are perfectly well-formed with valid flags, balanced quotes, and correct command separators.",
-        "semantic_score": 3,
-        "semantic_justification": "The command's logic perfectly aligns with T1205 traffic signaling, but its operational feasibility is negated by the stated 'Privilege: None' for `iptables` which requires root privileges.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T17:29:19.399268Z"
+        "syntactic_justification": "The command is well-formed with properly chained semicolons, balanced quotes, valid iptables flags including --name, --rcheck, --seconds, -m string, --algo bm, and nc flags, with correct backgrounding via &.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 traffic signaling by using a crafted mDNS service discovery string (_t1205._udp.local) on UDP/5353 as a knock signal that temporarily opens TCP/53530 via iptables recent module, with nc listening as the triggered backdoor — a realistic and operationally coherent port-knocking variant using protocol mimicry.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T04:01:12.252463Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for iptables rules, string matching, command chaining with semicolons, and background process execution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by setting up a covert signaling mechanism using mDNS protocol fields as a trigger that opens a temporary communication channel on TCP port 53530.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:21:48.028656Z"
+        "syntactic_justification": "The command string uses correct bash syntax, including proper semicolons for sequencing, valid backgrounding with ampersand, and well-formed iptables and netcat arguments.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively emulates traffic signaling by using iptables' string matching and 'recent' modules to implement a trigger; however, it incorrectly lists the privilege level as 'None' when iptables requires root/sudo to modify the kernel's firewall rules.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:01:31.330100Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

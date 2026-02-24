@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and appropriate escape sequences throughout the complex bash script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1568 Dynamic Resolution technique by using multiple fallback domains, DNS resolution with dig, randomized sleep intervals, and establishing a periodic beacon that mimics legitimate analytics traffic.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:48:54.832408Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct command substitutions, valid flag usage for all included utilities, and proper shell syntax throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1568 Dynamic Resolution by re-resolving C2 endpoints at runtime, including fallback domains, and establishing a periodic beacon that mimics legitimate analytics collection with randomized sleep intervals.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T07:49:07.708579Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The bash one-liner is well-formed with balanced quoting, proper separators, valid expansions, and standard options, making it parseable as-is.",
@@ -46,11 +26,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T07:49:36.466530Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid constructs, though the nested variable reuse of `host` as both the initial value and loop variable, combined with complex quoting inside the for loop, creates edge cases that may behave unexpectedly in some bash versions.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 dynamic resolution by re-resolving multiple fallback domains each beacon cycle using `dig`, randomly selecting an IP with `shuf`, encoding exfiltrated data (username + timestamp) as base64 in a query string, mimicking legitimate analytics traffic with a browser User-Agent, and using randomized sleep intervals to evade beaconing detection—all operationally plausible and well-aligned with the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:30:43.704924Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with correctly escaped double quotes for a bash -c execution context, balanced control structures, and proper command chaining.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately demonstrates dynamic resolution by rotating through a list of domains, resolving them at runtime using dig, handling multiple potential IPs with shuf, and implementing a jittered beaconing behavior that mimics legitimate analytics traffic.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:30:54.966333Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

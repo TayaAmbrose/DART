@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, exception handling, balanced quotes/parentheses/braces, and correct string formatting for the embedded Python code to be executed in the Kubernetes pod.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries SecurityScorecard's private API using an authentication token to gather non-public security rating data about a target domain, which could be used for reconnaissance and targeting.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:09:38.512539Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The provided Python script is perfectly well-formed, with correct syntax for imports, Kubernetes client calls, environment variable access, string manipulation, and nested script execution via `python3 -c`.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of querying SecurityScorecard's closed-source API for company data using token authentication, which directly aligns with MITRE ATT&CK T1597 'Search Closed Sources' by accessing a paid/private intelligence feed for targeting information.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:09:45.744667Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Python with balanced quoting/escaping, valid Kubernetes stream exec usage, and no syntax errors.",
@@ -44,11 +24,31 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T13:10:10.583289Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The outer Python script is mostly well-formed, but the inner string contains escaped quotes and embedded newlines that create fragile quoting issues (e.g., backslash-escaped single quotes inside a double-quoted f-string), which would likely cause parsing errors when passed to the Kubernetes exec stream.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1597 by querying SecurityScorecard's closed-source paid API using token-based authentication to gather intelligence on a target domain, and the Kubernetes exec mechanism to run the query inside a pod is operationally plausible, though the inner script's quoting fragility slightly reduces realism.",
+        "combined_score": 3.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:55:57.272231Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-structured, correctly handles nested quoting for the execution string, and properly utilizes the Kubernetes client library and stream module.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying a commercial, closed-source security intelligence API (SecurityScorecard) to gather intelligence on a target domain.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:55:59.003185Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_syntactic": 4.333,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

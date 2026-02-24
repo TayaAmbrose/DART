@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T01:34:52.690230Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), balanced quotes, valid flags for all tools (airport, networksetup, openssl, nc), and correct syntax for piping output between commands.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1011 by disconnecting from the current network, connecting to an alternative Wi-Fi network (ops-relay-153), base64 encoding the data for obfuscation, and exfiltrating it over IPv6 link-local addressing to a specific port (54831) using netcat.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:34:56.467988Z"
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, valid use of &&, pipe operators, and correct flag syntax for all tools including airport, networksetup, openssl, and nc.",
+        "semantic_score": 4,
+        "semantic_justification": "The command plausibly implements T1011 by disassociating from the current Wi-Fi network, joining an alternative SSID, and exfiltrating base64-encoded JSON data over IPv6 link-local addressing via netcat on an uncommon port, though the IPv6 link-local address with scope ID requires the target to be on the same local segment and the 'None' privilege level is inconsistent with the sudo usage and networksetup requiring admin rights.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:11:23.715189Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax, balanced quoting, valid flags, and proper command separators.",
+        "syntactic_justification": "The command uses correct syntax for chaining multiple macOS utilities and tools like openssl and nc with valid flags and quoting.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the described intent to exfiltrate data over an alternative Wi-Fi network using appropriate macOS tools and network protocols for T1011.",
+        "semantic_justification": "The command accurately demonstrates T1011 by disassociating from the current network, joining a specific exfiltration SSID, and transmitting encoded data via a targeted IPv6 address.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:33:40.264473Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:11:26.032111Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

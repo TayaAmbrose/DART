@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, variable declarations, error handling, balanced parentheses/braces, and correct function calls to AWS services and the Shodan API.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it retrieves intelligence from Shodan's paid API service about a target IP address, stores the results securely, and implements proper error handling - all consistent with the technique description.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:00:45.764932Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed, with correct syntax for imports, API calls, string formatting, error handling, and JSON manipulation.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by querying Shodan's paid API (a closed source) for host intelligence and storing the results, directly aligning with MITRE ATT&CK T1597.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:00:55.997712Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid, well-formed Python code with balanced quotes/brackets, correct imports, and proper try/except structure.",
@@ -45,6 +25,26 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T13:01:12.067630Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-formed with balanced parentheses, proper imports, correct string formatting, valid exception handling, and no syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by retrieving host intelligence from Shodan's paid API (a closed source) using a securely stored API key from AWS Secrets Manager, then persisting results to S3, which is operationally realistic and fully aligned with querying paid/private intelligence databases for targeting reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:55:18.020919Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is well-formed, uses correct library syntax for boto3 and requests, and includes proper error handling and JSON parsing.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately demonstrates gathering intelligence from a paid technical source (Shodan) and persisting it in a cloud environment, aligning perfectly with T1597.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:55:20.668920Z"
       }
     ],
     "llm_average_syntactic": 5.0,

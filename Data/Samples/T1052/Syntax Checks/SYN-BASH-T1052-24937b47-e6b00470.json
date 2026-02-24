@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T07:13:04.012627Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for both tar and dd commands, and correct use of command piping and logical operators.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid pipe and && separators, correct tar/dd flag syntax, and proper use of $HOME variable expansion.",
         "semantic_score": 5,
-        "semantic_justification": "The command effectively implements the T1052 technique by compressing the Desktop directory and writing it to a hidden-looking file on a USB drive that mimics system files to avoid detection, with the sync ensuring data is fully written before removal.",
+        "semantic_justification": "The command accurately implements T1052 by streaming a compressed archive of the Desktop directly to a removable USB volume disguised as an fseventsd system file (a clever obfuscation technique), using dd for direct block-level writing and sync to ensure data is flushed — all operationally plausible on macOS without elevated privileges.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T07:13:07.114483Z"
+        "timestamp": "2026-02-18T22:32:15.365584Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, proper command separators, and no discernible syntax errors.",
+        "syntactic_justification": "The command uses valid Bash syntax, properly balanced quotes, correct pipe usage, and valid flags for both tar and dd.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by compressing sensitive data, streaming it to a physical medium (USB drive), and attempting to evade detection by naming the output file as a system log entry, all while ensuring data is written before removal.",
+        "semantic_justification": "The command effectively compresses data and writes it to a disguised path on a removable volume, perfectly illustrating exfiltration over physical media with basic obfuscation.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T07:13:17.242444Z"
+        "timestamp": "2026-02-18T22:32:17.968201Z"
       }
     ],
     "llm_average_syntactic": 5.0,

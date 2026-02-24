@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T21:41:06.105256Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 0,
-        "syntactic_justification": "Cannot evaluate syntactic correctness as the actual command was withheld for safety reasons.",
-        "semantic_score": 0,
-        "semantic_justification": "Cannot evaluate semantic correctness as the actual command was withheld for safety reasons.",
-        "combined_score": 0.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T04:00:12.665634Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command is explicitly withheld, so no syntactic structure is available to evaluate beyond the descriptive metadata.",
+        "semantic_score": 2,
+        "semantic_justification": "While mshta-based HTA execution from unexpected directories via PowerShell is a real and plausible technique, it maps more precisely to T1218.005 (Signed Binary Proxy Execution: Mshta) than to T1216 (System Script Proxy Execution), which focuses on trusted signed scripts like PubPrn.vbs or SyncAppvPublishingServer.vbs invoked via script hosts.",
+        "combined_score": 1.5,
+        "confidence": 0.4,
+        "timestamp": "2026-02-19T00:06:19.907032Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 1,
-        "syntactic_justification": "The provided text is a description and placeholder ('WITHHELD_FOR_SAFETY'), not a syntactically runnable command string with proper syntax or arguments.",
-        "semantic_score": 5,
-        "semantic_justification": "The described action, 'launching mshta from PowerShell to execute HTA content... relying on script-host trust to proxy execution,' perfectly aligns with T1216's definition of abusing trusted system scripts/executables for proxy execution.",
-        "combined_score": 3.0,
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 0,
+        "syntactic_justification": "The provided text is a natural language description and a safety placeholder ('WITHHELD_FOR_SAFETY') rather than a parseable PowerShell or mshta command.",
+        "semantic_score": 0,
+        "semantic_justification": "The input contains no executable code or valid arguments and therefore cannot demonstrate or achieve the T1216 technique.",
+        "combined_score": 0.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T04:00:18.172801Z"
+        "timestamp": "2026-02-19T00:06:30.255346Z"
       }
     ],
     "llm_average_syntactic": 0.667,
-    "llm_average_semantic": 2.0,
-    "llm_average_score": 1.333,
+    "llm_average_semantic": 1.0,
+    "llm_average_score": 0.834,
     "llm_verdict": "likely_mismatch",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

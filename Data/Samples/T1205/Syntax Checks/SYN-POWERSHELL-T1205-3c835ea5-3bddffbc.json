@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T18:18:13.987064Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with correct syntax for variable assignments, object instantiation, method calls, control flow, and external command execution.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, brackets, and braces, proper semicolon separators, valid .NET API calls, and correct string comparisons throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1205 technique by listening for a specific signal on a multicast address (mDNS) to trigger a security-relevant action (enabling a firewall rule), demonstrating operational plausibility and correct tool usage as described in its explanation.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T18:18:32.417487Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced parentheses, proper semicolon separators, correct method calls, and valid syntax for creating and manipulating network objects.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by setting up a covert listener on IPv6 multicast DNS (port 5353) that waits for a specific trigger phrase ('open-sesame') before enabling Windows Remote Management firewall rules, creating a hidden activation mechanism.",
+        "semantic_justification": "The command precisely implements T1205 Traffic Signaling by joining the IPv6 mDNS multicast group (ff02::fb) on UDP/5353, listening for a covert trigger string 'open-sesame', and upon receipt executing a netsh command to enable Windows Remote Management firewall rules — a textbook port knocking/traffic signaling pattern that covertly activates a management channel only after receiving the signal.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:26:55.581686Z"
+        "timestamp": "2026-02-19T04:05:31.385214Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid PowerShell syntax and correctly leverages .NET classes for socket programming and multicast operations.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a traffic signaling listener on a standard protocol port (mDNS) to trigger an administrative action upon receipt of a specific covert string.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:05:34.294958Z"
       }
     ],
     "llm_average_syntactic": 5.0,

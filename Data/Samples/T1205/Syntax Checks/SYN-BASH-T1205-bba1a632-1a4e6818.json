@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T15:54:29.473742Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, valid command separators, and correct flag usage for all invoked tools and shell constructs.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves its claimed intent of enabling local WoL and sending a correctly formatted magic packet via UDP/9, which operationally implements the T1205 technique for traffic signaling.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T15:55:13.275475Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes and valid separators, but the hex construction using `printf ff%.0s {1..6}` combined with a loop that uses `echo -n $mac` without printf may produce incorrect concatenation depending on shell behavior, and the overall pipeline is complex but parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements Wake-on-LAN magic packet construction (6x 0xFF followed by 16x target MAC) and sends it via UDP port 9, which aligns well with T1205 traffic signaling as a covert activation trigger, though the hex assembly logic has a minor flaw where the loop body uses `echo -n $mac` instead of `printf '%s' $mac`, potentially breaking the raw byte stream before piping to xxd.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:54:10.036274Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags for all tools used (ethtool, tr, printf, echo, xxd, nc), and correct escape sequences.",
+        "syntactic_justification": "The command uses valid Bash syntax, including proper variable assignment, command substitution, loops, and pipe sequences with balanced quotes.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by enabling Wake-on-LAN on eth0 and crafting a valid magic packet (with 6 bytes of 0xFF followed by the MAC address repeated 16 times) sent via UDP to port 9, which could serve as a covert activation signal between compromised systems.",
+        "semantic_justification": "The command accurately constructs a standard Wake-on-LAN magic packet (6xFF followed by 16 MAC repetitions) and uses appropriate networking tools to deliver it, perfectly aligning with the Traffic Signaling technique.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:14:47.228240Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:54:12.391964Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

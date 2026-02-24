@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper nesting of quotes, valid parameter names for Invoke-AzVMRunCommand, and correct shell command construction within the ScriptString parameter.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using the 'shred' utility with secure deletion parameters (-n 3 overwrites 3 times, -z adds zeros, -u unlinks) to permanently destroy all files in a Docker volume, making them unrecoverable.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T01:46:09.994916Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct nesting of quotes for PowerShell and the inner shell script, including proper escaping for `shred` arguments.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by using `Invoke-AzVMRunCommand` to execute a Docker container that employs `find`, `xargs`, and `shred -n 3 -z -u` to securely overwrite and delete all files within the specified Docker volume, directly aligning with the T1485 technique description.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T01:46:17.661707Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 2,
         "syntactic_justification": "The PowerShell -ScriptString uses a double-quoted string containing unescaped double quotes (\"{}\") which will terminate the string prematurely since backslash does not escape quotes in PowerShell, making the command likely to fail parsing.",
@@ -44,12 +24,32 @@
         "combined_score": 2.5,
         "confidence": 1,
         "timestamp": "2025-10-02T01:47:03.221934Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper PowerShell cmdlet syntax and nested quoting using escaped double quotes inside the shell string, though the complex multi-level quoting (PowerShell → RunShellScript → sh -lc → shred) may cause edge-case parsing issues depending on how Azure's RunCommand API handles the ScriptString parameter.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1485 Data Destruction by using Azure VM Run Command to remotely execute a Docker container that mounts the target volume and applies shred (-n 3 overwrites three times, -z zeroes, -u unlinks) to every file found via find, which is a textbook secure deletion approach that renders data unrecoverable and aligns precisely with the described technique.",
+        "combined_score": 4.5,
+        "confidence": null,
+        "timestamp": "2026-02-19T01:41:33.191145Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command and nested Docker/shell strings are well-formed, with balanced quotes and valid parameter usage for the Az module.",
+        "semantic_score": 4,
+        "semantic_justification": "The command logic perfectly aligns with T1485 (Data Destruction) by using a container to wipe a volume; however, the use of backslash-escaped quotes (\\\") inside a PowerShell double-quoted string will result in literal backslashes being passed to the Linux shell, which would cause 'shred' to fail as it looks for filenames containing literal quotes.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:41:44.249745Z"
       }
     ],
-    "llm_average_syntactic": 4.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.167,
-    "llm_verdict": "likely_match",
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 3.833,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

@@ -17,26 +17,6 @@
     "syntax_ok": false,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with proper indentation, balanced quotes, valid syntax, and appropriate use of Python libraries and functions.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) as it copies a patched system image to the boot directory, verifies its integrity, and modifies the boot symlink to ensure the modified image will be used at next boot.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T17:31:40.399582Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command uses a valid Python heredoc structure, and all Python code within is perfectly well-formed with no syntax errors, balanced constructs, or invalid expressions.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by copying a patched system image to a boot directory and updating a 'current' symlink, directly aligning with T1601's objective of replacing or tampering with boot mechanisms to modify a system image, while correctly acknowledging root privileges are required for such actions.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T17:31:52.980059Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The heredoc is correctly quoted/terminated and python3 - validly reads the well-formed Python code from stdin with balanced constructs.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 1,
         "timestamp": "2025-10-02T17:32:09.626795Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python heredoc is perfectly well-formed with balanced quotes, correct indentation, valid imports, and proper shell syntax for the outer `python3 - <<'PY'` construct.",
+        "semantic_score": 5,
+        "semantic_justification": "The script precisely implements T1601 by copying a staged patched image into the boot directory, verifying byte-for-byte integrity, and atomically repointing the boot symlink to the new image, which directly aligns with modifying a system image to persist changes across reboots on network devices.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:14:07.945978Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses a correctly formatted shell heredoc to execute a perfectly valid Python script with proper indentation, imports, and logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements the deployment of a modified system image and the redirection of the boot pointer, which is a core behavior of T1601.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:14:09.509666Z"
       }
     ],
     "llm_average_syntactic": 5.0,

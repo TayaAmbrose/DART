@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Docker syntax, volume mounting, balanced quotes, valid flags for 'find', 'xargs', and 'shred', and appropriate command chaining.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using 'shred' with multiple passes (-n 3) to securely overwrite and delete (-z -u) certificate files (*.pem) in a mounted volume, followed by a 'sync' to ensure data is committed to disk.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T02:40:54.596590Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for all commands, and correct use of pipes and separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by using `shred -n 3 -z -u` to securely overwrite and delete files matching '*.pem' in the specified volume, directly aligning with T1485's example tools and methods.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T02:40:58.986850Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quoting with valid docker run and bash -lc usage, proper command separation, and correct find/xargs/shred flags.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T02:41:33.908376Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid Docker flags, correct find/xargs/shred pipeline syntax, proper null-delimiter handling (-print0/-0), and valid shred flags (-n 3 -z -u).",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely targets PEM certificate files in a named Docker volume using shred with three-pass overwrite, zero-fill, and unlink (-u), followed by sync to flush to disk, fully aligning with T1485 secure deletion of sensitive cryptographic material to prevent recovery.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:44:42.319944Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Docker and Bash syntax, properly quotes the internal command string, and uses standard Unix utility flags correctly.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively leverages a container to mount a persistent volume and utilizes shred to securely delete specific sensitive files, perfectly aligning with the Data Destruction technique.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:44:45.014175Z"
       }
     ],
     "llm_average_syntactic": 5.0,

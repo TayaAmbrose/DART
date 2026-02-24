@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T14:34:24.359445Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct bash syntax, valid ufw and iptables commands, proper flag formats, and correct logical chaining.",
-        "semantic_score": 1,
-        "semantic_justification": "While the iptables rules correctly implement the technical mechanism for traffic signaling (T1205), the command cannot achieve its claimed intent because it requires root privileges to execute ufw and iptables, directly contradicting the stated 'Privilege: None' constraint.",
-        "combined_score": 3.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T14:34:53.421326Z"
+        "syntactic_justification": "The command is well-formed with balanced quoting, proper use of && separators, valid iptables flags, and correct ufw syntax throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a port-knocking/traffic signaling mechanism using iptables with the `recent` module: a specially crafted TCP packet to port 445 with FIN+URG flags and TTL=66 sets a named entry in the recent table, which then temporarily allows connections to port 8080 for 20 seconds — a textbook T1205 covert signaling trigger aligned with the explanation.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T03:48:41.666152Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper bash syntax, balanced quotes, valid flags for ufw and iptables, and correct command separators.",
+        "syntactic_justification": "The command is perfectly well-formed, using correct bash quoting, logical operators, and valid iptables/ufw flag syntax.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using specific TCP flags (FIN,URG) and TTL value (66) as a covert signal to temporarily open port 8080, exactly matching the MITRE ATT&CK T1205 description.",
+        "semantic_justification": "The command accurately implements traffic signaling by using the iptables 'recent' module to create a conditional firewall rule triggered by specific TCP headers.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:11:20.248968Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:48:46.350716Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.167,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper process substitution, piping, balanced parentheses, and valid use of the diff, sha256sum, and awk utilities.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with detecting T1601 (Modify System Image) by comparing cryptographic hashes between the production and potentially modified system images, which is a standard integrity verification technique for firmware tampering detection.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T19:43:50.009550Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, utilizing standard Bash process substitution, pipes, and common utilities without any syntax errors.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves its claimed intent by calculating and comparing SHA-256 hashes of two system images, which directly aligns with detecting 'image integrity failures' or 'unexpected checksums' as a signal for MITRE ATT&CK T1601 (Modify System Image).",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T19:43:57.151892Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command is well-formed Bash using valid process substitution, correct flags, and balanced quoting.",
@@ -44,11 +24,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T19:44:25.404858Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses for process substitution, valid flags (-u for unified diff), proper piping to awk, and correct quoting throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses SHA-256 hashing and diff to compare a production image against a modified one to detect integrity deviation consistent with T1601 tampering, though using 'diff' on single-line hash outputs is functional but redundant (a simple equality check would suffice), and the path /bootflash/ is realistic for Cisco IOS-XE/NX-OS devices while /var/tmp/ is a plausible staging location for a modified image.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:25:57.450297Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Bash process substitution, piping, and standard utilities with correct syntax and balanced delimiters.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively compares hashes to detect integrity changes, though reading system images on network devices typically requires elevated privileges rather than 'None'.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:26:01.424009Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

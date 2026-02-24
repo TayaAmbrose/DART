@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T09:22:17.214392Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced parentheses, correct variable assignments, proper piping, and valid parameters for all cmdlets used.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by automatically identifying a removable drive, copying Windows event logs to it, and encrypting the data with EFS to hide the exfiltrated content.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T09:22:20.218042Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses and quotes, valid cmdlets and flags, and proper semicolon separators, though the string concatenation for the USB path (':\\\\') and the mixed use of PowerShell and cmd-style cipher invocation are slightly awkward but parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly identifies a removable drive, copies Windows event logs to it (a realistic exfiltration target for covering tracks or stealing audit data), and applies EFS encryption via cipher /E to hinder forensic analysis, aligning well with T1052 physical medium exfiltration; however, EFS encryption on a FAT32-formatted USB (common for removable drives) would silently fail since EFS requires NTFS, reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:10:25.105764Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command uses perfectly well-formed PowerShell cmdlets, proper variable assignment, correct command separators, and valid arguments for both PowerShell functions and the external `cipher` executable.",
-        "semantic_score": 5,
-        "semantic_justification": "The command successfully identifies a removable drive, copies Windows event logs to it, and encrypts the copied data using EFS, directly aligning with the described technique for exfiltration over a physical medium and the explanation provided.",
-        "combined_score": 5.0,
+        "syntactic_justification": "The command uses correct PowerShell syntax, valid cmdlets, and proper parameter usage for both PowerShell and the cipher utility.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively automates finding a removable drive and staging data for exfiltration, though copying system logs requires administrative privileges not specified in the metadata.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T09:22:33.660382Z"
+        "timestamp": "2026-02-19T03:10:28.511597Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

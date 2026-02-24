@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T10:33:44.821368Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced parentheses/braces, correct variable assignments, proper piping, and valid cmdlet usage throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1052 technique by identifying a removable drive, creating a benign-looking image file, reading a confidential file, encoding it as Base64, and hiding it in an alternate data stream of the image file for stealthy exfiltration via physical media.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T10:33:48.079408Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed PowerShell with balanced quotes, valid semicolons as separators, and correct cmdlet syntax, though the use of `-Stream` parameter with `Set-Content` for alternate data streams on FAT32-formatted USB drives (which don't support NTFS ADS) is a functional concern rather than a syntax error.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements T1052 by detecting a removable drive, reading a sensitive file, Base64-encoding it, and hiding it in an alternate data stream of a benign-looking image file on the USB — a realistic steganographic exfiltration approach — though the technique's effectiveness is limited since most USB drives use FAT32 which does not support NTFS alternate data streams, reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:42:29.193736Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax for Powershell cmdlets, .NET calls, variable assignments, and command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of encoding data, hiding it in an alternate data stream on a benign file on a removable drive, and aligns precisely with T1052's principles of exfiltration over physical medium with obfuscation.",
-        "combined_score": 5.0,
+        "syntactic_justification": "The command uses correct PowerShell syntax, properly balanced parentheses, and valid .NET class calls separated by semicolons.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates the technique, though it assumes the target USB is formatted with NTFS to support Alternate Data Streams and that a 'Pictures' directory already exists.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T10:34:00.851570Z"
+        "timestamp": "2026-02-18T22:42:31.649788Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid kubectl syntax, correct flag formats, and properly escaped JSON payload.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1585 technique by creating a new email account through an API, which aligns with establishing accounts for persistence or follow-on actions.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T09:19:03.572152Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct escaping, and proper separation of `kubectl run` arguments from the container command.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of creating a new email account via an API call within an ephemeral Kubernetes pod, directly aligning with the MITRE ATT&CK T1585 'Establish Accounts' technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T09:19:11.118570Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quoting with proper escaping, valid kubectl run/sh/curl flag usage, and no malformed constructs.",
@@ -44,6 +24,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T09:19:52.964060Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes (including properly escaped inner JSON double quotes), valid kubectl flags (--rm, -i, --restart=Never, --image, --command), correct curl flags, and proper shell invocation via 'sh -lc'.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 (Establish Accounts) by using an ephemeral Kubernetes pod to programmatically create a persona email account via a REST API POST request, which is operationally plausible for automated persona infrastructure setup and aligns precisely with the technique's account creation behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:38:07.856093Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed, correctly uses kubectl run flags, and properly escapes the nested JSON payload within the shell execution string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately reflects the T1585 technique by programmatically creating a new email account via an API call from an ephemeral container, which is a plausible method for establishing persistence or infrastructure.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:38:10.008590Z"
       }
     ],
     "llm_average_syntactic": 5.0,

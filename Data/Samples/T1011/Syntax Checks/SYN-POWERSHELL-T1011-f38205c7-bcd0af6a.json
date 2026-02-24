@@ -27,29 +27,29 @@
         "timestamp": "2025-09-30T23:45:04.375766Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes/parentheses, valid variable assignments, proper piping, and correct method calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively implements T1011 by reading a file and exfiltrating its contents byte-by-byte over IPv6 ICMP (a different network medium) by encoding each byte in the buffer size of ping packets, with a proper sync marker to initiate the transfer.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T23:45:10.044066Z"
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper variable assignments, valid semicolon separators, and correct Test-Connection flag usage including -IPv6, -BufferSize, -Count, and -Quiet.",
+        "semantic_score": 4,
+        "semantic_justification": "The command plausibly implements covert data exfiltration by encoding file bytes in ICMPv6 echo request buffer sizes to a ULA (fd00::/8) address, with a sync marker sent first to a link-local address, which aligns well with T1011's alternate network medium concept, though the link-local sync address (fe80::1%13) and ULA destination suggest local network rather than a truly alternate medium like cellular or Bluetooth, and the byte-by-byte encoding via BufferSize (333+byte value, max 588) is operationally slow but technically feasible.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:50:45.833379Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid PowerShell syntax for variable assignment, cmdlets, parameters, .NET calls, and control flow, with balanced delimiters throughout.",
+        "syntactic_justification": "The command is perfectly well-formed, using valid PowerShell syntax, standard cmdlets, and proper .NET class calls.",
         "semantic_score": 5,
-        "semantic_justification": "The command effectively implements the claimed ICMPv6 exfiltration by encoding data bytes into packet sizes (BufferSize) and targets Unique Local Addresses (ULA), which is a plausible and operationally realistic approach for exfiltrating data over an alternate network medium as described by T1011.",
+        "semantic_justification": "The command successfully implements a data exfiltration covert channel by modulating ICMPv6 buffer sizes over a specific network interface index, aligning with the technique's intent.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-09-30T23:45:24.869821Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:50:47.342896Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, variable declarations, control flow, file operations, error handling, and string manipulation.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively implements a detection mechanism for T1601 by comparing boot partition hashes against a baseline, though it only checks the first 4MB rather than the entire image which could miss some modifications.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T18:58:30.362255Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with no syntax errors, balanced parentheses, and valid Python constructs.",
-        "semantic_score": 3,
-        "semantic_justification": "The script's logic aligns with detecting system image tampering, but the stated 'Privilege: None' is incorrect as reading raw block devices and files in `/root` requires root privileges, making it operationally implausible as described.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T18:58:42.954776Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid, well-formed Python code with correct imports, control flow, and function calls.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.86,
         "timestamp": "2025-10-02T18:59:25.426680Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically well-formed with balanced parentheses, proper string formatting (including f-string), correct imports, and valid control flow throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The script correctly implements boot partition integrity checking by reading the raw block device, computing a SHA-256 hash of the first 4 MiB, and comparing it against a stored baseline using unified diff output — directly relevant to T1601 detection; minor realism gap is that the privilege level is listed as 'None' but reading raw block devices (e.g., /dev/sda1) typically requires root privileges.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:21:17.122896Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is syntactically sound, correctly utilizes the hashlib and difflib libraries, and handles file I/O and string parsing without errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements an integrity check for the boot partition header as a detection mechanism for T1601, although it realistically requires root privileges to access block devices and the /root directory.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:21:20.252322Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

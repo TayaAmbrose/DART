@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T14:08:30.101251Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid Docker and iptables syntax, correct flag formats, balanced quoting, and proper command chaining.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid Docker flags, proper shell command chaining with &&, and correct iptables syntax including all required modules and flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves the stated intent of interpreting a specific TCP MSS value as a signal to log an event and temporarily open a port for the signaling source, directly aligning with T1205's use of protocol fields and timing-based triggers for covert communication.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T14:08:47.930325Z"
-      },
-      {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Docker syntax, balanced quotes, correct iptables command structure, and appropriate use of command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements the T1205 Traffic Signaling technique by using a specific TCP MSS value (1337) as a covert signal that, when detected, temporarily opens another port (8080) for 30 seconds only to the signaling IP address.",
+        "semantic_justification": "The command precisely implements T1205 traffic signaling by using an unusual TCP MSS value of 1337 as a covert knock signal on port 443, logging it, tracking the source IP with the 'recent' module, and conditionally opening port 8080 for that IP within a 30-second window — a textbook port-knocking/traffic-signaling implementation using protocol-specific fields.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:10:00.602379Z"
+        "timestamp": "2026-02-19T03:47:15.440229Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows correct Docker, shell, and iptables syntax with properly balanced quotes and logical operators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively demonstrates traffic signaling by using a specific TCP MSS value as a trigger to dynamically open a port, perfectly aligning with T1205.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:47:18.287360Z"
       }
     ],
     "llm_average_syntactic": 5.0,

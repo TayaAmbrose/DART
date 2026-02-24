@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is well-formed with properly balanced quotes, parentheses, and braces, correct imports, valid function definitions, and proper control flow structures.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the T1568 Dynamic Resolution technique by using a domain generation algorithm (DGA) to create domains, querying TXT records for C2 configuration, resolving the C2 server IP, and establishing a connection to the retrieved endpoint.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T07:35:22.052638Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with no syntax errors, balanced quoting, valid function calls (Scapy, hashlib, subprocess), and proper variable assignments.",
-        "semantic_score": 4,
-        "semantic_justification": "The command excellently implements DGA and dynamic resolution of C2 host, port, and IP using DNS TXT and A records, and correctly uses `curl --resolve` for connection, but the `iptables` command requires root privileges, contradicting the stated 'Privilege: None' and representing a significant operational realism gap.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T07:35:41.676001Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The python -c payload is fully quoted with balanced delimiters and valid Python syntax, making the command parseable as written.",
@@ -46,11 +26,31 @@
         "combined_score": 4.0,
         "confidence": 0.7,
         "timestamp": "2025-10-02T07:36:05.040009Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code embedded in the shell one-liner is largely well-formed with balanced parentheses and proper logic flow, though the newlines within the -c string argument may cause parsing issues depending on how the shell handles them without explicit line continuation or semicolons separating all statements.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 by using a date-seeded MD5-based DGA to generate 25 candidate domains, querying TXT records under DGA subdomains to retrieve C2 host/port configuration, resolving the C2 host via a secondary DNS query, adding an iptables rule to permit the connection, and finally beaconing to the resolved C2 endpoint — fully consistent with dynamic resolution for C2 establishment.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:29:13.162523Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-formed with correct imports, balanced quotes, proper indentation (within the string), and valid usage of the subprocess and scapy libraries.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements a DGA for C2 discovery via DNS TXT records; however, it requires root privileges for both Scapy raw packet manipulation and iptables modification, which contradicts the 'Privilege: None' metadata.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:29:19.224586Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

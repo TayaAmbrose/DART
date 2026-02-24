@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T17:14:11.635438Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses correct PowerShell syntax for variable assignment, array creation, loops, cmdlet calls, and statement separators.",
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper array syntax (@()), valid foreach loop, correct cmdlet names and parameters, and proper semicolon separators throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of a TCP port-knocking sequence, which is a direct example of 'timing- or sequence-based triggers' for 'Traffic Signaling' (T1205).",
+        "semantic_justification": "The command accurately implements TCP port-knocking (T1205) by sequentially connecting to ports 1111, 2222, 3333 with timed intervals to signal a hidden service, then connecting to the target port 8443, which is a textbook implementation of traffic signaling to trigger a firewall rule or daemon to open a covert service port.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T17:14:20.912183Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-19T04:00:21.446880Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable assignments, array declaration, foreach loop structure, pipeline operators, and semicolons as command separators.",
+        "syntactic_justification": "The PowerShell command follows standard syntax, using valid variables, arrays, loops, and cmdlets with correct parameters.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by sending a specific sequence of connection attempts to predefined ports (port knocking) to signal a hidden service, followed by connecting to the port that would be opened as a result.",
+        "semantic_justification": "The command effectively implements a port-knocking sequence, which is a textbook example of Traffic Signaling (T1205) to trigger a remote response.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:19:16.150321Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T04:00:23.474946Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T02:18:10.482805Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolon separators, valid PowerShell cmdlets and parameters, and correct object pipeline structure.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by collecting administrator group membership data, converting it to compressed JSON, and sending it via HTTPS POST to an external endpoint with error handling and user-agent spoofing.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T02:18:13.910297Z"
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, valid PowerShell cmdlet syntax, proper semicolon separators, and correct hashtable notation for headers.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately collects local Administrators group membership, serializes it as compressed JSON, and exfiltrates it via HTTPS POST with a spoofed User-Agent header, fully aligning with T1020 automated exfiltration; the minor gap is that this is a single-shot collection rather than a fully automated/scheduled recurring exfiltration pipeline, and 'None' privilege may be insufficient for Get-LocalGroupMember on some configurations.",
+        "combined_score": 4.5,
+        "confidence": 0.92,
+        "timestamp": "2026-02-18T22:19:47.790158Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct PowerShell syntax, including proper command separation, balanced quotes, and valid parameter usage.",
+        "syntactic_justification": "The command follows perfect PowerShell syntax, including proper variable assignment, pipeline usage, and correctly formatted hashtables for headers.",
         "semantic_score": 5,
-        "semantic_justification": "The command accurately uses appropriate PowerShell cmdlets to collect local group data, format it as minified JSON, and exfiltrate it via an HTTPS POST request, perfectly aligning with the described technique T1020 Automated Exfiltration.",
+        "semantic_justification": "The command accurately performs data collection, formatting, and exfiltration via HTTP POST as described, using standard PowerShell cmdlets appropriate for the task.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T02:18:25.997641Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:19:50.003614Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

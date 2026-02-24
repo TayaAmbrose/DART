@@ -17,16 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper find syntax, balanced parentheses, correct option flags for both find and shred, and appropriate use of the -exec action with proper termination.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively implements the Data Destruction technique by using shred to securely delete crash dump files (which may contain sensitive memory data) with multiple overwrites (-n 2), zero-filling (-z), forced removal (-u), and forced execution (-f), aligning perfectly with the technique's goal of rendering specific data unrecoverable.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T00:53:48.044740Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The command is well-formed with correctly escaped parentheses, valid find predicates, and a proper -exec shred {} + invocation with valid flags.",
@@ -37,19 +27,29 @@
         "timestamp": "2025-10-02T00:54:06.378813Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, correctly used `find` and `shred` options, and proper `find -exec ... {} +` syntax.",
-        "semantic_score": 4,
-        "semantic_justification": "The command precisely targets crash dump files for secure destruction using `shred`, making it an excellent example of T1485; however, its operational feasibility for 'secure destruction' is highly improbable under the stated 'Privilege: None' for typical system crash dumps.",
-        "combined_score": 4.5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper escaping of parentheses and -o operators within find's expression, valid shred flags (-n 2 -z -u -f), and correct use of -exec with + terminator.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely targets crash dump files (*.core, core.*, *.crash) in /var/crash using find with -xdev to stay on the same filesystem, then securely destroys them with shred (2 overwrite passes, final zero-out, unlink, and force), which directly aligns with T1485 data destruction via secure deletion to eliminate sensitive memory snapshots that could aid forensic analysis.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:39:40.603457Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses perfectly formed find syntax with correctly escaped parentheses, logical OR operators, and the efficient -exec {} + termination.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately targets standard crash dump locations and filenames using shred to securely overwrite and delete sensitive forensic artifacts as described.",
+        "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T00:54:19.427637Z"
+        "timestamp": "2026-02-19T01:39:41.475893Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

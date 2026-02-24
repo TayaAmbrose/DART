@@ -26,24 +26,24 @@
         "timestamp": "2025-10-01T00:54:15.471533Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper variable assignments, correct piping, and valid PowerShell syntax throughout.",
+        "syntactic_justification": "The command is well-formed PowerShell with balanced parentheses and quotes, valid pipeline operators, correct semicolons as statement separators, and properly formatted ncat flags (-6, -s, --send-only).",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by explicitly using Wi-Fi (a different network medium) to exfiltrate data via IPv6 to an external endpoint using ncat on an uncommon port.",
+        "semantic_justification": "The command correctly implements T1011 by explicitly binding to the Wi-Fi IPv6 interface (a distinct network medium from a wired primary channel), reading and Base64-encoding a file, then transmitting it via ncat to an IPv6 destination on an uncommon high port, which is operationally plausible and tightly aligned with the technique description.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:54:20.182979Z"
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T22:03:23.839767Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, utilizing correct PowerShell cmdlet syntax, .NET method calls, variable assignments, piping, and valid `ncat.exe` arguments.",
+        "syntactic_justification": "The command uses correct PowerShell syntax, valid .NET methods, and appropriate flags for the ncat utility.",
         "semantic_score": 5,
-        "semantic_justification": "The command accurately identifies and binds to the Wi-Fi IPv6 address, Base64-encodes the specified file, and exfiltrates the data via `ncat` over the distinct Wi-Fi interface to an uncommon port, perfectly aligning with the T1011 technique description.",
+        "semantic_justification": "The command explicitly selects a secondary network interface (Wi-Fi) to bind the exfiltration traffic, perfectly aligning with the T1011 technique description.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:19:57.868388Z"
+        "timestamp": "2026-02-18T22:03:27.479404Z"
       }
     ],
     "llm_average_syntactic": 4.667,

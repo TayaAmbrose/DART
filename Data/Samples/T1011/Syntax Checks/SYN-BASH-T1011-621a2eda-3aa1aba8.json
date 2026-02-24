@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T01:42:05.909816Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators (&&, |), valid flags for all tools used (iwconfig, cat, ssh), and correct use of subshell execution.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of command chaining (&&, |), valid SSH flags, and correctly nested command substitution using $() for dynamic IP extraction.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by first checking for the presence of a secondary network interface (wlan2), then exfiltrating data over that interface by binding the SSH connection to the wlan2 IP address while sending sensitive data to a remote server.",
+        "semantic_justification": "The command correctly implements T1011 by first verifying wlan2 exists, dynamically binding the SSH connection to the wlan2 interface IP to force traffic over that separate Wi-Fi medium, and exfiltrating a log file to a remote host on a high port, which is operationally plausible and fully aligned with the technique.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:42:09.656565Z"
+        "confidence": 0.92,
+        "timestamp": "2026-02-18T22:12:28.315914Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, correct command separators, and valid flag formats for all tools used.",
+        "syntactic_justification": "The command is perfectly formed, with correct use of pipes, subshells, variable expansion, and SSH options.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely implements the claimed intent by piping a file over SSH, explicitly binding the connection to the `wlan2` interface's IP via `BindAddress`, and using a high port, directly aligning with T1011's exfiltration over a separate Wi-Fi network medium.",
+        "semantic_justification": "The command effectively forces exfiltration over a specific wireless interface using BindAddress, perfectly aligning with the T1011 technique.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:35:29.723753Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:12:31.055562Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T06:43:34.371268Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags, correct command separators (&&), and appropriate path references.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags (-p for mkdir, -Rp for cp), proper use of && operator, and correct variable expansion of $HOME.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by creating a hidden directory (.D1) on an external drive and copying the user's Desktop contents to it, enabling physical exfiltration of data.",
+        "semantic_justification": "The command accurately implements T1052 by creating a hidden directory (prefixed with '.') on an external drive ('NO NAME' is a common default macOS label for unformatted USB drives) and recursively copying the Desktop with preserved attributes, which is a realistic and operationally plausible data exfiltration via physical medium.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T06:43:36.859384Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:30:42.249260Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for mkdir and cp, correct command separators (&&), and proper path specifications.",
+        "syntactic_justification": "The command uses correct Bash syntax, proper quoting for paths with spaces, and standard flags for directory creation and recursive copying.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by copying the Desktop directory to a hidden folder on an external volume, directly fulfilling the T1052 technique of exfiltration over a physical medium using obfuscation.",
+        "semantic_justification": "The command accurately implements exfiltration to a removable drive on macOS by using a hidden directory and preserving file attributes, reflecting realistic adversary behavior.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:43:44.604112Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:30:43.650376Z"
       }
     ],
     "llm_average_syntactic": 5.0,

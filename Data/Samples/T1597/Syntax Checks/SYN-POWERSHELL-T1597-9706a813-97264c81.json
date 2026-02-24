@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, balanced quotes/braces, correct error handling with try/catch/finally blocks, and appropriate command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by using pscp to securely retrieve a non-public domain registration database file from a closed source (sftp.domainsdb.com) with proper authentication, logging, and error handling.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:47:06.866260Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, uses proper PowerShell command separators, and employs valid flag formats for both PowerShell cmdlets and the external pscp.exe executable.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of fetching a closed-source enterprise domain registration feed via SCP, utilizing appropriate tools and arguments that directly map to the MITRE ATT&CK T1597 'Search Closed Sources' technique, demonstrating high operational plausibility and realism.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T12:47:18.281296Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced braces/quotes, valid separators, and correct PSCP flags and invocation syntax.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T12:47:45.118211Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, braces, and parentheses, proper semicolon separators, valid try/catch/finally blocks, and correct flag syntax for pscp.exe.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by using pscp to retrieve a paid enterprise domain registrations feed from a closed-source SFTP server (domainsdb.com) with key-based authentication, storing credentials in environment variables, and producing structured JSON telemetry with SHA256 hash verification — all operationally plausible and consistent with querying non-public intelligence sources.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:53:56.128572Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly formed PowerShell one-liner using correct syntax for variables, try/catch/finally blocks, and external process invocation.",
+        "semantic_score": 5,
+        "semantic_justification": "The command effectively simulates T1597 by programmatically acquiring a non-public data feed using legitimate administrative tools and secure authentication.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:53:58.606382Z"
       }
     ],
     "llm_average_syntactic": 5.0,

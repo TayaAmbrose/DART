@@ -26,29 +26,29 @@
         "timestamp": "2025-10-01T15:28:41.114348Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid flags, arguments, and proper quoting, and will parse and execute without syntax errors.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1205 technique by using iptables to detect and log application-layer HTTP header signaling (`X-Activate: 1`), and uses the `recent` module to track the source IP of the signal.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T15:28:56.432217Z"
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid iptables flags, correct module syntax for -m string, -m recent, and -j LOG with a valid log-prefix.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command correctly uses iptables with the string module to detect a covert HTTP header (X-Activate: 1) and logs matching packets, it only logs traffic rather than triggering or acting on the signal, and the -m recent --set addition is semantically odd here (it tracks IPs but serves no clear signaling-detection purpose without a corresponding --rcheck rule), reducing operational plausibility as a complete T1205 detection or implementation mechanism.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:52:48.324197Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for iptables, including correct flag formats, balanced quotes, and valid module options.",
+        "syntactic_justification": "The command uses valid iptables syntax, correctly formatted modules (string, recent), and balanced quoting for the string and log-prefix arguments.",
         "semantic_score": 5,
-        "semantic_justification": "The command correctly implements T1205 (Traffic Signaling) by monitoring for a specific HTTP header pattern that could be used as a covert signaling mechanism between compromised systems and controllers.",
+        "semantic_justification": "The command effectively implements a traffic signaling trigger by inspecting packet payloads for a specific string and utilizing the 'recent' module to statefully track the occurrence.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:13:41.567999Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:52:49.739951Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

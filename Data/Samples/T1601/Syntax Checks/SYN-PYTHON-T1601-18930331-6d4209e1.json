@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax for imports, list comprehension, assertions, file operations, and string comparisons.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly addresses T1601 by implementing a detection mechanism that validates bootloader integrity through SHA256 hash comparison between current GRUB/EFI components and a known-good baseline, which is an appropriate countermeasure against firmware/bootloader tampering.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T17:11:38.304594Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed, with balanced quotes, parentheses, and valid Python syntax for all statements and operations, making it fully parseable and runnable.",
-        "semantic_score": 4,
-        "semantic_justification": "The command's logic accurately implements a robust detection method for T1601 by hashing critical bootloader components and comparing them to a baseline, although the claimed 'Privilege: None' is a significant realism gap as it typically requires root privileges to read files in '/boot'.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T17:11:58.890006Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed python3 -c one-liner with balanced quotes, valid Python syntax, and proper separators.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T17:12:03.985899Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper string quoting, valid semicolons as statement separators, and correct use of Python standard library functions.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements bootloader integrity validation by computing SHA256 hashes of real GRUB/EFI binary paths and comparing against a stored baseline, directly supporting T1601 detection by identifying tampered bootloader components.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:12:21.585303Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python command is perfectly well-formed, using correct syntax for imports, list comprehensions, file I/O, and string formatting within a single-line execution string.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the logic required to find common bootloader paths, calculate their SHA256 hashes, and compare them against a baseline file to detect tampering as described in the technique's detection section.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:12:27.663714Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

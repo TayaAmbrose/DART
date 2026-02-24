@@ -29,30 +29,30 @@
         "timestamp": "2025-10-01T00:13:05.267314Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 0,
-        "syntactic_justification": "Cannot evaluate syntactic correctness as the actual command was withheld from the prompt.",
-        "semantic_score": 0,
-        "semantic_justification": "Cannot evaluate semantic correctness as the actual command was withheld from the prompt.",
-        "combined_score": 0.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T00:13:09.186861Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 3,
+        "syntactic_justification": "The command is described in natural language rather than provided as actual code, so syntactic correctness cannot be fully verified, but the described constructs (AF_INET6/SOCK_DGRAM, base64 encoding, fixed-size chunks) are all valid Python socket API elements that would form well-formed code.",
+        "semantic_score": 3,
+        "semantic_justification": "Using IPv6 UDP to a unique-local address with a reduced hop limit is a plausible alternative network path for exfiltration, but T1011 specifically refers to different physical network mediums (cellular, Wi-Fi, Bluetooth) rather than alternative IP protocol versions on the same physical medium, making this a partial rather than precise alignment with the technique.",
+        "combined_score": 3.0,
+        "confidence": 0.6,
+        "timestamp": "2026-02-18T21:55:14.685071Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 1,
-        "syntactic_justification": "The actual command was explicitly withheld and described as non-actionable, making direct evaluation of its syntactic correctness impossible as it is not runnable as-is.",
-        "semantic_score": 5,
-        "semantic_justification": "Exfiltrating data via IPv6 UDP to a unique-local address with a low hop-limit represents a distinct network path and protocol stack from typical enterprise IPv4 traffic, perfectly aligning with the T1011 technique.",
-        "combined_score": 3.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T00:13:28.593453Z"
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The description perfectly maps to valid Python socket programming logic using the AF_INET6 and SOCK_DGRAM constants along with the base64 module.",
+        "semantic_score": 2,
+        "semantic_justification": "T1011 specifically refers to switching physical or logical network media (e.g., Wi-Fi to Cellular); switching from IPv4 to IPv6 on the same interface is a protocol variation (T1048) rather than a different medium.",
+        "combined_score": 3.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:55:39.233594Z"
       }
     ],
-    "llm_average_syntactic": 0.667,
+    "llm_average_syntactic": 3.0,
     "llm_average_semantic": 2.333,
-    "llm_average_score": 1.5,
-    "llm_verdict": "likely_mismatch",
+    "llm_average_score": 2.667,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": "Python syntax check failed (py_compile). Command '['C:\\\\Users\\\\flacman\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\\\python.exe', '-m', 'py_compile', 'C:\\\\Users\\\\flacman\\\\AppData\\\\Local\\\\Temp\\\\tmppzydkk3v.py']' returned non-zero exit status 1."

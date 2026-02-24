@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T09:42:32.011873Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax including balanced parentheses, correct variable assignment, proper piping, and valid cmdlet parameters.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses, proper semicolon separators, valid PowerShell cmdlets and parameters, and correct string interpolation using double-quoted strings.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by identifying a removable drive, creating a plausibly-named directory structure, and transferring data from the system to the removable media in a way that attempts to blend in as legitimate driver files.",
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive, creating a camouflaged 'Drivers' directory to blend in with legitimate content, and extracting a pre-staged ZIP archive (drivers_cache.zip) containing exfiltrated data onto the USB medium, fully aligning with the technique's staging, obfuscation, and physical medium transfer behaviors.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:42:34.968003Z"
+        "timestamp": "2026-02-18T22:40:41.028797Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Powershell command is perfectly well-formed with correct syntax, balanced quotes and parentheses, valid command separators, and appropriate cmdlet flags.",
+        "syntactic_justification": "The command uses valid PowerShell cmdlets, correct variable interpolation, and proper command separators.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the claimed intent and MITRE ATT&CK T1052 by identifying a removable drive, creating a plausible 'Drivers' directory for obfuscation, and transferring/staging content from the system to this removable medium via archive expansion, consistent with exfiltration over a physical medium.",
+        "semantic_justification": "The command accurately identifies a removable drive, creates a deceptive directory, and extracts staged data to that location as described in the T1052 technique.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T09:42:47.474114Z"
+        "timestamp": "2026-02-18T22:40:43.295109Z"
       }
     ],
     "llm_average_syntactic": 5.0,

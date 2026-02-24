@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T00:14:44.362636Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and brackets, proper semicolon separators, and valid Python syntax for socket creation, file reading, and list comprehension.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1011 by exfiltrating data over IPv6 UDP (an alternate network medium from typical IPv4/TCP) to a high port, reading from a hidden file and sending it in chunks, which is operationally plausible for data exfiltration.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:14:50.211155Z"
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper list comprehension syntax, correct socket API usage, and valid command separators throughout.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command does exfiltrate data over UDP and uses IPv6 (a different network medium than typical IPv4/TCP C2), T1011 specifically refers to physically different network mediums (cellular, Wi-Fi, Bluetooth) rather than just a different protocol layer on the same physical medium, making this a partial but not fully accurate representation of the technique; additionally, 2001:db8::/32 is documentation-only space that would not route in practice, limiting operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T21:55:51.407355Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced syntax, valid function calls, correct arguments, and proper use of list comprehension for iteration.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of exfiltrating data over IPv6 UDP, a distinct network medium from typical IPv4/TCP, directly aligning with MITRE ATT&CK T1011.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T00:14:59.094941Z"
+        "syntactic_justification": "The command is a perfectly well-formed Python one-liner with balanced quotes, proper semicolon separators, and correct use of the socket and file I/O APIs.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively exfiltrates data using IPv6 UDP datagrams in chunks, which is operationally plausible for bypassing IPv4-only monitoring, though T1011 often implies distinct physical interfaces like cellular or Bluetooth.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:56:00.633762Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 4.0,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

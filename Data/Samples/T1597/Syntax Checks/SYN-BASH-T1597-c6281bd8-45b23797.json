@@ -19,26 +19,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper flag formats, valid curl options, and correct output redirection syntax.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by querying BuiltWith's commercial API to gather technology stack intelligence about a target domain, which is a paid/closed source of information typically used for reconnaissance.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:07:13.331650Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct syntax for redirection, and no parsing errors.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly queries a commercial 'closed source' API (BuiltWith requiring a key) to gather intelligence on a target's technology stack, perfectly aligning with the T1597 technique description.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T12:07:21.897727Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed curl command with valid flags, balanced quoting for header/URL/write-out JSON, and correct output/log redirection.",
@@ -47,6 +27,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T12:07:36.971218Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid curl flags (-fsS, --retry, --connect-timeout, --max-time, --compressed, -H, -o, -w), proper environment variable expansion, and correct output redirection with append operator.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying BuiltWith's commercial/paid API (a closed data source) using an API key to retrieve technology stack intelligence on a target domain, saving structured JSON output and logging HTTP status metadata, which is operationally realistic and directly aligned with the technique's description of querying paid technical databases for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:50:55.268353Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid curl flags, correct variable expansion, balanced quoting for the write-out format, and proper redirection.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately utilizes a commercial API (BuiltWith) to gather technical intelligence, which is a textbook example of searching closed sources for reconnaissance.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:50:56.965233Z"
       }
     ],
     "llm_average_syntactic": 5.0,

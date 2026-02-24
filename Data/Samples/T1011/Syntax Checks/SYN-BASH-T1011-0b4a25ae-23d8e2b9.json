@@ -28,29 +28,29 @@
         "timestamp": "2025-09-30T23:00:58.916242Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), balanced quotes, valid flags, and correct syntax for all components including airport, networksetup, base64, dd, and netcat.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with proper use of &&, pipes, process substitution, and balanced quotes, though the process substitution `< <(...)` combined with `base64` piped to `nc` is syntactically valid in bash but slightly unconventional; the `-N` flag for nc on macOS may not be universally supported.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1011 by first disconnecting from current Wi-Fi, connecting to a specific alternate network (lab-rnd-157), and then exfiltrating a portion of a disk image over that network to a specific IP and port using netcat.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T23:01:03.006678Z"
+        "semantic_justification": "The command accurately implements T1011 by first disassociating from the current Wi-Fi network via `airport -z`, joining an alternate SSID with `networksetup`, then exfiltrating a partial disk image encoded in base64 over netcat to a remote host on an uncommon port, fully aligning with the technique of using an alternate network medium for exfiltration.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:13:18.359571Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct Bash syntax for command chaining, process substitution, balanced quotes, and valid flags for all utilities.",
+        "syntactic_justification": "The command is perfectly formed using standard Bash syntax, valid macOS-specific paths, and correct flags for the utilities involved.",
         "semantic_score": 5,
-        "semantic_justification": "The command correctly uses macOS specific tools (`airport`, `networksetup`) to switch Wi-Fi networks, then `dd`, `base64`, and `nc` to exfiltrate a small volume of data over the new network medium to an uncommon port, perfectly aligning with the T1011 technique and the provided explanation, assuming the user possesses or successfully obtains sudo privileges.",
+        "semantic_justification": "The command accurately reflects the T1011 technique by switching the Wi-Fi interface to a new SSID before exfiltrating data via Netcat, a highly plausible exfiltration scenario.",
         "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-09-30T23:01:29.654232Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T22:13:20.414693Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

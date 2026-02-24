@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T18:14:23.024320Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, including balanced quotes, valid flags (e.g., '-p' for local/listening port depending on 'nc' implementation), and correct command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1205 Traffic Signaling technique, using a magic phrase over UDP to trigger a security-sensitive action (opening SSH via iptables), and is operationally plausible.",
-        "combined_score": 5.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T18:15:02.725717Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced quotes and valid pipe/logical-AND chaining, but the `nc -lukp` flag combination (mixing `-l`, `-u`, `-k`, `-p`) may not be universally valid across all netcat variants, reducing portability.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling pattern (T1205) by listening for a magic phrase on UDP/4000 and dynamically opening SSH via iptables upon receipt, which is operationally plausible, though the `grep -m1 -x` approach on a UDP stream via nc may have reliability issues in practice since nc's UDP mode doesn't guarantee clean line-buffered output.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T04:05:24.860069Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for nc and grep, correct use of command chaining with pipes and conditional execution, and proper sudo usage.",
+        "syntactic_justification": "The command uses correct syntax for bash -c, piping, netcat flags, and iptables parameters with proper quote balancing.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by listening for a specific trigger phrase on UDP port 4000 and then modifying firewall rules to open SSH access only after receiving the signal.",
+        "semantic_justification": "The command perfectly implements traffic signaling by listening for a specific UDP payload and using it as a trigger to modify firewall rules.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:26:47.107420Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:05:26.701653Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

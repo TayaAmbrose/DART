@@ -17,26 +17,6 @@
     "syntax_ok": false,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed Python code with balanced quotes, proper imports, correct assertion syntax, valid system call, and appropriate exit handling.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively validates firmware integrity using MD5 checksums which aligns with mitigating T1601, but relies on MD5 which is cryptographically weak compared to modern hash algorithms.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T18:48:41.447876Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct Python syntax, balanced quotes, valid function calls, and a properly structured shell command embedded within `os.system()`.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the claimed intent of validating a Junos install package via MD5 checksums, which is a direct integrity check and a crucial detection/mitigation technique against T1601 (Modify System Image).",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T18:48:55.823449Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Python one-liner with balanced quoting, valid statements, and a parseable shell subcommand.",
@@ -45,11 +25,31 @@
         "combined_score": 3.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T18:49:34.419841Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is well-formed with balanced parentheses, proper semicolons, valid imports, and correct use of os.system and sys.exit.",
+        "semantic_score": 3,
+        "semantic_justification": "While the command correctly validates a Junos package via MD5 checksum (a legitimate integrity check mitigation against T1601), it is a defensive/detection action rather than an adversarial technique execution, and MD5 is cryptographically weak for authenticity verification; additionally, the privilege assertion (assert os.geteuid()==0) contradicts the stated privilege level of 'None'.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:20:24.550390Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly formed with correct imports, proper use of semicolons, and correctly nested quotes for the subshell command.",
+        "semantic_score": 5,
+        "semantic_justification": "The command logically performs an integrity check using standard utilities (md5sum) in a common staging directory (/var/tmp) for Junos devices, which is a realistic precursor or verification step for modifying a system image.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:20:28.124872Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -27,24 +27,24 @@
         "timestamp": "2025-10-01T00:01:32.531940Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command chaining (&&), valid flags for both iwconfig and curl, correct redirection of output (>/dev/null 2>&1), and appropriate parameter usage.",
+        "syntactic_justification": "The command is perfectly well-formed with valid use of &&, properly quoted flags, balanced syntax, and correct curl flag usage including --interface, -T, and --max-time.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by first checking if the secondary network interface (wlan1) is available and then using curl to exfiltrate a database file over that specific interface to an external server on a high port.",
+        "semantic_justification": "The command accurately implements T1011 by first verifying the wlan1 interface exists via iwconfig, then using curl's --interface flag to bind the upload specifically to wlan1 (a secondary Wi-Fi interface), transferring a sensitive file to an HTTP listener on a high port, which is operationally realistic exfiltration over an alternate network medium.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T00:01:40.737672Z"
+        "timestamp": "2026-02-18T21:53:26.798225Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid flags, correct command separators, and proper redirection without any syntax errors.",
+        "syntactic_justification": "The command uses standard Bash syntax, valid shell redirection, and correctly formatted curl arguments.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by explicitly binding `curl` to `wlan1` to exfiltrate a file via HTTP, directly aligning with the T1011 technique of using an 'other network medium' for data exfiltration.",
+        "semantic_justification": "The command effectively verifies the presence of a secondary network interface and forces data exfiltration through it using tool-specific flags, perfectly matching T1011.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T00:01:49.338312Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:53:28.476921Z"
       }
     ],
     "llm_average_syntactic": 5.0,

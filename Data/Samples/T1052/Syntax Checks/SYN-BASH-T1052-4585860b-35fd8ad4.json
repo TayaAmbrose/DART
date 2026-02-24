@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T06:43:03.084602Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for both tar and dd commands, and correct piping syntax.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid pipe chaining, correct flag usage for both tar (-C, -czf with stdout dash) and dd (of=, bs=, oflag=direct, status=none), and proper variable expansion.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by compressing password data and writing it directly to a physical USB device using raw device access, leaving minimal forensic traces on the filesystem.",
+        "semantic_justification": "The command precisely implements T1052 by compressing the password-store directory via tar to stdout and piping it directly to a raw USB block device via dd with direct I/O, which bypasses the mounted filesystem and leaves no recoverable file artifacts on the drive, fully aligning with the exfiltration-over-physical-medium technique including data staging and obfuscation of the transfer.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T06:43:05.673339Z"
+        "timestamp": "2026-02-18T22:30:37.415763Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid flags and operators, and has balanced quotes, making it fully parseable and executable.",
-        "semantic_score": 5,
-        "semantic_justification": "The command accurately implements T1052 by compressing a sensitive directory and writing it directly to a raw USB device, precisely matching the explanation and achieving exfiltration over a physical medium in an operationally plausible manner, even under 'none' privilege in common user scenarios.",
-        "combined_score": 5.0,
+        "syntactic_justification": "The command uses standard Bash syntax, valid tar flags, and correctly structured dd arguments with proper piping.",
+        "semantic_score": 4,
+        "semantic_justification": "The command perfectly achieves the intent of writing a tarball to a raw device, though it would realistically require root privileges which contradicts the provided metadata.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:43:15.112567Z"
+        "timestamp": "2026-02-18T22:30:38.640479Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

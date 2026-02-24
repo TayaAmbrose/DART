@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid kubectl syntax, correct JSON escaping in the curl payload, and appropriate flag usage throughout.",
-        "semantic_score": 4,
-        "semantic_justification": "The command aligns with T1585 (Establish Accounts) by updating a social media profile to enhance credibility of an established account, though it's updating rather than creating an account which is a slight deviation from the core technique.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T10:45:32.391338Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, valid flags, and correct escape sequences for the JSON payload within the `curl` command.",
-        "semantic_score": 5,
-        "semantic_justification": "The command updates an existing account's profile to enhance credibility and reduce suspicion, which perfectly aligns with the 'abuse accounts (...) to blend into normal activity' aspect of T1585.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T10:45:39.672997Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command and quoting are well-formed with valid kubectl and curl flags and correctly escaped JSON for the inner shell.",
@@ -44,6 +24,26 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T10:46:12.045875Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes (including properly escaped inner double quotes in the JSON payload), valid kubectl flags, correct curl options, and proper shell invocation via sh -lc.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 persona establishment by using a ephemeral Kubernetes pod to patch a social media profile with credibility-enhancing details (bio, location, website) that make the fake account appear legitimate, which is operationally consistent with the technique's goal of building believable online personas.",
+        "combined_score": 5.0,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:43:57.585981Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed kubectl run instruction with correctly nested and escaped quotes for the internal curl JSON payload.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately reflects the sub-technique of establishing credibility via social media profile modification, although a realistic PATCH request would typically require an authorization header.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:44:01.207189Z"
       }
     ],
     "llm_average_syntactic": 5.0,

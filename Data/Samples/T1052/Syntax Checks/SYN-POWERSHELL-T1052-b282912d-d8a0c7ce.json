@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T08:11:55.002128Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid PowerShell syntax, and appropriate variable assignments and method calls.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed PowerShell with balanced parentheses, proper semicolons, and valid cmdlet usage, though the alternate data stream path construction ($carrier+':cache') uses string concatenation that works but is slightly unconventional compared to using a dedicated ADS path format.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by identifying a removable drive, creating a thumbs.db file as a carrier, and exfiltrating data from Budget.xlsx by encoding it as base64 and hiding it in an alternate data stream, which is a realistic implementation of exfiltration over physical medium.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T08:11:57.846220Z"
+        "semantic_justification": "The command accurately implements T1052 by detecting a removable USB drive, creating a decoy file (thumbs.db) on it, base64-encoding a target document (Budget.xlsx), and hiding the encoded data in an NTFS alternate data stream named 'cache' on that file — combining physical medium exfiltration with obfuscation/steganography as described in the technique.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:35:21.469891Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct PowerShell cmdlet usage, .NET calls, variable assignments, and proper Alternate Data Stream (ADS) syntax.",
-        "semantic_score": 5,
-        "semantic_justification": "The command flawlessly locates a removable drive, creates or targets a 'thumbs.db' file, base64-encodes a plausible target file, and stashes the encoded data in an ADS on the USB, perfectly aligning with T1052 for stealthy data exfiltration via physical medium.",
-        "combined_score": 5.0,
+        "syntactic_justification": "The command is a series of well-formed PowerShell statements using valid cmdlets, .NET classes, and correct syntax for variable assignment and piping.",
+        "semantic_score": 4,
+        "semantic_justification": "The command successfully identifies a removable drive and writes data to an alternate data stream; however, it assumes the USB drive is formatted with NTFS, as FAT32 and exFAT do not support ADS.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T08:12:10.556686Z"
+        "timestamp": "2026-02-18T22:35:24.232979Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

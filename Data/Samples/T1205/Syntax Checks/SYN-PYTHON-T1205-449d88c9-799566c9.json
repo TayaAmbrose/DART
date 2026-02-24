@@ -27,30 +27,30 @@
         "timestamp": "2025-10-01T13:07:42.188514Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 4,
-        "syntactic_justification": "The command appears to be a well-structured Python script using Scapy to send TCP SYN packets in a specific sequence, though without seeing the actual code I cannot verify complete syntactic correctness.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 1,
+        "syntactic_justification": "The command was withheld and replaced with a high-level description, so no actual parseable syntax exists to evaluate.",
         "semantic_score": 5,
-        "semantic_justification": "The described port-knocking implementation using Scapy to send TCP SYN packets to specific ports in sequence perfectly aligns with the T1205 Traffic Signaling technique as it uses network protocol fields and timing patterns to covertly signal a listening system to modify firewall rules.",
-        "combined_score": 4.5,
-        "confidence": 0.8,
-        "timestamp": "2025-10-01T13:07:46.094700Z"
+        "semantic_justification": "The described concept is a textbook implementation of T1205 port-knocking using Scapy to send a precise TCP SYN sequence to closed ports, which would trigger a server-side listener to dynamically open SSH access via iptables, perfectly aligning with Traffic Signaling technique semantics.",
+        "combined_score": 3.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:43:16.123161Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "While the specific command is withheld, the description implies a standard Scapy script which is perfectly well-formed and parseable in Python for sending TCP SYN packets.",
+        "syntactic_justification": "The command describes a standard Scapy-based TCP SYN sequence that is syntactically valid in a Python environment.",
         "semantic_score": 4,
-        "semantic_justification": "The described command perfectly aligns with MITRE ATT&CK T1205 (Traffic Signaling) by using port knocking via Scapy to covertly trigger a server-side action (opening SSH), though the stated 'Privilege: None' for a raw Scapy packet send is a minor realism gap.",
+        "semantic_justification": "The tool and method are perfectly aligned with T1205, but raw packet crafting on Linux requires root privileges, which contradicts the 'None' requirement specified.",
         "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T13:08:06.006957Z"
+        "timestamp": "2026-02-19T03:43:28.702703Z"
       }
     ],
-    "llm_average_syntactic": 3.333,
+    "llm_average_syntactic": 2.333,
     "llm_average_semantic": 4.0,
-    "llm_average_score": 3.667,
-    "llm_verdict": "uncertain",
+    "llm_average_score": 3.167,
+    "llm_verdict": "likely_mismatch",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": "Python syntax check failed (py_compile). Command '['C:\\\\Users\\\\flacman\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\\\python.exe', '-m', 'py_compile', 'C:\\\\Users\\\\flacman\\\\AppData\\\\Local\\\\Temp\\\\tmpmf1lckci.py']' returned non-zero exit status 1."

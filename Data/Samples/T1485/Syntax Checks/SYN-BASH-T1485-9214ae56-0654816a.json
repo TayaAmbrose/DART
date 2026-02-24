@@ -19,26 +19,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct use of variables, pipes, and loops.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by first overwriting all files in a Docker volume with zeros (using dd with /dev/zero) and then deleting them, making data recovery extremely difficult.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T02:19:18.049658Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct variable assignments, command substitutions, piping, loop structure, and proper quoting throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely executes the claimed intent by locating a Docker volume, iterating through its files, securely overwriting their content with zeros using `dd`, flushing writes with `sync`, and finally deleting the files, directly aligning with T1485's data destruction methods.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T02:19:28.139542Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Bash with balanced quoting, valid substitutions, and correct find/while loop syntax and flags.",
@@ -47,6 +27,26 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T02:19:47.923701Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of bash -c, correct subshell syntax, valid dd/find/stat flags, and proper null-delimiter handling in the while loop.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 data destruction by inspecting a Docker volume mountpoint, overwriting each file's content with zeros using dd (secure wipe), syncing to disk, then deleting the files — fully aligning with the technique's overwrite-then-delete pattern targeting container storage.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:43:44.475791Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "the command uses correct bash syntax, proper quoting for subshells and templates, and a robust loop structure for handling filenames.",
+        "semantic_score": 5,
+        "semantic_justification": "the command accurately identifies the volume path, performs a non-truncating overwrite to destroy data on disk, and then deletes the files, perfectly aligning with T1485.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:43:47.744605Z"
       }
     ],
     "llm_average_syntactic": 5.0,

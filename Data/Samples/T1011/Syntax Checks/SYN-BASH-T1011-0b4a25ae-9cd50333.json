@@ -28,29 +28,29 @@
         "timestamp": "2025-09-30T22:56:09.969616Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), balanced quotes, valid flags for all tools (airport, networksetup, tar, base64, nc), and follows correct syntax for each component.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, proper use of &&, pipe operators, valid flags for each tool (airport -z, networksetup, tar -czf, base64, nc -6 with -w and -N), and correct IPv6 link-local address syntax with interface scope.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1011 by disconnecting from current Wi-Fi, connecting to an alternate network, compressing a specific file, encoding it with base64, and exfiltrating it over IPv6 to a specific port using netcat.",
+        "semantic_justification": "The command accurately implements T1011 by disassociating from the current Wi-Fi network (airport -z), joining a covert SSID via networksetup, then exfiltrating a specific CSV file over an alternate wireless medium using IPv6 link-local addressing to an uncommon high port via netcat, which is operationally plausible on macOS and clearly distinct from a primary network channel.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T22:56:30.424474Z"
+        "confidence": 0.88,
+        "timestamp": "2026-02-18T22:01:44.153254Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flag formats, and no impossible constructs.",
-        "semantic_score": 3,
-        "semantic_justification": "While the chosen tools and overall flow align with the intent, the `networksetup -setairportnetwork` command lacks `sudo` and would likely fail due to insufficient permissions, preventing the crucial step of joining the alternate Wi-Fi network and thereby breaking the exfiltration chain as described.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-09-30T22:56:54.094057Z"
+        "syntactic_justification": "The command is perfectly formed for the macOS Bash environment, using correct tool paths, valid flag combinations, proper piping, and a correctly formatted IPv6 link-local address with a scope ID.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1011 by programmatically switching Wi-Fi networks to an alternate SSID and exfiltrating compressed, encoded data directly to a listener on that local wireless segment.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:01:48.288718Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T02:16:37.015607Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), valid flags for tar (-czf), rsync (-azq), and rm (-f), balanced quoting, and logical flow.",
+        "syntactic_justification": "The command is perfectly well-formed with proper use of &&, valid tar/rsync/rm flags, correct variable expansion, balanced quoting, and appropriate stderr redirection.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by compressing user configuration files (.config directory), transferring them via rsync to a remote server with obfuscated naming (.cfg-$HOSTNAME.tgz hidden in .cache/.rs/), and cleaning up traces afterward.",
+        "semantic_justification": "The command fully realizes T1020 by compressing the user's .config directory into a hidden, hostname-tagged archive, quietly exfiltrating it via rsync to a remote host, and then removing the local artifact to reduce forensic traces — a textbook automated exfiltration workflow.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T02:16:40.198606Z"
+        "timestamp": "2026-02-18T22:19:41.852106Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid flags and separators, and adheres to standard Bash syntax without any errors or impossible constructs.",
+        "syntactic_justification": "The command uses valid bash syntax, correctly formatted tool flags, logical operators, and standard variable expansion without any syntax errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by collecting and compressing configuration data, exfiltrating it via rsync to an external location, and cleaning up, which is operationally plausible and directly aligns with the T1020 automated exfiltration technique.",
+        "semantic_justification": "The command perfectly demonstrates the lifecycle of automated exfiltration by packaging sensitive user configuration data, transferring it to a remote host, and cleaning up temporary files.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T02:16:50.940927Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:19:43.139476Z"
       }
     ],
     "llm_average_syntactic": 5.0,

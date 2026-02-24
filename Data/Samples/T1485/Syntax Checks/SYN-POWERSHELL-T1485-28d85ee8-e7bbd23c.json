@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Azure PowerShell syntax, balanced quotes, correct parameter usage, and proper PowerShell script string formatting with appropriate command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using SDelete (a secure deletion tool) with proper parameters (-p 3 for 3 passes, -s for subdirectories, -q for quiet mode) to permanently destroy private key files in the specified directory.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T02:46:08.317944Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell script string is perfectly well-formed with balanced quotes, valid command chaining using semicolons, proper cmdlet syntax, and correct executable invocation.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1485 Data Destruction by using SDelete (a tool specifically mentioned in the technique) to securely overwrite and delete sensitive key files, and while the prompt stated 'Privilege: None', `Invoke-AzVMRunCommand` typically executes as SYSTEM on Windows, ensuring sufficient permissions for the operation.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T02:46:21.232241Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The cmdlet and embedded PowerShell are well-formed with balanced quotes, valid parameters, and properly separated statements.",
@@ -44,11 +24,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T02:46:49.160899Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed and parseable overall, but the ScriptString value contains unescaped `$env:TEMP` which may be interpolated by the outer PowerShell session before being passed to the VM, and passing two separate path arguments to sdelete.exe at the end may not be valid syntax for that tool (sdelete typically takes one path per invocation).",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1485 by using Azure's RunCommand to remotely deploy SDelete (a legitimate secure-wipe utility) with multi-pass overwrite (-p 3) and recursive deletion (-s) targeting cryptographic key files (.pem, .pfx), which is a highly realistic and operationally plausible data destruction scenario.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:44:57.889571Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows correct Azure PowerShell and internal script syntax, utilizing proper quoting, semicolons, and valid SDelete flags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command perfectly executes the MITRE technique by downloading a known secure-wipe utility and using it to destroy specific sensitive cryptographic files via remote VM execution.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:45:01.380287Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

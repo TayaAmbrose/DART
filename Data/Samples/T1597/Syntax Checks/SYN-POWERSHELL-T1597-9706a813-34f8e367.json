@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, braces, and parentheses, proper error handling with try/catch/finally blocks, and correct variable assignments and function calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by retrieving non-public corporate intelligence data from a commercial database (Bureau van Dijk) using secure SCP with proper authentication, logging, and error handling.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:34:23.197524Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, correct command separators, valid flag formats for PSCP, and proper PowerShell cmdlet usage within a robust try-catch-finally block.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by using PSCP to retrieve a named 'closed-source' intelligence export from a specific SFTP host, employing robust operational practices like host key pinning, error handling, and structured logging.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T12:34:35.381963Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced quotes/braces, valid PSCP flags, and proper separators; no parsing hazards apparent.",
@@ -46,6 +26,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T12:35:22.105841Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, braces, and parentheses, proper semicolon separators, valid try/catch/finally blocks, and correct flag syntax for pscp.exe.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by downloading a closed-source corporate intelligence export (Bureau van Dijk Orbis) via SCP using credential environment variables and host key pinning, with realistic logging, hash verification, and structured JSON status output consistent with operational tradecraft.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T00:53:04.039959Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is perfectly formed, with correct variable assignments, proper use of the call operator, balanced braces/quotes, and valid error handling logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by programmatically extracting data from Bureau van Dijk (a major closed-source provider of corporate intelligence) using realistic parameters and automated logging.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:53:07.276997Z"
       }
     ],
     "llm_average_syntactic": 5.0,

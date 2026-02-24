@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T09:02:56.826917Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, balanced quotes/parentheses/braces, appropriate command separators, valid cmdlet parameters, and correct error handling.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, proper semicolon separators, valid cmdlet syntax, correct backtick escaping in the path string, and all flags are valid for their respective commands.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by identifying a removable drive, creating a hidden directory on it, copying document files from the user profile, and logging the exfiltration activity - all core components of physical medium exfiltration.",
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive, creating a hidden/system-attributed directory to evade casual inspection, copying DOCX files from the user's Documents folder to that directory for physical exfiltration, and logging the operation — all operationally plausible without elevated privileges.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:02:59.721289Z"
+        "timestamp": "2026-02-18T22:37:58.960276Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct PowerShell cmdlet usage, proper command separators, balanced quotes, and valid external command calls.",
+        "syntactic_justification": "The command uses valid PowerShell syntax, correct variable interpolation, and proper command separation.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the described intent and T1052, accurately identifying a removable drive, creating a hidden staging directory, copying target files, and logging the action, demonstrating a plausible and effective physical exfiltration attempt.",
+        "semantic_justification": "The command accurately identifies a removable drive, creates a hidden staging area, and copies specific documents, aligning perfectly with physical exfiltration techniques.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T09:03:13.260669Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:38:04.077376Z"
       }
     ],
     "llm_average_syntactic": 5.0,

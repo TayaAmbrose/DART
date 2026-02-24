@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T04:46:34.680047Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The rsync command is perfectly well-formed with valid flags, properly formatted include/exclude patterns, and correct variable usage.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid rsync flags (-azq), properly structured include/exclude filter rules, and correct use of shell variables ($HOME, $HOSTNAME).",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by selectively copying document files (PDF, DOCX, XLSX) from a user's home directory to a remote server using rsync, hiding the exfiltrated data in a hidden directory structure.",
+        "semantic_justification": "The command precisely implements automated selective exfiltration (T1020) by using rsync's include/exclude logic to filter only document types (PDF, DOCX, XLSX) from the home directory and transfer them to a remote host in a hidden cache directory, with compression (-z) and quiet mode (-q) adding operational stealth.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T04:46:37.464802Z"
+        "confidence": 0.97,
+        "timestamp": "2026-02-18T22:27:48.555416Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid flags, balanced quoting, and correct syntax for rsync and shell variables.",
+        "syntactic_justification": "The command uses valid rsync syntax with correctly ordered include/exclude rules and properly escaped shell variables.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the technique description by using `rsync` to selectively filter and exfiltrate specific document types from the home directory to a remote server, demonstrating a highly plausible automated exfiltration attempt.",
+        "semantic_justification": "The command effectively implements selective exfiltration of documents to a remote server using a common utility in an operationally realistic manner.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:09:11.381780Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:27:51.421591Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T19:26:16.565428Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid Python syntax, and correct use of shell constructs including background execution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using Scapy to monitor for GRE protocol packets as a trigger to temporarily enable an HTTP server, creating a covert signaling channel that aligns with T1205.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:40:20.009785Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed with balanced quotes and parentheses, though the nested escaping of quotes within the os.system call (using backslash-escaped double quotes inside a single-quoted Python string) is technically unnecessary and could cause issues in some shell environments, but is generally parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a traffic signaling trigger by sniffing for GRE (IP protocol 47) packets and using their appearance as a signal to temporarily enable an HTTP server for 2 minutes, which aligns well with T1205's concept of using network traffic as a covert trigger; however, 'ciscoconf' is a non-standard/fictional tool that reduces operational realism, and running scapy on a network device with a bash shell is plausible but uncommon.",
+        "combined_score": 4.0,
+        "confidence": 0.75,
+        "timestamp": "2026-02-19T04:10:47.767302Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid function calls, and correct shell syntax within the `os.system` string.",
+        "syntactic_justification": "The command correctly uses nested quoting and escape sequences to pass a backgrounded subshell command through Python's os.system within a sudo-wrapped shell command.",
         "semantic_score": 5,
-        "semantic_justification": "The command flawlessly executes the described signaling technique, using Scapy to detect a GRE packet as a trigger to temporarily enable a network device's HTTP server, aligning perfectly with T1205 Traffic Signaling.",
+        "semantic_justification": "The command perfectly implements T1205 by using a specific network protocol (GRE) as a passive trigger to execute a temporary configuration change on a network device.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T03:40:28.475328Z"
+        "timestamp": "2026-02-19T04:10:50.593297Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

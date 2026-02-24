@@ -17,16 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper syntax, balanced quotes, correct exception handling, and appropriate use of libraries and functions.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by using Clearbit's paid API with proper authentication to gather non-public company information about a target domain, which is exactly the technique described.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T14:25:54.098610Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed Python with balanced delimiters, valid try/except and inline statements, and proper use of urllib and SSL context.",
@@ -37,19 +27,29 @@
         "timestamp": "2025-10-02T14:26:25.502838Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is a perfectly well-formed Python script, with balanced quotes, parentheses, braces, and proper statement separators, runnable as-is.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with correct imports, string formatting, and exception handling, but the multi-line format with inline if-statement and mixed indentation may cause parsing issues when executed as a single command string in a shell context.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 by querying Clearbit, a known paid closed-source data provider, to enrich organizational intelligence on a target domain, which is a classic adversary intelligence gathering step.",
+        "semantic_justification": "The command accurately implements T1597 by querying Clearbit's paid Company API (a closed commercial data source) using Bearer token authentication to enrich organizational intelligence on a target domain, which is a textbook example of searching closed sources for targeting information.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:00:12.412035Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is perfectly well-formed, using standard library modules and correct syntax for environment variable retrieval, error handling, and API requests.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the T1597 technique by querying a commercial, paid data source (Clearbit) for organizational intelligence using authenticated API access.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T20:53:57.519594Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:00:15.289071Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

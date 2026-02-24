@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper PowerShell syntax throughout, and valid parameter usage for all cmdlets.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements T1568 (Dynamic Resolution) by algorithmically generating domain names based on date/time, using DNS resolution to establish command and control, and implementing randomized ports for communication.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T06:59:12.090455Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, braces, correct command separators, and valid flag formats for PowerShell cmdlets.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively implements dynamic resolution via DGA, alternate DNS server, and beaconing, but the `netsh advfirewall` command requires Administrator privileges, contradicting the stated 'Privilege: None'.",
-        "combined_score": 4.5,
-        "confidence": 1,
-        "timestamp": "2025-10-02T06:59:25.012884Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell scriptblock is well-formed with balanced delimiters and valid cmdlets/parameters; operators and pipelines are correctly used.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T06:59:55.065083Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced braces, parentheses, and quotes, valid PowerShell syntax throughout, proper use of format operators, pipeline separators, and all cmdlet flags are syntactically correct.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1568 dynamic resolution by algorithmically generating a domain name from the current date/hour (a time-based DGA), flushing DNS cache to avoid detection artifacts, using an alternate DNS resolver to bypass local monitoring, randomizing egress ports from an uncommon set, adding a firewall rule to permit the connection, and beaconing via HTTP with a randomized timeout to mimic legitimate traffic patterns.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:26:14.579029Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct PowerShell syntax, properly nested braces, and valid cmdlet parameters throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates time-based dynamic resolution, though the inclusion of a 'netsh' rule requires administrative privileges not specified in the metadata.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:26:16.937797Z"
       }
     ],
     "llm_average_syntactic": 5.0,

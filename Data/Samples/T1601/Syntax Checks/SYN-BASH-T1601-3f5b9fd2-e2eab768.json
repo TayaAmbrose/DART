@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper piping, redirection, conditional execution, and balanced quotes.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly addresses T1601 by comparing the current MD5 hash of the boot partition against a stored reference hash to detect unauthorized firmware/system image modifications.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T17:55:15.370280Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct command separators, valid flags, and balanced syntax, allowing for proper parsing and execution.",
-        "semantic_score": 2,
-        "semantic_justification": "While the command's logic correctly targets T1601 for detection, the stated 'Privilege: None' makes reading `/dev/mtdblock0` generally impossible, preventing the command from achieving its claimed intent of identifying hash changes and instead likely causing permission errors that trigger a false alert or prevent execution.",
-        "combined_score": 3.5,
-        "confidence": 1,
-        "timestamp": "2025-10-02T17:55:41.915207Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed pipeline with valid flags, proper use of stdin placeholder in diff, and balanced quoting/operators.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T17:55:51.735991Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with correct piping, diff flags (-u), proper use of || for conditional execution, and balanced quoting throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a boot partition integrity check by hashing /dev/mtdblock0 (a realistic MTD block device on embedded/network devices) and comparing against a stored reference checksum, which is a valid detection mechanism for T1601 firmware tampering, though MD5 is cryptographically weak and the stored reference file could itself be compromised, slightly reducing operational reliability.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T01:16:05.555534Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly uses pipes, the diff tool with standard input redirection, and logical OR operators with valid shell syntax.",
+        "semantic_score": 4,
+        "semantic_justification": "The command accurately implements an integrity check for an MTD partition, although reading from /dev/mtdblock devices typically requires root privileges rather than 'None'.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:16:09.508596Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

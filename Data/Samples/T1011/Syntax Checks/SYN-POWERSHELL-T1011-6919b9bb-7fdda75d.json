@@ -26,29 +26,29 @@
         "timestamp": "2025-10-01T00:32:40.834449Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, parentheses, and braces, proper command separators, valid PowerShell syntax for variable assignment, string manipulation, and proper execution of nping with appropriate parameters.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by reading a file, encoding it to Base64, chunking it, and exfiltrating it over ICMPv6 (a different network medium than typical C2 channels) with appropriate labeling for reassembly.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:32:47.526049Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses and proper semicolon separators, though the string concatenation passed to --data-string uses parentheses which may require quoting adjustments depending on how nping.exe parses its arguments from PowerShell.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly reads a file, Base64-encodes it, chunks it, and exfiltrates via ICMPv6 payload using nping over IPv6 — a non-standard network medium consistent with T1011 — though nping's --data-string flag expects a hex string rather than an ASCII/Base64 string, which reduces operational plausibility slightly.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T21:59:57.726391Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Powershell commands are perfectly well-formed, using valid syntax for variable assignment, string manipulation, and function calls, and the `nping.exe` command uses correct flags and arguments.",
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell sequence with correct object methods, balanced parentheses, and valid nping.exe flags.",
         "semantic_score": 4,
-        "semantic_justification": "The command accurately leverages `nping` and ICMPv6 for data exfiltration, fitting T1011's 'Exfiltration Over Other Network Medium' by using a non-standard protocol, but `nping` typically requires administrative privileges on Windows for raw socket operations, making the claimed 'Privilege: None' a significant operational realism gap.",
+        "semantic_justification": "The command effectively achieves data exfiltration using a non-standard protocol (ICMPv6), although nping typically requires administrative privileges on Windows to craft raw packets, which contradicts the 'None' privilege label.",
         "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T06:14:10.330392Z"
+        "confidence": 1,
+        "timestamp": "2026-02-18T21:59:59.598380Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.333,
+    "llm_average_score": 4.0,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

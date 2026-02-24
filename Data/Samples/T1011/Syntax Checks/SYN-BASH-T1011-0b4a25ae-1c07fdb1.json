@@ -28,29 +28,29 @@
         "timestamp": "2025-09-30T22:49:51.149461Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper command separators (&&), balanced quotes, valid flags for all tools (airport -z, networksetup -setairportnetwork, base64, nc -6u with port and -w timeout), and correct piping.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by disconnecting from current WiFi, connecting to an alternate network (field_ops_149), and exfiltrating base64-encoded database content via IPv6 UDP to a specific host on an uncommon port (53317).",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T22:49:56.346180Z"
+        "syntactic_justification": "The command is well-formed with properly balanced quotes, valid use of &&, pipe, and redirection operators, and correct flag syntax for airport, networksetup, base64, and nc.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly disassociates from the current Wi-Fi network, joins an alternate SSID, and exfiltrates a base64-encoded database dump over IPv6 UDP via netcat to an uncommon port, which is operationally plausible for T1011; however, the 'None' privilege level is inconsistent with the sudo requirement, and the -6u flag combination in nc may not be supported on all macOS versions.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:11:30.226050Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using correct syntax for chaining commands, piping, input redirection, balanced quoting, and valid flags for all utilities.",
+        "syntactic_justification": "The command uses correct macOS-specific tool paths, valid flag combinations, and proper shell piping/chaining with valid IPv6 link-local addressing.",
         "semantic_score": 5,
-        "semantic_justification": "The command sequence logically disassociates from the current network, connects to a new Wi-Fi, encodes data, and sends it via IPv6 UDP over the newly connected network, perfectly aligning with the T1011 technique of exfiltration over an alternate network medium.",
+        "semantic_justification": "The sequence of disconnecting from the current AP, switching to a specific SSID, and using Netcat over IPv6 effectively implements exfiltration over an alternate network medium.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-09-30T22:50:12.983920Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:11:34.240319Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

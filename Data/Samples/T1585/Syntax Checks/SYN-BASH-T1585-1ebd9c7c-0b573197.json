@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct use of redirection and piping.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively establishes persistent access to a disposable email account by setting up a cron job that polls the Mail.tm API every 15 minutes using a stored authentication token, though it lacks error handling for API rate limits or token expiration.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T10:19:40.660714Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct command separators, valid flags, proper command substitutions, and standard shell constructs.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the claimed intent of automating inbox polling to capture verification links, which directly supports the T1585 technique by facilitating account establishment and development workflows through automated email processing.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T10:19:50.242910Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed with balanced quotes, correct grouping and piping to crontab, and valid curl/jq flags with command substitution deferred to runtime.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T10:20:03.738637Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced parentheses and proper piping to crontab, though the nested quoting with the embedded `$(jq -r .token < $HOME/.mailtm_token.json)` inside double quotes within a single-quoted crontab entry creates a quoting conflict that would prevent the subshell from executing correctly at runtime.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements automated inbox polling for a mail.tm disposable email account using cron and the mail.tm API with bearer token authentication, which aligns well with T1585's account establishment and maintenance workflows, though the quoting issue would reduce operational reliability and the output appending to a JSON file without proper JSON formatting could corrupt the file over time.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:42:53.442264Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses a standard subshell pattern to append a line to the crontab, with correctly balanced parentheses, quotes, and pipes.",
+        "semantic_score": 5,
+        "semantic_justification": "The command logically achieves the goal of automating API-based email retrieval for account verification, using realistic tools (curl, jq) and a valid disposable email API (mail.tm).",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:42:57.359562Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

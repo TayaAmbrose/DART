@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T08:50:56.698409Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, balanced quotes/parentheses/braces, appropriate command separators, valid cmdlet parameters, and correct error handling.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, parentheses, and braces, proper semicolon separators, valid cmdlet names and flags, and correct backtick escaping for the drive letter variable interpolation.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements T1052 by automatically detecting removable media, compressing user pictures, encoding them to evade detection, storing them with an innocuous filename in a benign-sounding directory, and logging the operation with timestamps.",
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive, compressing the Pictures folder, Base64-encoding the archive to obfuscate content, storing it under a benign-named 'drivers' directory on the removable medium, cleaning up the temp file, and logging the operation — fully consistent with staging, obfuscation, and physical medium exfiltration behaviors described in the technique.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T08:51:00.391083Z"
+        "timestamp": "2026-02-18T22:37:21.789449Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct PowerShell syntax, balanced elements, valid cmdlet usage, and proper string interpolation.",
+        "syntactic_justification": "The command is perfectly formed PowerShell; it correctly handles variable expansion with a backtick to escape the colon (avoiding scope-modifier errors) and uses proper separators and quoting.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves its stated intent of compressing, Base64-encoding, and exfiltrating data to a removable medium, aligning precisely with the T1052 technique's characteristics like staging, obfuscation, and transfer over physical medium.",
+        "semantic_justification": "The command accurately implements T1052 by identifying removable media, staging data through compression, obfuscating it via Base64 encoding to a benign-looking file extension, and logging its actions to evade casual detection.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T08:51:10.147148Z"
+        "timestamp": "2026-02-18T22:37:33.742263Z"
       }
     ],
     "llm_average_syntactic": 5.0,

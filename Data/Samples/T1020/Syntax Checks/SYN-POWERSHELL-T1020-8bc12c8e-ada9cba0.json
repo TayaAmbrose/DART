@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T03:04:25.090403Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags for both psexec and PowerShell, and correct PowerShell syntax throughout the script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by using a continuous loop to scan for files, upload them via BITS (a legitimate Windows transfer mechanism), track transferred files, and includes error handling and sleep intervals to maintain persistence and stealth.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T03:04:28.124110Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with balanced quotes, braces, and parentheses, though nesting double-quoted strings inside the outer PowerShell -Command string passed via psexec could cause quoting conflicts in practice, making it a minor but real parsing concern.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements automated exfiltration (T1020) using BITS uploads to an HTTPS endpoint in a loop with sleep intervals and file relocation tracking, though Start-BitsTransfer with -TransferType Upload and -Authentication NONE to an arbitrary HTTPS URL has limited real-world reliability and BITS upload support is less common than download, slightly reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-18T22:22:00.955836Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags for psexec and powershell, and correct PowerShell syntax throughout the embedded script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves automated, low-noise exfiltration using BITS to an external HTTPS endpoint, directly aligning with T1020, and is operationally plausible by leveraging SYSTEM privileges via `psexec -s`.",
-        "combined_score": 5.0,
+        "syntactic_justification": "The command is perfectly well-formed, using correct PsExec flags and properly nested PowerShell syntax with balanced quotes and braces.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively demonstrates automated exfiltration via BITS in a loop; however, using -Asynchronous followed immediately by Move-Item will cause the BITS transfer to fail because the source file path changes before the BITS service can process the job.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-10-01T05:38:18.822691Z"
+        "timestamp": "2026-02-18T22:22:10.124966Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 3.667,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

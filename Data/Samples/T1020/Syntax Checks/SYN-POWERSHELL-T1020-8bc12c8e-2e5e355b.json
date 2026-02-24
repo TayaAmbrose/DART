@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T04:02:08.206548Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct PowerShell syntax throughout.",
+        "syntactic_justification": "The command is well-formed with balanced quotes, braces, and parentheses, valid PowerShell constructs, proper flag usage for psexec and scp, and correct semicolon separators throughout the script block.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements automated exfiltration by using a persistent loop that scans for files, transfers them via SCP to an external server, tracks successful transfers, and runs with elevated privileges via PsExec.",
+        "semantic_justification": "The command precisely implements T1020 automated exfiltration by using psexec to run a hidden, privileged PowerShell loop that periodically scans a reports directory, transfers files via scp to an external SFTP server, and moves successfully exfiltrated files to a tracking folder to prevent re-exfiltration — fully matching the technique's batching, scheduling, and automated transfer behaviors.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T05:55:39.809262Z"
+        "timestamp": "2026-02-18T22:25:08.393141Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with balanced quotes, correct command separators, valid flags for both psexec and powershell, and proper PowerShell syntax for external command execution and scripting constructs.",
+        "syntactic_justification": "The command is perfectly formed with balanced quoting, proper PowerShell syntax for the loop and file handling, and correct flag usage for PsExec and SCP.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of periodic automated exfiltration using scp, correctly handles stealth and non-interactivity, and implements a robust mechanism to avoid re-exfiltration, fully aligning with MITRE ATT&CK T1020.",
+        "semantic_justification": "The command accurately implements MITRE ATT&CK T1020 by establishing a persistent loop that identifies new files, uses a standard protocol (SCP) for transfer, and implements a primitive tracking mechanism by moving sent files to avoid duplication.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T05:55:51.547247Z"
+        "timestamp": "2026-02-18T22:25:23.968420Z"
       }
     ],
     "llm_average_syntactic": 5.0,

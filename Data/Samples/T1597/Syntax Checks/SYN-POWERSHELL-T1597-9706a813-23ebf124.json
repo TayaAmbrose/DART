@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, error handling with try/catch/finally blocks, balanced quotes/braces, and correct command separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by retrieving intelligence data from a paid threat intelligence source (RiskIQ) using proper authentication, logging the activity, and storing the retrieved data securely.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T11:29:25.952541Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, proper command separators, valid flag formats, and correct cmdlet usage within a robust try/catch/finally block.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely aligns with T1597 by retrieving an 'asset intelligence export' from 'sftp.riskiq.net' (a known threat intelligence provider), which represents acquiring non-public information from a paid feed or private database, using operationally plausible methods like SCP with host key pinning and robust logging.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T11:29:36.763443Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The PowerShell command is well-formed with balanced quotes/braces, valid parameters, proper separators, and correct try/catch/finally and hashtable usage.",
@@ -46,11 +26,31 @@
         "combined_score": 4.5,
         "confidence": 0.86,
         "timestamp": "2025-10-02T11:29:55.841201Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is well-formed with balanced braces, proper try/catch/finally blocks, correct string interpolation, valid flag usage for pscp, and proper semicolon separators throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command credibly implements T1597 by downloading a RiskIQ (a legitimate closed-source threat intelligence platform) asset export via SCP with host key pinning, credential management via environment variables, and structured JSON logging — though RiskIQ's actual SFTP endpoint and export path format are not publicly documented, making the specific hostname and path speculative.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T00:48:04.940855Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell script is perfectly formed with correct variable assignments, proper try-catch-finally blocks, and valid use of the call operator for the external executable.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by automating the retrieval of a non-public intelligence export from a known closed-source provider (RiskIQ) using appropriate tools and error handling.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:48:07.536158Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

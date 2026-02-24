@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, valid kubectl syntax, correct JSON escaping in the curl payload, and appropriate use of flags and parameters.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1585 technique by creating a new user account on a developer platform using a temporary Kubernetes pod to make an API request, which aligns perfectly with establishing accounts for persistent access.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T09:07:31.525999Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct nested command execution, and proper escaping for the JSON payload within the shell command.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with establishing an account by using `curl` to send a POST request with user registration data to an API endpoint, directly reflecting the stated technique and explanation.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T09:07:40.168098Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quoting and escaping with valid kubectl flags and a well-formed curl JSON POST payload.",
@@ -44,6 +24,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T09:08:07.869837Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes (including properly escaped inner JSON quotes), valid kubectl flags (--rm, -i, --restart=Never, --image, --command), and correct curl arguments with proper JSON payload structure.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 by using a ephemeral Kubernetes pod to register a new developer platform account via a REST API POST request, establishing a technical persona footprint with realistic credentials and identity fields, fully consistent with the technique's account establishment behavior.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:37:37.527349Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command correctly uses kubectl run flags, handles shell execution with proper quoting, and includes a valid, escaped JSON payload for the curl request.",
+        "semantic_score": 5,
+        "semantic_justification": "The command successfully leverages a temporary pod to perform an HTTP POST request for account creation on a target API, which aligns perfectly with the Establish Accounts technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:37:40.704496Z"
       }
     ],
     "llm_average_syntactic": 5.0,

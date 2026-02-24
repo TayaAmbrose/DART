@@ -29,29 +29,29 @@
         "timestamp": "2025-10-01T00:31:00.040405Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, backticks, parentheses, and braces, correct PowerShell syntax with appropriate escape sequences, and valid WMIC process call create syntax.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with proper escaping of backtick-prefixed variables for WMIC/PowerShell nesting, balanced parentheses and braces, though the complex multi-level quoting and backtick escaping within the WMIC call create edge cases that could fail depending on shell interpretation context.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by identifying a USB tethering network adapter (Remote NDIS), binding to it specifically, and using it to exfiltrate data over TCP to an external server, effectively using an alternate network medium separate from the primary network.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:31:03.488448Z"
+        "semantic_justification": "The command accurately implements T1011 by detecting a USB tethering (Remote NDIS) adapter via WMI, binding a TCP socket specifically to that adapter's IP to route traffic over the alternate network medium, and exfiltrating a file to an external host on a high port, which is operationally coherent and realistic.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T21:59:24.121133Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes and parentheses, appropriate backtick escaping for PowerShell variables within the WMIC string, and valid PowerShell syntax throughout.",
+        "syntactic_justification": "The command is perfectly well-formed for execution from a PowerShell host, correctly using backticks to escape dollar signs within the double-quoted WMIC argument and maintaining balanced parentheses and braces throughout the nested logic.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by programmatically identifying a 'Remote NDIS' adapter, binding a TCP client to its specific IP address, and then exfiltrating a file over this distinct network path, directly aligning with MITRE ATT&CK T1011.",
+        "semantic_justification": "The command accurately implements the T1011 technique by identifying a non-standard network interface (Remote NDIS/USB tethering), binding a TCP socket specifically to that interface's IP address to ensure traffic leaves via that medium, and exfiltrating a file to a remote listener.",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T06:13:43.761020Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:59:34.511107Z"
       }
     ],
-    "llm_average_syntactic": 4.667,
+    "llm_average_syntactic": 4.333,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.667,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -29,24 +29,24 @@
         "timestamp": "2025-10-01T19:16:12.604369Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for both tcpdump and iptables, including correct flag formats, balanced quotes, and proper command chaining with &&.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid tcpdump BPF filter syntax, correct flag usage for both tcpdump and iptables, and proper use of && as a command separator.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using tcpdump to monitor for specific TCP SYN packets as a trigger signal and then executing an iptables rule to open a port in response, creating a covert activation mechanism.",
+        "semantic_justification": "The command accurately implements T1205 port-knock-style traffic signaling by using tcpdump to detect three TCP SYN packets to a decoy port as an activation trigger, then dynamically opening a backdoor port via iptables, which is a textbook implementation of traffic-based signaling to trigger a payload/action.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-02T03:37:58.916965Z"
+        "timestamp": "2026-02-19T04:10:08.859858Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax for tcpdump filters, flag usage, command separators, and iptables arguments.",
+        "syntactic_justification": "The command uses valid BPF filter syntax for tcpdump, correct logical operators, and standard iptables flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of using a sequence of three TCP SYNs to a specific port as a network-based signal to trigger an iptables firewall modification, directly implementing MITRE ATT&CK T1205.",
+        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using a packet count threshold on a specific port to trigger a firewall configuration change.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-02T03:38:06.557706Z"
+        "timestamp": "2026-02-19T04:10:10.586927Z"
       }
     ],
     "llm_average_syntactic": 5.0,

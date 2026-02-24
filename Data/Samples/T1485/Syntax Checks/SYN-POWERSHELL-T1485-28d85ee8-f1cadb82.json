@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper Azure PowerShell syntax, balanced quotes, valid parameter names, and correct nesting of the Linux command within the ScriptString parameter.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using the 'shred' utility with secure deletion parameters (-n 3 overwrites 3 times, -z adds zeros, -u unlinks) to systematically find and destroy all backup files in the specified directory.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T01:12:50.306077Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell cmdlet and the embedded shell script are perfectly well-formed with balanced quotes, valid parameters, and correct flag usage for all commands.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly uses `shred` with appropriate flags via `find` and `xargs` to securely overwrite and delete files on a Linux VM, directly aligning with the stated intent and the T1485 technique, especially since Invoke-AzVMRunCommand typically executes as root on Linux.",
-        "combined_score": 5.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T01:12:55.717740Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced quoting and a correctly quoted Linux pipeline; parameters and flag formats are plausible.",
@@ -44,11 +24,31 @@
         "combined_score": 4.5,
         "confidence": 0.84,
         "timestamp": "2025-10-02T01:13:33.681868Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The PowerShell cmdlet and embedded shell script are well-formed with proper quoting, valid flags for shred (-n 3 -z -u), and correct xargs usage, though the single quotes around '{}' inside a double-quoted ScriptString parameter could cause minor shell interpretation issues depending on how Azure passes the script.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1485 Data Destruction by using Invoke-AzVMRunCommand to remotely execute a shred-based secure deletion pipeline on a Linux VM's backup directory, combining Azure IaaS remote execution with the shred tool's multi-pass overwrite (-n 3), zero-out (-z), and unlink (-u) flags to render backup files unrecoverable.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:40:24.685935Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a well-formed Azure PowerShell cmdlet with a correctly escaped and quoted nested Bash one-liner using standard Linux utilities.",
+        "semantic_score": 5,
+        "semantic_justification": "The command uses the 'shred' utility exactly as described in T1485 to securely overwrite and delete backup files via a legitimate administrative remote execution tool.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:40:26.528782Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

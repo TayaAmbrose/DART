@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper indentation, balanced parentheses/brackets, correct function calls, and appropriate error handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The script correctly implements the T1597 technique by accessing closed-source intelligence through AWS Data Exchange, filtering for relevant datasets containing threat intelligence, exporting selected assets to S3, and generating time-limited access URLs.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:02:52.022341Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The multi-line Python script is perfectly well-formed, uses standard libraries and boto3 correctly, and contains no syntax errors or structural issues.",
-        "semantic_score": 5,
-        "semantic_justification": "The script directly accesses and exports data from AWS Data Exchange (a commercial data marketplace), which is a prime example of acquiring intelligence from 'paid feeds' or 'private databases' as described by T1597.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:03:04.855000Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed, runnable Python with balanced delimiters and valid boto3 calls; no syntax errors evident.",
@@ -45,11 +25,31 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T13:03:20.523213Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is well-formed with balanced parentheses, proper indentation, valid boto3 API calls, correct string formatting, and no syntax errors.",
+        "semantic_score": 4,
+        "semantic_justification": "The script accurately implements T1597 by querying AWS Data Exchange (a paid/closed commercial data source) for entitled datasets matching intelligence-related keywords, exporting assets to S3, and generating presigned URLs for access — though the 'None' privilege claim is slightly misleading since valid AWS credentials with DataExchange and S3 permissions are required.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:55:30.490676Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-structured, uses correct boto3 API calls, and maintains consistent variable naming and logical flow with proper exception handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements the technique by programmatically identifying, exporting, and retrieving commercial data from AWS Data Exchange, a primary platform for closed-source intelligence feeds.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:55:32.766176Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

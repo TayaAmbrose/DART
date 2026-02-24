@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T03:55:26.915749Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct escape sequences for a Docker run command with a complex shell script inside.",
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper semicolons and pipe separators, valid Docker and curl flags, and correct shell construct nesting within the single-quoted sh -c argument.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by creating a persistent container that collects Docker logs every 30 minutes, compresses them with gzip, and exfiltrates them via HTTP POST to an external server, aligning completely with the T1020 technique.",
+        "semantic_justification": "The command fully realizes T1020 automated exfiltration: it mounts the Docker socket to enumerate running containers, collects logs from the past 30 minutes via 'docker logs --since 30m', compresses output with gzip, and POSTs it to an external HTTP endpoint with hostname identification, repeating every 1800 seconds in a persistent background container — matching batching, compression, scheduling, and automated transfer behaviors described in the technique.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T03:55:29.987152Z"
+        "timestamp": "2026-02-18T22:24:44.374397Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quoting, proper command separators, and valid flags throughout the docker run arguments and the internal shell script.",
+        "syntactic_justification": "The command follows correct Docker CLI and shell syntax, including proper quoting, pipe usage, and valid flag arguments for both Docker and curl.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements automated exfiltration by leveraging docker socket access to periodically collect and compress container logs, then quietly exfiltrate them via an HTTP POST to an external server.",
+        "semantic_justification": "The command perfectly demonstrates automated exfiltration by using a persistent loop to collect container logs via the Docker socket, compressing them, and transmitting them to a remote server over HTTP.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T05:54:01.753779Z"
+        "timestamp": "2026-02-18T22:24:47.205953Z"
       }
     ],
     "llm_average_syntactic": 5.0,

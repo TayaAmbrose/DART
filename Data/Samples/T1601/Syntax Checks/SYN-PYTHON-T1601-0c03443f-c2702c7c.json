@@ -17,26 +17,6 @@
     "syntax_ok": false,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed with proper indentation, balanced quotes, valid imports, correct conditional statements, and proper file handling.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1601 (Modify System Image) by recalculating and updating the checksum manifest to match a previously modified system image, effectively hiding the tampering by making integrity verification tools believe the modified image is legitimate.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T17:18:56.372909Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed, using valid syntax, balanced constructs, and appropriate Python modules and functions.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent of recalculating and updating an integrity manifest for a tampered system image, directly aligning with evasion tactics for MITRE ATT&CK T1601 by subverting simple integrity checks.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T17:19:10.748601Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The here-document and 'python3 -' usage are correct, quoting is balanced, and the Python code is valid and parseable.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 1,
         "timestamp": "2025-10-02T17:19:29.761207Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python heredoc is perfectly well-formed with balanced quotes, correct imports, proper file I/O constructs, and valid Python 3 syntax throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The script precisely implements the post-tampering cover-up described: it verifies the deployed image matches the staged (tampered) version, then recalculates and overwrites the SHA-256 manifest to align integrity verification files with the modified image, directly supporting T1601 evasion of checksum-based detection.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:13:06.388347Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is perfectly formed, uses correct indentation, valid libraries, and a proper shell heredoc wrapper.",
+        "semantic_score": 5,
+        "semantic_justification": "The command logically achieves the goal of updating a checksum manifest to match a modified system image, which is a key step in evading integrity checks as described in T1601.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:13:07.426230Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The AWS CLI command is perfectly well-formed with proper syntax, balanced quotes, valid parameter flags, and correctly formatted tag key-value pairs.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the T1585 technique by creating a new IAM user with plausible attributes that could be used for persistence or follow-on activities within AWS environments.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T08:21:23.039787Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct AWS CLI syntax, valid flags, proper tag formatting, and balanced quoting for values with spaces.",
-        "semantic_score": 4,
-        "semantic_justification": "The command perfectly aligns with the T1585 technique by creating a new IAM user with plausible attributes, but the stated 'Privilege: None' is misleading as the execution requires specific cloud IAM permissions (iam:CreateUser) to succeed.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T08:21:33.651334Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "AWS CLI command is well-formed with valid flags and properly quoted tag values for PowerShell; usernames and tags conform to expected formats.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 1,
         "timestamp": "2025-10-02T08:21:50.512953Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with valid AWS CLI syntax, properly balanced quotes, correct flag usage for --user-name, --tags, and --output, and valid key-value pair formatting for multiple tags.",
+        "semantic_score": 5,
+        "semantic_justification": "The command directly implements T1585 by creating a plausible IAM user account with realistic persona attributes (name, department, title, email, location) designed to blend into legitimate organizational activity and establish a persistent cloud identity.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:35:07.394347Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command follows standard AWS CLI syntax for creating a user with multiple tags using the shorthand key-value format and specifying the output format.",
+        "semantic_score": 5,
+        "semantic_justification": "The command creates a new IAM identity with deceptive tags designed to blend into a corporate environment, directly mapping to the Establish Accounts technique.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:35:11.514456Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

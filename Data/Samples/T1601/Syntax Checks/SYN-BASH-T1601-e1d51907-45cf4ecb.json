@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax, balanced parentheses, valid command chaining with &&, and correct use of command substitution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively implements bootloader integrity verification by extracting the GRUB core image from disk, calculating its SHA256 hash, and comparing it against a baseline image to detect firmware/bootloader tampering, which aligns perfectly with the T1601 technique detection approach.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T19:36:59.256099Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, utilizing valid Bash constructs like arithmetic and process substitution, balanced quoting, and correct flag formats.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command's logic and chosen tools are semantically sound and perfectly aligned for detecting T1601 via bootloader image comparison, its stated privilege level 'None' makes the critical `dd if=/dev/sda` operation impossible to execute due to permission restrictions.",
-        "combined_score": 4.0,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T19:37:18.420955Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Command is valid Bash with balanced arithmetic and command substitutions, correct dd/sha256sum/diff usage, and proper process substitution.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.7,
         "timestamp": "2025-10-02T19:37:47.486280Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is well-formed with balanced parentheses, proper process substitution syntax, and valid flag usage, though the nested arithmetic expansion with stat and dd is complex and could fail if baseline/core.img doesn't exist, but syntactically it is parseable.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly reads the MBR gap region from /dev/sda using dd with appropriate block size and skip parameters, computes SHA256 checksums of both the extracted region and a baseline image, and diffs them to detect bootloader tampering — aligning well with T1601 detection methodology, though reading /dev/sda requires root privileges contrary to the 'None' privilege claim, and the diff on sha256sum outputs is redundant given the sha256sum comparison already shows mismatches.",
+        "combined_score": 4.0,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T01:25:08.109048Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct Bash syntax, including valid shell arithmetic for block calculation, proper command chaining, and valid process substitution for the diff comparison.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively achieves the goal of verifying GRUB core integrity, though it incorrectly claims to require no privileges when reading /dev/sda necessitates root access.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T01:25:10.855244Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_score": 4.167,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

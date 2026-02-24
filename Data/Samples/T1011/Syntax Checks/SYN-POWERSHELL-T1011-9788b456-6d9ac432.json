@@ -27,30 +27,30 @@
         "timestamp": "2025-10-01T01:28:12.445801Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax for the netsh interface portproxy command, using proper parameter names and values with appropriate separators.",
-        "semantic_score": 4,
-        "semantic_justification": "The command correctly implements a port forwarding mechanism that could be used for exfiltration over an alternative network medium, though it requires additional context/commands to fully implement the technique as it only sets up the proxy but doesn't handle the actual data transfer.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-01T01:28:15.511228Z"
+        "syntactic_justification": "The command is perfectly well-formed with valid netsh syntax, correct subcommand structure, and properly formatted key=value parameter pairs for portproxy configuration.",
+        "semantic_score": 2,
+        "semantic_justification": "While the command does create a port proxy that redirects traffic from an IPv6 loopback address to a remote IPv4 host, this is fundamentally a network tunneling/port forwarding technique (more aligned with T1090 Proxy or T1572 Protocol Tunneling) rather than T1011 exfiltration over a different network medium, which specifically refers to using alternate physical network interfaces like cellular, Bluetooth, or Wi-Fi rather than the monitored channel — IPv6-to-IPv4 proxying on the same network interface does not constitute exfiltration over a different network medium.",
+        "combined_score": 3.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:10:20.401841Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax, parameters, and values for the `netsh interface portproxy` command.",
+        "syntactic_justification": "The command is perfectly well-formed and uses valid netsh interface portproxy syntax with correctly formatted IPv6 and IPv4 parameters.",
         "semantic_score": 3,
-        "semantic_justification": "While the command's arguments are semantically correct for creating a port proxy, the stated 'Privilege: None' is incorrect, as `netsh interface portproxy add` requires administrator privileges, making the claimed operational feasibility inaccurate.",
+        "semantic_justification": "While the command successfully redirects traffic, it requires Administrator privileges to execute (contrary to the 'None' stated) and is more representative of Port Proxying (T1090) than Exfiltration Over Other Network Medium (T1011), which typically involves separate physical hardware like Bluetooth or cellular.",
         "combined_score": 4.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:32:06.634471Z"
+        "timestamp": "2026-02-18T22:10:23.897367Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 4.0,
-    "llm_verdict": "likely_match",
+    "llm_average_semantic": 2.333,
+    "llm_average_score": 3.667,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

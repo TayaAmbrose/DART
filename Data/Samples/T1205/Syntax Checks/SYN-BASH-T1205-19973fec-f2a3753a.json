@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T17:35:47.505431Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, using valid iptables options, correct string matching syntax, proper netcat flags, and appropriate command separators without any parsing errors.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command chain is well-formed with proper semicolons, balanced quotes, and valid flag usage, though the iptables rule ordering (inserting the ACCEPT rule before the SET rule) creates a logical dependency that works syntactically but may behave unexpectedly depending on existing ruleset.",
         "semantic_score": 3,
-        "semantic_justification": "While the core logic of using an SSH banner string with iptables and recent module for traffic signaling is well-aligned with T1205, the critical claim of 'Privilege: None' renders the iptables commands inoperable without root access, significantly reducing its operational plausibility.",
-        "combined_score": 4.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T17:36:29.286272Z"
+        "semantic_justification": "The port-knocking concept using an SSH banner string as a signal is plausible and aligns with T1205, but the implementation has a critical flaw: iptables string matching on port 22 traffic would require the connection to complete enough to send the banner, and the --rcheck rule inserted first (position 1) would accept traffic before the --set rule can mark the source, meaning the ordering of iptables -I rules (both at position 1, so second insertion becomes rule 1) actually places the ACCEPT check ahead of the SET/LOG rule, partially undermining the intended trigger-then-unlock flow; additionally, 'nc -l -p 2200 -k' without root privileges (claimed 'None') would fail on port 2200 if it's below 1024, though 2200 is above 1024 so that part is fine.",
+        "combined_score": 3.5,
+        "confidence": 0.75,
+        "timestamp": "2026-02-19T04:02:20.332903Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper syntax for iptables rules, correct use of command separators, valid flags, and proper backgrounding of the netcat listener.",
+        "syntactic_justification": "The command uses perfectly well-formed iptables and netcat syntax, including correct module flags for the 'recent' and 'string' modules, balanced quotes, and standard shell redirection/backgrounding.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by using a custom SSH banner as a covert signal that, when detected, triggers iptables to allow access to a hidden service on port 2200 for 60 seconds.",
+        "semantic_justification": "The command accurately implements a sophisticated traffic signaling technique (port knocking via DPI) by using iptables to monitor the SSH handshake for a specific magic string, which then triggers a temporary firewall hole for a secondary listener.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:22:39.142058Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:02:21.356162Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

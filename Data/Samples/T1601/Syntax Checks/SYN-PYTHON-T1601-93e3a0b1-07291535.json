@@ -17,26 +17,6 @@
     "syntax_ok": false,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax for imports, assertions, variable assignments, and conditional statements.",
-        "semantic_score": 4,
-        "semantic_justification": "The command effectively implements a detection mechanism against firmware tampering by comparing a Junos installer against a golden reference, though it's a defensive measure rather than an offensive technique described in T1601.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T17:11:11.421730Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python command uses perfectly well-formed syntax with balanced quotes and parentheses, valid function calls, and proper statement separators.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly achieves its stated intent of detecting image tampering via deep binary comparison against a golden reference, aligning perfectly with T1601's detection signals for image integrity and mitigation via integrity validation on a plausible platform (Junos on network devices).",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T17:11:20.169106Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The command uses python3 -c with balanced quotes and valid Python statements separated by semicolons, and all functions and arguments are correctly formed.",
@@ -45,6 +25,26 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T17:11:34.922671Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper semicolons, valid imports, and correct string quoting throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a deep binary file comparison (filecmp.cmp with shallow=False) of a Junos firmware archive against a golden reference to detect tampering, which aligns well with T1601 detection/integrity validation, though the privilege check (assert os.geteuid()==0) is unnecessary for read-only file comparison and the explanation claims 'None' privilege while the script enforces root.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T01:12:15.730231Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly valid Python one-liner with correct module imports, syntax, and logic.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a deep binary comparison between two files to detect discrepancies, which is a valid method for verifying the integrity of a system image.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:12:18.730892Z"
       }
     ],
     "llm_average_syntactic": 5.0,

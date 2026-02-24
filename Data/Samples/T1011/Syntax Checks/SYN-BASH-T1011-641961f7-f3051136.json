@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T01:03:57.764300Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command substitution, valid curl flags, and correct use of awk for parsing the network interface information.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly implements T1011 by explicitly binding curl to the Thunderbolt Bridge interface (an alternate network medium) to exfiltrate data via HTTP POST, which aligns perfectly with the technique of exfiltrating over a different network medium than the primary channel.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T01:04:00.735451Z"
+        "syntactic_justification": "The command is well-formed with balanced quotes and parentheses, valid curl flags (--interface, -X, --data-binary), and a properly structured command substitution using networksetup piped to awk.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses curl's --interface flag to bind to the Thunderbolt Bridge IP address for exfiltration over an alternate network medium, which aligns well with T1011, though Thunderbolt Bridge is typically a peer-to-peer local interface rather than a true alternate network medium like cellular or Wi-Fi, slightly reducing operational realism.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-18T22:05:05.591472Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid flags, correct command substitution, and proper piping for a runnable Bash command.",
+        "syntactic_justification": "The command uses valid Bash syntax, correctly nested subshells, balanced quotes, and proper curl flags.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by using `curl` to exfiltrate a file via HTTP POST, explicitly binding to the IP of the 'Thunderbolt Bridge' interface as an alternate network medium, directly addressing T1011.",
+        "semantic_justification": "The command effectively binds curl to a specific network interface to force exfiltration over an alternate medium, perfectly aligning with T1011.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:22:58.478113Z"
+        "timestamp": "2026-02-18T22:05:07.861467Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes/parentheses/braces, correct use of variables, proper JSON conversion, and appropriate API calls with required parameters.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1585 (Establish Accounts) by configuring mailbox settings for an existing account to make it appear legitimate and actively used, which helps adversaries blend in and establish persistence.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T10:16:44.005774Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, featuring balanced syntax, valid PowerShell cmdlets, proper parameter usage, and correct command separation and object literals.",
-        "semantic_score": 3,
-        "semantic_justification": "While the command correctly performs its stated action of modifying mailbox settings to 'reinforce believability,' which aligns with the 'blend into normal activity' aspect of T1585, it does not directly 'establish accounts' as the primary focus of the technique, and the claim of 'Privilege: None' is semantically incorrect as it requires specific Graph API permissions to execute successfully.",
-        "combined_score": 4.0,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T10:17:08.028341Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with balanced quoting/parentheses, valid hashtables, proper use of ConvertTo-Json for the PATCH body, and correct command separators.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.8,
         "timestamp": "2025-10-02T10:17:35.677108Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, braces, and quotes, proper semicolon separators, valid hashtable construction, and correct ConvertTo-Json/ConvertFrom-Json usage throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly uses Microsoft Graph API via Az module tokens to configure mailbox settings (timezone, working hours, locale) for a specific user, which aligns with T1585's persona-building/account establishment behavior, though the technique more typically focuses on account creation rather than post-creation persona reinforcement, making this a supporting rather than primary T1585 action.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:42:43.184014Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax for variable assignment, subexpressions, hashtables, and command chaining via semicolons.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately leverages Azure PowerShell and the Microsoft Graph API to modify account attributes that help an adversary-controlled account blend into a specific geographical or professional context, directly supporting the persona-building aspect of T1585.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:42:47.783557Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

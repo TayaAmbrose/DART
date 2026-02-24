@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed Python code with proper imports, exception handling, balanced quotes/parentheses/braces, and correct string formatting for the inner Python script.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) as it queries SecurityTrails, a paid closed-source intelligence platform, to gather subdomain information about a target domain using a valid API key.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:06:42.025860Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python script is perfectly well-formed, with correct syntax for imports, variable assignments, Kubernetes API calls, f-strings, JSON operations, and error handling, making it fully parseable and runnable.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by executing a Python script within a Kubernetes pod to query SecurityTrails, a recognized paid closed-source intelligence platform, for subdomain data using an API key, which directly aligns with MITRE ATT&CK T1597.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:06:58.162601Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The Python script is well-formed with balanced quotes and parentheses, valid Kubernetes client usage, and a correctly quoted inner command string.",
@@ -44,11 +24,31 @@
         "combined_score": 5.0,
         "confidence": 1,
         "timestamp": "2025-10-02T13:07:07.930776Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The Python code is largely well-formed with proper imports, exception handling, and kubernetes client usage, though the embedded inner script string uses a literal newline escape sequence ('\\n') within a double-quoted string that may cause minor parsing issues depending on execution context.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying SecurityTrails, a paid closed-source DNS intelligence platform, via its subscription API to enumerate subdomains of a target domain, executed inside a Kubernetes pod to avoid direct attribution, which is operationally consistent with adversaries leveraging closed data sources for reconnaissance.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:55:43.469306Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-structured, handles Kubernetes API authentication correctly, and manages nested quoting for the executed sub-command without syntax errors.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements the technique by querying a commercial, closed-source DNS intelligence API (SecurityTrails) from within a compromised or controlled environment.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:55:44.702810Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
+    "llm_average_syntactic": 4.667,
     "llm_average_semantic": 5.0,
-    "llm_average_score": 5.0,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

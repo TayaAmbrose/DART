@@ -27,28 +27,28 @@
         "timestamp": "2025-10-01T12:47:21.094436Z"
       },
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, parentheses, and braces, correct PowerShell syntax throughout, and proper escape sequences for nested quotes.",
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with properly nested quotes (using doubled single-quotes inside the outer single-quoted ArgumentList string) and balanced braces/parentheses, though the complex multi-level quoting within Invoke-WmiMethod's ArgumentList string creates edge cases that could cause parsing failures in some environments.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a covert signaling mechanism that listens for specially crafted SSDP packets with a specific token, which when received, dynamically enables an RDP firewall rule only for the sender's IP address.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T12:47:24.134903Z"
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by listening on UDP/1900 for crafted SSDP M-SEARCH packets containing a specific ST field and custom X-Token header as a covert trigger, then dynamically enabling a pre-staged RDP firewall rule scoped to the sender's IP — a realistic and operationally coherent port-knocking/traffic-signaling mechanism for conditional RDP access.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T03:41:27.092850Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes and braces, valid parameter formats, and correct escaping for nested string literals within the PowerShell command block.",
-        "semantic_score": 3,
-        "semantic_justification": "The command semantically aligns well with Traffic Signaling by using SSDP for a trigger; however, the crucial firewall modification actions (New-NetFirewallRule, Set-NetFirewallRule) require Administrator privileges, contradicting the stated 'Privilege: None' and preventing the claimed intent from being fully achieved.",
-        "combined_score": 4.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T12:47:48.659179Z"
+        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax, properly escaped nested single quotes for the WMI argument, and balanced delimiters.",
+        "semantic_score": 4,
+        "semantic_justification": "The command effectively implements traffic signaling using the SSDP protocol to trigger a firewall change; however, it requires administrative privileges (contrary to the 'None' tag) and would likely encounter a port conflict if the native SSDP Discovery service is running.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:41:31.152261Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
     "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,

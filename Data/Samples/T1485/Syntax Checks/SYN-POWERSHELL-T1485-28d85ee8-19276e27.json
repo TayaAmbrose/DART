@@ -16,26 +16,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax for Invoke-AzVMRunCommand, correct parameter names, balanced quotes, and a valid embedded Linux shred command with appropriate flags.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1485 Data Destruction technique by using the shred utility with multiple passes (-n 3) and zero-filling (-z) to securely and permanently destroy all data on the specified disk (/dev/sdc) in a manner that prevents recovery.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T01:09:13.543755Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command and the embedded shell script are both perfectly well-formed with balanced quotes and valid flag formats.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly uses `Invoke-AzVMRunCommand` to execute `shred -v -n 3 -z /dev/sdc`, which is the appropriate tool and arguments to securely overwrite an entire disk device on a Linux VM, perfectly aligning with Data Destruction (T1485).",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T01:09:20.893899Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid Azure PowerShell cmdlet with correct parameters and balanced quoting, and the embedded shred command uses proper flags.",
@@ -44,6 +24,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T01:09:36.130462Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is perfectly well-formed with balanced quotes, valid Invoke-AzVMRunCommand parameters, correct flag usage for shred (-v, -n 3, -z), and proper ScriptString embedding.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1485 by using shred with multiple overwrite passes (-n 3) and a final zero-pass (-z) on an entire block device (/dev/sdc) via Azure VM Run Command, which is a realistic and operationally plausible method for irreversible data destruction on a cloud IaaS disk.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T01:40:11.986727Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command and the encapsulated shell script use correct syntax, balanced quotes, and valid Azure cmdlet parameters.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately utilizes the Azure RunCommand extension to execute a destructive shred operation on a block device, perfectly aligning with T1485.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T01:40:13.318276Z"
       }
     ],
     "llm_average_syntactic": 5.0,

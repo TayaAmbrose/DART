@@ -27,30 +27,30 @@
         "timestamp": "2025-10-01T14:38:39.141521Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, correct PowerShell syntax for embedding a script block, and proper escaping of internal strings for `Invoke-WmiMethod`.",
-        "semantic_score": 2,
-        "semantic_justification": "While the LLMNR parsing and signaling logic correctly implements T1205, the command fails to achieve its claimed intent of modifying firewall rules because it explicitly states 'Privilege: None', which is insufficient for `New-NetFirewallRule` or `Set-NetFirewallRule` cmdlets.",
-        "combined_score": 3.5,
-        "confidence": 1.0,
-        "timestamp": "2025-10-01T14:39:04.077210Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with properly nested quotes using doubled single-quotes for escaping within the outer PowerShell string, balanced braces and parentheses, and valid WMI invocation syntax, though the deeply nested quoting layers create edge-case fragility when passed through WMI's CreateProcess.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1205 Traffic Signaling by listening on UDP/5355 (LLMNR), parsing the DNS-like question name from raw UDP datagrams, using a sentinel hostname ('svc-open.') as a covert trigger signal, and conditionally enabling a pre-staged firewall rule restricted to the signaling host's IP — a textbook port-knocking/traffic-signaling pattern for C2 activation.",
+        "combined_score": 4.5,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T03:48:59.630204Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, parentheses, and braces, correct PowerShell syntax throughout, and proper escape sequences for nested quotes.",
+        "syntactic_justification": "The command is perfectly well-formed, using correct PowerShell syntax, balanced braces, and proper escaping for nested single quotes within the WMI argument list.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by monitoring LLMNR traffic (UDP/5355) for a specific signal ('svc-open.') and responding by enabling a previously disabled firewall rule, creating a covert signaling channel that allows controlled access to SMB.",
+        "semantic_justification": "The command accurately implements a traffic signaling mechanism by monitoring LLMNR traffic for a specific 'sentinel' string to dynamically modify firewall rules, which is a textbook implementation of T1205.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:11:28.288191Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T03:49:04.044215Z"
       }
     ],
-    "llm_average_syntactic": 4.0,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 3.5,
-    "llm_verdict": "likely_match",
+    "llm_average_syntactic": 3.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 3.833,
+    "llm_verdict": "uncertain",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
     "Syntax_Run_Details": ""

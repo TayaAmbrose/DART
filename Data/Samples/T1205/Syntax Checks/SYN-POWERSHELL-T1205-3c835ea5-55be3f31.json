@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T16:47:09.741082Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, with correct PowerShell syntax, balanced elements, valid command separators, and proper use of .NET methods and external commands.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced quotes, proper semicolon separators, valid .NET class instantiations, correct pipeline usage, and no syntax errors.",
         "semantic_score": 4,
-        "semantic_justification": "The command accurately constructs and attempts to broadcast a Wake-on-LAN magic packet, which aligns with Traffic Signaling (T1205) by using legitimate network traffic to trigger a remote action; however, the `netsh` command to add a firewall rule will fail under the stated 'Privilege: None', creating a minor realism gap for the full command's operational success.",
+        "semantic_justification": "The command correctly constructs a WoL magic packet (6x 0xFF + 16 repetitions of MAC bytes) and broadcasts it over UDP/9, which is a legitimate traffic signaling technique to wake a remote host; however, the MITRE T1205 alignment is somewhat indirect since WoL is a niche signaling vector, and the netsh firewall rule addition requires admin privileges despite the privilege field claiming 'None'.",
         "combined_score": 4.5,
-        "confidence": 1,
-        "timestamp": "2025-10-01T16:47:45.574772Z"
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T03:57:14.051700Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with proper variable declarations, method calls, balanced quotes/braces, appropriate operators, and correct pipeline usage throughout.",
-        "semantic_score": 4,
-        "semantic_justification": "The command correctly implements a Wake-on-LAN packet with proper formatting (magic packet with FF bytes followed by repeated MAC address) and UDP broadcast to port 9, though it's debatable whether this fully aligns with the Traffic Signaling technique as it's more of a standard protocol than covert signaling.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T03:17:31.610134Z"
+        "syntactic_justification": "The PowerShell script is perfectly formed, uses correct .NET class calls, and properly handles variable pipelines and command separators.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately constructs a standard Wake-on-LAN magic packet and implements the necessary firewall and socket configurations to transmit it as a broadcast signal.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T03:57:16.797977Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.0,
-    "llm_average_score": 4.5,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

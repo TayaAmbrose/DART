@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T00:22:22.269944Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed with balanced quotes, parentheses, and proper syntax for importing modules, creating a socket, setting timeout, connecting to a Bluetooth device, reading a file, and sending data.",
+        "syntactic_justification": "The Python one-liner is perfectly well-formed with balanced parentheses, proper semicolons as statement separators, correct string quoting, and valid Python socket API calls.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1011 by establishing a Bluetooth RFCOMM connection to exfiltrate SSH known_hosts data over an alternative network medium, bypassing potential monitoring on the primary network.",
+        "semantic_justification": "The command accurately implements T1011 by using Python's Bluetooth RFCOMM socket (AF_BLUETOOTH, BTPROTO_RFCOMM) as an alternate network medium to exfiltrate ~/.ssh/known_hosts, a legitimate user-readable file containing SSH host metadata, to a remote Bluetooth MAC address on port 19.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-01T00:22:28.870041Z"
+        "confidence": 0.9,
+        "timestamp": "2026-02-18T21:57:55.041612Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The Python command is perfectly well-formed, with balanced quotes and parentheses, valid function calls, and proper statement separators for single-line execution.",
+        "syntactic_justification": "The Python syntax is perfectly valid, with correct socket initialization, file handling, and nested quoting.",
         "semantic_score": 5,
-        "semantic_justification": "The command precisely achieves its claimed intent by using `socket.AF_BLUETOOTH` and `BTPROTO_RFCOMM` to exfiltrate `~/.ssh/known_hosts` over a Bluetooth connection, directly aligning with MITRE ATT&CK T1011's description of using an 'other network medium' like Bluetooth.",
+        "semantic_justification": "The command accurately implements exfiltration over Bluetooth RFCOMM as described in T1011, targeting a realistic data file (~/.ssh/known_hosts).",
         "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T00:22:36.599963Z"
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T21:57:57.714247Z"
       }
     ],
     "llm_average_syntactic": 5.0,

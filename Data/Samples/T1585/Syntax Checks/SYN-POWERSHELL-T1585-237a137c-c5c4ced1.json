@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes/parentheses, correct variable assignments, appropriate method calls, and proper command separators.",
-        "semantic_score": 4,
-        "semantic_justification": "The command aligns with the T1585 technique by manipulating an established account to increase its legitimacy through profile photo modification, though it assumes Azure credentials are already authenticated which slightly reduces operational plausibility.",
-        "combined_score": 4.5,
-        "confidence": 0.9,
-        "timestamp": "2025-10-02T10:57:27.256794Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid PowerShell syntax, balances all quotes, parentheses, and braces, and employs correct command separators and flag formats.",
-        "semantic_score": 5,
-        "semantic_justification": "The command effectively uploads a profile photo to a specified user account via the Microsoft Graph API, directly aligning with the 'blend into normal activity' aspect of the T1585 technique by making an account appear more legitimate, assuming the necessary Azure AD permissions are available for the executing context.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T10:57:44.349386Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell command is well-formed with balanced quotes/parentheses, correct separators, valid parameters, and proper hashtable/header usage.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.78,
         "timestamp": "2025-10-02T10:58:09.927356Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper string concatenation, valid semicolon separators, and correct Invoke-RestMethod flag usage throughout.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly retrieves a Microsoft Graph token via Az module, resolves the user's object ID, uploads a profile photo via PUT to the correct Graph API endpoint, and verifies it with a GET — all consistent with T1585 persona-building to increase account realism, though the GET response for a photo endpoint returns binary data rather than JSON, making the ConvertTo-Json step slightly misaligned.",
+        "combined_score": 4.5,
+        "confidence": 0.88,
+        "timestamp": "2026-02-19T00:44:51.798966Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses correct PowerShell syntax, including proper variable assignment, command separation with semicolons, and valid string concatenation for the Microsoft Graph URI.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately leverages the Microsoft Graph API to update a user's profile picture, which aligns perfectly with the goal of increasing account realism under MITRE ATT&CK T1585.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:44:54.825593Z"
       }
     ],
     "llm_average_syntactic": 5.0,

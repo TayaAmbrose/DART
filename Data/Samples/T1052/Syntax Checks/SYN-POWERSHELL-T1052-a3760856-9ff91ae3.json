@@ -28,24 +28,24 @@
         "timestamp": "2025-10-01T06:59:37.290309Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes/parentheses/braces, correct variable assignments, pipeline operations, and error handling.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper semicolon separators, valid cmdlet syntax, correct backtick escaping in the path string, and no structural errors.",
         "semantic_score": 5,
-        "semantic_justification": "The command fully implements the T1052 technique by automatically detecting a removable drive, copying spreadsheet files from the user's desktop, encoding them as base64 to evade simple content inspection, and logging the operation - all core elements of exfiltration over physical medium.",
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive, staging a hidden-looking 'cache' directory, recursively collecting spreadsheet files from the Desktop, Base64-encoding them to evade content inspection, writing them to the removable medium, and logging the operation — all consistent with physical medium exfiltration tradecraft.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T06:59:40.367668Z"
+        "timestamp": "2026-02-18T22:31:24.252271Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses valid PowerShell syntax, balanced parentheses and quotes, and proper command separators and flags.",
+        "syntactic_justification": "The command uses valid PowerShell syntax, properly handles variable interpolation, and uses correct cmdlets and .NET methods.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the claimed intent and T1052 by identifying a removable drive, Base64-encoding target files, and saving them to the removable drive, effectively demonstrating exfiltration over a physical medium with obfuscation.",
+        "semantic_justification": "The command accurately identifies a removable drive, performs data staging with Base64 encoding to evade inspection, and transfers the files to the physical medium as described in T1052.",
         "combined_score": 5.0,
         "confidence": 1,
-        "timestamp": "2025-10-01T06:59:50.241448Z"
+        "timestamp": "2026-02-18T22:31:33.405829Z"
       }
     ],
     "llm_average_syntactic": 5.0,

@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced parentheses, correct parameter names, and proper piping to Select-Object and ConvertTo-Json.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1585 technique by creating a new Azure role assignment that grants a user account Reader access to a resource group, which is a legitimate way to establish persistence in cloud environments while maintaining a low profile.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T08:45:27.108729Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The PowerShell command is perfectly well-formed with correct cmdlet usage, parameter syntax, balanced parentheses, and proper piping.",
-        "semantic_score": 1,
-        "semantic_justification": "The command assigns a role to an *existing* account and does not create a new account or significantly elevate an account to fit the 'Establish Accounts' technique (T1585); it primarily performs an access modification (more aligned with T1098.001).",
-        "combined_score": 3.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T08:45:33.691045Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Well-formed PowerShell with valid parameters, balanced quotes/parentheses, and a correct pipeline to Select-Object and ConvertTo-Json.",
@@ -45,11 +25,31 @@
         "combined_score": 4.0,
         "confidence": 0.7,
         "timestamp": "2025-10-02T08:46:07.374521Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced parentheses and quotes, valid PowerShell pipeline syntax, correct Az module cmdlet usage, and proper property selection with ConvertTo-Json.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly assigns a Reader role to a specific account on a scoped resource group using legitimate Az PowerShell cmdlets, which aligns well with T1585's account establishment and privilege blending behaviors, though Reader is so low-privilege it may not enable meaningful follow-on actions and the 'None' privilege claim is unrealistic since role assignment itself requires Owner or User Access Administrator rights.",
+        "combined_score": 4.5,
+        "confidence": 0.9,
+        "timestamp": "2026-02-19T00:36:24.239780Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command uses valid Azure PowerShell cmdlets, correct parameter names, balanced parentheses, and proper piping for output formatting.",
+        "semantic_score": 5,
+        "semantic_justification": "The command correctly assigns the specified role to the target user at the resource group scope, which aligns with the intent of establishing access permissions.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:36:25.751779Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.0,
-    "llm_average_score": 4.0,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

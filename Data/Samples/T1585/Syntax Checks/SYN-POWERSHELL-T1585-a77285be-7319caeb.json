@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper variable assignments, command separators, balanced quotes, and valid Azure CLI syntax for group and user operations.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with the T1585 technique by adding a user to a legitimate-looking group to establish persistence and blend in with normal activity, then verifying the addition was successful.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T10:12:23.695631Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, utilizing correct Powershell variable assignment, `az` CLI syntax, proper quoting, valid flags, and command separators.",
-        "semantic_score": 2,
-        "semantic_justification": "While the `az` CLI commands correctly implement the action of adding a user to an Azure AD group, the stated 'Privilege: None' makes the entire operation semantically unachievable and operationally implausible in a real-world Azure AD environment, as significant administrative permissions are required for this action.",
-        "combined_score": 3.5,
-        "confidence": 1.0,
-        "timestamp": "2025-10-02T10:12:46.573947Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "PowerShell variable assignments and semicolon separators are valid; quoting is balanced and az CLI flags/queries are well-formed.",
@@ -45,11 +25,31 @@
         "combined_score": 4.5,
         "confidence": 0.8,
         "timestamp": "2025-10-02T10:12:58.793381Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is mostly well-formed PowerShell using valid Azure CLI syntax with proper variable assignment and chaining via semicolons, though mixing bash-style `$()` subshell substitution with PowerShell variable assignment (`$gid=$(...)`) works in PowerShell but is slightly unconventional and could cause issues depending on the PowerShell version.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1585 by adding a created persona to an existing legitimate-looking group to normalize their presence and access patterns, using appropriate Azure CLI commands (`az ad group member add`) with correct argument structure to blend the account into normal organizational activity.",
+        "combined_score": 4.5,
+        "confidence": 0.85,
+        "timestamp": "2026-02-19T00:42:11.217864Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed PowerShell sequence using valid subexpression syntax, variable assignments, and command separators.",
+        "semantic_score": 4,
+        "semantic_justification": "The command logic perfectly matches the intent of the technique by manipulating group membership to blend in; however, 'az ad group show' requires the '--id' flag rather than '--group' to identify the target group, which would cause the first part of the command to fail in current Azure CLI versions.",
+        "combined_score": 4.5,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:42:31.428448Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.5,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

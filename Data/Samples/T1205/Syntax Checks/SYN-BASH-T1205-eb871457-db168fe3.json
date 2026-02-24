@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T17:58:40.620245Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid command separators, and correct flag formats for ufw and iptables.",
-        "semantic_score": 2,
-        "semantic_justification": "While the iptables logic correctly implements the traffic signaling technique to create a temporary firewall bypass, the explicit statement of 'Privilege: None' renders the command operationally infeasible as both ufw and iptables require root access to modify firewall rules.",
-        "combined_score": 3.5,
-        "confidence": null,
-        "timestamp": "2025-10-01T17:59:10.768008Z"
+        "syntactic_justification": "The command is well-formed with balanced quoting, proper use of && separators, valid iptables flags including -m string, -m recent modules, and all arguments are syntactically correct.",
+        "semantic_score": 5,
+        "semantic_justification": "The command implements a classic port-knocking/traffic-signaling mechanism where a UDP packet to port 40000 containing the string 'MAGIC' sets a recent-match entry, which then allows TCP/4444 connections from the same source IP for 30 seconds — perfectly aligned with T1205 traffic signaling via payload-based firewall triggers.",
+        "combined_score": 5.0,
+        "confidence": 0.92,
+        "timestamp": "2026-02-19T04:03:46.630558Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper quoting, valid flags for both ufw and iptables, correct command separators, and appropriate syntax for string matching and recent module usage.",
+        "syntactic_justification": "The command is perfectly well-formed, using correct bash quoting, valid ufw/iptables flags, and logical command chaining with the && operator.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by configuring a firewall to only allow TCP connections on port 4444 when triggered by a specific UDP packet containing 'MAGIC' on port 40000, creating a covert signaling mechanism.",
+        "semantic_justification": "The command accurately implements traffic signaling (T1205) by using the iptables string and recent modules to create a conditional port-opening trigger based on a specific UDP payload.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:24:32.416026Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:03:56.998380Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.667,
-    "llm_average_score": 4.333,
+    "llm_average_semantic": 4.667,
+    "llm_average_score": 4.833,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

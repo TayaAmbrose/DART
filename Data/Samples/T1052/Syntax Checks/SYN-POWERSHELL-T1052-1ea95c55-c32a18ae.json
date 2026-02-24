@@ -28,29 +28,29 @@
         "timestamp": "2025-10-01T09:39:02.385848Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper PowerShell syntax, balanced quotes/parentheses/braces, appropriate variable assignments, pipeline operations, and error handling.",
+        "syntactic_justification": "The PowerShell command is well-formed with balanced parentheses, proper string concatenation, valid cmdlet usage, correct pipeline operators, and appropriate semicolon separators throughout.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1052 by identifying a USB drive, creating a hidden system folder disguised as a Recycle Bin, and exfiltrating Outlook OST files to this concealed location on the physical medium.",
+        "semantic_justification": "The command precisely implements T1052 by detecting a removable drive via WMI DriveType=2, staging data in a hidden/system-attributed '.Recycle' folder to mimic the Recycle Bin and evade casual inspection, then locating and copying Outlook OST cache files (which contain email data) to that concealed location for physical exfiltration.",
         "combined_score": 5.0,
         "confidence": 0.95,
-        "timestamp": "2025-10-01T09:39:05.115238Z"
+        "timestamp": "2026-02-18T22:40:16.427224Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax for PowerShell, including balanced parentheses, valid cmdlets, proper path construction, and attribute setting.",
-        "semantic_score": 5,
-        "semantic_justification": "The command fully achieves its claimed intent by locating a removable drive, creating a hidden, system-attributed folder named '.Recycle', and copying Outlook cache files into it, perfectly aligning with T1052's focus on exfiltration over physical medium with obfuscation.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T09:39:15.368236Z"
+        "syntactic_justification": "The command uses valid PowerShell syntax, correctly handles variable assignments, and utilizes proper cmdlet flags and pipeline operations.",
+        "semantic_score": 4,
+        "semantic_justification": "While the logic for identifying a USB drive and hiding the destination folder is sound, copying active Outlook OST files often fails due to file locks unless Outlook is closed.",
+        "combined_score": 4.5,
+        "confidence": 1.0,
+        "timestamp": "2026-02-18T22:40:19.675192Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.667,
-    "llm_average_score": 4.833,
+    "llm_average_semantic": 4.333,
+    "llm_average_score": 4.667,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

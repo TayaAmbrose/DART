@@ -18,26 +18,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, appropriate error handling with set -euo pipefail, and correct variable usage throughout.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by securely retrieving paid threat intelligence from a closed source (route-insights.net) using proper authentication, verifying file integrity with SHA256, and logging structured results.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T12:51:23.955813Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, proper command separators, valid flags, and correct bash constructs including brace expansion and subshells.",
-        "semantic_score": 5,
-        "semantic_justification": "The command directly implements the stated T1597 technique by fetching intelligence from a simulated 'closed source' feed via SCP, validating its integrity, and logging the outcome in a realistic operational manner.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T12:51:40.577353Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "The Bash command is well-formed with balanced quoting and parentheses, valid scp options, and correct use of conditionals and expansions.",
@@ -46,6 +26,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T12:52:04.427546Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, braces, and parentheses, valid flag usage for scp and sha256sum, proper use of set -euo pipefail, and correct command separators throughout.",
+        "semantic_score": 5,
+        "semantic_justification": "The command precisely implements T1597 by fetching a paid/closed-source ASN feed via authenticated SCP from a named commercial provider, validating integrity via SHA256 checksum, storing results in a structured path, and logging structured JSON telemetry with the technique label — all operationally plausible and consistent with the described technique.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:54:09.062356Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is a perfectly well-formed Bash script with correct quoting, variable expansion, brace expansion, and control flow.",
+        "semantic_score": 5,
+        "semantic_justification": "The command realistically simulates the automated ingestion of a paid technical data feed from a closed source, including authentication, integrity checking, and structured logging.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:54:12.306522Z"
       }
     ],
     "llm_average_syntactic": 5.0,

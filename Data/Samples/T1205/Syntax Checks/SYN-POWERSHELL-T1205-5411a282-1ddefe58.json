@@ -27,29 +27,29 @@
         "timestamp": "2025-10-01T17:21:21.369310Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed, uses balanced quotes and parentheses, valid PowerShell syntax, and correctly escapes inner strings for WMI execution.",
-        "semantic_score": 5,
-        "semantic_justification": "The command precisely implements traffic signaling by listening on a common port (443), inspecting initial connection data for a specific string (mimicking SNI), and triggering a C2-relevant action (enabling WinRM firewall rule for the source IP) upon a match.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-01T17:21:38.035626Z"
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 4,
+        "syntactic_justification": "The command is largely well-formed with properly nested quotes (single within double within the ArgumentList string), balanced braces and parentheses, and valid PowerShell constructs, though the deeply nested quoting with escaped single quotes inside WMI's ArgumentList string creates edge-case parsing fragility.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly implements a port-knocking/traffic-signaling mechanism by listening on TCP 443, inspecting incoming data for an SNI-like string ('knock.example.org'), and conditionally enabling a WinRM firewall rule for the source IP, which aligns well with T1205; however, it reads raw bytes rather than properly parsing TLS ClientHello SNI fields, so the SNI inspection is approximate and may not reliably extract the SNI from a real TLS handshake, and the 'None' privilege claim is inaccurate since firewall rule manipulation and WMI process creation typically require elevated privileges.",
+        "combined_score": 4.0,
+        "confidence": 0.82,
+        "timestamp": "2026-02-19T04:00:31.304308Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with properly balanced quotes, parentheses, and braces, correct PowerShell syntax for WMI method invocation, and proper nesting of the embedded script.",
+        "syntactic_justification": "The command is perfectly formed, using correct PowerShell syntax, balanced braces, and proper escaping of single quotes (using double single-quotes) inside the WMI argument string.",
         "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Traffic Signaling technique by creating a covert TCP listener that inspects incoming connections for a specific SNI value ('knock.example.org') and only enables a firewall rule for WinRM access from the signaling IP address when the correct 'knock' is received.",
+        "semantic_justification": "The command realistically implements T1205 (Traffic Signaling) by setting up a listener on port 443, inspecting the incoming stream for a specific SNI-like string, and dynamically modifying the Windows Firewall to authorize the signaling IP for WinRM access.",
         "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T03:20:39.215106Z"
+        "confidence": 1,
+        "timestamp": "2026-02-19T04:00:34.426624Z"
       }
     ],
-    "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 4.333,
-    "llm_average_score": 4.667,
+    "llm_average_syntactic": 4.667,
+    "llm_average_semantic": 4.0,
+    "llm_average_score": 4.333,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,

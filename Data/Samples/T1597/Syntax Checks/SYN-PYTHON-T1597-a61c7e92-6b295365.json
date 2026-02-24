@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with proper imports, variable definitions, error handling, balanced parentheses/braces, and follows standard Python syntax conventions.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1597 (Search Closed Sources) by retrieving data from GreyNoise (a paid threat intelligence service) using proper API authentication, storing the results securely, and implementing appropriate error handling.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T13:48:39.720376Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The Python code is perfectly well-formed with correct syntax, balanced delimiters, and proper function calls.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly achieves the claimed intent by querying a commercial closed-source threat intelligence API (GreyNoise) and storing the results, directly embodying the T1597 technique.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T13:48:47.704678Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Valid Python script with balanced syntax, correct imports, f-strings, and exception handling that will parse under Python 3.",
@@ -45,6 +25,26 @@
         "combined_score": 5.0,
         "confidence": 0.9,
         "timestamp": "2025-10-02T13:49:00.486577Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python script is syntactically well-formed with balanced parentheses, proper string formatting, valid imports, correct boto3/requests API usage, and proper exception handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1597 by querying a paid commercial closed-source intelligence feed (GreyNoise) using a securely stored API key from AWS Secrets Manager, storing results in S3, which is operationally realistic and directly aligned with the technique of searching closed sources for targeting intelligence.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:58:56.424783Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The Python code is well-formed, uses correct library syntax for boto3 and requests, and maintains proper logical flow and error handling.",
+        "semantic_score": 5,
+        "semantic_justification": "The script accurately implements T1597 by programmatically querying a paid threat intelligence provider (GreyNoise) and exfiltrating/storing that data in a cloud-native manner.",
+        "combined_score": 5.0,
+        "confidence": 1.0,
+        "timestamp": "2026-02-19T00:58:59.157186Z"
       }
     ],
     "llm_average_syntactic": 5.0,

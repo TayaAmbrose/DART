@@ -17,26 +17,6 @@
     "syntax_ok": true,
     "llm_judgments": [
       {
-        "model": "claude-3-7-sonnet",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with proper variable assignments, balanced quotes, correct command separators, valid flags for each tool (dig, nc, wget), and proper flow control structure.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly implements the Dynamic Resolution technique by resolving multiple IP addresses for a domain (potential fast-flux behavior), testing connectivity with randomized timing, and using specific headers to appear as legitimate traffic while attempting to establish command and control.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-10-02T06:37:04.307439Z"
-      },
-      {
-        "model": "gemini-2.0-flash-thinking-exp",
-        "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with balanced syntax, proper separators, and valid flag formats for the specified platform, ensuring it parses and executes without errors.",
-        "semantic_score": 5,
-        "semantic_justification": "The command perfectly aligns with T1568 by dynamically resolving A records (simulating fast-flux interaction), iterating with randomized delays, validating endpoint reachability, and using legitimate HTTP headers to mimic standard browsing, all crucial for dynamic resolution C2 operations and evasion.",
-        "combined_score": 5.0,
-        "confidence": 1,
-        "timestamp": "2025-10-02T06:37:21.155938Z"
-      },
-      {
         "model": "gpt-5",
         "syntactic_score": 5,
         "syntactic_justification": "Balanced quoting and separators with valid bash constructs; dig, nc (-z -G), and wget flags are correctly formed and parseable.",
@@ -45,6 +25,26 @@
         "combined_score": 4.5,
         "confidence": 0.9,
         "timestamp": "2025-10-02T06:37:37.601059Z"
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed with balanced quotes, valid subshell expansion via $(dig +short A \"$dom\"), proper use of semicolons and &&, and all flags are valid for nc, wget, grep, and sleep on macOS bash.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements T1568 fast-flux C2 contact by iterating over all A records returned for a domain (simulating a fast-flux pool), using randomized delays to evade beaconing detection, checking reachability before connecting, and spoofing legitimate browser behavior via Host header and User-Agent to blend in with normal HTTP traffic.",
+        "combined_score": 5.0,
+        "confidence": 0.95,
+        "timestamp": "2026-02-19T00:25:00.862218Z"
+      },
+      {
+        "model": "gemini-3-flash-preview",
+        "syntactic_score": 5,
+        "syntactic_justification": "The command is perfectly well-formed for bash, with correct variable assignments, loop structures, command substitutions, and properly escaped/quoted strings.",
+        "semantic_score": 5,
+        "semantic_justification": "The command accurately implements a fast-flux resolution pattern by iterating through multiple A records, using randomized delays, and employing host-header spoofing to contact a rotating set of endpoints.",
+        "combined_score": 5.0,
+        "confidence": 1,
+        "timestamp": "2026-02-19T00:25:04.598475Z"
       }
     ],
     "llm_average_syntactic": 5.0,

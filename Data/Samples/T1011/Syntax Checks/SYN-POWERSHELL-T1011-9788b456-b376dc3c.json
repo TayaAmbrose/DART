@@ -27,29 +27,29 @@
         "timestamp": "2025-09-30T23:53:25.615077Z"
       },
       {
-        "model": "claude-3-7-sonnet",
+        "model": "claude-sonnet-4-6",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with correct syntax for the netsh interface teredo command, using proper parameter names and values with appropriate equals signs for assignment.",
-        "semantic_score": 5,
-        "semantic_justification": "The command correctly configures Teredo tunneling to a custom server with a specific client port, which would effectively create an IPv6-over-IPv4 tunnel that could be used as an alternate network medium for exfiltration, precisely matching the T1011 technique.",
-        "combined_score": 5.0,
-        "confidence": 0.95,
-        "timestamp": "2025-09-30T23:53:31.280843Z"
+        "syntactic_justification": "The command is perfectly well-formed with valid netsh syntax, correct subcommand structure, and properly formatted key=value parameter pairs.",
+        "semantic_score": 3,
+        "semantic_justification": "While Teredo does create an IPv6-over-IPv4 tunnel that could serve as an alternate network medium aligning with T1011, the command only configures the Teredo client state and does not by itself exfiltrate data; additionally, 'enterpriseclient' type and a custom server are plausible but Teredo is typically blocked in enterprise environments, and the clientport parameter sets the local UDP port rather than establishing an active exfiltration channel, reducing operational plausibility.",
+        "combined_score": 4.0,
+        "confidence": 0.8,
+        "timestamp": "2026-02-18T21:52:22.376455Z"
       },
       {
-        "model": "gemini-2.0-flash-thinking-exp",
+        "model": "gemini-3-flash-preview",
         "syntactic_score": 5,
-        "syntactic_justification": "The command is perfectly well-formed with valid syntax for `netsh`, correct parameters, and no obvious errors.",
-        "semantic_score": 3,
-        "semantic_justification": "The command correctly uses `netsh` to configure Teredo for exfiltration, aligning with T1011's concept, but the stated 'Privilege: None' makes it operationally unfeasible as this command requires administrative privileges to execute.",
-        "combined_score": 4.0,
+        "syntactic_justification": "The command follows the correct netsh utility syntax with valid subcommands and parameter-value pairings.",
+        "semantic_score": 4,
+        "semantic_justification": "The command correctly configures a Teredo tunnel which can serve as an alternate exfiltration path, though it requires administrative privileges which contradicts the 'None' privilege level provided.",
+        "combined_score": 4.5,
         "confidence": 1,
-        "timestamp": "2025-09-30T23:53:47.604908Z"
+        "timestamp": "2026-02-18T21:52:32.737535Z"
       }
     ],
     "llm_average_syntactic": 5.0,
-    "llm_average_semantic": 3.333,
-    "llm_average_score": 4.167,
+    "llm_average_semantic": 3.0,
+    "llm_average_score": 4.0,
     "llm_verdict": "likely_match",
     "sandbox_trace_id": null,
     "mitre_match_score": null,
